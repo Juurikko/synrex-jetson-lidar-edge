@@ -517,7 +517,11 @@ def test_real_cuda_tensorrt_to_classified_laz(tmp_path, policy, dtype, feature, 
         engine_pkg,
     )
     _, expected = oracle(source, spec, model)
-    assert set(expected) == {2, 5, 6}
+    # last_wins restricts local_x to the final tile's stride (<75% of its extent),
+    # so this context fixture cannot reach the analytic model's high-feature class.
+    assert len(set(expected)) >= 2 and set(expected).issubset({2, 5, 6})
+    if feature == "mean_intensity":
+        assert set(expected) == {2, 5, 6}
     labels = tmp_path / "expected.u8"
     labels.write_bytes(expected.tobytes())
     outputs = [tmp_path / "classified.laz", tmp_path / "repeat.laz"]
@@ -526,6 +530,8 @@ def test_real_cuda_tensorrt_to_classified_laz(tmp_path, policy, dtype, feature, 
             run("classify", "--model", engine_pkg, "--input", source, "--out", out).stdout
         )
         assert receipt["backend"] == "CUDA/TensorRT"
+        assert receipt["completed_inference_blocks"] == receipt["blocks"] > 0
+        assert receipt["timings_seconds"]["tensorrt_inference"] > 0
         assert verify(source, out, labels)["points"] == len(expected)
     assert outputs[0].read_bytes() == outputs[1].read_bytes()
     # Initialization with a valid package but a wrong tensor contract must fail before output.

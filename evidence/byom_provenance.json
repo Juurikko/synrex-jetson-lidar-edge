@@ -523,7 +523,7 @@
   },
   {
     "file": "tests/test_byom.py",
-    "sha256": "3ee7d75468ffa0cc957ebcb8bd99d24d773cb36c2d8141d4bd84ba757f1468c1",
+    "sha256": "503bb6b6bb27cd48c71f672a419b33156b89f048d22e49b6356d729898e717ff",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
