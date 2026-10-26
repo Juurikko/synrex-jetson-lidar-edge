@@ -135,3 +135,18 @@ new weights, ONNX, real/synthetic source-output pairs, seven-class sidecars,
 bindings, QGIS style, licences, source export and Git bundle into ignored storage.
 It does not authorize publication. See [results/limitations](UNET_R2_RELEASE.md)
 and the immutable local release receipt before any owner-approved distribution.
+
+Relocation check (after installing into a new prefix and moving it elsewhere):
+
+```bash
+python tools/qualify_relocated_models.py --prefix build/relocated-install \
+  --native-build build-gpu/synrex-native --qualified build/unet-r2/safe-qualified \
+  --data build/unet-r2/data --synthetic build-gpu/dense-50013 \
+  --out build/unet-r2/relocated-check --resource-allocation-verified
+```
+
+The helper checks both engines with the same installed executable, no build-tree
+RUNPATH/RPATH, exact real/synthetic labels, laz-rs preservation, installed model
+notices and QGIS style. Configure only the existing matching vendor library paths.
+The installed binary SHA differs from the build binary because CMake strips the
+build RUNPATH; both identities are recorded separately.

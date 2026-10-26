@@ -295,7 +295,7 @@
   },
   {
     "file": "docs/byom/UNET_PROVENANCE.md",
-    "sha256": "9b59958faf637dfe03ac8996e4e3d3dd44357993439779fd014ed695cd461557",
+    "sha256": "2069f5d7e1e8d436648c773a948b1ca89592255f8f9ac839276b1396111318d1",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -313,13 +313,13 @@
   },
   {
     "file": "docs/byom/UNET_R2_QUICKSTART.md",
-    "sha256": "e3c7cc946f256eb6bf9fc713d54e74e61a81de3dd649a193881b9ecf6d16b4cb",
+    "sha256": "7e950f2772ee057d23395881e3a61aa2636ea526f8cb56fb6b38ca2ede9f1502",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "docs/byom/UNET_R2_RELEASE.md",
-    "sha256": "21745f4c78597a665f3f81c11ed0f25f810a5f04a9cbf8d28f6a8de6c86cf64e",
+    "sha256": "64304ea1360f91570e597cbd4c21b13a06ee82a59daf9dc678cfb68ebcac3b87",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -630,8 +630,20 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_r2_release_benchmarks.json",
+    "sha256": "bb1575222e7b73aec48a251685ef77764a7475007c478ab051fa6e01b089a65b",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_r2_release_gates.json",
+    "sha256": "b914754e895e62560869fa2e37c7382ea8371947e51f57d56185220f1336025e",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_r2_relocation.json",
-    "sha256": "7432a70ebfdd199a753469d2021ab5a5d9f4bba2bd3df022718d62e1a13ace08",
+    "sha256": "a03f20f02d447e2cdfd13baf20d9f8fb7128ad40bfa73ae97f5c7d9fd11c3d4b",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
     "origin": "BYOM R0 local qualification record"
   },

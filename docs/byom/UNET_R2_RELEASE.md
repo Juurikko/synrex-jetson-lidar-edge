@@ -145,7 +145,7 @@ of the identical engine exactly. That latter comparison is not FP32 equivalence.
 
 ## Untraced application benchmarks
 
-[Raw cold and persistent receipts](../../evidence/unet_r2_benchmarks.json) contain
+[Raw cold and persistent receipts](../../evidence/unet_r2_release_benchmarks.json) contain
 four real scenes, three fresh-process invocations each, then three warmup and ten
 measured cycles in a persistent engine/context/stream/buffer allocation. RTX4090,
 x86_64 WSL, CUDA13.2, TensorRT10.16.1.11, no compute competitors observed; desktop
@@ -157,37 +157,43 @@ use PATH=/nonexistent. Every cold output is independently verified; repeats are
 byte-identical. Warm cycles check identical LAS and raw semantic vectors and100%
 point coverage.
 
-| Real scene suffix | Points | Mean fresh-process E2E ms | TRT ms | Persistent processing ms | Cold Mpoint/s | Cached processing Mpoint/s |
-|---|---:|---:|---:|---:|---:|---:|
-| 0447_6390 | 50,096 | 323.147 | 0.901 | 1.458 | .155 | 34.36 |
-| 0922_6376 | 97,258 | 352.595 | 0.937 | 1.629 | .276 | 59.71 |
-| 0944_6564 | 400,654 | 894.506 | 1.543 | 3.723 | .448 | 107.62 |
-| 0947_6571 | 76,649 | 363.792 | 0.929 | 1.505 | .211 | 50.93 |
+| Real scene suffix | Points | Native main E2E ms | Process launch→exit ms | First launch→exit ms | Persistent processing ms | Full process Mpoint/s | Cached processing Mpoint/s |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 0447_6390 | 50,096 | 372.707 | 732.685 | 1376.392 | 1.685 | 0.068 | 29.74 |
+| 0922_6376 | 97,258 | 346.151 | 440.536 | 443.170 | 1.336 | 0.221 | 72.79 |
+| 0944_6564 | 400,654 | 899.298 | 989.948 | 1003.418 | 4.595 | 0.405 | 87.19 |
+| 0947_6571 | 76,649 | 370.026 | 461.534 | 461.851 | 1.329 | 0.166 | 57.66 |
+
+Process timing spans OS launch through exit (loader, main, output flush and CUDA
+teardown). Native E2E spans entry to main through output hashing, before teardown.
+The first process is1,376ms versus410–412ms repeats on the smallest scene; it is
+retained, not discarded. These are fresh processes with otherwise warm system
+caches, not a reboot or guaranteed disk-cache-cold experiment.
 
 | Mean cold phase, ms | 50,096 pts | 97,258 pts | 400,654 pts | 76,649 pts |
 |---|---:|---:|---:|---:|
-| LAZ decode | 23.582 | 35.222 | 219.915 | 43.381 |
-| CPU geometry/voxel membership | 6.615 | 13.052 | 56.723 | 10.062 |
-| CUDA tensor reduction | 1.395 | 1.689 | 1.752 | 1.390 |
-| Engine/context init + initial upload | 248.365 | 234.994 | 227.623 | 226.130 |
-| TensorRT inference | .901 | .937 | 1.543 | .929 |
-| CUDA argmax + source-index reconstruction | .0253 | .0268 | .0567 | .0259 |
-| LAZ preservation/encoding | 36.961 | 59.527 | 367.914 | 72.747 |
+| LAZ decode | 22.9872 | 36.5542 | 219.5998 | 43.7476 |
+| CPU geometry/voxel membership | 6.5867 | 12.7962 | 56.8292 | 10.1735 |
+| CUDA tensor reduction | 2.1297 | 1.4197 | 1.9281 | 1.4271 |
+| Engine/context init + initial upload | 297.9551 | 229.9300 | 230.6752 | 234.9507 |
+| TensorRT inference | 0.9418 | 0.8116 | 1.4001 | 0.8167 |
+| CUDA argmax + source-index reconstruction | 0.0256 | 0.0262 | 0.0573 | 0.0262 |
+| LAZ preservation/encoding | 35.9825 | 57.6484 | 369.6933 | 72.6151 |
 
 CUDA postprocessing **is the fused argmax/map/source-index reconstruction kernel**;
 it has one CUDA-event interval, not separable per-operation timings. Transfers,
 host vector construction, validation, scratch writing, hashing and launch overhead
 are included in E2E but not all individually instrumented. Initial upload is
 included in initialization. Phase sums therefore need not equal E2E. Persistent
-mean CUDA prep/TRT/reconstruction ms are respectively .141/.576/.0198,
-.102/.531/.0224, .259/1.075/.0527, .0762/.569/.0206.
+mean CUDA prep/TRT/reconstruction ms are respectively .1645/.6758/.0198,
+.1028/.4851/.0227, .2584/1.5799/.0527, .0764/.5377/.0202.
 Persistent throughput excludes cached decode/geometry and all LAZ encoding;
 it must not be advertised as application throughput or a streaming service.
 
 Tracked peak requested CUDA bytes:6,600,535 /8,954,015 /23,998,035 /8,016,215.
 This includes adapter buffers and TensorRT allocation callbacks, excluding CUDA
 context and vendor allocations outside callbacks. Device-wide sampled maximum
-is518/520/518/518MiB (desktop included), sampled with nvidia-smi roughly60–80ms
+is526/518/524/518MiB (desktop included), sampled with nvidia-smi roughly60–80ms
 apart despite a20ms sleep request. This is a sampled lower bound on resident peak,
 not an exact total resident high-water mark. No synthetic/SegFormer extrapolation.
 
@@ -227,7 +233,7 @@ technical provenance review, not independent legal clearance or clean-room proof
 The [quickstart](UNET_R2_QUICKSTART.md) reproduces the frozen procedure and exports.
 [QGIS style](../../examples/unet/fractal-classification.qml) uses a point-cloud
 classified renderer and explicit200/201 legends. Static XML/taxonomy checks PASS;
-QGIS application loading is NOT_RUN because no QGIS is installed on the hosts.
+QGIS application loading is NOT_RUN because QGIS is unavailable in the review environment.
 [Actual source/prediction plots](../../media/unet-r2/heldout-semantics.png) show
 all points without interpolation; scenes were selected for class support after
 freeze, not for model selection. [Display manifest](../../evidence/unet_r2_showcase_media.json)
@@ -238,3 +244,15 @@ A separate [streaming milestone](STREAMING_MILESTONE.md) and
 [LitePT/TorchSparse++ assessment](LITEPT_SPARSE_PLAN.md) follow this dense release.
 AGX qualification still requires a verified nonconflicting physical allocation;
 its stack/workloads were not modified. Owner publication approval remains pending.
+
+## Final source checks
+
+[CPU receipt](../../evidence/unet_r2_cpu_tests.json):69 PASS,5 GPU-only NOT_RUN.
+[ASAN/UBSAN receipt](../../evidence/unet_r2_sanitizer_tests.json):33 PASS,5 GPU-only
+NOT_RUN; CTest1/1 PASS. [Physical RTX suite](../../evidence/unet_r2_gpu_tests.json):
+73 PASS,1 CPU-only NOT_RUN, including genuine GPU negative/overlap/multichannel
+cases and semantic binding/tampering tests. Ruff checks PASS. These are executed
+results, not mocked inference. [Relocated dual-model receipt](../../evidence/unet_r2_relocation.json)
+records no build-tree RPATH/RUNPATH and the installed executable identity;
+CMake installation strips RUNPATH, so its hash differs from the unchanged build
+binary. The installed classifier needs only the declared existing vendor libraries.

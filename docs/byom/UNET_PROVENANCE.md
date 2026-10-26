@@ -54,3 +54,13 @@ No private source, restricted model or restricted survey data is incorporated.
 Publication remains subject to owner approval. Training and qualification artifacts
 are local and ignored by Git; redistributable source and notices can be reviewed
 without publishing a model or dataset.
+
+The expanded R2 campaign preserves the same architecture/dataset licence pins
+and attribution. Its frozen weights, tensor contract and held-out outputs are
+recorded in [R2 qualification](UNET_R2_RELEASE.md). Additional verification and
+packaging helpers are original MIT source, not imported preprocessing code.
+The QGIS style is original declarative XML using documented renderer fields;
+QGIS GPL renderer implementation is not copied or linked into the MIT runtime.
+The seven-class taxonomy retains separate IGN Etalab attribution. Neither the
+new code nor the expanded tests changes the explicit non-clean-room boundary in
+[the preprocessing provenance review](PROVENANCE_REVIEW_R1.md).
