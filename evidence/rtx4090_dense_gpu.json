@@ -1,0 +1,552 @@
+{
+  "schema": "synrex.byom.dense_gpu_qualification.v1",
+  "points_requested": 50013,
+  "allocation": "rtx4090-idle-preflight-20261026",
+  "records": [
+    {
+      "check": "source-revision",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0015452317893505096,
+      "log_sha256": "d81a7a913025743b7d74119d18a5efd199511560a4d44a260ab3ee25d5ddeb67"
+    },
+    {
+      "check": "package-onnx",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.043032986810430884,
+      "log_sha256": "cd5dd0b09335910e63fbda85cb772a89f0a878615f202141a9be0a0bbc604b6a"
+    },
+    {
+      "check": "version",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.04095430416055024,
+      "log_sha256": "6e810fbc6298eb224ffbdd00ed03531d786690efc303e4366e9382410ab565e3"
+    },
+    {
+      "check": "before-engine-build-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0557430989574641,
+      "log_sha256": "0dcd0eaf39a4df2641380386c0c95be537e530c313822582a48d38c088ed7af1"
+    },
+    {
+      "check": "before-engine-build-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05194848799146712,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "target",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.13027964695356786,
+      "log_sha256": "b7ffa7d09848463603c34d2dea615ca46a281a304e5e5a202d050715303e73b2"
+    },
+    {
+      "check": "build-engine",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 2.1380510518793017,
+      "log_sha256": "eee20823ae1ca990b01481f492413b8069f53164e2855a8407ac34d8502b6197"
+    },
+    {
+      "check": "package-engine",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.12749967607669532,
+      "log_sha256": "cd5dd0b09335910e63fbda85cb772a89f0a878615f202141a9be0a0bbc604b6a"
+    },
+    {
+      "check": "native-dependencies",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0053937959019094706,
+      "log_sha256": "56d626385fb784aed8045795942e271950ea5843a4491d783388f64c7c4a7dd5"
+    },
+    {
+      "check": "before-classify-0-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05393154895864427,
+      "log_sha256": "0dcd0eaf39a4df2641380386c0c95be537e530c313822582a48d38c088ed7af1"
+    },
+    {
+      "check": "before-classify-0-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0517133679240942,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "classify-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.44169349991716444,
+      "log_sha256": "5204c60f36bff9b38d8fcdfb461340d84d9cd4a152075031806bd69879011912"
+    },
+    {
+      "check": "before-classify-1-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05443224613554776,
+      "log_sha256": "fd4a9787aebe43e637675e3a05be8adfe240e3f97a49261b7b78cc34c9fd9277"
+    },
+    {
+      "check": "before-classify-1-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0506080340128392,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "classify-1",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.4430969038512558,
+      "log_sha256": "5ecd5e56e05c3b7d91605113dcf850f9ae0ad61bd731abbc558de28eaa47edae"
+    },
+    {
+      "check": "before-negative-tensor_name-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05313909682445228,
+      "log_sha256": "fd4a9787aebe43e637675e3a05be8adfe240e3f97a49261b7b78cc34c9fd9277"
+    },
+    {
+      "check": "before-negative-tensor_name-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05149376788176596,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-tensor_name",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.3744217299390584,
+      "log_sha256": "2ea60a7f807455b7dcf189d82c32ae5c8de17827de5c431a3d1c41f593389200"
+    },
+    {
+      "check": "before-negative-tensor_shape-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.053881152998656034,
+      "log_sha256": "e7fe7d106b6e70a47d776de852c45853689243bb5333b2e3165908ba4488e9ec"
+    },
+    {
+      "check": "before-negative-tensor_shape-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0509082421194762,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "before-negative-tensor_shape-1",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05434342194348574,
+      "log_sha256": "0dcd0eaf39a4df2641380386c0c95be537e530c313822582a48d38c088ed7af1"
+    },
+    {
+      "check": "before-negative-tensor_shape-1-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05261493590660393,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-tensor_shape",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.3711116819176823,
+      "log_sha256": "7ed9c266e3b7395c180a1beec1ac5c5fd99a44e7759fec3dda52f9de12bf15bf"
+    },
+    {
+      "check": "before-negative-class_mapping-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.0585664811078459,
+      "log_sha256": "fd4a9787aebe43e637675e3a05be8adfe240e3f97a49261b7b78cc34c9fd9277"
+    },
+    {
+      "check": "before-negative-class_mapping-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05102169304154813,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-class_mapping",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.04246083600446582,
+      "log_sha256": "34bbed94b34574c1e8aee5991252bc9ffa0659fc013c99824d4bbb82ef85ca77"
+    },
+    {
+      "check": "before-negative-target-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.054717975901439786,
+      "log_sha256": "fd4a9787aebe43e637675e3a05be8adfe240e3f97a49261b7b78cc34c9fd9277"
+    },
+    {
+      "check": "before-negative-target-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05159291881136596,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-target",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.1717817101161927,
+      "log_sha256": "503dd1f0e4eaad799a053de530fed7df04e5cdc0fabbc6bb583a569d8482c702"
+    },
+    {
+      "check": "before-negative-sha256-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05320422584190965,
+      "log_sha256": "0dcd0eaf39a4df2641380386c0c95be537e530c313822582a48d38c088ed7af1"
+    },
+    {
+      "check": "before-negative-sha256-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05136026907712221,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-sha256",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.04234431893564761,
+      "log_sha256": "6d5de1506374364d663158187b593096182fbf7567749bfb00d0c38e38b90e26"
+    },
+    {
+      "check": "before-negative-engine_bytes-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05458201700821519,
+      "log_sha256": "0dcd0eaf39a4df2641380386c0c95be537e530c313822582a48d38c088ed7af1"
+    },
+    {
+      "check": "before-negative-engine_bytes-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05108009395189583,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "reject-engine_bytes",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.3530350320506841,
+      "log_sha256": "f11ab501ad1d820ac4b85a0b9ec1b8bf604703ffd512ae36cbfc7c5ad78bbe4a"
+    },
+    {
+      "check": "reject-overwrite",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.04786618403159082,
+      "log_sha256": "4fb3c33621cf80f23a9dd2449716960f723cdc08f49b8e55da03739e7bcd44f1"
+    },
+    {
+      "check": "reject-point-format",
+      "exit_code": 1,
+      "expected_success": false,
+      "wall_seconds": 0.04264161502942443,
+      "log_sha256": "cda5b7ceaeb3931644f3c0854e8a55c3e6938e9093c1cf1aa465dab5994ed9b9"
+    },
+    {
+      "check": "after-qualification-0",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05419242777861655,
+      "log_sha256": "fd4a9787aebe43e637675e3a05be8adfe240e3f97a49261b7b78cc34c9fd9277"
+    },
+    {
+      "check": "after-qualification-0-workloads",
+      "exit_code": 0,
+      "expected_success": true,
+      "wall_seconds": 0.05157229700125754,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "SYNTHETIC_ONNX_EXPORT": "PASS",
+  "TENSORRT_ENGINE_BUILD": "PASS",
+  "REAL_GPU_INFERENCE": "PASS",
+  "BYOM_CLASSIFIED_LAZ_E2E": "PASS",
+  "INDEPENDENT_LAZ_VALIDATION": "PASS",
+  "private_model_or_restricted_data_used": false,
+  "source_commit": "5a40d81b54c266579f150002d0269ac8eeb61d62",
+  "native_binary_sha256": "8cdea2a672d41f83ef1f85d1670c2053e49bf15d2a18130ab766a96ad73d4431",
+  "onnx_sha256": "e9a55b97e1c38e9be057f7f23f395be00418c80d6e160736af53e7a64d43067c",
+  "oracle": {
+    "backend": "ONNX Runtime CPU independent oracle, not native execution",
+    "points": 50013,
+    "blocks": 18,
+    "memberships": 64074,
+    "class_histogram": {
+      "2": 14339,
+      "5": 17867,
+      "6": 17807
+    }
+  },
+  "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+  "expected_labels_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb",
+  "resource_samples": [
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 0,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 0,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 5,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 5,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 6,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 0,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 5,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 5,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 0,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 0,
+      "reported_compute_processes": []
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "free_mib": 24009,
+      "utilization_percent": 5,
+      "reported_compute_processes": []
+    }
+  ],
+  "target": {
+    "architecture": "x86_64",
+    "cuda_runtime": 13020,
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "sm": 89,
+    "tensorrt": "101601"
+  },
+  "engine_sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+  "engine_manifest": {
+    "artifacts": {
+      "engine": {
+        "path": "model.engine",
+        "sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59"
+      },
+      "license": {
+        "path": "MODEL_LICENSE.txt",
+        "sha256": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06"
+      }
+    },
+    "contract": {
+      "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+      "features": [
+        {
+          "kind": "occupancy",
+          "offset": 0.0,
+          "scale": 1.0
+        },
+        {
+          "kind": "mean_intensity",
+          "offset": 0.0,
+          "scale": 1.5259021896696422e-05
+        }
+      ],
+      "geometry": {
+        "block_size_xyz": [
+          8.0,
+          6.0,
+          4.0
+        ],
+        "dimensions_xyz": [
+          8,
+          6,
+          4
+        ],
+        "overlap_policy": "last_wins",
+        "overlap_xyz": [
+          0.25,
+          0.0,
+          0.0
+        ],
+        "voxel_size_xyz": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "input": {
+        "dtype": "float32",
+        "layout": "NCZYX",
+        "name": "features",
+        "shape": [
+          1,
+          2,
+          4,
+          6,
+          8
+        ]
+      },
+      "las_classes": [
+        2,
+        5,
+        6
+      ],
+      "licensing": {
+        "author": "Tuomas Pietil\u00e4; AI-assisted with OpenAI Codex",
+        "notice": "Synthetic engineering fixture; class mapping is explicit test semantics, not validated survey accuracy",
+        "source": "examples/export_reference.py in this repository",
+        "spdx": "MIT",
+        "weights": "Original analytic constants; no trained or third-party weights"
+      },
+      "limits": {
+        "max_blocks": 10000,
+        "max_memberships": 4000000,
+        "max_points": 1000000,
+        "max_tensor_bytes": 16777216
+      },
+      "output": {
+        "dtype": "float32",
+        "layout": "NCZYX",
+        "name": "scores",
+        "shape": [
+          1,
+          3,
+          4,
+          6,
+          8
+        ]
+      }
+    },
+    "schema": "synrex.srxmodel.v2",
+    "target": {
+      "architecture": "x86_64",
+      "cuda_runtime": 13020,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "sm": 89,
+      "tensorrt": "101601"
+    }
+  },
+  "native_runs": [
+    {
+      "backend": "CUDA/TensorRT",
+      "blocks": 18,
+      "changed": 50013,
+      "completed_inference_blocks": 18,
+      "memberships": 64074,
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "points": 50013,
+      "status": "PASS",
+      "timings_seconds": {
+        "cuda_postprocessing": 8.543999958783387e-05,
+        "cuda_tensor_preparation": 0.00038816000521183023,
+        "end_to_end": 0.357185894,
+        "geometry_cpu": 0.008745413,
+        "gpu_initialization_and_initial_upload": 0.234330323,
+        "laz_decode_cpu": 0.040431449,
+        "laz_encoding_and_preservation": 0.068158576,
+        "preprocessing_cpu": 0.049176862,
+        "tensorrt_inference": 8.319999882951378e-05
+      }
+    },
+    {
+      "backend": "CUDA/TensorRT",
+      "blocks": 18,
+      "changed": 50013,
+      "completed_inference_blocks": 18,
+      "memberships": 64074,
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "points": 50013,
+      "status": "PASS",
+      "timings_seconds": {
+        "cuda_postprocessing": 8.159999968484042e-05,
+        "cuda_tensor_preparation": 0.0003866240046918393,
+        "end_to_end": 0.357806184,
+        "geometry_cpu": 0.008908738,
+        "gpu_initialization_and_initial_upload": 0.237351086,
+        "laz_decode_cpu": 0.0394799,
+        "laz_encoding_and_preservation": 0.065545714,
+        "preprocessing_cpu": 0.048388638,
+        "tensorrt_inference": 8.780799899250269e-05
+      }
+    }
+  ],
+  "independent_validation": [
+    {
+      "status": "PASS",
+      "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+      "points": 50013,
+      "classification_records_changed": 50013,
+      "point_order_and_nonclassification_bytes_exact": true,
+      "public_header_non_laszip_vlrs_and_padding_exact": true,
+      "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "canonical_nonclassification_sha256": "b5bd9ddd61d476e5107d01ff44a97e1e0d6b7bb7b980be6015d9f7402aca6f1d",
+      "classification_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb"
+    },
+    {
+      "status": "PASS",
+      "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+      "points": 50013,
+      "classification_records_changed": 50013,
+      "point_order_and_nonclassification_bytes_exact": true,
+      "public_header_non_laszip_vlrs_and_padding_exact": true,
+      "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "canonical_nonclassification_sha256": "b5bd9ddd61d476e5107d01ff44a97e1e0d6b7bb7b980be6015d9f7402aca6f1d",
+      "classification_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb"
+    }
+  ],
+  "repeat_labels_and_laz_identical": true,
+  "inference_with_empty_executable_path": "PASS",
+  "negative_cases": "PASS",
+  "status": "PASS"
+}

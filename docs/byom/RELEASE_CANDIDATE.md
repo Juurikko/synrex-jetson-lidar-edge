@@ -4,6 +4,12 @@
 
 Prepared GitHub release text; **local only, not published, not pushed**.
 
+**Superseding engineering milestone:** [physical RTX4090 qualification](RTX4090_QUALIFICATION.md)
+now passes the complete synthetic GPU pipeline on 50,013 points, with 55 target tests passing
+and one CPU-only test skipped. The original RC1 CPU-checkpoint text below is retained as history;
+its physical-GPU NOT_RUN statements no longer describe the RTX4090 milestone. AGX execution is
+still NOT_RUN and publication remains unapproved/unperformed. New evidence is in `rtx4090_*.json`.
+
 This candidate adds a configurable native dense-voxel classification runtime to the existing
 MIT LAZ preservation utility. Users can export or supply a self-contained ONNX graph, build
 a target-native TensorRT engine, package its tensor/geometry/feature/class contracts and replace

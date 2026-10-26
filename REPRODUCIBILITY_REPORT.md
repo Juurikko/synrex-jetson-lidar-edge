@@ -4,7 +4,7 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-**Current local BYOM R0:** the [BYOM qualification/reproducibility report](docs/byom/QUALIFICATION.md) and [quickstart](docs/byom/QUICKSTART.md) describe the new native source, builds and executed tests. Historical reports below are preserved and do not establish physical GPU qualification for BYOM R0. The BYOM branch remains local and unpublished.
+**Current local BYOM R0:** [physical RTX4090 qualification](docs/byom/RTX4090_QUALIFICATION.md) passes the 50,013-point original synthetic pipeline and full target suite. The [CPU checkpoint report](docs/byom/QUALIFICATION.md) and historical reports below remain preserved. They do not substitute for physical AGX qualification, which is NOT_RUN; its [plan](docs/byom/AGX_QUALIFICATION_PLAN.md) is prepared. The BYOM branch remains local and unpublished.
 
 > **Superseding publication status — 2026-10-26:** [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge) is published and its public visibility is verified. **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). The original staging report below is retained as history; its statements about no creation/push, no remote, pending publication or `NOT_RUN` describe that earlier stage and are superseded for this repository's release. Licensing, personal/upstream attribution, noncommercial-reference restrictions and the limited model-free release scope remain unchanged. Evidence files and manifests retain their initial-commit contents.
 

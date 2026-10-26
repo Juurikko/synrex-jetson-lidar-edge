@@ -4,6 +4,11 @@
 
 Developer and project lead: Tuomas Pietilä. Engineering is AI-assisted with OpenAI Codex.
 
+The [second-pass preprocessing review](PROVENANCE_REVIEW_R1.md) compares the actual generic
+implementation against frozen private geometry during RTX4090 qualification. It supports the
+scoped technical disposition below, with design exposure disclosed and no clean-room or external
+legal certification claimed.
+
 The initial assessment read the public README, architecture, licensing scope, source review,
 writer, verifier, fixtures and qualification records; the private repository's entrypoint,
 current state, frozen identities, engineering memo, package manifest/format, licensing notices

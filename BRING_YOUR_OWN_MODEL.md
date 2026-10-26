@@ -4,7 +4,7 @@
 
 **Developer/project lead:** Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)) · AI-assisted software engineering using OpenAI Codex.
 
-**Native BYOM R0:** [native build, packaging and classification quickstart](docs/byom/QUICKSTART.md), [adapter contract](docs/byom/ADAPTER.md) and [qualification status](docs/byom/QUALIFICATION.md) cover the newly implemented generic CUDA/TensorRT runtime on this local branch. Physical BYOM GPU qualification remains NOT_RUN. It does not expose the private reference implementation or restricted pretrained weights.
+**Native BYOM R0:** [native build, packaging and classification quickstart](docs/byom/QUICKSTART.md) and [adapter contract](docs/byom/ADAPTER.md) cover the generic CUDA/TensorRT runtime on this local branch. [Physical RTX4090 qualification passes on 50,013 synthetic points](docs/byom/RTX4090_QUALIFICATION.md); physical AGX qualification remains NOT_RUN. This does not expose the private reference implementation or restricted pretrained weights.
 
 The guide below retains the independently usable label-writer workflow. Its integration contract applies to `synrex-laz-labels`; the new `synrex-native` runtime performs geometry, inference, reconstruction and explicit class mapping itself within its declared dense-voxel adapter.
 

@@ -25,7 +25,7 @@
   },
   {
     "file": "ARCHITECTURE.md",
-    "sha256": "2de777a3509dde0d1e33e11897b27a028efc1e997a0a7c6e97a92b2abba641c8",
+    "sha256": "e0c0bd81b94b276acb7c23000268d81701de2b04c1a20d0b898e0ce572b86e9d",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -43,7 +43,7 @@
   },
   {
     "file": "BRING_YOUR_OWN_MODEL.md",
-    "sha256": "8e47587c31bf2e7b61e921ea6f11a9947a990cdb1a09dbd45238ada0260c8e7b",
+    "sha256": "7250d852bcd2773001e274d768a6d67694033f8c7fb3d99fc8f835c82bb51b75",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -151,7 +151,7 @@
   },
   {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "a7904a669f377010e1aa10ff0728b9f81fae01367d18d4492cae942333532424",
+    "sha256": "c4046c088ef4c8d5d6d3bda448ae941f69f9a89110f30ab8b41bcbd774ce2d59",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -187,7 +187,7 @@
   },
   {
     "file": "README.md",
-    "sha256": "351031dd86db0e234a513ea021f0c03e98be85c1198577e3f4c425d70e89fe40",
+    "sha256": "124ff208f093fde476022b7683d5e6fd0120a608125cc813822ee421cdd50a60",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -199,7 +199,7 @@
   },
   {
     "file": "REPRODUCIBILITY_REPORT.md",
-    "sha256": "38c140949ed82e7dae06d076cca3528059a8b797b7fbf381dfb277df8608cb35",
+    "sha256": "fc02a113ed87da1db099684ac9b1d720905ac9de58f169fdf583f71c3c40c4ba",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -222,8 +222,14 @@
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
+    "file": "docs/byom/AGX_QUALIFICATION_PLAN.md",
+    "sha256": "70ed999e324225d1c59036a158fde2e8d42350928e8386b1b28e9f8f4be63e38",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
     "file": "docs/byom/PROVENANCE.md",
-    "sha256": "6b617b4a9b35a95ce9e75ca1485d09a54fe7327566c06298a691a1feca0fec63",
+    "sha256": "bdea150c77869097597cb30c2fc784c3ced6ec79853cd7358ce9aa5ca03173a5",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -235,19 +241,25 @@
   },
   {
     "file": "docs/byom/QUALIFICATION.md",
-    "sha256": "2ce9323c5797bf117d4c3809e6a9f8a43a14e2578ff12636910909e37033da34",
+    "sha256": "d7131c0724de1ed37b8f66be0cacf312aa763ac1fdb6bcabece197f60c99dc3d",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "docs/byom/QUICKSTART.md",
-    "sha256": "c84e6e640aebaed86955e011af218271a89ba347913421566fc48cac4e9b87f6",
+    "sha256": "43c4faf883b60a38aceada74038499e97b34f872672dfe76b0257503c6a33855",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "docs/byom/RELEASE_CANDIDATE.md",
-    "sha256": "fff684e66d08ce03c41365dc05480d3e22b84ce567905b3a9123706c7f5f51ea",
+    "sha256": "4c4dc66a2c9aaec1ad81fa1b259ae971885592fe1e6093a96e1aee06a243f92e",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "docs/byom/RTX4090_QUALIFICATION.md",
+    "sha256": "6e57c077f8bfbf0b814c7979bb09c4cc2bb91e4451b1e039f66ab8579d8ab463",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -340,6 +352,48 @@
     "sha256": "dbc6b45f02a22f4e86c41ae54202297dd105c2a83f496442a01bd40fdf30bdeb",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
     "origin": "Historical qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_dense_gpu.json",
+    "sha256": "ea9cc6f0aa0638baaecd053c286b057c8883a68e60f789f1e2ba862a08223233",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_download_validation.json",
+    "sha256": "de6339e5f643c75ba2505d711f8e62acc46c7b3f1d289bc62d11889eb20b9ef9",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_full_suite.json",
+    "sha256": "496165fa688d8b6c4090ba136d379ec53c976f38ccec0a57aa57b11eedb45f66",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_profiler.json",
+    "sha256": "7e35a308c10a370861642440ba1ec51c3537f61006be73f3b8d89b0f3ee206ad",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_status.json",
+    "sha256": "1fee0dad696409494590f95d9de67e0c5b9346e405363a0b4f79ab592961169e",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_target_snapshot.json",
+    "sha256": "0c69430515bec38c393e4251f060c448a5e7451db4ec27d0cfeaafaba0a5fc92",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/rtx4090_transfer.json",
+    "sha256": "3d922f7debcdcdcf48838ee02d237985004289a7152be27442829c78c3760fca",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
   },
   {
     "file": "evidence/source_review.json",

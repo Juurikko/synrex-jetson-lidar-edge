@@ -1,0 +1,11 @@
+{
+  "schema": "synrex.byom.optional_profiler.v1",
+  "profiler": "Nsight Systems 2023.1.2.43",
+  "native_classification_during_profile": "PASS",
+  "classified_laz_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+  "TRACE_IMPORT_STATUS": "FAIL",
+  "reason": "Unknown driver API function index: 719; imported SQLite lacks CUDA kernel data. CUDA-13-compatible Nsight needed for full API/kernel trace.",
+  "required_native_cuda_event_timing": "PASS",
+  "used_as_successful_kernel_trace_evidence": false,
+  "raw_log_sha256": "b07ef36b5c2885e291872176974b8ad7a060ad140690878a9f627ec40222b039"
+}

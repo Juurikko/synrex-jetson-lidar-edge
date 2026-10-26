@@ -3,11 +3,16 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. Original expression only; upstream material and facts excluded. -->
 
 Date: 2026-10-26. Developer/project lead: Tuomas Pietilä; AI-assisted with OpenAI Codex.
+**Later physical milestone:** [RTX4090 qualification](RTX4090_QUALIFICATION.md) now passes the
+complete 50,013-point native GPU pipeline and full target suite. The CPU-checkpoint report below
+is retained as the `eaf3ce2` milestone; its NOT_RUN GPU rows describe that earlier checkpoint.
+Physical AGX qualification still remains NOT_RUN. Nothing is pushed or published.
+
 This report concerns the new generic BYOM implementation. Historical SegFormer benchmarks,
 class IDs, model conversion comparisons and AGX qualification receipts are unchanged and are
 not used as evidence of new BYOM GPU execution.
 
-## Executed results
+## Executed results at the CPU checkpoint
 
 | Gate | Status | Evidence / boundary |
 |---|---|---|

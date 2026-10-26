@@ -1,0 +1,22 @@
+{
+  "schema": "synrex.byom.rtx4090_status.v1",
+  "utc": "2026-10-26T20:32:36.068203+00:00",
+  "accepted_checkpoint": "eaf3ce21cf7fd1a2787f1a1b4599e7ab920612a5",
+  "qualified_source_commit": "5a40d81b54c266579f150002d0269ac8eeb61d62",
+  "RTX4090_NATIVE_BUILD": "PASS",
+  "SYNTHETIC_ONNX_EXPORT": "PASS",
+  "TENSORRT_ENGINE_BUILD": "PASS",
+  "REAL_GPU_INFERENCE": "PASS",
+  "BYOM_CLASSIFIED_LAZ_E2E": "PASS",
+  "INDEPENDENT_LAZ_VALIDATION": "PASS",
+  "MIT_PROVENANCE_REVIEW": "PASS",
+  "AGX_QUALIFICATION_READINESS": "NOT_RUN",
+  "agx_readiness_scope": "Physical readiness/allocation not inspected; separate plan prepared. Verified nonconflicting allocation and Jetson-specific resource probe are prerequisites.",
+  "physical_agx_execution": "NOT_RUN",
+  "agx_accessed": false,
+  "source_private_pristine": true,
+  "public_push_or_publication_performed": false,
+  "GPU_workload_interruption_performed": false,
+  "timing_scope": "Separate one-process-per-file native invocations; CUDA event stream intervals plus wall-clock CPU/encoding/end-to-end; not historical SegFormer benchmarks.",
+  "agx_plan_prepared": "PASS"
+}

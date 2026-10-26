@@ -1,0 +1,26 @@
+[
+  {
+    "status": "PASS",
+    "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+    "points": 50013,
+    "classification_records_changed": 50013,
+    "point_order_and_nonclassification_bytes_exact": true,
+    "public_header_non_laszip_vlrs_and_padding_exact": true,
+    "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+    "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+    "canonical_nonclassification_sha256": "b5bd9ddd61d476e5107d01ff44a97e1e0d6b7bb7b980be6015d9f7402aca6f1d",
+    "classification_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb"
+  },
+  {
+    "status": "PASS",
+    "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+    "points": 50013,
+    "classification_records_changed": 50013,
+    "point_order_and_nonclassification_bytes_exact": true,
+    "public_header_non_laszip_vlrs_and_padding_exact": true,
+    "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+    "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+    "canonical_nonclassification_sha256": "b5bd9ddd61d476e5107d01ff44a97e1e0d6b7bb7b980be6015d9f7402aca6f1d",
+    "classification_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb"
+  }
+]

@@ -10,6 +10,23 @@ package and plan; classification requires the CUDA/TensorRT build. See the
 [adapter specification](ADAPTER.md), [provenance assessment](PROVENANCE.md) and
 [qualification report](QUALIFICATION.md) before using it as a release candidate.
 
+The [physical RTX4090 milestone](RTX4090_QUALIFICATION.md) qualifies the original 50,013-point
+fixture and GPU suite. AGX execution remains separate. To reproduce the large test on an idle,
+allocated NVIDIA workstation after building:
+
+```bash
+.venv/bin/python tools/qualify_dense_gpu.py --native build-gpu/synrex-native \
+  --out build-gpu/dense-qualification --points 50013 \
+  --verified-gpu-allocation VERIFIED_ALLOCATION_ID
+```
+
+This exports the model, creates invented LAZ/expected labels, builds the TensorRT engine/package,
+runs native inference twice, independently verifies preservation and checks negative cases. The
+desktop runner requires usable `nvidia-smi` telemetry and an allocation; it does not allocate an
+AGX or stop other work. Its `--prepare-only` mode exports CPU fixtures while keeping GPU gates
+explicitly NOT_RUN. Each native classification receipt includes separate monotonic wall-clock
+and CUDA-event stage timings; see the report for measurement boundaries.
+
 ## Build on a CPU workstation
 
 Prerequisites: Linux/glibc, CMake >=3.20, Ninja or Make, C++17 compiler, OpenSSL 3 development
@@ -159,4 +176,4 @@ glibc/libstdc++, CUDA and TensorRT remain external system dependencies. The inst
 has no build-tree RUNPATH; a correctly configured target must provide vendor libraries through
 its normal loader configuration. The package may live anywhere. No Python paths or historical
 reference build paths are embedded in the product workflow. CPU relocation is tested locally;
-physical GPU relocation remains a separate qualification gate.
+physical GPU relocation is qualified on RTX4090 and remains separate for AGX.

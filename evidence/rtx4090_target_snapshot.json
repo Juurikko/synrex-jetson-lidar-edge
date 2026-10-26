@@ -1,0 +1,82 @@
+{
+  "schema": "synrex.byom.rtx4090_target_snapshot.v1",
+  "source_commit": "5a40d81b54c266579f150002d0269ac8eeb61d62",
+  "worktree_clean": true,
+  "native_binary_sha256": "8cdea2a672d41f83ef1f85d1670c2053e49bf15d2a18130ab766a96ad73d4431",
+  "source_files": [
+    {
+      "file": "CMakeLists.txt",
+      "sha256": "408c34a743ff2303e9daba3574f8d4efc6fb30d57f9aec1891efa31b127b3f8a"
+    },
+    {
+      "file": "native/geometry.cpp",
+      "sha256": "fe5e49ee812cc29371a8275bf6363ac87081a445a245b21e39b4754ce1c46ce9"
+    },
+    {
+      "file": "native/gpu.hpp",
+      "sha256": "5f6bbd488630855bc63f3d123148db9225536bc3612d986c594e59f3b29e4349"
+    },
+    {
+      "file": "native/include/synrex/runtime.hpp",
+      "sha256": "09b51411be1f5aebd13d18a0c332759ae0b3671fd49b6ac16fe5b6d0cc654db8"
+    },
+    {
+      "file": "native/kernels.cu",
+      "sha256": "bc511772336b408145ff94e6af5e0853f36d30370d372615395f1d41fcce0a2c"
+    },
+    {
+      "file": "native/main.cpp",
+      "sha256": "f2120964a64995ebe6edc8ca7525b8c265ee40229dc4772e89877622c5e4e72f"
+    },
+    {
+      "file": "native/no_gpu.cpp",
+      "sha256": "b2b869ee68c9dcaa0ab1a718c67699375cd9c967712c2fe880d098840b7a0b1e"
+    },
+    {
+      "file": "native/package.cpp",
+      "sha256": "66adae634fe4acdc628db9135b0a10fdb150a623bd628c6e0646e6947676812f"
+    },
+    {
+      "file": "native/tensorrt.cpp",
+      "sha256": "4f93680def442c9c317ea5993def5dd6edbb8d4c82c5f53b3aad75c1d2052b07"
+    },
+    {
+      "file": "src/byom_reference.py",
+      "sha256": "33c7b58d8297c64afe7a2735430bba95218684ef319d74c06e57c71452af5b73"
+    },
+    {
+      "file": "src/preserve_laz.cpp",
+      "sha256": "9ef1fd2b850174f3a56734f4897a89d966feaa26768c1f694f3494a18c76e82f"
+    },
+    {
+      "file": "src/synthetic_laz.py",
+      "sha256": "2c3f9929e42823664a85b036427eebf2a7d2a6a1aa37e16518f594398c13f768"
+    },
+    {
+      "file": "src/verify_laz.py",
+      "sha256": "bf16b16c3042ba85592fc171dcec393060d31a2095858856434736764608aa61"
+    }
+  ],
+  "transfer_files": [
+    {
+      "file": "checkpoint-eaf3ce2.bundle",
+      "sha256": "4e9991403d200689776970c904512194cd8cc1591406b729c984c303b7968ecf"
+    },
+    {
+      "file": "gpu-qualification-v3.bundle",
+      "sha256": "e3db6dd2013497268f26e2234c77c8d6d69178c10bbdea710f58c56bb12cb6ea"
+    },
+    {
+      "file": "dependencies.tar.gz",
+      "sha256": "349781b1b225fc21cf5eadb2f66d41517d7044465ea90c86ce792ec67437309c"
+    }
+  ],
+  "architecture": "x86_64",
+  "compiler": "13.3.0",
+  "glibc": [
+    "glibc",
+    "2.39"
+  ],
+  "system_cuda": "Cuda compilation tools, release 12.1, V12.1.66",
+  "isolated_cuda": "Cuda compilation tools, release 13.2, V13.2.86"
+}

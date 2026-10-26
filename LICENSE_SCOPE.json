@@ -64,11 +64,13 @@
       "THIRD_PARTY_NOTICES.md",
       "VALIDATION.md",
       "docs/byom/ADAPTER.md",
+      "docs/byom/AGX_QUALIFICATION_PLAN.md",
       "docs/byom/PROVENANCE.md",
       "docs/byom/PROVENANCE_REVIEW_R1.md",
       "docs/byom/QUALIFICATION.md",
       "docs/byom/QUICKSTART.md",
       "docs/byom/RELEASE_CANDIDATE.md",
+      "docs/byom/RTX4090_QUALIFICATION.md",
       "media/PERSONAL_CREDITS.md"
     ],
     "license": "CC-BY-4.0"

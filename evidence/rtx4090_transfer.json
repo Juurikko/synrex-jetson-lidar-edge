@@ -1,0 +1,21 @@
+{
+  "schema": "synrex.byom.private_transfer.v1",
+  "public_github_push": false,
+  "method": "Git bundle over authenticated SSH with existing trusted host key",
+  "accepted_checkpoint": "eaf3ce21cf7fd1a2787f1a1b4599e7ab920612a5",
+  "qualified_revision": "5a40d81b54c266579f150002d0269ac8eeb61d62",
+  "source_bundle_sha256": "e3db6dd2013497268f26e2234c77c8d6d69178c10bbdea710f58c56bb12cb6ea",
+  "initial_checkpoint_bundle_sha256": "4e9991403d200689776970c904512194cd8cc1591406b729c984c303b7968ecf",
+  "isolated_dependency_archive_sha256": "349781b1b225fc21cf5eadb2f66d41517d7044465ea90c86ce792ec67437309c",
+  "target_system_stack_modified": false,
+  "system_cuda_before": "12.1.66; not used or changed",
+  "isolated_cuda_compiler": "13.2.86",
+  "isolated_cuda_runtime": "13.2.75",
+  "isolated_tensorrt_libraries": "10.16.1.11",
+  "system_openssl": "3.0.13",
+  "openssl_headers": "matching 3.0.13 headers copied from i5radeon into isolated dependency include tree",
+  "target_cmake_architecture": 89,
+  "third_party_identity_source": "evidence/byom_dependencies.json; same source pins/wheel identities, selected SM89/PTX TensorRT resources",
+  "private_source_transferred": false,
+  "restricted_weights_or_data_transferred": false
+}
