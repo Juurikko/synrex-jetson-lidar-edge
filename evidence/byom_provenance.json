@@ -798,6 +798,12 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_r3_release_candidate.json",
+    "sha256": "6c85c04b5bb02e3600d7af40d956701c0058a93cb502b4efb47c4c6fa735b9b7",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_release_candidate.json",
     "sha256": "e5910456f89ff60a4c0b238af93bf7c28fa410652f0130fa7451a5a26dd28c6b",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
