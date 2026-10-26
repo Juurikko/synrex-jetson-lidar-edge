@@ -1,0 +1,573 @@
+{
+  "schema": "synrex.qgis_export_receipt.v1",
+  "status": "PASS",
+  "points": 1062717,
+  "scenes": 10,
+  "files": [
+    {
+      "path": "LICENSES/Apache-2.0.txt",
+      "sha256": "959f77033ba56a3b146faf5c02f9162071f2d0bff4b8b6f1c2193a4b41127d39"
+    },
+    {
+      "path": "LICENSES/CC-BY-4.0.txt",
+      "sha256": "d557539df68e771cc1eedcc91d13f70fca930e508d11eedcafa4b15db49e3744"
+    },
+    {
+      "path": "LICENSES/DejaVu-font-notice.txt",
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "LICENSES/Etalab-2.0.md",
+      "sha256": "8ead98cc22756015f4ff21a29d9c6eac4511b7703f2eba44f13af4bb297d8ac1"
+    },
+    {
+      "path": "LICENSES/LicenseRef-Review-Only.txt",
+      "sha256": "259a3a318525ca54ec04c6e1ab8ea8571bc105648fa48a9223d27f8ba678718f"
+    },
+    {
+      "path": "LICENSES/MIT.txt",
+      "sha256": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06"
+    },
+    {
+      "path": "LICENSES/NVIDIA-API-NOTICES.txt",
+      "sha256": "9fb1011b8c40b683b28fe126d9d54436e9bef054d3c5bf2be0cb485545ae6d1e"
+    },
+    {
+      "path": "LICENSES/NVIDIA-CUDA-License.txt",
+      "sha256": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+    },
+    {
+      "path": "LICENSES/NVIDIA-TensorRT-SLA.txt",
+      "sha256": "64bd290f0251405f783ba1d2e155c500542be69795e51147a1d9f11a57bda8cc"
+    },
+    {
+      "path": "LICENSES/PDAL-BSD-3-Clause.txt",
+      "sha256": "9ab1261b649806f4884539d5fd49d8f2c9a634762ee52f1ddd2330ef417f5cdf"
+    },
+    {
+      "path": "LICENSES/laspy-BSD-2-Clause.txt",
+      "sha256": "586e5e4d12f36050240d2702abcd3319593f13841440920244f95f15cb83eb63"
+    },
+    {
+      "path": "LICENSES/lazrs-MIT.txt",
+      "sha256": "52a77551f216940344e34b637e9dad2f69f364a5b8b34b811247ccdaed60a307"
+    },
+    {
+      "path": "LICENSES/nlohmann-json-MIT.txt",
+      "sha256": "86b998c792894ccb911a1cb7994f7a9652894e7a094c0b5e45be2f553f45cf14"
+    },
+    {
+      "path": "LICENSES/pytorch-3dunet-MIT.txt",
+      "sha256": "ce9edb3d10677ee9b1253d1353ac45bc7c30ba6d1198e9dbbec8fe43d0b101c2"
+    },
+    {
+      "path": "LICENSES/squeeze-excitation-MIT.txt",
+      "sha256": "8627825cac1c7aecf97231d752d78eec8364949233cb93d6b2d330a4f6afb144"
+    },
+    {
+      "path": "MODEL_NOTICE.txt",
+      "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+    },
+    {
+      "path": "data/classified/TEST-0438_6393-002595911-classified.laz",
+      "sha256": "1986a89888a72cecceb50bc9fef855b44f1f2fa76081f00cda54cdeef9092288"
+    },
+    {
+      "path": "data/classified/TEST-0445_6387-003080157-classified.laz",
+      "sha256": "f564a568231413f5a179eceeeb20eee2450b2968ccab56d450a812f79f5b3d79"
+    },
+    {
+      "path": "data/classified/TEST-0737_6243-006721286-classified.laz",
+      "sha256": "b14a8a617cbb03f117e69849ebf28b1af65e95aa8bc6b3d13af3234e885838f9"
+    },
+    {
+      "path": "data/classified/TEST-0737_6255-006722653-classified.laz",
+      "sha256": "a431ed7c5573e1e4413c1eefd5c7f7cd5bf6af126aa5afcc238782ac8e80106f"
+    },
+    {
+      "path": "data/classified/TEST-0741_6244-006630086-classified.laz",
+      "sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a"
+    },
+    {
+      "path": "data/classified/TEST-0921_6373-000625023-classified.laz",
+      "sha256": "1a8b58d5d6be4b546e55bbda45e6bc69bcbbefa486da4a583939020cf256d2a6"
+    },
+    {
+      "path": "data/classified/TEST-0933_6370-000554696-classified.laz",
+      "sha256": "393c4b35adb00034bb5f0a3c62fb2263b79f3ef355e804f468dd1bd19ebd035f"
+    },
+    {
+      "path": "data/classified/TEST-0935_6376-000225796-classified.laz",
+      "sha256": "eefd783e7609f8b225a8d54064efda2400d80e1375821ae9978e14c58c698882"
+    },
+    {
+      "path": "data/classified/TEST-1170_6133-009203818-classified.laz",
+      "sha256": "75c26de3a3e0ae17a1b5d7dc3e1a8aaf304926893807cbe032f89760e642852d"
+    },
+    {
+      "path": "data/classified/TEST-1175_6130-009399360-classified.laz",
+      "sha256": "e9061ef9ac179e8d1bfa19ecad6edf621f428d53fdcb3125dd0ae561aafab254"
+    },
+    {
+      "path": "data/semantics/TEST-0438_6393-002595911-binding.json",
+      "sha256": "5927306af37a2f04202aac7583419ed015ef6ae39d9a2ecfc4c4bab5f2661d09"
+    },
+    {
+      "path": "data/semantics/TEST-0438_6393-002595911-semantics.json",
+      "sha256": "2a50ae163116513c063813feed0c62acb614bd72a5e658b0924fca6f37578c93"
+    },
+    {
+      "path": "data/semantics/TEST-0445_6387-003080157-binding.json",
+      "sha256": "7fa458e6b444ca96e3434f1299f75943c5401f28e39388cfab6ff4179dae8124"
+    },
+    {
+      "path": "data/semantics/TEST-0445_6387-003080157-semantics.json",
+      "sha256": "ca8528b89e28c2549fe43de1785fea05bc67670cf6b28e27c02ada3d76129f22"
+    },
+    {
+      "path": "data/semantics/TEST-0737_6243-006721286-binding.json",
+      "sha256": "8f34db8f851bc4ccd3e4f4667700901a915a52e85c94f3eaba34758292487599"
+    },
+    {
+      "path": "data/semantics/TEST-0737_6243-006721286-semantics.json",
+      "sha256": "bfb97e9af1ac82886e3575c984409e676ca95d80f522fe3126e0e212f4d9dadd"
+    },
+    {
+      "path": "data/semantics/TEST-0737_6255-006722653-binding.json",
+      "sha256": "611a994d5843919f24ea0fca7902183c638a0eb1bc76d2681b27bb43a1755c5e"
+    },
+    {
+      "path": "data/semantics/TEST-0737_6255-006722653-semantics.json",
+      "sha256": "0e937f27dc123b2ec5e354584942b2ea00c1f839c162b6826d12dc0c37eadcca"
+    },
+    {
+      "path": "data/semantics/TEST-0741_6244-006630086-binding.json",
+      "sha256": "0c6295d2097bac38bc07b0922f7f7b9131aa681bb06d11d336e2aa093bb0950c"
+    },
+    {
+      "path": "data/semantics/TEST-0741_6244-006630086-semantics.json",
+      "sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7"
+    },
+    {
+      "path": "data/semantics/TEST-0921_6373-000625023-binding.json",
+      "sha256": "b3b7b0ac40669489f8a8caf7974533f4a2a3dbda355a560911a8606c4a98783e"
+    },
+    {
+      "path": "data/semantics/TEST-0921_6373-000625023-semantics.json",
+      "sha256": "f89221d372d9097d042178fc51cd0b0e24ebeef62a83b56a3a54e6fb0930def8"
+    },
+    {
+      "path": "data/semantics/TEST-0933_6370-000554696-binding.json",
+      "sha256": "1ca2a8c7c2506614f732a89129183cc1b67c4ac9b50e81c2c77d2656b66f85b6"
+    },
+    {
+      "path": "data/semantics/TEST-0933_6370-000554696-semantics.json",
+      "sha256": "cf1a577b096c501f7bdef0adb043b76281683e5e76cebd94c920c64f58bf1c40"
+    },
+    {
+      "path": "data/semantics/TEST-0935_6376-000225796-binding.json",
+      "sha256": "9b9684d87263d06f7ebc39bf2b6ff43ace101a398bae908ac033a3caa65191d4"
+    },
+    {
+      "path": "data/semantics/TEST-0935_6376-000225796-semantics.json",
+      "sha256": "a8b29a9325cac4023bca364e55a0d81ba58a878071d8f86933f9f2a3fa6e715e"
+    },
+    {
+      "path": "data/semantics/TEST-1170_6133-009203818-binding.json",
+      "sha256": "15d353d53733fc1f355f31ef0d25839a63452dc1fb3b09814890911e01ee4714"
+    },
+    {
+      "path": "data/semantics/TEST-1170_6133-009203818-semantics.json",
+      "sha256": "45603e86ef7e852fab1f0ebbdf98a8281a4db2b74e51164eb8c84566ce81c794"
+    },
+    {
+      "path": "data/semantics/TEST-1175_6130-009399360-binding.json",
+      "sha256": "48e81708c74dfa4e1ee56675f61179c167c356c4e0bdf195f229ea8a8c962545"
+    },
+    {
+      "path": "data/semantics/TEST-1175_6130-009399360-semantics.json",
+      "sha256": "362c7d00fdd8c890fde1a4306d6d0863355d6b76d67800d2755b2673b31a8c6b"
+    },
+    {
+      "path": "data/source/TEST-0438_6393-002595911.laz",
+      "sha256": "2eb37d235685d10acc04a564bed00f175803cf974d33b7f08f47210b3bd08867"
+    },
+    {
+      "path": "data/source/TEST-0445_6387-003080157.laz",
+      "sha256": "b3854e6835aea7d9511c69d095dabfe3fadb77ff45de98033cbd612f2bdb47f0"
+    },
+    {
+      "path": "data/source/TEST-0737_6243-006721286.laz",
+      "sha256": "e8d85145cd93bc8f33f556c6652a8b843cc3e811a265ccf2bb1fc8f724e37d04"
+    },
+    {
+      "path": "data/source/TEST-0737_6255-006722653.laz",
+      "sha256": "a2aaef17ca03aa5c75bd618dcc91ce95e219739764922b6b9f4b0ab34d964dc4"
+    },
+    {
+      "path": "data/source/TEST-0741_6244-006630086.laz",
+      "sha256": "4c23d0b8960c9f04b05e62b41425be9563d03d76afe94f6de1c84d4719af9ec9"
+    },
+    {
+      "path": "data/source/TEST-0921_6373-000625023.laz",
+      "sha256": "f2eeddb74377a2ebdbae0d40f6bd0faf1580d3b9e4b7bb6c8fa8dbbcc2a50131"
+    },
+    {
+      "path": "data/source/TEST-0933_6370-000554696.laz",
+      "sha256": "541dc236895ebdb80927aa788e4b3a3c01278ba421358e5ef542cb69cb705c74"
+    },
+    {
+      "path": "data/source/TEST-0935_6376-000225796.laz",
+      "sha256": "b632af473eecabc47b37d45b2b9b16f5fcac491f5520f64c49050b56454bae3f"
+    },
+    {
+      "path": "data/source/TEST-1170_6133-009203818.laz",
+      "sha256": "ce5d82f00314813863f7208dc0c3ff8bd4106488692ce7f1a7239d79846e5f84"
+    },
+    {
+      "path": "data/source/TEST-1175_6130-009399360.laz",
+      "sha256": "bba796a7e0ef041494e86089448835a719318ac946ee9453c7340d63626171ce"
+    },
+    {
+      "path": "export-inputs.json",
+      "sha256": "8e875b4632cf715b1b617412ee878cd7c59fa5bed6cf9828eeee1de5984c0fe5"
+    },
+    {
+      "path": "fractal-classification-r3.qml",
+      "sha256": "41cc2914d7991b5202ecbee23ac84ac8a251f8f3f033178ba6626a1e590e59cd"
+    },
+    {
+      "path": "model/unet.srxmodel/MODEL_LICENSE.txt",
+      "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+    },
+    {
+      "path": "model/unet.srxmodel/manifest.json",
+      "sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    },
+    {
+      "path": "model/unet.srxmodel/model.engine",
+      "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+    },
+    {
+      "path": "qgis-project.json",
+      "sha256": "7f2ddddcd7dfa67ef3bab008103ddcff34a877aaedbd5785096bd33691bacc61"
+    },
+    {
+      "path": "qgis_export_project.py",
+      "sha256": "63bd5530fb46660936cde70de777f9e33840647701bb007100e5ce1e91b782c3"
+    },
+    {
+      "path": "semantic_classes.json",
+      "sha256": "464ad0232773d5f285624fd142dfbcb24c72f3b8972b15523c35e9ad006ec98f"
+    },
+    {
+      "path": "synrex-fractal.qgz",
+      "sha256": "2e9ea1e807f0efa889879b0af328ee67657fca4c574a625c52aca6b230842ce2"
+    },
+    {
+      "path": "views/TEST-0438_6393-002595911-verified.json",
+      "sha256": "c6299f3cd354a2e100dc51463bd5ad6c30b81a236987dc01bb5beb9f89172bf3"
+    },
+    {
+      "path": "views/TEST-0438_6393-002595911.copc.laz",
+      "sha256": "18fcb489998129b57cc8547088ca8c4888ec820ab2800908f418532fd358f842"
+    },
+    {
+      "path": "views/TEST-0445_6387-003080157-verified.json",
+      "sha256": "82b76d3c77db8190c505f820fc60c55f66a6dbdb8c8b9c16cb09f820f4199462"
+    },
+    {
+      "path": "views/TEST-0445_6387-003080157.copc.laz",
+      "sha256": "b397630e9fb6cbc58bef0b1478d277cff8510e0539637a8c150433ea00180474"
+    },
+    {
+      "path": "views/TEST-0737_6243-006721286-verified.json",
+      "sha256": "cccb8d87aaaaca98a5489c84c80c3e9f992458e5c84c186149e9fa0989547c88"
+    },
+    {
+      "path": "views/TEST-0737_6243-006721286.copc.laz",
+      "sha256": "cc9982875255227ea1e70af71f72e0ea1b860e3266bbf2c0dba192046a0ca659"
+    },
+    {
+      "path": "views/TEST-0737_6255-006722653-verified.json",
+      "sha256": "934661a114e3af49b13954fb627e41110654240245a560ebe847ec39c8972430"
+    },
+    {
+      "path": "views/TEST-0737_6255-006722653.copc.laz",
+      "sha256": "14a428fe754caee188cc2cef3363aea6186ef0f8aff486fed8c83cb822c1ce0f"
+    },
+    {
+      "path": "views/TEST-0741_6244-006630086-verified.json",
+      "sha256": "ff3584e5205600f7677652dd86ffac4eefd11a061dc42d4561d66f94248d31b8"
+    },
+    {
+      "path": "views/TEST-0741_6244-006630086.copc.laz",
+      "sha256": "cefd5d5294d181b3ba02a4ce55f59c74d6489736205e405a55a3a85cc4cd56b0"
+    },
+    {
+      "path": "views/TEST-0921_6373-000625023-verified.json",
+      "sha256": "1c8fc4e3f0220752d9a2e895ad26b14100503670d654e96eca417aab4b5dbe57"
+    },
+    {
+      "path": "views/TEST-0921_6373-000625023.copc.laz",
+      "sha256": "daaf537083f21834c3789cbc4822a61ad414203e668a06360d7583eef8f5649f"
+    },
+    {
+      "path": "views/TEST-0933_6370-000554696-verified.json",
+      "sha256": "84b6921443121d9632b613dd9e707f326b6c0fc2afb0bc45fd775d9ca5c4ea20"
+    },
+    {
+      "path": "views/TEST-0933_6370-000554696.copc.laz",
+      "sha256": "253609d90a88d705336ba65e3f888eb2f46d3a21da4cfcaf2a76aeb3a9dd573e"
+    },
+    {
+      "path": "views/TEST-0935_6376-000225796-verified.json",
+      "sha256": "14f662cf073008e887ae2615954b9c2c5b8496831686c84307f66f2a79c025d9"
+    },
+    {
+      "path": "views/TEST-0935_6376-000225796.copc.laz",
+      "sha256": "0bd03752a391f87ceaae89c4765c6be87578819f2359852acb12b74e828ced38"
+    },
+    {
+      "path": "views/TEST-1170_6133-009203818-verified.json",
+      "sha256": "195358354f273f335b298931dc186f21d6deab94118462e3d171c44f30dbeba8"
+    },
+    {
+      "path": "views/TEST-1170_6133-009203818.copc.laz",
+      "sha256": "bf2e28388ecbf6500ed80253d2367c9763043b1a3f34797a7a719c2d32ff31a5"
+    },
+    {
+      "path": "views/TEST-1175_6130-009399360-verified.json",
+      "sha256": "4b0ce5a51024dd553a0ef1479f69e1fe12c87282fb5c3c52af78619b0c813186"
+    },
+    {
+      "path": "views/TEST-1175_6130-009399360.copc.laz",
+      "sha256": "7d606a2c9d59ef21a31dd16da0d0368239c337bf7c38f14985d7df96433d9680"
+    }
+  ],
+  "project": {
+    "status": "PASS",
+    "qgis_version": "3.44.14-Solothurn",
+    "files": [
+      {
+        "source": "TEST-0438_6393-002595911.laz",
+        "points": 83641,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": true
+      },
+      {
+        "source": "TEST-0445_6387-003080157.laz",
+        "points": 49256,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": true
+      },
+      {
+        "source": "TEST-0921_6373-000625023.laz",
+        "points": 71744,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-0933_6370-000554696.laz",
+        "points": 103592,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-0935_6376-000225796.laz",
+        "points": 320718,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-1170_6133-009203818.laz",
+        "points": 120720,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-1175_6130-009399360.laz",
+        "points": 112756,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-0737_6243-006721286.laz",
+        "points": 42377,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-0737_6255-006722653.laz",
+        "points": 72691,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      },
+      {
+        "source": "TEST-0741_6244-006630086.laz",
+        "points": 85222,
+        "crs": "EPSG:2154",
+        "explicit_viewing_crs_assignment": false
+      }
+    ],
+    "project_sha256": "2e9ea1e807f0efa889879b0af328ee67657fca4c574a625c52aca6b230842ce2",
+    "scope": "Real QGIS providers/save/reopen; desktop rendering qualified separately"
+  },
+  "inference": "Existing frozen native predictions; no inference rerun",
+  "metadata_scope": "Source/native files unchanged; COPC is an indexed derivative",
+  "desktop": {
+    "status": "PASS",
+    "files": [
+      {
+        "source": "TEST-0438_6393-002595911.laz",
+        "points": 83641,
+        "semantic_counts": {
+          "6": 527,
+          "0": 9975,
+          "3": 40130,
+          "2": 2815,
+          "1": 30179,
+          "5": 15
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0438_6393-002595911-qgis.png",
+        "screenshot_sha256": "a36723af1c1437707d7abcf7e1ac92e823d0b8c5e12b0a3558aeb79cb6b90163"
+      },
+      {
+        "source": "TEST-0445_6387-003080157.laz",
+        "points": 49256,
+        "semantic_counts": {
+          "1": 18176,
+          "2": 19457,
+          "4": 1190,
+          "5": 8481,
+          "0": 1191,
+          "6": 93,
+          "3": 668
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0445_6387-003080157-qgis.png",
+        "screenshot_sha256": "b45912535384c9a71c9fa4d6ed4cebf1bb80e723f9a0cacfc26dd96ca220d669"
+      },
+      {
+        "source": "TEST-0921_6373-000625023.laz",
+        "points": 71744,
+        "semantic_counts": {
+          "1": 52610,
+          "4": 17404,
+          "0": 246,
+          "2": 1484
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0921_6373-000625023-qgis.png",
+        "screenshot_sha256": "fdbfd070a80d0d263f2ed7440977662ac22f76eac15b4ed7dd161e4007001e45"
+      },
+      {
+        "source": "TEST-0933_6370-000554696.laz",
+        "points": 103592,
+        "semantic_counts": {
+          "1": 55426,
+          "0": 44720,
+          "2": 2168,
+          "3": 1278
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0933_6370-000554696-qgis.png",
+        "screenshot_sha256": "546b24dee724b561ad52b31c0d20c128f5da0e165cd6cbdd56dbb25f9017971f"
+      },
+      {
+        "source": "TEST-0935_6376-000225796.laz",
+        "points": 320718,
+        "semantic_counts": {
+          "2": 296374,
+          "3": 53,
+          "1": 22081,
+          "4": 2202,
+          "0": 7,
+          "6": 1
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0935_6376-000225796-qgis.png",
+        "screenshot_sha256": "1fb093bee4ddfd0965219f69d5f61c8ea2cb7cb1b6e4bf3a02d7221ccf9cd33b"
+      },
+      {
+        "source": "TEST-1170_6133-009203818.laz",
+        "points": 120720,
+        "semantic_counts": {
+          "1": 115117,
+          "2": 1739,
+          "0": 3864
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-1170_6133-009203818-qgis.png",
+        "screenshot_sha256": "390b1388d32b4865b1213ce8e6a3c321fcfbc69e2c7ab4b32aec5c92b12d3369"
+      },
+      {
+        "source": "TEST-1175_6130-009399360.laz",
+        "points": 112756,
+        "semantic_counts": {
+          "6": 1267,
+          "2": 82472,
+          "0": 3,
+          "1": 29014
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-1175_6130-009399360-qgis.png",
+        "screenshot_sha256": "688929efc483e5e03fd60e5f142bea0fe574e661c7023464ab9512bdb311c03c"
+      },
+      {
+        "source": "TEST-0737_6243-006721286.laz",
+        "points": 42377,
+        "semantic_counts": {
+          "1": 19616,
+          "4": 22760,
+          "0": 1
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0737_6243-006721286-qgis.png",
+        "screenshot_sha256": "977c3118695086efa22f362026e41d187ad0c9fcc72b6c5c4d8270a0e1d0b665"
+      },
+      {
+        "source": "TEST-0737_6255-006722653.laz",
+        "points": 72691,
+        "semantic_counts": {
+          "2": 23,
+          "1": 41488,
+          "0": 4201,
+          "3": 26979
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0737_6255-006722653-qgis.png",
+        "screenshot_sha256": "545700e7aca315011c85741f5927e228be56b4978ecf7f6639fe160e6d66ccf4"
+      },
+      {
+        "source": "TEST-0741_6244-006630086.laz",
+        "points": 85222,
+        "semantic_counts": {
+          "0": 9419,
+          "3": 26031,
+          "6": 1776,
+          "1": 46915,
+          "4": 90,
+          "2": 779,
+          "5": 212
+        },
+        "crs": "EPSG:2154",
+        "screenshot": "TEST-0741_6244-006630086-qgis.png",
+        "screenshot_sha256": "0b0d88fa60ef5c19eefb34c4cb1557e1b312e456316184b8d663c8ebc90b9cf6"
+      }
+    ],
+    "all_seven_semantics_observed": true,
+    "exact_source_index_and_semantic_coverage": true,
+    "actual_exported_project_loaded": true
+  },
+  "export_receipt_sha256": "357928445c7dbc7f6dc964ea3b9de5a3df7385acda66d8970b73db4b06b8519e",
+  "desktop_receipt_sha256": "c6e9b8b9b4280fd71edb5d24738d8ff073e40b31d4adb18cd32076e1c7384ea0",
+  "source_tools": {
+    "tools/export_qgis.py": "b458d90671848c2335f8a04b6f94b498ea6f0143171b106cd67f3b6ae1a91c7c",
+    "tools/qgis_copc_view.py": "0311b4fe6229e0e4e3c34be8e39515bfa708c9187537524b9b75326c9c9a52dc",
+    "tools/qgis_export_project.py": "63bd5530fb46660936cde70de777f9e33840647701bb007100e5ce1e91b782c3",
+    "tools/qualify_qgis_export.py": "500021621ca664021acd68f5660faffdca7df818aafd48f9941404d54b4f36f9"
+  },
+  "execution": "WSL Python, installed Windows PDAL2.10 and actual QGIS3.44.14 desktop, no GPU inference rerun"
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "synrex.unet.r4.qualification.v1",
+  "status": "PASS",
+  "scope": "Release closing only: optional QGIS conversion, executed reader diagnosis, source/release preparation",
+  "parent_r3_source": "77ed8401bcb48e89d53ed0edf3b62b652b678f98",
+  "parent_r3_audit": "6896277bc39eee20a32ee69a41173af29f751b8c",
+  "gates": {
+    "READER_CAUSE_DIAGNOSIS": "PASS",
+    "QGIS_DIRECT_48BYTE": "FAIL",
+    "ONE_COMMAND_COPC_EXPORT": "PASS",
+    "ALL_POINT_VALUES_AND_SEVEN_SEMANTICS": "PASS",
+    "ACTUAL_QGIS_APPLICATION": "PASS",
+    "CRS_STYLE_PROJECT": "PASS",
+    "R3_ARCHIVE_SOURCE_INTEGRITY": "PASS",
+    "MIT_ATTRIBUTION_SCOPE_REVIEW": "PASS",
+    "CPU_NATIVE_BUILD": "PASS",
+    "CPU_TESTS": "PASS",
+    "RUFF_RELEASE_CHECKS": "PASS",
+    "PHYSICAL_AGX": "NOT_RUN",
+    "NEW_GPU_INFERENCE": "NOT_RUN",
+    "PUBLIC_PUSH_UPLOAD": "NOT_RUN"
+  },
+  "cpu_tests": {
+    "passed": 76,
+    "skipped_gpu": 5,
+    "junit_sha256": "cfd74fba9582451e7b63a300965765609c21b4e640f2e0270bba1f19a281d1cd"
+  },
+  "qgis": {
+    "scenes": 10,
+    "points": 1062717,
+    "version": "3.44.14-Solothurn",
+    "project_sha256": "2e9ea1e807f0efa889879b0af328ee67657fca4c574a625c52aca6b230842ce2"
+  },
+  "frozen_quality_miou": 0.48755974311318834,
+  "accepted_complete_points_per_second": 237991.41762428806,
+  "recommendation": "Ready for scoped RTX/QGIS owner review; known direct-reader limitation has a qualified COPC path. AGX qualification unavailable and not claimed. Publication held.",
+  "new_benchmarks": false,
+  "training_or_predictions_changed": false
+}

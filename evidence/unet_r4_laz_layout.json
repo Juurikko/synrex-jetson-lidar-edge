@@ -1,0 +1,503 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "filename": "TEST-0737_6243-006721286.laz",
+      "sha256": "e8d85145cd93bc8f33f556c6652a8b843cc3e811a265ccf2bb1fc8f724e37d04",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 42377,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 2034096,
+      "decompressed_sha256": "da872944be951e63cf92c810287fe9c1a025e5e760d3e7236e3c4e8c24cab2f7"
+    },
+    {
+      "filename": "TEST-0737_6255-006722653.laz",
+      "sha256": "a2aaef17ca03aa5c75bd618dcc91ce95e219739764922b6b9f4b0ab34d964dc4",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 72691,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 3489168,
+      "decompressed_sha256": "ae39b2ced7f67b0e7cf2ef9962c231f3e1626f960b804d5a081c8f8877796431"
+    },
+    {
+      "filename": "TEST-0741_6244-006630086.laz",
+      "sha256": "4c23d0b8960c9f04b05e62b41425be9563d03d76afe94f6de1c84d4719af9ec9",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 85222,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 4090656,
+      "decompressed_sha256": "fbcc359e81f87f3aded679c0819b0b414e35eff170b9b33bf25bd12c34d21270"
+    },
+    {
+      "filename": "TEST-0737_6243-006721286-classified.laz",
+      "sha256": "b14a8a617cbb03f117e69849ebf28b1af65e95aa8bc6b3d13af3234e885838f9",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 42377,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 2034096,
+      "decompressed_sha256": "558e598a5cdc93a5dc917efe71e43736b85740ec6864779db53f752db4a9ff42"
+    },
+    {
+      "filename": "TEST-0737_6255-006722653-classified.laz",
+      "sha256": "a431ed7c5573e1e4413c1eefd5c7f7cd5bf6af126aa5afcc238782ac8e80106f",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 72691,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 3489168,
+      "decompressed_sha256": "e32c33b9dca02abe9c29663a951f86c326f2080e2cb6a958191b250522baf4da"
+    },
+    {
+      "filename": "TEST-0741_6244-006630086-classified.laz",
+      "sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a",
+      "version": "1.4",
+      "compressed": true,
+      "point_format": 8,
+      "record_length": 48,
+      "point_offset": 2389,
+      "points": 85222,
+      "base_bytes": 38,
+      "declared_extra_bytes": 10,
+      "vlrs": [
+        {
+          "user": "LASF_Spec",
+          "record": 4,
+          "bytes": 384,
+          "sha256": "99169ee0e2c4284995ea9ee48931af882f0fefc2a52628e13e190d59cf14757c",
+          "descriptors": [
+            {
+              "name": "Reflectance",
+              "data_type": 10,
+              "options": 0,
+              "bytes": 8
+            },
+            {
+              "name": "Deviation",
+              "data_type": 3,
+              "options": 0,
+              "bytes": 2
+            }
+          ]
+        },
+        {
+          "user": "LASF_Projection",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "liblas",
+          "record": 2112,
+          "bytes": 681,
+          "sha256": "19e2d5830b4a7cc8a548100fe8d5a34ee8fc5bc2ed2597dd2c6a5bc0626d9b58",
+          "wkt": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]"
+        },
+        {
+          "user": "laszip encoded",
+          "record": 22204,
+          "bytes": 52,
+          "sha256": "0328ce1c3730a677864cf791291e7528c38fd7726fc98c9b1845b2ad302f31f6",
+          "laszip": {
+            "compressor": 3,
+            "coder": 0,
+            "version": "3.4.3",
+            "options": 0,
+            "chunk_size": 50000,
+            "special_evlrs": -1,
+            "special_evlr_offset": -1,
+            "items": [
+              [
+                10,
+                30,
+                3
+              ],
+              [
+                12,
+                8,
+                3
+              ],
+              [
+                14,
+                10,
+                3
+              ]
+            ]
+          }
+        }
+      ],
+      "independent_decoder": "laz-rs via laspy",
+      "decoded_point_bytes": 4090656,
+      "decompressed_sha256": "c4255909ff7d7dce999dfa312582fe00d8dbd168eb7634c93abd0b3b3d297049"
+    }
+  ]
+}

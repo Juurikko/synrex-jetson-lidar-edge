@@ -55,3 +55,11 @@ See [QGIS licensing](https://qgis.org/license/) (GPL2 or later) and the licences
 in the user's installed distribution for its complete Qt/dependency terms.
 QGIS/Qt interface elements in screenshots retain upstream rights. CC-BY4.0 covers
 only the original presentation; IGN survey information remains Etalab2.0.
+
+R4's optional QGIS export and original PDAL lifecycle diagnostic are outside the native
+classification execution path. They invoke/link separately installed PDAL (BSD-3-Clause)
+and QGIS (GPL-2.0-or-later) APIs; no QGIS/PDAL binaries or diagnostic SDK headers/import
+libraries are bundled. Actual QGIS/Qt screenshots retain upstream UI rights, IGN FRACTAL
+Etalab-2.0 data attribution and CC-BY-4.0 original presentation credit to Tuomas Pietilä.
+The native classifier, writer, pretrained-asset exclusion and frozen model rights are
+unchanged. See `docs/byom/QGIS_R4.md` for the independent conversion/reader evidence.

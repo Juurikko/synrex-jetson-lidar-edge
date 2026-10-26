@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "checks": {
+    "R2": {
+      "archive": "showcase-rc2.tar.gz",
+      "sha256": "c72a762fa14de87033e82eff7bc653a906dc2ff117fb14f847b72e0269250092"
+    },
+    "R3": {
+      "archive": "showcase-r3-final.tar.gz",
+      "sha256": "b57436b963412dbacce4ca1edd972a98dd1e07df7553638af3306c4239f6592c"
+    },
+    "byom-unet-fractal-r2-rc2": "f8d3ab81804e0c427684ac08f1b055e75206b861",
+    "byom-unet-fractal-r3-rc1": "77ed8401bcb48e89d53ed0edf3b62b652b678f98"
+  },
+  "native_writer_geometry_and_training_source_unchanged_from_R3": true,
+  "private_reference_git_pristine": true,
+  "physical_agx": "NOT_RUN; no connection or resource allocation attempted in R4; accepted R3 allocation-block evidence retained",
+  "new_gpu_inference": "NOT_RUN; accepted synthetic/R2 physical RTX qualifications retained, no neural source/model changes",
+  "public_push_upload_visibility": "NOT_RUN"
+}

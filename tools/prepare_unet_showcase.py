@@ -26,6 +26,7 @@ def main():
     )
     parser.add_argument("--qgis-direct", type=Path)
     parser.add_argument("--qgis-copc", type=Path)
+    parser.add_argument("--qgis-export", type=Path)
     args = parser.parse_args()
     if subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip():
         raise ValueError("showcase requires clean committed source, including all style files")
@@ -127,6 +128,25 @@ def main():
             screenshot = directory / row["screenshot"]
             assert sha(screenshot) == row["screenshot_sha256"]
             shutil.copy2(screenshot, destination / screenshot.name)
+    if args.qgis_export:
+        directory = args.qgis_export
+        receipt = json.loads((directory / "export-receipt.json").read_text())
+        desktop = json.loads((directory / "desktop-qualification.json").read_text())
+        if receipt["status"] != "PASS" or desktop["status"] != "PASS":
+            raise ValueError("require actual successful export and desktop qualification")
+        for item in receipt["files"]:
+            if sha(directory / item["path"]) != item["sha256"]:
+                raise ValueError("QGIS export file binding mismatch")
+        for item in desktop["files"]:
+            if sha(directory / item["screenshot"]) != item["screenshot_sha256"]:
+                raise ValueError("desktop screenshot binding mismatch")
+        shutil.copytree(
+            directory,
+            args.out / "qgis/ready",
+            ignore=shutil.ignore_patterns(
+                "profiles", "*.log", "*.qgz~", "*.qgd", ".work", "EXPORT_FAILED.json"
+            ),
+        )
     shutil.copytree(ROOT / "LICENSES", args.out / "LICENSES")
     source_commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True

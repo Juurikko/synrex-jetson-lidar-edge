@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "pdal": "2.10.0 git eb9126",
+  "command": "pdal info --stats",
+  "files": [
+    {
+      "file": "TEST-0737_6243-006721286-classified-pdal.json",
+      "receipt_sha256": "dfc29ecc445618570b6b0887006a0c05a680d57ff86092bed87053ec80030486",
+      "dimensions": 24,
+      "points": 42377,
+      "status": "PASS"
+    },
+    {
+      "file": "TEST-0737_6243-006721286-source-pdal.json",
+      "receipt_sha256": "9a79924074c1085be495e3de609cb59e17511204480598f51cbd66d7d6457ff1",
+      "dimensions": 24,
+      "points": 42377,
+      "status": "PASS"
+    },
+    {
+      "file": "TEST-0737_6255-006722653-classified-pdal.json",
+      "receipt_sha256": "0d76e8f9934d3063a18ef43c2a79c17476fb07db3486feb70ff3d3bfdec63f74",
+      "dimensions": 24,
+      "points": 72691,
+      "status": "PASS"
+    },
+    {
+      "file": "TEST-0737_6255-006722653-source-pdal.json",
+      "receipt_sha256": "7f5d3735be3749b929c1fadb1f9ef34a44ced9f69778594ddd73268478a14dfd",
+      "dimensions": 24,
+      "points": 72691,
+      "status": "PASS"
+    },
+    {
+      "file": "TEST-0741_6244-006630086-classified-pdal.json",
+      "receipt_sha256": "d9cbadc9401c68f0bda29b13149647f68331ee50764c40f98209bf94423143b5",
+      "dimensions": 24,
+      "points": 85222,
+      "status": "PASS"
+    },
+    {
+      "file": "TEST-0741_6244-006630086-source-pdal.json",
+      "receipt_sha256": "2f8029edf3c1752b46164e3af20d311416dfecd21bd5900bdae83138a9ee2e1e",
+      "dimensions": 24,
+      "points": 85222,
+      "status": "PASS"
+    }
+  ]
+}

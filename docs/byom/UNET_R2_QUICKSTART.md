@@ -113,8 +113,9 @@ Symbology → Style → Load Style select `examples/unet/fractal-classification.
 Choose the `Classification` attribute. RGB remains preserved original survey
 information and is not a neural input; QGIS may initially select RGB by default.
 The style labels200/201 as user-defined and documents the bridge projection.
-Style XML/taxonomy checks are executed, but actual QGIS application loading has
-not been executed on these hosts. A viewer may create its own display index;
+That R2 checkpoint qualified static style checks only. Actual QGIS desktop loading
+and the verified COPC export are now qualified separately; use the
+[current viewing instructions](QGIS_R4.md), including the direct 48-byte reader limitation. A viewer may create its own display index;
 that is separate from the original source-order semantic sidecar.
 
 The genuine four-scene comparison can be reproduced using Matplotlib3.10.8:

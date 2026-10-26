@@ -15,6 +15,11 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--classified", type=Path, required=True)
@@ -33,8 +38,11 @@ def main():
     ):
         raise ValueError("invalid full semantic channel ID")
     ids = np.asarray(semantic["semantic_ids"], dtype=np.uint8)
-    assert len(ids) == len(original)
-    assert np.array_equal(original.classification, np.asarray(semantic["las_classes"])[ids])
+    require(0 < len(ids) == len(original) <= np.iinfo(np.uint32).max, "point count mismatch")
+    require(
+        np.array_equal(original.classification, np.asarray(semantic["las_classes"])[ids]),
+        "classification/semantic mapping mismatch",
+    )
     result = dict(
         schema="synrex.qgis_copc_view.v1",
         status="PASS",
@@ -47,6 +55,12 @@ def main():
     if a.staging is not None:
         if a.staging.exists():
             raise FileExistsError(a.staging)
+        require(
+            not {"SynRexSourceIndex", "SynRexSemanticID"}.intersection(
+                original.point_format.dimension_names
+            ),
+            "reserved SynRex attributes already present",
+        )
         original.add_extra_dims(
             [
                 laspy.ExtraBytesParams(
@@ -68,9 +82,11 @@ def main():
     else:
         view = laspy.read(a.copc, laz_backend=laspy.LazBackend.Lazrs)
         index = np.asarray(view["SynRexSourceIndex"])
-        assert len(view) == len(original)
-        assert np.array_equal(np.sort(index), np.arange(len(original))), (
-            "source index coverage is not a permutation"
+        require(len(view) == len(original), "COPC point count mismatch")
+        require(
+            index.dtype == np.dtype("uint32")
+            and np.array_equal(np.sort(index), np.arange(len(original))),
+            "source index coverage is not a uint32 permutation",
         )
         if not any(v.user_id == "copc" and v.record_id == 1 for v in view.header.vlrs):
             raise ValueError("COPC info VLR missing")
@@ -78,10 +94,10 @@ def main():
         restored = np.empty(len(original), dtype=original.points.array.dtype)
         for field in original.points.array.dtype.names:
             restored[field] = view.points.array[field][order]
-        assert restored.tobytes() == original.points.array.tobytes()
-        assert np.array_equal(view["SynRexSemanticID"][order], ids)
-        assert np.array_equal(view.header.scales, original.header.scales)
-        assert np.array_equal(view.header.offsets, original.header.offsets)
+        require(restored.tobytes() == original.points.array.tobytes(), "point bytes changed")
+        require(np.array_equal(view["SynRexSemanticID"][order], ids), "semantic IDs changed")
+        require(np.array_equal(view.header.scales, original.header.scales), "scales changed")
+        require(np.array_equal(view.header.offsets, original.header.offsets), "offsets changed")
         result.update(
             copc_sha256=sha(a.copc),
             all_original_point_bytes_exact_after_index_restore=True,

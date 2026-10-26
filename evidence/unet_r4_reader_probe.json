@@ -1,0 +1,200 @@
+{
+  "status": "PASS",
+  "scope": "Executed native C++ reader lifecycle diagnosis, no upstream stack change",
+  "pdal_cli_version": "2.10.0 git eb9126",
+  "qgis_version": "3.44.14-Solothurn",
+  "installed_pdal_dll_sha256": "11bc301a68c7d405d0685e2bdb7e173ee0599ecfc7fad83c05ac9d1aa5d63d14",
+  "qgis_provider_dll_sha256": "09e4b55ff0accc7760316c48227755accae84e9c1580914d760467d17e36e450",
+  "probe_source_sha256": "e607a50ffa9ea9dd149ce06b98a03011f88cbb23eeb1d22afa28a5a0518458ee",
+  "sdk": {
+    "url": "https://download.osgeo.org/osgeo4w/v2/x86_64/release/pdal/pdal-devel/pdal-devel-2.10.0-1.tar.bz2",
+    "sha256": "ba5eb1ea4f742ae23cb9b0a85e1a7b006f81d7be5166da5c5925f103162b6224",
+    "headers_version": "2.10.0",
+    "headers_pdalSha": "02c1eab609f3263b78de5b9a07e8d2cb89011966",
+    "scope": "Isolated headers/import lib; existing installed runtime DLL unchanged; no SDK redistributed"
+  },
+  "results": [
+    {
+      "file": "TEST-0737_6243-006721286.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 42377\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6243-006721286.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6243-006721286.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6243-006721286.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 42377\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6243-006721286-classified.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 42377\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6243-006721286-classified.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6243-006721286-classified.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6243-006721286-classified.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 42377\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6255-006722653.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 72691\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6255-006722653.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6255-006722653.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6255-006722653.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 72691\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6255-006722653-classified.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 72691\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6255-006722653-classified.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0737_6255-006722653-classified.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0737_6255-006722653-classified.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 72691\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0741_6244-006630086.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 85222\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0741_6244-006630086.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0741_6244-006630086.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0741_6244-006630086.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 85222\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0741_6244-006630086-classified.laz",
+      "mode": "preview",
+      "returncode": 0,
+      "stdout": "preview PASS 85222\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0741_6244-006630086-classified.laz",
+      "mode": "prepare",
+      "returncode": 0,
+      "stdout": "prepare PASS\n",
+      "stderr": ""
+    },
+    {
+      "file": "TEST-0741_6244-006630086-classified.laz",
+      "mode": "prepare-preview",
+      "returncode": 1,
+      "stdout": "prepare PASS\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    },
+    {
+      "file": "TEST-0741_6244-006630086-classified.laz",
+      "mode": "preview-preview",
+      "returncode": 1,
+      "stdout": "first preview PASS 85222\n",
+      "stderr": "readers.las: Extra byte specification exceeds point length beyond base format length."
+    }
+  ],
+  "upstream_sources": [
+    {
+      "url": "https://github.com/qgis/QGIS/blob/final-3_44_14/src/providers/pdal/qgspdalprovider.cpp",
+      "sha256": "08a0700a268e89d5725862a29d23de9d8a6cbd015fe08f6073607bade2f86d68"
+    },
+    {
+      "url": "https://github.com/PDAL/PDAL/blob/2.10.0/io/LasReader.cpp",
+      "sha256": "d968204d2538727e844d55ad2fd58375b41ec01144b5a061418205ed3b8a1139"
+    }
+  ],
+  "conclusion": "Reader reuse failure reproduced: isolated prepare/preview PASS; prepare-preview and preview-preview FAIL for all six valid Extra Bytes files. Static inspected source explains duplicate retained VLR concatenation. No claim all upstream issue samples have identical cause.",
+  "other_qgis_versions": "NOT_RUN",
+  "direct_48byte_qgis": "FAIL",
+  "writer_change_required": false
+}

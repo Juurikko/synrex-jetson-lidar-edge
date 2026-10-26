@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "source_commit": "77ed8401bcb48e89d53ed0edf3b62b652b678f98",
+  "manifest_files": 360,
+  "source_git_blobs": 223,
+  "native_examples_verified": 14,
+  "copc_views_verified": 3,
+  "model_manifest_sha256": {
+    "synthetic.srxmodel": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+    "unet.srxmodel": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+  },
+  "full_receipt_sha256": "ca97fce4d3ea5eb75279e9e50152bf6af94a5bd77a673d93fa7c64617efaf73e",
+  "method": "Fresh Git clone of bundled public history; byte comparison to all source Git blobs; archive member hashes; laz-rs native and COPC source-index restoration; no private source dependency"
+}
