@@ -24,6 +24,8 @@ def main():
     parser.add_argument(
         "--media-manifest", type=Path, default=ROOT / "evidence/unet_showcase_media.json"
     )
+    parser.add_argument("--qgis-direct", type=Path)
+    parser.add_argument("--qgis-copc", type=Path)
     args = parser.parse_args()
     qualification = json.loads((args.qualified / "qualification.json").read_text())
     if qualification["status"] != "PASS":
@@ -95,6 +97,34 @@ def main():
             assert envelope["taxonomy_sha256"] == sha(taxonomy)
             shutil.copy2(binding, args.out / "data/semantics" / binding.name)
     shutil.copy2(ROOT / "examples/unet/fractal-classification.qml", args.out / "models")
+    for kind, directory in [("direct", args.qgis_direct), ("copc", args.qgis_copc)]:
+        if directory is None:
+            continue
+        receipt = json.loads((directory / "qgis-qualification.json").read_text())
+        assert receipt["status"] == "PASS"
+        assert receipt["harness_sha256"] == sha(ROOT / "tools/qualify_qgis.py")
+        assert receipt["project_sha256"] == sha(directory / "synrex-fractal-r2.qgz")
+        destination = args.out / "qgis" / kind
+        destination.mkdir(parents=True)
+        for name in ["data", "model", "views"]:
+            if (directory / name).exists():
+                shutil.copytree(
+                    directory / name, destination / name, ignore=shutil.ignore_patterns("ept_*")
+                )
+        for name in [
+            "selection.json",
+            "fractal-classification-r3.qml",
+            "semantic_classes.json",
+            "MODEL_NOTICE.txt",
+            "qgis-qualification.json",
+            "synrex-fractal-r2.qgz",
+        ]:
+            shutil.copy2(directory / name, destination / name)
+        shutil.copy2(ROOT / "tools/qualify_qgis.py", destination / "qualify_qgis.py")
+        for row in receipt["files"]:
+            screenshot = directory / row["screenshot"]
+            assert sha(screenshot) == row["screenshot_sha256"]
+            shutil.copy2(screenshot, destination / screenshot.name)
     shutil.copytree(ROOT / "LICENSES", args.out / "LICENSES")
     source_commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
@@ -130,6 +160,9 @@ def main():
         "The SM89 x86_64 plan is target-specific; rebuild from ONNX elsewhere.\n"
         "No SDK binaries, private source or restricted pretrained assets included.\n\n"
         "See source/docs/byom/UNET_R2_RELEASE.md for frozen metrics and limitations.\n"
+        "R3 actual QGIS projects/captures, where included: qgis/direct and qgis/copc.\n"
+        "See source/docs/byom/QGIS_R3.md for tested scope and direct48-byte workaround.\n"
+        "Physical AGX BYOM execution remains NOT_RUN while Spatial Lab owns its locks.\n"
         "The source directory is an exact export of the committed public repository.\n"
         "The source bundle also preserves local checkpoints and complete Git history.\n"
         "Restore with: git clone --branch codex/byom-native-mit-r0 source.bundle history\n"
@@ -156,6 +189,16 @@ def main():
                 if name.endswith(".png")
                 else "Mixed scoped repository licences; see source bundle LICENSE_SCOPE.json"
             )
+            if name.startswith("qgis/"):
+                license_id = (
+                    "Etalab-2.0 survey; CC-BY-4.0 original presentation; QGIS/Qt UI upstream rights"
+                    if name.endswith(".png")
+                    else "MIT original parameters; NVIDIA plan terms; MODEL_NOTICE.txt"
+                    if name.endswith("model.engine")
+                    else "MIT original helper/style; separate installed QGIS terms"
+                    if name.endswith((".py", ".qml"))
+                    else "Etalab-2.0 IGN survey/taxonomy; MIT original project/binding layout"
+                )
             records.append(
                 {
                     "path": name,

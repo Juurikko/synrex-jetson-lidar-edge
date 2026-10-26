@@ -289,7 +289,7 @@
   },
   {
     "file": "docs/byom/QGIS_R3.md",
-    "sha256": "eb90df0386213d2b94e7a79f569812e0f06cbff9706ed8fb8025a15582a74c00",
+    "sha256": "84c3efd96e57cd059171437ed8bf22600817695336b13560f9b12745f413777d",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -1237,7 +1237,7 @@
   },
   {
     "file": "tools/prepare_unet_showcase.py",
-    "sha256": "a490f0c8fd8fb9b19628ccedd2bddb5fadddc8e6f93afa9e2f02d92926d5bf31",
+    "sha256": "aac9a59213ad277ee0547e34eb22025b07fadb2c9923e05596b0bed4fc291991",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

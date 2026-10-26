@@ -162,3 +162,22 @@ the original source CRS WKT. The automated helper validates the added point
 index/semantic attributes against the original source-order sidecar for every
 identified point. Metadata in the COPC view is explicitly outside the original
 LAZ metadata-preservation guarantee.
+
+The R3 release assembler can include both qualified projects while keeping caches,
+profiles and installed software outside the archive:
+
+```bash
+python tools/prepare_unet_showcase.py --data build/unet-r2/data \
+  --trained build/unet-r2/trained --qualified build/unet-r2/rtx/unet-r2-safe-qualified \
+  --engine-package build/unet-r2/rtx/unet-r2-safe-qualified/unet.srxmodel \
+  --synthetic build/unet/synthetic --media-manifest evidence/unet_r2_showcase_media.json \
+  --qgis-direct build/r3/qgis/qualified --qgis-copc build/r3/qgis/copc-qualified \
+  --out build/r3/showcase-r3
+```
+
+Use committed source and fresh output paths. The assembler requires actual PASS
+application receipts and verifies harness, project and screenshot identities.
+Open `qgis/direct/synrex-fractal-r2.qgz` for seven direct38-byte examples, or
+`qgis/copc/synrex-fractal-r2.qgz` for the three48-byte viewing derivatives. Source
+LAZ/classified LAZ/sidecar/binding remain separately included for independent checks.
+The archive includes no QGIS profiles, EPT caches or SDK/application binaries.
