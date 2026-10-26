@@ -455,6 +455,9 @@ def test_relocated_installation_package_and_geometry(tmp_path):
     moved = tmp_path / "relocated"
     shutil.move(install, moved)
     executable = moved / "bin/synrex-native"
+    assert not list(moved.rglob("*.pyc"))
+    assert not list(moved.rglob("__pycache__"))
+    assert (moved / "share/synrex/docs/byom/ADAPTER.md").is_file()
     assert json.loads(run("version", executable=executable).stdout)["runtime"] == "synrex-native-r0"
     pkg, _, _ = package(tmp_path)
     source = scene(tmp_path)

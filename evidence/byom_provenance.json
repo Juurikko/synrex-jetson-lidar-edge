@@ -55,7 +55,7 @@
   },
   {
     "file": "CMakeLists.txt",
-    "sha256": "08e664380f6ca6de07e9246669ad4988551f16d351734d01986c90e6ab67a025",
+    "sha256": "408c34a743ff2303e9daba3574f8d4efc6fb30d57f9aec1891efa31b127b3f8a",
     "license": "MIT",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -511,7 +511,7 @@
   },
   {
     "file": "tests/test_byom.py",
-    "sha256": "746ef332ecb47a2e14af12b9489cf14ebf058ba95586b9a4bd84b3fdb179edd5",
+    "sha256": "3ee7d75468ffa0cc957ebcb8bd99d24d773cb36c2d8141d4bd84ba757f1468c1",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
