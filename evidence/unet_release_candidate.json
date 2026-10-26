@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "archive": "showcase-rc1.tar.gz",
+  "bytes": 38485467,
+  "sha256": "5002b6170d33e8b6507c4b951cfbb5bd5019d7188e3f4fec7aac0b4bc81b2fa8",
+  "source_commit": "0c9a7b9599bb8406d89ba27850763580edb61fca",
+  "publication": "HELD_FOR_EXPLICIT_OWNER_APPROVAL",
+  "verification": "PASS: all manifest SHA256s and sizes; source commit exact; no private repository, dependency/venv tree or unsafe member",
+  "hashed_files": 178
+}
