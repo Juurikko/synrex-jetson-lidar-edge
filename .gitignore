@@ -1,0 +1,16 @@
+.venv/
+.deps/
+.cache/
+build*/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.laz
+*.las
+*.u8
+*.pth
+*.pt
+*.onnx
+*.engine
+*.srxmodel

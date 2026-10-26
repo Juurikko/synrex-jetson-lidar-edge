@@ -1,0 +1,3 @@
+# Preserve upstream notice bytes, including their original whitespace.
+LICENSES/DejaVu-font-notice.txt -whitespace
+LICENSES/laspy-BSD-2-Clause.txt -whitespace

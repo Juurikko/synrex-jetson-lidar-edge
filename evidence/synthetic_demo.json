@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+  "points": 50013,
+  "classification_records_changed": 50013,
+  "point_order_and_nonclassification_bytes_exact": true,
+  "public_header_non_laszip_vlrs_and_padding_exact": true,
+  "source_sha256": "3de6333708fc0ed6bfa4e68997dbfd6285b0ff2641067b6d0286b3eb4e8b8ed2",
+  "output_sha256": "504b4414becea148c810fbab9bab743afb04d45745fc05e2025a62415cdfdffe",
+  "canonical_nonclassification_sha256": "a96ee2bbfa9e2ae2230089e43e5b26558e5070d2503af0262de32b533c6c86bf",
+  "classification_sha256": "c15f56063b71b6893ebe784482e395a414d843a61f148c10c4a88f9a1d133ac0",
+  "scope": "Synthetic preservation demo, not neural inference or a Jetson performance measurement",
+  "generated_points": 50013
+}

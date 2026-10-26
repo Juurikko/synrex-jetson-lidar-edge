@@ -1,0 +1,46 @@
+{
+  "schema": "personal.license.activation.v1",
+  "confirmation_source": "Explicit user confirmation by Tuomas Pietilä in this project session",
+  "confirmation": "I own or have authority to license the newly staged original source code, documentation and procedural media developed for this project.",
+  "developer": "Tuomas Pietilä",
+  "project_lead": "Tuomas Pietilä",
+  "original_source_tests_configuration": "MIT",
+  "original_documentation_diagrams_video": "CC-BY-4.0",
+  "copyright_boundary": "Only personally controlled protectable original expression; no claim over facts, standard formats, ideas, AI output without protectable human authorship, or third-party material.",
+  "excluded": [
+    "LICENSES upstream notices and standard license texts",
+    "Third-party algorithms, libraries, model weights and datasets",
+    "Underlying factual benchmark/lineage records and excluded private production source",
+    "LICENSES/LicenseRef-Review-Only.txt is a preserved historical staging notice, superseded only for the explicitly licensed original scopes; no current source references it."
+  ],
+  "ai_assistance": "OpenAI Codex; coding, testing, automation and documentation under human-led specifications/decisions/review",
+  "historical_source_review_unchanged": true,
+  "historical_review_only_notice_superseded_for_explicit_scopes": true,
+  "accepted_media_modified": false,
+  "public_repository_created_or_pushed": false,
+  "agx_modifications": 0,
+  "checks": {
+    "status": "PASS",
+    "python_ast_behavior_unchanged": {
+      "src/verify_laz.py": true,
+      "src/synthetic_laz.py": true,
+      "tests/test_preservation.py": true,
+      "tools/synthetic_demo.py": true,
+      "tools/media_preview.py": true
+    },
+    "noncomment_source_unchanged": {
+      "src/preserve_laz.cpp": true,
+      "CMakeLists.txt": true,
+      "pyproject.toml": true
+    },
+    "accepted_publication_files_preserved": 210,
+    "global_git_configuration_unchanged": true,
+    "release_tests_passed": 19,
+    "sanitizer_tests_passed": 19,
+    "format_lint_whitespace": "PASS",
+    "personal_license_scopes": "MIT source/tests/configuration; CC-BY-4.0 documentation/media; upstream and facts excluded",
+    "accepted_media_changed": false,
+    "publication": "NOT_RUN",
+    "agx_modifications": 0
+  }
+}

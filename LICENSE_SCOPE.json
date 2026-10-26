@@ -1,0 +1,74 @@
+{
+  "schema": "personal.licensing.scope.v1",
+  "developer": "Tuomas Pietilä",
+  "project_lead": "Tuomas Pietilä",
+  "ai_assistance": "OpenAI Codex; coding, testing, automation and documentation under human-led specifications/decisions/review",
+  "ownership_confirmation": "CONFIRMED_BY_TUOMAS_PIETILA",
+  "active_personal_licenses": true,
+  "source": {
+    "state": "ACTIVE_OWNER_AUTHORIZED",
+    "files": [
+      ".clang-format",
+      ".gitattributes",
+      ".gitignore",
+      "CMakeLists.txt",
+      "pyproject.toml",
+      "requirements-dev.lock",
+      "src/preserve_laz.cpp",
+      "src/synthetic_laz.py",
+      "src/verify_laz.py",
+      "tests/test_preservation.py",
+      "tools/media_preview.py",
+      "tools/release_checks.py",
+      "tools/synthetic_demo.py"
+    ],
+    "license": "MIT"
+  },
+  "documentation": {
+    "state": "ACTIVE_OWNER_AUTHORIZED",
+    "files": [
+      "ABOUT.md",
+      "ARCHITECTURE.md",
+      "AUTHORS.md",
+      "BENCHMARK.md",
+      "CONTRIBUTIONS_AND_METHOD.md",
+      "FINAL_REPORT.md",
+      "FUTURE_UAV.md",
+      "PERSONAL_ATTRIBUTION_AND_LICENSING.md",
+      "PUBLICATION_BLOCKERS.md",
+      "PUBLICATION_RIGHTS.md",
+      "PUBLIC_RELEASE_AUDIT.md",
+      "README.md",
+      "REPOSITORY_CONTENTS.md",
+      "REPRODUCIBILITY_REPORT.md",
+      "THIRD_PARTY_NOTICES.md",
+      "VALIDATION.md",
+      "CITATION.cff",
+      "media/PERSONAL_CREDITS.md"
+    ],
+    "license": "CC-BY-4.0"
+  },
+  "original_procedural_media": {
+    "state": "ACTIVE_OWNER_AUTHORIZED",
+    "files": [
+      "media/pipeline-landscape.png",
+      "media/pipeline-landscape.svg",
+      "media/pipeline-portrait.png",
+      "media/pipeline-portrait.svg",
+      "media/preview.gif",
+      "media/synrex-jetson-lidar-r1.mp4",
+      "media/thumbnail.png"
+    ],
+    "license": "CC-BY-4.0"
+  },
+  "excluded_from_personal_copyright_or_relicense": [
+    "LICENSES upstream notices and standard license texts",
+    "Third-party algorithms, libraries, model weights and datasets",
+    "Underlying factual benchmark/lineage records and excluded private production source",
+    "LICENSES/LicenseRef-Review-Only.txt is a preserved historical staging notice, superseded only for the explicitly licensed original scopes; no current source references it."
+  ],
+  "preserve_existing_upstream_notices": true,
+  "confirmation_record": "evidence/license_activation.json",
+  "copyright_notice": "Copyright (c) 2026 Tuomas Pietilä",
+  "copyright_boundary": "Only personally controlled protectable original expression; no claim over facts, standard formats, ideas, AI output without protectable human authorship, or third-party material."
+}

@@ -1,0 +1,8 @@
+LicenseRef-Review-Only
+
+Local review staging notice; all rights reserved pending confirmation of the
+copyright holder and an explicit public release license by the repository owner.
+No new permissive redistribution license is granted by this notice. Existing
+third-party licenses and rights remain unaffected. This is a staging boundary,
+not an assertion that a particular contributor owns third-party or model-derived
+material. Do not publish the repository before the release audit is approved.

@@ -1,0 +1,83 @@
+{
+  "source_commit": "69eca500738b0412d1a2a0b6ba0edeac20012aec",
+  "source_report_blob_sha": "a718b46c8ac0b515028819a54f2a73ac914433fa",
+  "recorded_utc": "2026-10-24T11:54:39.579214+00:00",
+  "platform": {
+    "device": "Jetson AGX Orin 64 GB",
+    "compute_capability": [
+      8,
+      7
+    ],
+    "cuda": "13.2.86",
+    "tensorrt": "10.16.2.10",
+    "power_mode": "MODE_50W"
+  },
+  "scene_count": 4,
+  "total_points": 4790076,
+  "summed_end_to_end_seconds": 30.27297449300204,
+  "aggregate_points_per_second": 158229.4465681687,
+  "scenes": [
+    {
+      "points": 468416,
+      "wall_seconds": 6.644377816999622,
+      "points_per_second": 70498.09822697905,
+      "independent_verification": "PASS",
+      "output_sha256": "40b6f77841e238e678f60c377726ddef9ca636e87bfa407d3881b42ec4c490a9",
+      "point_count_preserved": true,
+      "point_order_preserved": true,
+      "nonclassification_record_bytes_exact": true,
+      "public_header_bytes_exact": true,
+      "non_laszip_vlr_bytes_exact": true,
+      "metadata_padding_exact": true,
+      "evlr_count": 0
+    },
+    {
+      "points": 886928,
+      "wall_seconds": 6.237314941001387,
+      "points_per_second": 142197.08454510168,
+      "independent_verification": "PASS",
+      "output_sha256": "3e43cfe4220b475113e603c002692b9abe93f8365c9b96cf14b9c5540b535ffb",
+      "point_count_preserved": true,
+      "point_order_preserved": true,
+      "nonclassification_record_bytes_exact": true,
+      "public_header_bytes_exact": true,
+      "non_laszip_vlr_bytes_exact": true,
+      "metadata_padding_exact": true,
+      "evlr_count": 0
+    },
+    {
+      "points": 1308277,
+      "wall_seconds": 7.280629281000074,
+      "points_per_second": 179692.8465255264,
+      "independent_verification": "PASS",
+      "output_sha256": "601e159f87903ad9d0367ce4b91ad8cb72f4374785064a8794b32fcd7e155a3f",
+      "point_count_preserved": true,
+      "point_order_preserved": true,
+      "nonclassification_record_bytes_exact": true,
+      "public_header_bytes_exact": true,
+      "non_laszip_vlr_bytes_exact": true,
+      "metadata_padding_exact": true,
+      "evlr_count": 0
+    },
+    {
+      "points": 2126455,
+      "wall_seconds": 10.110652454000956,
+      "points_per_second": 210318.27665666875,
+      "independent_verification": "PASS",
+      "output_sha256": "fbae6964b8e27ca3833653484ce6172242896267062f0d51451dfe75ffd598d7",
+      "point_count_preserved": true,
+      "point_order_preserved": true,
+      "nonclassification_record_bytes_exact": true,
+      "public_header_bytes_exact": true,
+      "non_laszip_vlr_bytes_exact": true,
+      "metadata_padding_exact": true,
+      "evlr_count": 0
+    }
+  ],
+  "timing_boundary": "Parent monotonic clock immediately before product command launch through process completion, including model verification/extraction, TensorRT initialization, native preprocessing/inference, labels, metadata-preserving classified LAZ write and product output hashing. No cache flushing; no warmups; one process per scene.",
+  "timing_limitations": [
+    "One shot per scene; no warmup or repetitions.",
+    "Inputs and package prehashed; OS file caches not flushed. No controlled cold-cache or warm-benchmark claim.",
+    "Native service internal total_ms excludes wrapper initialization, package verification and classified-LAZ writing; it is not used as full end-to-end time."
+  ]
+}

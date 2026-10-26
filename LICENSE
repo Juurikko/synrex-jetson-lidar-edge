@@ -1,0 +1,37 @@
+Personal engineering project — Tuomas Pietilä
+
+Developer and project lead: Tuomas Pietilä.
+AI-assisted software engineering, including OpenAI Codex, under human-led
+architecture, specifications, decisions and verification review.
+
+Copyright (c) 2026 Tuomas Pietilä, for personally controlled protectable
+original expression only. The owner confirmed ownership or licensing authority
+for newly staged original source, documentation and procedural media.
+
+ACTIVE LICENSES — explicit file scopes in LICENSE_SCOPE.json
+
+- Original source code, tests, tools and project configuration: MIT.
+  Full grant and copyright notice: LICENSES/MIT.txt.
+- Original documentation, diagrams, video and GIF preview: CC BY 4.0.
+  Full legal code: LICENSES/CC-BY-4.0.txt.
+  https://creativecommons.org/licenses/by/4.0/
+  Credit: Tuomas Pietilä — developer and project lead; AI-assisted development
+  using OpenAI Codex. Retain applicable upstream credits and indicate changes.
+
+These grants cover only the personally controlled original portions of the
+listed files. No claim is made over unprotectable facts, formats, ideas,
+algorithms, AI output without protectable human authorship, or third-party
+material. Third-party license texts/notices and embedded font contributions
+retain their original terms. Dependencies are not relicensed.
+
+Historical benchmark/lineage facts and source identities are not claimed as
+personal intellectual property. Restricted TreeAIBox code, model weights,
+ECLAIR data/derivatives and uncertain-rights private runtime source are excluded.
+The SynRex project label is not corporate authorship or copyright attribution.
+
+The retained LICENSES/LicenseRef-Review-Only.txt records the former staging
+boundary; it is superseded for the original scopes explicitly licensed above.
+It neither limits these grants nor grants rights to excluded material.
+Accepted media bytes are unchanged; attribution/licensing is supplied in
+media/PERSONAL_CREDITS.md. No public repository creation or push is authorized
+by this license update. See PERSONAL_ATTRIBUTION_AND_LICENSING.md.

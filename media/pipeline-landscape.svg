@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240" role="img" aria-labelledby="title desc">
+<title id="title">SynRex native LAZ-to-classified-LAZ pipeline</title>
+<desc id="desc">Verified file-based pipeline on Jetson AGX Orin. Compressed georeferenced LAZ, native C++ preprocessing, CUDA and TensorRT FP16, classified LAZ. Qualified four-file preservation and one-shot benchmark.</desc>
+<rect width="1800" height="1240" fill="#080f1b"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#83edb5"/></marker></defs>
+<text x="72" y="77" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="35" font-weight="700" text-anchor="start">SYNREX</text>
+<text x="1728" y="77" fill="#83edb5" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400" text-anchor="end">VERIFIED ENGINEERING / OCT 2026</text>
+<text x="72" y="164" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="63" font-weight="700" text-anchor="start">Native LAZ-to-classified-LAZ</text>
+<text x="72" y="218" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="400" text-anchor="start">Already georeferenced input → on-device classification → classified file</text>
+<rect x="72" y="294" width="387" height="253" rx="18" fill="#102030" stroke="#64b2ff" stroke-width="2"/>
+<text x="98" y="333" fill="#64b2ff" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400" text-anchor="start">01</text>
+<text x="98" y="382" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">COMPRESSED</text>
+<text x="98" y="424" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">LAZ INPUT</text>
+<text x="98" y="479" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Native laz-perf decode</text>
+<text x="98" y="513" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Source record order</text>
+<line x1="461" y1="420" x2="492" y2="420" stroke="#83edb5" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="495" y="294" width="387" height="253" rx="18" fill="#102030" stroke="#64b2ff" stroke-width="2"/>
+<text x="521" y="333" fill="#64b2ff" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400" text-anchor="start">02</text>
+<text x="521" y="382" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">NATIVE C++</text>
+<text x="521" y="424" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">PREPROCESSING</text>
+<text x="521" y="479" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Geometry + compact plan</text>
+<text x="521" y="513" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">TreeAIBox-compatible</text>
+<line x1="884" y1="420" x2="915" y2="420" stroke="#83edb5" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="918" y="294" width="387" height="253" rx="18" fill="#102030" stroke="#83edb5" stroke-width="2"/>
+<text x="944" y="333" fill="#83edb5" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400" text-anchor="start">03</text>
+<text x="944" y="382" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">CUDA +</text>
+<text x="944" y="424" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">TENSORRT FP16</text>
+<text x="944" y="479" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Occupancy + inference</text>
+<text x="944" y="513" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Argmax + point scatter</text>
+<line x1="1307" y1="420" x2="1338" y2="420" stroke="#83edb5" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1341" y="294" width="387" height="253" rx="18" fill="#102030" stroke="#83edb5" stroke-width="2"/>
+<text x="1367" y="333" fill="#83edb5" font-family="DejaVu Sans Mono, monospace" font-size="23" font-weight="400" text-anchor="start">04</text>
+<text x="1367" y="382" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">CLASSIFIED</text>
+<text x="1367" y="424" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="700" text-anchor="start">LAZ OUTPUT</text>
+<text x="1367" y="479" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Native LAZ writer</text>
+<text x="1367" y="513" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Product SHA256</text>
+<rect x="72" y="595" width="1656" height="179" rx="18" fill="#102030" stroke="#2a3d51" stroke-width="2"/>
+<text x="101" y="642" fill="#83edb5" font-family="DejaVu Sans Mono, monospace" font-size="25" font-weight="400" text-anchor="start">QUALIFIED PRESERVATION</text>
+<text x="101" y="694" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="31" font-weight="700" text-anchor="start">Point count + source order + every nonclassification record byte</text>
+<text x="101" y="743" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Public headers, non-LASzip VLRs and metadata padding exact. LASzip compression metadata regenerated.</text>
+<rect x="72" y="814" width="1656" height="218" rx="18" fill="#102030" stroke="#2a3d51" stroke-width="2"/>
+<text x="101" y="859" fill="#83edb5" font-family="DejaVu Sans Mono, monospace" font-size="26" font-weight="400" text-anchor="start">PHYSICAL NVIDIA JETSON AGX ORIN 64GB</text>
+<line x1="907" y1="883" x2="907" y2="991" stroke="#2a3d51" stroke-width="2"/>
+<text x="101" y="920" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="36" font-weight="700" text-anchor="start">2,126,455 points / 10.110652 s</text>
+<text x="101" y="977" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="29" font-weight="400" text-anchor="start">210,318 points/s · largest tested file</text>
+<text x="954" y="920" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="700" text-anchor="start">4,790,076 points / 30.272974 s</text>
+<text x="954" y="977" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="29" font-weight="400" text-anchor="start">158,229 points/s · four-file aggregate</text>
+<text x="72" y="1082" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="400" text-anchor="start">CUDA 13.2 · TensorRT 10.16 · FP16 · MODE_50W · No Python/PyTorch in product execution</text>
+<text x="72" y="1127" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">One shot per file: launch, loading, initialization, preprocessing, inference, LAZ writing + hashing. Caches not flushed.</text>
+<text x="72" y="1170" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="400" text-anchor="start">Preservation scope: frozen LAS 1.4 / PDRF 7 / 42-byte records / no EVLRs. Independent laz-rs verification.</text>
+<text x="72" y="1210" fill="#ffc16e" font-family="DejaVu Sans, sans-serif" font-size="23" font-weight="400" text-anchor="start">Current trained reference model: noncommercial. CUDA, TensorRT and glibc remain system dependencies.</text>
+</svg>

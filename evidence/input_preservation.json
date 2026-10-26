@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "protected_publication_files": 210,
+  "changed_files": [],
+  "accepted_r1_video_sha256": "f3a9366f5a42fa5fc4dfd95249b9254385049298214dfac0fbf0696cea0a371c",
+  "agx_accesses": 0,
+  "agx_modifications": 0,
+  "public_github_release": "NOT_RUN"
+}

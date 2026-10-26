@@ -1,0 +1,85 @@
+{
+  "schema": "personal.attribution.update.v1",
+  "developer": "Tuomas Pietilä",
+  "project_lead": "Tuomas Pietilä",
+  "ai_assistance": "OpenAI Codex; coding, testing, automation and documentation under human direction",
+  "human_leadership": [
+    "Architecture and specifications",
+    "Engineering decisions",
+    "Verification/acceptance criteria and interpretation",
+    "Review and release decisions"
+  ],
+  "git_identity": {
+    "login": "Juurikko",
+    "email": "217794568+Juurikko@users.noreply.github.com",
+    "commit_sha": "42f5d3a882aadc0e11b80218e5bdac22185d7bf7",
+    "source": "Existing GitHub commit linked by GitHub to authenticated @Juurikko"
+  },
+  "git_correction_scope": "Only the candidate repository single initial commit; author and committer both Tuomas Pietilä; repository-local configuration only",
+  "predecessor_initial_commit": "87cda738081cfd0973af526c61174d1eb8d09ca1",
+  "original_source_predecessor_sha256": {
+    "CMakeLists.txt": "20a6fde9099c287709d2b044b4b2054b5125dcdba41e5dddee0690cfb4a63f23",
+    "pyproject.toml": "d6085a366fa91d061184ee3e12f34fd3c347d127157cae3157ed6cb7ae9092d8",
+    "src/preserve_laz.cpp": "2fe54d75ec9532d1505401a57d4ce0dcb25a2913521a22d179b0a8b2d414464d",
+    "src/synthetic_laz.py": "c7661ab65dbf72a6535073908394be549e900cbf9f44ea770092488d00554cce",
+    "src/verify_laz.py": "d01b6214093fa075aa9494a6161a02cced303cc02693533e872b8918dd6627a6",
+    "tests/test_preservation.py": "bcb8497c66bc3147537b085a326eb3e48cebd0f0101389b61e6c7aa177c86686",
+    "tools/media_preview.py": "8eaa4eb5d8b31a070e01ff9b62584a187d3bb5084beef57d2b4b55ff4dab2738",
+    "tools/release_checks.py": "f6b60020b3d370849f5b6ff7988448ba853586e8392c1451f576f5f27c9ae410",
+    "tools/synthetic_demo.py": "2e29c39121093775bafcad8d449d436a76baca790c9b30a6db33513b4c1aaa54"
+  },
+  "behavior_comparison": {
+    "src/verify_laz.py": true,
+    "src/synthetic_laz.py": true,
+    "tests/test_preservation.py": true,
+    "tools/synthetic_demo.py": true,
+    "tools/media_preview.py": true,
+    "src/preserve_laz.cpp": true
+  },
+  "preserved_candidate_assets_and_evidence": {
+    "files": [
+      "LICENSES/Apache-2.0.txt",
+      "LICENSES/DejaVu-font-notice.txt",
+      "LICENSES/LicenseRef-Review-Only.txt",
+      "LICENSES/laspy-BSD-2-Clause.txt",
+      "LICENSES/lazrs-MIT.txt",
+      "evidence/benchmark.json",
+      "evidence/model_lineage_summary.json",
+      "evidence/numerical_lineage.json",
+      "evidence/source_review.json",
+      "evidence/synthetic_demo.json",
+      "evidence/test_results.json",
+      "evidence/video_qa.json",
+      "media/pipeline-landscape.png",
+      "media/pipeline-landscape.svg",
+      "media/pipeline-portrait.png",
+      "media/pipeline-portrait.svg",
+      "media/preview.gif",
+      "media/synrex-jetson-lidar-r1.mp4",
+      "media/thumbnail.png"
+    ],
+    "status": "PASS"
+  },
+  "r1_video_inspection": {
+    "closing_text": "Engineering · @Juurikko",
+    "project_label": "SYNREX",
+    "explicit_corporate_author_or_copyright_found": false,
+    "actual_decoded_frame_review": true,
+    "accepted_files_changed": false,
+    "separate_personal_variant": "Proposed only in media/PERSONAL_CREDITS.md"
+  },
+  "licensing": {
+    "source": "MIT",
+    "original_documentation_media": "CC-BY-4.0",
+    "personal_scope_confirmation": "CONFIRMED_BY_TUOMAS_PIETILA",
+    "active_personal_copyright_notices_added": true,
+    "upstream_notices_changed": false,
+    "confirmation_record": "evidence/license_activation.json"
+  },
+  "tests": {
+    "release_passed": 19,
+    "sanitizer_passed": 19
+  },
+  "publication": "NOT_RUN",
+  "agx_modifications": 0
+}

@@ -1,0 +1,31 @@
+{
+  "source_commit": "69eca500738b0412d1a2a0b6ba0edeac20012aec",
+  "characterized_scene_points": 886928,
+  "comparisons": {
+    "pinned_treeaibox_vs_historical_pytorch": {
+      "mismatches": 0,
+      "interpretation": "Current pinned preprocessing/model reproduces historical oracle exactly"
+    },
+    "onnxruntime_fp32_vs_pytorch": {
+      "mismatches": 27,
+      "fraction": 0.00003044215539480093
+    },
+    "tensorrt_fp32_vs_pytorch": {
+      "mismatches": 27,
+      "fraction": 0.00003044215539480093
+    },
+    "onnxruntime_fp32_vs_tensorrt_fp32": {
+      "mismatches": 0,
+      "raw_output_identity": true
+    },
+    "tensorrt_fp16_vs_pytorch": {
+      "mismatches": 89,
+      "fraction": 0.00010034636407915862
+    },
+    "tensorrt_fp16_vs_fp32_onnx_baseline": {
+      "mismatches": 90,
+      "fraction": 0.00010147385131600311
+    }
+  },
+  "scope": "Class-ID differences on the characterized scene; not accuracy metrics or all-scene guarantees. Pairwise mismatch counts are not additive."
+}

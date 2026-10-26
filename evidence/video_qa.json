@@ -1,0 +1,20 @@
+{
+  "sha256": "f3a9366f5a42fa5fc4dfd95249b9254385049298214dfac0fbf0696cea0a371c",
+  "bytes": 12075175,
+  "duration_seconds": 30.0,
+  "fps": 30,
+  "frame_count": 900,
+  "width": 1080,
+  "height": 1350,
+  "video_codec": "h264",
+  "video_profile": "High",
+  "pixel_format": "yuv420p",
+  "color_space": "BT.709",
+  "audio_stream_count": 0,
+  "sample_aspect_ratio": "1/1",
+  "all_900_frames_decoded": true,
+  "ffmpeg_full_decode_errors": "",
+  "artifact": "media/synrex-jetson-lidar-r1.mp4",
+  "accepted_r1_qa": "PASS",
+  "visual_review": "Sampled decoded frames, transitions and 360px portrait views; not human real-time playback."
+}

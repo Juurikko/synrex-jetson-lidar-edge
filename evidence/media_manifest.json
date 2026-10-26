@@ -1,0 +1,39 @@
+{
+  "synrex-jetson-lidar-r1.mp4": {
+    "sha256": "f3a9366f5a42fa5fc4dfd95249b9254385049298214dfac0fbf0696cea0a371c",
+    "bytes": 12075175,
+    "accepted_r1_byte_exact": true
+  },
+  "thumbnail.png": {
+    "sha256": "4b70901b544aa59e5c327a28713d9ca188fc40a973716ad1cc911ae0cbce5ac4",
+    "bytes": 539653,
+    "accepted_r1_byte_exact": true
+  },
+  "pipeline-portrait.svg": {
+    "sha256": "59411e6fb9e0a737e590e32cfa7e07a7a02992fb392383a1b957b474e9d07aa4",
+    "bytes": 4631,
+    "accepted_r1_byte_exact": true
+  },
+  "pipeline-portrait.png": {
+    "sha256": "610f18c212a699d73a2c19890cc8b5bcb6e6c2135f4a9e46ef73f66a999f2f2a",
+    "bytes": 136084,
+    "accepted_r1_byte_exact": true
+  },
+  "pipeline-landscape.svg": {
+    "sha256": "008ca5a9486ca9f05a66526f647c3683b1d98acbe4c6dc568a445316d6c0247a",
+    "bytes": 7780,
+    "accepted_r1_byte_exact": true
+  },
+  "pipeline-landscape.png": {
+    "sha256": "988c460f256065ab497ac3e05eea027502ad724c2efe90bfca8dc6aa2bac078d",
+    "bytes": 187973,
+    "accepted_r1_byte_exact": true
+  },
+  "preview.gif": {
+    "sha256": "88d09b87a846083766ca488cab66a07d94c96655467f29f7ef7a5222b55892dd",
+    "bytes": 964797,
+    "origin": "First 9 seconds of accepted R1 MP4; 360x450 GIF preview at 6 fps, 96-color palette",
+    "source_mp4_sha256": "f3a9366f5a42fa5fc4dfd95249b9254385049298214dfac0fbf0696cea0a371c",
+    "illustrative_only": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "release": {
+    "status": "PASS",
+    "tests_passed": 19
+  },
+  "address_and_undefined_sanitizers": {
+    "status": "PASS",
+    "tests_passed": 19,
+    "leak_detection": true
+  },
+  "synthetic_demo": {
+    "status": "PASS",
+    "points": 50013
+  },
+  "scope": "Local x86-64 CPU tests of the public-focused preservation utility, not a rerun of historical inference."
+}

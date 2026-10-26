@@ -1,0 +1,16 @@
+{
+  "source_commit": "69eca500738b0412d1a2a0b6ba0edeac20012aec",
+  "model_family": "SegFormer3D",
+  "application": "LiDAR point classification",
+  "reference_lineage": "NRCan TreeAIBox urban filtering",
+  "treeaibox_commit": "5380ddec2799f55adb43b63407dd12ccf7abefae",
+  "checkpoint_sha256": "cddb791041d46a2e7be3c53d6e94157c9af2218e7ea5595bf3134c4390c1fbc0",
+  "onnx_sha256": "149e4c5d1b6d08c957b03c8a0a4d75dbfaa172429eae3ed39a3497d10a498c1b",
+  "tensorrt_engine_sha256": "4ae62249a2fad6ce28ea3400bae51a3852135724eef9cdc6baea0282d5eb855a",
+  "network_output_channels": 8,
+  "configured_class_count": 7,
+  "commercial_use_allowed": false,
+  "license_status": "REFERENCE_NON_COMMERCIAL_LINEAGE",
+  "artifacts_included": false,
+  "new_architecture_claimed": false
+}

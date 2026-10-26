@@ -1,0 +1,350 @@
+[
+  {
+    "file": ".clang-format",
+    "sha256": "ea04e710dfe0a172a2907ca2f7ddc7c4b697d3f0d38a9ee604016013d0476c0f",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": ".gitattributes",
+    "sha256": "d1eed727fa0e5c088c39aba6fa7275ca57bd500f310da95f92978caf666e4cca",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": ".gitignore",
+    "sha256": "1481d8dc417ae0b13d369c2fb8b5755a34ec64bf8e67b1c509eecc295b3efe8f",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "ABOUT.md",
+    "sha256": "69545be71f79e73d94111be9fa51d205882ae2f4d58d94b6c4957f01e229e74b",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "ARCHITECTURE.md",
+    "sha256": "02bbf75e881f946b5e8563b2a3ccde0967f9d7e138aa8b38f836b8190fd27e28",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "AUTHORS.md",
+    "sha256": "ecb00717c61b1a6e5a540cf6decda738289c25297659f6832c26512f05d36ba4",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "BENCHMARK.md",
+    "sha256": "feba00ea0c0bb2b1ae28f38e6a0da1ab60830c1b563a3e01cdf40f223a1a46c6",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "CITATION.cff",
+    "sha256": "c841697af38e2fffa1d6bcb95dfee07759aa7ebf357a96c58b213f8fd65a96d9",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "CMakeLists.txt",
+    "sha256": "90c6f6c7d131e199e786b650c6b8e3af8bf8b94a798f1a18fa582d9d78d933f6",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "CONTRIBUTIONS_AND_METHOD.md",
+    "sha256": "c29b83bd7821b8df89412807302364c6ed5903880e02908781e2f442821e7a73",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "FINAL_REPORT.md",
+    "sha256": "c1a8a190f39fe03549d3398272e80bdedb0516b2af21d421f8eb8db394a6e1b9",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "FUTURE_UAV.md",
+    "sha256": "1012b2023a8ce7941e7fa2f381a086533cb3859e6823bc82dcfca56f0ff3676c",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "LICENSE",
+    "sha256": "8ed14a854b659add4a753b5947cbb88b8fcd2a9718c0a154735de5320ae0fd07",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "LICENSES/Apache-2.0.txt",
+    "sha256": "959f77033ba56a3b146faf5c02f9162071f2d0bff4b8b6f1c2193a4b41127d39",
+    "origin": "Unmodified upstream permission/license notice; see THIRD_PARTY_NOTICES.md",
+    "license_state": "upstream"
+  },
+  {
+    "file": "LICENSES/CC-BY-4.0.txt",
+    "sha256": "d557539df68e771cc1eedcc91d13f70fca930e508d11eedcafa4b15db49e3744",
+    "origin": "Standard license text; MIT notice personalized on owner confirmation",
+    "license_state": "active for explicit LICENSE_SCOPE.json scopes; no personal claim over license text"
+  },
+  {
+    "file": "LICENSES/DejaVu-font-notice.txt",
+    "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "origin": "Unmodified upstream permission/license notice; see THIRD_PARTY_NOTICES.md",
+    "license_state": "upstream"
+  },
+  {
+    "file": "LICENSES/LicenseRef-Review-Only.txt",
+    "sha256": "259a3a318525ca54ec04c6e1ab8ea8571bc105648fa48a9223d27f8ba678718f",
+    "origin": "Preserved historical staging notice",
+    "license_state": "superseded only for explicitly licensed original scopes"
+  },
+  {
+    "file": "LICENSES/MIT.txt",
+    "sha256": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+    "origin": "Standard license text; MIT notice personalized on owner confirmation",
+    "license_state": "active for explicit LICENSE_SCOPE.json scopes; no personal claim over license text"
+  },
+  {
+    "file": "LICENSES/laspy-BSD-2-Clause.txt",
+    "sha256": "586e5e4d12f36050240d2702abcd3319593f13841440920244f95f15cb83eb63",
+    "origin": "Unmodified upstream permission/license notice; see THIRD_PARTY_NOTICES.md",
+    "license_state": "upstream"
+  },
+  {
+    "file": "LICENSES/lazrs-MIT.txt",
+    "sha256": "52a77551f216940344e34b637e9dad2f69f364a5b8b34b811247ccdaed60a307",
+    "origin": "Unmodified upstream permission/license notice; see THIRD_PARTY_NOTICES.md",
+    "license_state": "upstream"
+  },
+  {
+    "file": "LICENSE_SCOPE.json",
+    "sha256": "67edc8128a0a96f1db31b83b963850939342fadafe2a50388c9fd8f2f6964365",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "PERSONAL_ATTRIBUTION_AND_LICENSING.md",
+    "sha256": "bf07e89e734f971b1b1ed1d1fbbd817f01897c3d357e437a141f0c8a70a57abb",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "PUBLICATION_BLOCKERS.md",
+    "sha256": "7a6d2466d612e78e79c6d4e309182dbdebdbc4fa3a4714d6d94ae65959d63697",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "PUBLICATION_RIGHTS.md",
+    "sha256": "63fa9e535fc84f0d7f67a9fe0a8cde2d225590d438ad4cc27efa7662966997e7",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "PUBLIC_RELEASE_AUDIT.md",
+    "sha256": "82be379ef81f395a209229c7a916eb6943ca7a5198eeb043adbc02dc6deffb50",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "README.md",
+    "sha256": "3f96765b9c6a3b681f9102215bec3127edbaa3604a574dbb199d673736c40deb",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "REPOSITORY_CONTENTS.md",
+    "sha256": "55020581c3b488702ee6a9c46305854655081a90ec1f57761da68d462ab48cf5",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "REPRODUCIBILITY_REPORT.md",
+    "sha256": "8a1ed098f6559967c2f21c0c2c95ac6c52fb8d8880df3a95c3ff16374009a1c9",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "THIRD_PARTY_NOTICES.md",
+    "sha256": "aad45a0c9bde33c414377ad85d27e6f99e65b088d711a344f7644be2899917a4",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "VALIDATION.md",
+    "sha256": "9035301bc02096646aa22b5ef8a936cd760813e91e9ba02fe899ded6d6fae725",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "evidence/attribution_update.json",
+    "sha256": "cdaf4d505191dabf54c4161ee4e5f98b148594e2491fba7a78b0433c87ec0d6e",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/benchmark.json",
+    "sha256": "51c2301407e14600cf1f0853cfefcd2983007c8fd23fb3c1ad03531cc1b57498",
+    "origin": "Sanitized factual transcription of accepted historical device evidence",
+    "license_state": "factual measurements; no personal copyright claimed"
+  },
+  {
+    "file": "evidence/input_preservation.json",
+    "sha256": "cfa79d67710e4f06345144478d2c956345cbfcb0d2d6e0563ae7dca83c6e85ff",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/license_activation.json",
+    "sha256": "52c255f7c19afffe02ebead36192a868f5b596cdef146771f2c1483cd41cf9ef",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/media_manifest.json",
+    "sha256": "8d8d0a70f614f81a7979a5330fe56d06abb737ecf143e5a4e6c765b1e4d2c821",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/model_lineage_summary.json",
+    "sha256": "a3ef774c6edeb64dc377efcfa760ecf45fae033b9727e407ccdaf8fae995efdc",
+    "origin": "Sanitized factual provenance/numerical summaries; no model artifacts",
+    "license_state": "factual records; no personal copyright claimed"
+  },
+  {
+    "file": "evidence/numerical_lineage.json",
+    "sha256": "e7d5f8d66b617760e87038e64fece5bfdbf4275a8851b5ef35606302d61323a4",
+    "origin": "Sanitized factual provenance/numerical summaries; no model artifacts",
+    "license_state": "factual records; no personal copyright claimed"
+  },
+  {
+    "file": "evidence/source_review.json",
+    "sha256": "3b55f82c0e3bdfe3f87c110dc6e1591c66e4802f65f25c56db14494f48a27774",
+    "origin": "Historical source audit; original staging state superseded by license_activation.json",
+    "license_state": "factual identities; no personal copyright claimed; excluded source not licensed"
+  },
+  {
+    "file": "evidence/synthetic_demo.json",
+    "sha256": "a4aeca34d419ec0805d76b1e6654b8466c38419f4ecac317032318f9432e66f6",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/test_results.json",
+    "sha256": "6acf31927c51ccbc0de75fa0bb3da43c395bc6eb21c9a1b281a1a131fe75758b",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "evidence/video_qa.json",
+    "sha256": "44a037a51570271cc0d9b2b9e5ea90a8954a5b0636c89940b3003fc231aabe2b",
+    "origin": "Tuomas Pietil\u00e4-led showcase work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "scope metadata/factual audit records; grants restricted to LICENSE_SCOPE.json originals"
+  },
+  {
+    "file": "media/PERSONAL_CREDITS.md",
+    "sha256": "2f754a93869b01d85b7f1136288b232f8f72b1211f1358a0e507670a57925552",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/pipeline-landscape.png",
+    "sha256": "988c460f256065ab497ac3e05eea027502ad724c2efe90bfca8dc6aa2bac078d",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/pipeline-landscape.svg",
+    "sha256": "008ca5a9486ca9f05a66526f647c3683b1d98acbe4c6dc568a445316d6c0247a",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/pipeline-portrait.png",
+    "sha256": "610f18c212a699d73a2c19890cc8b5bcb6e6c2135f4a9e46ef73f66a999f2f2a",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/pipeline-portrait.svg",
+    "sha256": "59411e6fb9e0a737e590e32cfa7e07a7a02992fb392383a1b957b474e9d07aa4",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/preview.gif",
+    "sha256": "88d09b87a846083766ca488cab66a07d94c96655467f29f7ef7a5222b55892dd",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/synrex-jetson-lidar-r1.mp4",
+    "sha256": "f3a9366f5a42fa5fc4dfd95249b9254385049298214dfac0fbf0696cea0a371c",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "media/thumbnail.png",
+    "sha256": "4b70901b544aa59e5c327a28713d9ca188fc40a973716ad1cc911ae0cbce5ac4",
+    "origin": "Accepted original R1 procedural media; GIF is a documented excerpt",
+    "license_state": "CC-BY-4.0; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "pyproject.toml",
+    "sha256": "443fbe066669ab14fd472e9be4e725361ab46dbfe1f938535608e7c0083f94da",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "requirements-dev.lock",
+    "sha256": "f1374cb4a8bbe471eb545239bee14f19bf2e626cafbc410db22d9da578c2c3d6",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "src/preserve_laz.cpp",
+    "sha256": "e24dde652ecf9568a385ada65882b69d7993b57a9edaacdf6bdd2183b31edca3",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "src/synthetic_laz.py",
+    "sha256": "2c3f9929e42823664a85b036427eebf2a7d2a6a1aa37e16518f594398c13f768",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "src/verify_laz.py",
+    "sha256": "bf16b16c3042ba85592fc171dcec393060d31a2095858856434736764608aa61",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "tests/test_preservation.py",
+    "sha256": "1f112eb8d08e06a07f3ef7e217855c4176205d34e62b07e898cea1f16a6bc119",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "tools/media_preview.py",
+    "sha256": "04dbeb59597f1b483d5f50a952059a719c507674462f332a70687900d907d2c5",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "tools/release_checks.py",
+    "sha256": "08082ca0fe71853993802dba34e4af80c4e74a2a20fca319aab9380ae7fd4018",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  },
+  {
+    "file": "tools/synthetic_demo.py",
+    "sha256": "dfc84368792803bdea47b91f2d867e16c9c4f95f2d5e1e2a9990dcbe596e348e",
+    "origin": "Tuomas Pietil\u00e4-led original work with OpenAI Codex; see LICENSE_SCOPE.json",
+    "license_state": "MIT; original expression only; upstream/facts excluded"
+  }
+]

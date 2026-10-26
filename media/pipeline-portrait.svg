@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+<title id="title">SynRex native LAZ-to-LAZ pipeline, portrait</title>
+<desc id="desc">Verified native four-stage file classification on NVIDIA Jetson AGX Orin. Largest measured file: 2.13 million points in 10.11 seconds. Noncommercial reference model.</desc>
+<rect width="1080" height="1350" fill="#080f1b"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#83edb5"/></marker></defs>
+<text x="64" y="78" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="42" font-weight="700" text-anchor="start">SYNREX</text>
+<text x="64" y="147" fill="#83edb5" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="700" text-anchor="start">VERIFIED ON JETSON AGX ORIN</text>
+<text x="64" y="235" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="62" font-weight="700" text-anchor="start">NATIVE LAZ → LAZ</text>
+<text x="64" y="292" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="36" font-weight="400" text-anchor="start">Already georeferenced input</text>
+<rect x="105" y="337" width="911" height="145" rx="17" fill="#102030" stroke="#64b2ff" stroke-width="2"/>
+<text x="64" y="398" fill="#64b2ff" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="400" text-anchor="start">1</text>
+<text x="137" y="391" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="42" font-weight="700" text-anchor="start">COMPRESSED LAZ INPUT</text>
+<text x="137" y="446" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Native decode · source records</text>
+<line x1="550" y1="486" x2="550" y2="507" stroke="#83edb5" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="105" y="511" width="911" height="145" rx="17" fill="#102030" stroke="#64b2ff" stroke-width="2"/>
+<text x="64" y="572" fill="#64b2ff" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="400" text-anchor="start">2</text>
+<text x="137" y="565" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="38" font-weight="700" text-anchor="start">NATIVE C++ PREPROCESSING</text>
+<text x="137" y="620" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Geometry · compact plan</text>
+<line x1="550" y1="660" x2="550" y2="681" stroke="#83edb5" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="105" y="685" width="911" height="145" rx="17" fill="#102030" stroke="#83edb5" stroke-width="2"/>
+<text x="64" y="746" fill="#83edb5" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="400" text-anchor="start">3</text>
+<text x="137" y="739" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="42" font-weight="700" text-anchor="start">CUDA + TENSORRT FP16</text>
+<text x="137" y="794" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Inference · point scatter</text>
+<line x1="550" y1="834" x2="550" y2="855" stroke="#83edb5" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="105" y="859" width="911" height="145" rx="17" fill="#102030" stroke="#83edb5" stroke-width="2"/>
+<text x="64" y="920" fill="#83edb5" font-family="DejaVu Sans, sans-serif" font-size="32" font-weight="400" text-anchor="start">4</text>
+<text x="137" y="913" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="42" font-weight="700" text-anchor="start">CLASSIFIED LAZ OUTPUT</text>
+<text x="137" y="968" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Native writer · product hash</text>
+<text x="64" y="1074" fill="#83edb5" font-family="DejaVu Sans, sans-serif" font-size="52" font-weight="700" text-anchor="start">2.13M points · 10.11s</text>
+<text x="64" y="1130" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="36" font-weight="400" text-anchor="start">210,318 pts/s · one-shot full-file</text>
+<text x="64" y="1184" fill="#a2b4c8" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Qualified preservation · details in writeup</text>
+<text x="64" y="1241" fill="#ffc16e" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Reference model: noncommercial</text>
+<text x="64" y="1303" fill="#edf4fa" font-family="DejaVu Sans, sans-serif" font-size="34" font-weight="400" text-anchor="start">Engineering · @Juurikko</text>
+</svg>

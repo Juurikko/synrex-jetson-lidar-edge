@@ -1,0 +1,12 @@
+# Copyright (c) 2026 Tuomas Pietilä.
+# SPDX-License-Identifier: CC-BY-4.0
+# This metadata file only; software has MIT licensing. See LICENSE_SCOPE.json.
+cff-version: 1.2.0
+message: "Please credit Tuomas Pietilä for this personal engineering showcase; upstream research and dependencies retain their own attribution."
+type: software
+title: "SynRex: native Jetson LiDAR engineering showcase"
+authors:
+  - family-names: "Pietilä"
+    given-names: "Tuomas"
+url: "https://github.com/Juurikko"
+abstract: "Human-led native LiDAR deployment engineering with OpenAI Codex-assisted coding, testing and documentation. Includes model-free LAZ integrity tools; it does not claim authorship of upstream algorithms, models or datasets."
