@@ -559,7 +559,7 @@
   },
   {
     "file": "tools/qualify_dense_gpu.py",
-    "sha256": "481dd9d86d9e4708cf7eec93d5cde6c2e365effe2f739d3b3d8a74c203131a05",
+    "sha256": "0b1a88175f2756df785787132a486be2f362cb0e7f8bd5003437741b880127ac",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

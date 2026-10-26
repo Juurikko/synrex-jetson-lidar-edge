@@ -70,6 +70,17 @@ def qualify(args) -> int:
         return result
 
     def available(name):
+        # NVML utilization is sampled over a past interval, which may include our
+        # immediately preceding completed invocation. Wait without GPU work for
+        # that sample to settle; never wait through a reported competing process.
+        for attempt in range(8):
+            if idle_sample(f"{name}-{attempt}"):
+                return
+            if attempt < 7:
+                time.sleep(1)
+        raise RuntimeError("GPU remained busy; no competing work started")
+
+    def idle_sample(name):
         sample = command(
             name,
             [
@@ -86,8 +97,10 @@ def qualify(args) -> int:
         if len(rows) != 1:
             raise RuntimeError("qualification requires one visible NVIDIA GPU")
         gpu, free, utilization = [s.strip() for s in rows[0].split(",")]
-        if workloads.stdout.strip() or int(free) < 2048 or int(utilization) > 5:
-            raise RuntimeError("GPU busy or resources uncertain; no competing work started")
+        if workloads.stdout.strip() or int(free) < 2048:
+            raise RuntimeError(
+                "GPU workload reported or insufficient memory; no competing work started"
+            )
         report.setdefault("resource_samples", []).append(
             {
                 "gpu": gpu,
@@ -96,6 +109,7 @@ def qualify(args) -> int:
                 "reported_compute_processes": [],
             }
         )
+        return int(utilization) <= 5
 
     native = args.native.resolve()
     try:
