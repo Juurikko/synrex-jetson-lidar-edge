@@ -6,6 +6,7 @@
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 #include <algorithm>
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -32,6 +33,22 @@ struct Stream {
             cudaStreamSynchronize(value);
             cudaStreamDestroy(value);
         }
+    }
+};
+struct Event {
+    cudaEvent_t value{};
+    Event() { cuda_check(cudaEventCreate(&value)); }
+    ~Event() {
+        if (value)
+            cudaEventDestroy(value);
+    }
+    Event(const Event &) = delete;
+    Event &operator=(const Event &) = delete;
+    void record(cudaStream_t stream) { cuda_check(cudaEventRecord(value, stream)); }
+    double seconds_since(const Event &start) const {
+        float milliseconds{};
+        cuda_check(cudaEventElapsedTime(&milliseconds, start.value, value));
+        return static_cast<double>(milliseconds) / 1000;
     }
 };
 class Buffer {
@@ -140,7 +157,9 @@ void build_engine(const Package &package, const fs::path &output) {
               << '\n';
 }
 std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point> &points,
-                                const Plan &plan) {
+                                const Plan &plan, InferenceMetrics *metrics) {
+    const auto initialized_at = std::chrono::steady_clock::now();
+    InferenceMetrics measured;
     require(package.manifest.at("target") == target_info(),
             "engine target mismatch; rebuild and package on this target");
     const auto serialized = read_model(package.artifact("engine"));
@@ -187,7 +206,8 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     source_ids.reserve(capacity);
     voxel_ids.reserve(capacity);
     group_list.reserve(capacity);
-    // Declared last so exceptions synchronize before any device or host buffers are released.
+    Event prepared_start, prepared_end, inference_end, postprocess_end;
+    // Declared last so exceptions synchronize before any device/host buffers or events release.
     Stream stream;
     device_points.upload(gpu_points, stream.value);
     device_features.upload(features, stream.value);
@@ -197,6 +217,9 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     require(context->setTensorAddress(c.input_name.c_str(), input.data()) &&
                 context->setTensorAddress(c.output_name.c_str(), output.data()),
             "TensorRT tensor binding failed");
+    cuda_check(cudaStreamSynchronize(stream.value));
+    measured.initialization_and_upload_seconds =
+        std::chrono::duration<double>(std::chrono::steady_clock::now() - initialized_at).count();
     for (const auto &b : plan.blocks) {
         source_ids.clear();
         voxel_ids.clear();
@@ -215,21 +238,29 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         voxels.upload(voxel_ids, stream.value);
         groups.upload(group_list, stream.value);
         cuda_check(cudaMemsetAsync(input.data(), 0, input_bytes, stream.value));
+        prepared_start.record(stream.value);
         prepare_cuda(input.data(), input_half, c.voxels, device_points.as<GpuPoint>(),
                      ids.as<std::uint32_t>(), groups.as<GpuGroup>(),
                      static_cast<unsigned>(group_list.size()), device_features.as<GpuFeature>(),
                      static_cast<unsigned>(features.size()),
                      {{b.origin[0], b.origin[1], b.origin[2]}}, bad.as<int>(), stream.value);
         cuda_check(cudaGetLastError());
+        prepared_end.record(stream.value);
         require(context->enqueueV3(stream.value), "TensorRT enqueueV3 failed");
+        inference_end.record(stream.value);
         scatter_cuda(output.data(), output_half, c.voxels,
                      static_cast<unsigned>(c.las_classes.size()), ids.as<std::uint32_t>(),
                      voxels.as<std::uint32_t>(), static_cast<unsigned>(b.members.size()),
                      mapping.as<std::uint8_t>(), labels.as<std::uint32_t>(),
                      c.policy == "first_wins", bad.as<int>(), stream.value);
         cuda_check(cudaGetLastError());
+        postprocess_end.record(stream.value);
         cuda_check(
             cudaStreamSynchronize(stream.value)); // Also owns lifetime of host upload vectors.
+        measured.cuda_preparation_seconds += prepared_end.seconds_since(prepared_start);
+        measured.tensorrt_inference_seconds += inference_end.seconds_since(prepared_end);
+        measured.cuda_postprocessing_seconds += postprocess_end.seconds_since(inference_end);
+        ++measured.completed_inference_blocks;
     }
     int invalid{};
     std::vector<std::uint32_t> result(points.size());
@@ -242,6 +273,8 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         require(label <= 255, "source point was not reconstructed");
         mapped.push_back(static_cast<std::uint8_t>(label));
     }
+    if (metrics)
+        *metrics = measured;
     return mapped;
 }
 } // namespace synrex

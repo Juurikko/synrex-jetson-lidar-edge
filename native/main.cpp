@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/runtime.hpp"
+#include <chrono>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -43,6 +44,11 @@ void usage() {
 } // namespace
 int main(int argc, char **argv) {
     using namespace synrex;
+    using Clock = std::chrono::steady_clock;
+    const auto invocation_start = Clock::now();
+    const auto seconds = [](Clock::time_point start, Clock::time_point end) {
+        return std::chrono::duration<double>(end - start).count();
+    };
     try {
         if (argc < 2) {
             usage();
@@ -103,25 +109,45 @@ int main(int argc, char **argv) {
         const fs::path input(get("--input"));
         if (command == "classify")
             require(gpu_enabled(), "CUDA/TensorRT backend not built; inference NOT_RUN");
+        const auto decode_start = Clock::now();
         const auto points = decode(input, package.contract);
+        const auto geometry_start = Clock::now();
         const auto plan = geometry(points, package.contract);
+        const auto preprocessing_end = Clock::now();
         if (command == "plan") {
             write_new(output, describe_plan(points, plan, package.contract).dump(2) + "\n");
             return 0;
         }
-        auto labels = infer(package, points, plan);
+        InferenceMetrics metrics;
+        auto labels = infer(package, points, plan, &metrics);
         require(labels.size() == points.size(), "inference label count mismatch");
         Scratch scratch(output);
         write_new(scratch.labels(),
                   std::string(reinterpret_cast<const char *>(labels.data()), labels.size()));
+        const auto encode_start = Clock::now();
         const auto changed = apply_labels(input, scratch.labels(), output);
+        const auto encode_end = Clock::now();
+        const auto output_hash = sha256(output);
+        const auto total_end = Clock::now();
         std::cout << Json{{"status", "PASS"},
                           {"backend", "CUDA/TensorRT"},
                           {"points", points.size()},
                           {"blocks", plan.blocks.size()},
                           {"memberships", plan.memberships},
                           {"changed", changed},
-                          {"output_sha256", sha256(output)}}
+                          {"output_sha256", output_hash},
+                          {"completed_inference_blocks", metrics.completed_inference_blocks},
+                          {"timings_seconds",
+                           {{"laz_decode_cpu", seconds(decode_start, geometry_start)},
+                            {"geometry_cpu", seconds(geometry_start, preprocessing_end)},
+                            {"preprocessing_cpu", seconds(decode_start, preprocessing_end)},
+                            {"gpu_initialization_and_initial_upload",
+                             metrics.initialization_and_upload_seconds},
+                            {"cuda_tensor_preparation", metrics.cuda_preparation_seconds},
+                            {"tensorrt_inference", metrics.tensorrt_inference_seconds},
+                            {"cuda_postprocessing", metrics.cuda_postprocessing_seconds},
+                            {"laz_encoding_and_preservation", seconds(encode_start, encode_end)},
+                            {"end_to_end", seconds(invocation_start, total_end)}}}}
                          .dump(2)
                   << '\n';
         return 0;

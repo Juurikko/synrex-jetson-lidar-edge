@@ -66,6 +66,13 @@ Json describe_plan(const std::vector<Point> &points, const Plan &plan, const Con
 bool gpu_enabled();
 Json target_info();
 void build_engine(const Package &package, const fs::path &output);
+struct InferenceMetrics {
+    double initialization_and_upload_seconds{};
+    double cuda_preparation_seconds{};
+    double tensorrt_inference_seconds{};
+    double cuda_postprocessing_seconds{};
+    std::uint64_t completed_inference_blocks{};
+};
 std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point> &points,
-                                const Plan &plan);
+                                const Plan &plan, InferenceMetrics *metrics = nullptr);
 } // namespace synrex

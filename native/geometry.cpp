@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
-// Original generic bounded tiling, deliberately distinct from model-specific geometry.
+// Generic regular-grid adapter, design-informed by prior SynRex work.
+// Provenance boundaries: docs/byom/PROVENANCE_REVIEW_R1.md. No clean-room claim.
 #include "synrex/runtime.hpp"
 #include <algorithm>
 #include <cmath>
