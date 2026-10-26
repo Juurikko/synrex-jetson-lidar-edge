@@ -98,7 +98,7 @@ def main():
         "dataset": "IGNF/FRACTAL",
         "revision": REVISION,
         "license": "etalab-2.0",
-        "selection": "lexicographically first requested LAZ members of split archive 00; pilot only",
+        "selection": "first sorted requested LAZ members of split archive 00; pilot only",
         "files": {},
     }
     for split in ("train", "val", "test"):

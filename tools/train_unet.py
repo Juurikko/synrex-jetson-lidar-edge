@@ -124,7 +124,10 @@ def main():
             if random.random() < 0.5:
                 bx, by = bx.flip(-1), by.flip(-1)
             optimizer.zero_grad(set_to_none=True)
-            loss = criterion(net(bx), by)
+            # Flatten occupied observations to the deterministic 1-D NLL path.
+            # PyTorch 2.9 rejects CUDA NLLLoss2d with strict determinism enabled.
+            logits = net(bx).permute(0, 2, 3, 4, 1).reshape(-1, 7)
+            loss = criterion(logits, by.reshape(-1))
             loss.backward()
             optimizer.step()
             losses.append(loss.item())
