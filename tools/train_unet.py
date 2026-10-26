@@ -52,7 +52,11 @@ def model(source):
 
 def load_split(data, split, spec):
     xs, ys, files = [], [], []
-    for path in sorted((data / split).glob("*.laz")):
+    manifest = json.loads((data / "dataset.json").read_text())
+    paths = sorted(
+        data / split / Path(row["member"]).name for row in manifest["files"][split]["tiles"]
+    )
+    for path in paths:
         files.append({"file": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
         for b in blocks(path, spec):
             if np.count_nonzero(b["labels"] >= 0) >= 32:

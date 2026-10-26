@@ -112,6 +112,12 @@ def main():
         "selection": "deterministic sorted member selection recorded per split; bounded pilot",
         "files": {},
     }
+    previous = args.out / "dataset.json"
+    if previous.exists():
+        prior = json.loads(previous.read_text())
+        if prior["revision"] != REVISION:
+            raise ValueError("refusing to mix dataset revisions")
+        receipt["files"] = prior["files"]
     for split in args.splits:
         count = getattr(args, split)
         if not 1 <= count <= 1000:
