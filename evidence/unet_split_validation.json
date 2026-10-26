@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "check": "No positive-area XY bounding-box overlap across pilot splits; no test data used by training",
+  "points": {
+    "train": 20711690,
+    "val": 1962809,
+    "test": 2586115
+  },
+  "tiles": {
+    "train": 256,
+    "val": 32,
+    "test": 32
+  },
+  "source_selection_sha256": "aa57d5296d3f241bb08b4e161d9594a3a36bd9b2dd8ba34a4ecc0f8d05e580b1"
+}

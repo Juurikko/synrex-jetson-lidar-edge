@@ -18,6 +18,7 @@ import zlib
 from pathlib import Path
 
 REVISION = "36e00245ef92fd180f655f6ee410f2e935693cc2"
+SOURCE_LAST_MODIFIED = "2025-04-05T09:37:48.000Z"
 BASE = f"https://huggingface.co/datasets/IGNF/FRACTAL/resolve/{REVISION}"
 
 
@@ -97,6 +98,8 @@ def main():
     receipt = {
         "dataset": "IGNF/FRACTAL",
         "revision": REVISION,
+        "source_last_modified": SOURCE_LAST_MODIFIED,
+        "retrieved": "2026-10-26",
         "license": "etalab-2.0",
         "selection": "first sorted requested LAZ members of split archive 00; pilot only",
         "files": {},

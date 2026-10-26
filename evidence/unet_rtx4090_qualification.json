@@ -1,0 +1,1985 @@
+{
+  "status": "PASS",
+  "quality_gate": "common ground/vegetation/building mIoU >=0.50; accuracy > training-majority baseline +0.10",
+  "quality_gate_pass": true,
+  "numerical_gate_pass": true,
+  "native_sha256_before_and_after_model_switch": "e14ee5b059c8c266398ee7f7560f3204f6fe5b956eb3aa832d38d3757faba334",
+  "source_commit": "dc3f3630dc72c2c76139787bd4dfd7c09a1e0e42",
+  "onnx_fp32_sha256": "1542382fda7f24721c42c8bedac593ea95a3141fd805cd3291082afaedcc6516",
+  "onnx_fp16_sha256": "478df586d4f086f4dde8a624918fdbc40a7eb46a57adffa3117567921a324c2b",
+  "engine_sha256": "e27bffc7aa7db14a083c483114b3c804f3a9f0c1ecfd062ffd0dacbe9f608878",
+  "numerical": {
+    "torch_onnx_max_abs": 4.506111145019531e-05,
+    "fp32_fp16_max_abs": 0.34098124504089355,
+    "values": 29818880,
+    "point_disagreements": 687,
+    "scored_points": 2585959,
+    "compared_points": 2586115,
+    "blocks": 130,
+    "rmse": 0.019625086400062726,
+    "point_label_agreement": 0.9997343505605899
+  },
+  "held_out_point_metrics": {
+    "confusion": [
+      [
+        5095,
+        2545,
+        3027,
+        1210,
+        0,
+        0,
+        23
+      ],
+      [
+        940,
+        1133383,
+        15452,
+        1653,
+        279,
+        0,
+        0
+      ],
+      [
+        9538,
+        173480,
+        1137892,
+        14524,
+        110,
+        0,
+        148
+      ],
+      [
+        806,
+        1498,
+        1843,
+        79281,
+        0,
+        0,
+        4
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        65,
+        752,
+        139,
+        1997,
+        0,
+        0,
+        0
+      ],
+      [
+        8,
+        0,
+        2,
+        0,
+        0,
+        0,
+        265
+      ]
+    ],
+    "support": [
+      11900,
+      1151707,
+      1335692,
+      83432,
+      0,
+      2953,
+      275
+    ],
+    "iou": [
+      0.21907382723481103,
+      0.852179202425296,
+      0.8390574823674285,
+      0.7710959383753502,
+      0.0,
+      0.0,
+      0.5888888888888889
+    ],
+    "mean_iou_present": 0.4671850484702535,
+    "ground_vegetation_building_mean_iou": 0.8207775410560249,
+    "accuracy": 0.9110415130324959
+  },
+  "fp32_point_metrics": {
+    "confusion": [
+      [
+        5113,
+        2543,
+        3030,
+        1191,
+        0,
+        0,
+        23
+      ],
+      [
+        928,
+        1133229,
+        15625,
+        1646,
+        279,
+        0,
+        0
+      ],
+      [
+        9488,
+        173235,
+        1138269,
+        14442,
+        110,
+        0,
+        148
+      ],
+      [
+        809,
+        1498,
+        1860,
+        79261,
+        0,
+        0,
+        4
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        65,
+        768,
+        139,
+        1981,
+        0,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        2,
+        0,
+        0,
+        0,
+        266
+      ]
+    ],
+    "support": [
+      11900,
+      1151707,
+      1335692,
+      83432,
+      0,
+      2953,
+      275
+    ],
+    "iou": [
+      0.22041643315946027,
+      0.852211429057019,
+      0.8392160419007512,
+      0.7718322751528843,
+      0.0,
+      0.0,
+      0.5911111111111111
+    ],
+    "mean_iou_present": 0.4678267557687466,
+    "ground_vegetation_building_mean_iou": 0.8210865820368848,
+    "accuracy": 0.9111273612613348
+  },
+  "training_majority_baseline": {
+    "confusion": [
+      [
+        0,
+        0,
+        11900,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1151707,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1335692,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        83432,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2953,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        275,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "support": [
+      11900,
+      1151707,
+      1335692,
+      83432,
+      0,
+      2953,
+      275
+    ],
+    "iou": [
+      0.0,
+      0.0,
+      0.5165170832174834,
+      0.0,
+      null,
+      0.0,
+      0.0
+    ],
+    "mean_iou_present": 0.08608618053624723,
+    "ground_vegetation_building_mean_iou": 0.17217236107249445,
+    "accuracy": 0.5165170832174834
+  },
+  "voxel_collision_upper_bound": {
+    "confusion": [
+      [
+        10357,
+        1331,
+        108,
+        56,
+        0,
+        48,
+        0
+      ],
+      [
+        456,
+        1130540,
+        20460,
+        177,
+        0,
+        74,
+        0
+      ],
+      [
+        195,
+        42439,
+        1292706,
+        352,
+        0,
+        0,
+        0
+      ],
+      [
+        43,
+        940,
+        307,
+        82142,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        30,
+        28,
+        0,
+        0,
+        0,
+        2895,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        275
+      ]
+    ],
+    "support": [
+      11900,
+      1151707,
+      1335692,
+      83432,
+      0,
+      2953,
+      275
+    ],
+    "iou": [
+      0.8204214195183777,
+      0.9449159802581816,
+      0.9529245514596772,
+      0.9776830879464871,
+      null,
+      0.9414634146341463,
+      1.0
+    ],
+    "mean_iou_present": 0.939568075636145,
+    "ground_vegetation_building_mean_iou": 0.9585078732214486,
+    "accuracy": 0.9740738348906537
+  },
+  "test_points": 2586115,
+  "test_tiles": 32,
+  "class_mapping": [
+    1,
+    2,
+    5,
+    6,
+    9,
+    17,
+    64
+  ],
+  "native_no_python": "PASS: PATH=/nonexistent, empty PYTHONPATH, loader inspected every test invocation",
+  "repeatability": {
+    "status": "PASS",
+    "native": {
+      "backend": "CUDA/TensorRT",
+      "blocks": 4,
+      "changed": 53835,
+      "completed_inference_blocks": 4,
+      "gpu_memory_bytes": {
+        "free_after_allocation": 24058527744,
+        "free_before_initialization": 24104665088,
+        "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+      },
+      "memberships": 107172,
+      "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+      "points": 107172,
+      "status": "PASS",
+      "timings_seconds": {
+        "cuda_postprocessing": 2.7520000003278255e-05,
+        "cuda_tensor_preparation": 0.0026959680300205945,
+        "end_to_end": 0.365986076,
+        "geometry_cpu": 0.015106791,
+        "gpu_initialization_and_initial_upload": 0.224637759,
+        "laz_decode_cpu": 0.044055176,
+        "laz_encoding_and_preservation": 0.072691729,
+        "preprocessing_cpu": 0.059161967,
+        "tensorrt_inference": 0.0008623040020465851
+      }
+    }
+  },
+  "same_runtime_original_conv3d": {
+    "native": {
+      "backend": "CUDA/TensorRT",
+      "blocks": 18,
+      "changed": 50013,
+      "completed_inference_blocks": 18,
+      "gpu_memory_bytes": {
+        "free_after_allocation": 24069013504,
+        "free_before_initialization": 24104665088,
+        "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+      },
+      "memberships": 64074,
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "points": 50013,
+      "status": "PASS",
+      "timings_seconds": {
+        "cuda_postprocessing": 8.294399967417118e-05,
+        "cuda_tensor_preparation": 0.0003790400009602309,
+        "end_to_end": 0.31290921,
+        "geometry_cpu": 0.008836421,
+        "gpu_initialization_and_initial_upload": 0.189328381,
+        "laz_decode_cpu": 0.041570468,
+        "laz_encoding_and_preservation": 0.066861348,
+        "preprocessing_cpu": 0.050406889,
+        "tensorrt_inference": 8.611199865117669e-05
+      }
+    },
+    "independent": {
+      "status": "PASS",
+      "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+      "points": 50013,
+      "classification_records_changed": 50013,
+      "point_order_and_nonclassification_bytes_exact": true,
+      "public_header_non_laszip_vlrs_and_padding_exact": true,
+      "source_sha256": "a15fe3fc05fe8cf6d2d7f2974918d152756be5ca0b17bf99a53f25fca61f866c",
+      "output_sha256": "2230895f034708d78ef52a23533c42ae29be8f9a7f7f7aa82262ce6a48d81cb0",
+      "canonical_nonclassification_sha256": "b5bd9ddd61d476e5107d01ff44a97e1e0d6b7bb7b980be6015d9f7402aca6f1d",
+      "classification_sha256": "7794ebb0fba2d8d5091ebcf41547879b5f7c5709c4ce1f9f5a1963d86db3acbb"
+    }
+  },
+  "mean_file_timings_seconds": {
+    "cuda_postprocessing": 2.7078999803052286e-05,
+    "cuda_tensor_preparation": 0.0015819600091053871,
+    "end_to_end": 0.3036745558125,
+    "geometry_cpu": 0.01095560634375,
+    "gpu_initialization_and_initial_upload": 0.1992822171875,
+    "laz_decode_cpu": 0.0316778499375,
+    "laz_encoding_and_preservation": 0.0538640123125,
+    "preprocessing_cpu": 0.042633456281249996,
+    "tensorrt_inference": 0.0010516889989376067
+  },
+  "aggregate_points_per_second_including_per_file_initialization": 266127.31360970164,
+  "files": [
+    {
+      "source": "TEST-0436_6384-002325248.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 53835,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 107172,
+        "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+        "points": 107172,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.6624000165611507e-05,
+          "cuda_tensor_preparation": 0.0016967360414564608,
+          "end_to_end": 0.35432983,
+          "geometry_cpu": 0.01455809,
+          "gpu_initialization_and_initial_upload": 0.220288879,
+          "laz_decode_cpu": 0.04117147,
+          "laz_encoding_and_preservation": 0.069054451,
+          "preprocessing_cpu": 0.05572956,
+          "tensorrt_inference": 0.0013055679798126222
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 107172,
+        "classification_records_changed": 53835,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "d80abb99a278eec90300d074ecada13a676a2f4f8b53dfad5544d90503cb0f3c",
+        "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+        "canonical_nonclassification_sha256": "f86ee211dd2d0778b6c50ac526341f47d11c27b78653a3364fea8e4a69c9aaa6",
+        "classification_sha256": "cf14da7021f2528e17e4f1c409a738722591423dd72e4c7ae23542b6d09c66ce"
+      },
+      "labels_sha256": "cf14da7021f2528e17e4f1c409a738722591423dd72e4c7ae23542b6d09c66ce",
+      "predicted_class_histogram": {
+        "2": 65121,
+        "5": 42051
+      }
+    },
+    {
+      "source": "TEST-0436_6384-002325312.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 7264,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 112088,
+        "output_sha256": "66346ea1716cf295f1231a8e4eba41c1ae9d1a1fc32f241815254b004c52bf95",
+        "points": 112088,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.5567999575287106e-05,
+          "cuda_tensor_preparation": 0.0015061439462006091,
+          "end_to_end": 0.349169029,
+          "geometry_cpu": 0.015038661,
+          "gpu_initialization_and_initial_upload": 0.207405057,
+          "laz_decode_cpu": 0.04725306,
+          "laz_encoding_and_preservation": 0.071441541,
+          "preprocessing_cpu": 0.062291721,
+          "tensorrt_inference": 0.0008235200196504592
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 112088,
+        "classification_records_changed": 7264,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "623bda360e8b4b4a4508da0f1f170e3616d57690c585380dc0259ec6fde4dc19",
+        "output_sha256": "66346ea1716cf295f1231a8e4eba41c1ae9d1a1fc32f241815254b004c52bf95",
+        "canonical_nonclassification_sha256": "76b2124b14876c372e42f6bf0ae46918bb5a89ab2124f45aa138f55dc161bf75",
+        "classification_sha256": "093d3c9463172b15de6fc5293bd3a6cfc75f217ab07dbc072026d23544cb9ea2"
+      },
+      "labels_sha256": "093d3c9463172b15de6fc5293bd3a6cfc75f217ab07dbc072026d23544cb9ea2",
+      "predicted_class_histogram": {
+        "1": 2678,
+        "2": 47621,
+        "5": 44763,
+        "6": 16995,
+        "64": 31
+      }
+    },
+    {
+      "source": "TEST-0436_6385-003103854.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 38375,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24054333440,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 151472,
+        "output_sha256": "f11650848e726404a0cbd48d2cbb457a01e0481d7deea13dcbe0ca4a3a22eeff",
+        "points": 151472,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.7295999694615604e-05,
+          "cuda_tensor_preparation": 0.0013702400363981725,
+          "end_to_end": 0.388951922,
+          "geometry_cpu": 0.02094595,
+          "gpu_initialization_and_initial_upload": 0.203772597,
+          "laz_decode_cpu": 0.056974797,
+          "laz_encoding_and_preservation": 0.097594091,
+          "preprocessing_cpu": 0.077920747,
+          "tensorrt_inference": 0.0011143359988927842
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 151472,
+        "classification_records_changed": 38375,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "5dac2aab125b82053ed2dd518d584b14ac51cea13de5ac6c4661100c7a449b71",
+        "output_sha256": "f11650848e726404a0cbd48d2cbb457a01e0481d7deea13dcbe0ca4a3a22eeff",
+        "canonical_nonclassification_sha256": "eed2ca7396fdac53d99085f91fc2373e35335907734dc20293e742d1de8b9f3a",
+        "classification_sha256": "a228a8893f0275f073373e54c6aed09369c95dfbc53668ff7213ce1d8f20f047"
+      },
+      "labels_sha256": "a228a8893f0275f073373e54c6aed09369c95dfbc53668ff7213ce1d8f20f047",
+      "predicted_class_histogram": {
+        "2": 32100,
+        "5": 119372
+      }
+    },
+    {
+      "source": "TEST-0436_6388-003076166.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 44854,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24056430592,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 118074,
+        "output_sha256": "c981b974008dd1e40a36b50fdf57043baaa3f20d5a27d0eede960ee96a249814",
+        "points": 118074,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.6304000057280065e-05,
+          "cuda_tensor_preparation": 0.0013648959659039973,
+          "end_to_end": 0.347968461,
+          "geometry_cpu": 0.01611953,
+          "gpu_initialization_and_initial_upload": 0.202835672,
+          "laz_decode_cpu": 0.044910848,
+          "laz_encoding_and_preservation": 0.07631814,
+          "preprocessing_cpu": 0.061030378,
+          "tensorrt_inference": 0.0008061439990997315
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 118074,
+        "classification_records_changed": 44854,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "6a5e61332b0184b23376ee9a82f5903620b11c6443d96d143fd03b7c685139df",
+        "output_sha256": "c981b974008dd1e40a36b50fdf57043baaa3f20d5a27d0eede960ee96a249814",
+        "canonical_nonclassification_sha256": "2fe17ae3ac2e0332695154daecc6f8678d7034ec13693f917e1516550652aed6",
+        "classification_sha256": "cedb4389367d2d721a1442a51bab2461e1fa8045066da4e86da9cbf171d6baf1"
+      },
+      "labels_sha256": "cedb4389367d2d721a1442a51bab2461e1fa8045066da4e86da9cbf171d6baf1",
+      "predicted_class_histogram": {
+        "1": 1318,
+        "2": 53169,
+        "5": 63376,
+        "6": 130,
+        "64": 81
+      }
+    },
+    {
+      "source": "TEST-0436_6390-003179399.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 6076,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24056430592,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 120104,
+        "output_sha256": "5c16ca1a6b80c5966b98e6122ee3f25961c387fd2733f53b8edefdfad79b375b",
+        "points": 120104,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 3.5808000247925514e-05,
+          "cuda_tensor_preparation": 0.0021557119470089676,
+          "end_to_end": 0.364854238,
+          "geometry_cpu": 0.01622628,
+          "gpu_initialization_and_initial_upload": 0.215024703,
+          "laz_decode_cpu": 0.04769171,
+          "laz_encoding_and_preservation": 0.07660998,
+          "preprocessing_cpu": 0.06391799,
+          "tensorrt_inference": 0.0009039680063724517
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 120104,
+        "classification_records_changed": 6076,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "7729bea301f76fcd34984a6d059954356ee9c783893fcc7b5c8e1da364bfe653",
+        "output_sha256": "5c16ca1a6b80c5966b98e6122ee3f25961c387fd2733f53b8edefdfad79b375b",
+        "canonical_nonclassification_sha256": "13d1a21abc4aba70a56d6737d0ce10c373c2393fec84440b1f122a26af414939",
+        "classification_sha256": "895b2cdf2c09dc6fb7938ce6ad006f39a904714e9b4ddf40c0a8c4bace941f45"
+      },
+      "labels_sha256": "895b2cdf2c09dc6fb7938ce6ad006f39a904714e9b4ddf40c0a8c4bace941f45",
+      "predicted_class_histogram": {
+        "1": 1077,
+        "2": 116614,
+        "5": 2413
+      }
+    },
+    {
+      "source": "TEST-0436_6391-003259247.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 3032,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24054333440,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 131462,
+        "output_sha256": "164ebb7a6a2f0341a2616f52fe1e379ae61da63f6889802dc034a1e1b10edb81",
+        "points": 131462,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.7456000447273257e-05,
+          "cuda_tensor_preparation": 0.0021413760762661696,
+          "end_to_end": 0.362896843,
+          "geometry_cpu": 0.01803306,
+          "gpu_initialization_and_initial_upload": 0.199342652,
+          "laz_decode_cpu": 0.048591671,
+          "laz_encoding_and_preservation": 0.086954321,
+          "preprocessing_cpu": 0.066624731,
+          "tensorrt_inference": 0.0009072639942169189
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 131462,
+        "classification_records_changed": 3032,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "ed0d76ad7454f53736b70a6ee8dc3ed6760fd5eadbd837d0482adbfe05feba24",
+        "output_sha256": "164ebb7a6a2f0341a2616f52fe1e379ae61da63f6889802dc034a1e1b10edb81",
+        "canonical_nonclassification_sha256": "2ad611819cf2051ca47f5cde0a357c5c1f1d9bd88787da8a7c00ef5ded473f97",
+        "classification_sha256": "69b48a9ba1f990dca5435c7d6027f8763bbd87f530dc3690e3c045e7aa37d7f9"
+      },
+      "labels_sha256": "69b48a9ba1f990dca5435c7d6027f8763bbd87f530dc3690e3c045e7aa37d7f9",
+      "predicted_class_histogram": {
+        "2": 3080,
+        "5": 128382
+      }
+    },
+    {
+      "source": "TEST-0436_6397-002459059.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 40,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 75348,
+        "output_sha256": "1578aad51b193366a1a1448c6fa9a10ad3d0bfc58221c8ced893e38ed5428aa7",
+        "points": 75348,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.6624000165611507e-05,
+          "cuda_tensor_preparation": 0.0015452479813247919,
+          "end_to_end": 0.285492504,
+          "geometry_cpu": 0.00975977,
+          "gpu_initialization_and_initial_upload": 0.194788565,
+          "laz_decode_cpu": 0.026546391,
+          "laz_encoding_and_preservation": 0.045560678,
+          "preprocessing_cpu": 0.036306161,
+          "tensorrt_inference": 0.001506144016981125
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 75348,
+        "classification_records_changed": 40,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "5715f46d32607785e55ea48f6755c2e9840034b7b0a2bd00e7b2197951ae65e3",
+        "output_sha256": "1578aad51b193366a1a1448c6fa9a10ad3d0bfc58221c8ced893e38ed5428aa7",
+        "canonical_nonclassification_sha256": "ee6aa0f8c31dd50c90b89f01d9c55fb050caabb5980b651a98ab3baaae5ead63",
+        "classification_sha256": "7b2e536e2a886d9ce0f8fcca11c15701ea464858954688008acdc4728b5ce688"
+      },
+      "labels_sha256": "7b2e536e2a886d9ce0f8fcca11c15701ea464858954688008acdc4728b5ce688",
+      "predicted_class_histogram": {
+        "2": 75348
+      }
+    },
+    {
+      "source": "TEST-0437_6385-002348200.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 1678,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 75146,
+        "output_sha256": "efe9db6db23ec759176aa206c672c83354a8c34f39cbc8f98e892183da5ec2b3",
+        "points": 75146,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.3775999434292316e-05,
+          "cuda_tensor_preparation": 0.0013445120472460985,
+          "end_to_end": 0.29370651,
+          "geometry_cpu": 0.01007525,
+          "gpu_initialization_and_initial_upload": 0.192242351,
+          "laz_decode_cpu": 0.030333931,
+          "laz_encoding_and_preservation": 0.05326891,
+          "preprocessing_cpu": 0.040409181,
+          "tensorrt_inference": 0.0011130879670381546
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 75146,
+        "classification_records_changed": 1678,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "43c7051d227bad35d0fc594162063498e8366f8f59553ec9d44107272242be2f",
+        "output_sha256": "efe9db6db23ec759176aa206c672c83354a8c34f39cbc8f98e892183da5ec2b3",
+        "canonical_nonclassification_sha256": "8c101feb15ccc35238ebcf19c1ba1a77557ed0ac7b5f83601394941730ccc287",
+        "classification_sha256": "b6001c59ff0ddfdb582ed18c8c804e8cc1e48a76db1977b429695cdd751ac9c6"
+      },
+      "labels_sha256": "b6001c59ff0ddfdb582ed18c8c804e8cc1e48a76db1977b429695cdd751ac9c6",
+      "predicted_class_histogram": {
+        "1": 156,
+        "2": 13119,
+        "5": 58103,
+        "6": 3511,
+        "9": 256,
+        "64": 1
+      }
+    },
+    {
+      "source": "TEST-0437_6386-002409558.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 22303,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24054333440,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 163226,
+        "output_sha256": "1d5dce813a4ba90e9f565364f8d0a4ecdd282b5ac7784206bd2c4a95fd69afb2",
+        "points": 163226,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.9920000582933426e-05,
+          "cuda_tensor_preparation": 0.001341439951211214,
+          "end_to_end": 0.394556124,
+          "geometry_cpu": 0.022876575,
+          "gpu_initialization_and_initial_upload": 0.195006376,
+          "laz_decode_cpu": 0.060756581,
+          "laz_encoding_and_preservation": 0.106837358,
+          "preprocessing_cpu": 0.083633156,
+          "tensorrt_inference": 0.0007809280008077621
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 163226,
+        "classification_records_changed": 22303,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "d978b2abe21243dc412a860822b6c62022ab52dcf07a8a2372f2d32753dedbb1",
+        "output_sha256": "1d5dce813a4ba90e9f565364f8d0a4ecdd282b5ac7784206bd2c4a95fd69afb2",
+        "canonical_nonclassification_sha256": "01f765834bc8b31bfba218206d026ccf5fff352fdd40a0696abeb8b7a170e149",
+        "classification_sha256": "25bea5d4c11a2e22208bcddb46a15cab8c96f56fae50fa5d2d7d34229b473819"
+      },
+      "labels_sha256": "25bea5d4c11a2e22208bcddb46a15cab8c96f56fae50fa5d2d7d34229b473819",
+      "predicted_class_histogram": {
+        "1": 16,
+        "2": 15895,
+        "5": 147315
+      }
+    },
+    {
+      "source": "TEST-0437_6387-002227829.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 2723,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 38592,
+        "output_sha256": "9d03d184671a28ac0853412c49347911c587a0a598fabbcb7ab18be58cae66d7",
+        "points": 38592,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 3.5999999847263094e-05,
+          "cuda_tensor_preparation": 0.0014551040465012196,
+          "end_to_end": 0.243146354,
+          "geometry_cpu": 0.005010809,
+          "gpu_initialization_and_initial_upload": 0.192593749,
+          "laz_decode_cpu": 0.014802441,
+          "laz_encoding_and_preservation": 0.024659031,
+          "preprocessing_cpu": 0.01981325,
+          "tensorrt_inference": 0.0007792639955878257
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 38592,
+        "classification_records_changed": 2723,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "03f0a6cf10f89de963ebddfe974b1ef979fc2806f886b845b5212eb098040b78",
+        "output_sha256": "9d03d184671a28ac0853412c49347911c587a0a598fabbcb7ab18be58cae66d7",
+        "canonical_nonclassification_sha256": "3fd35fc5a3524ae289194c3276a4049a1ecf50f57a2ed55ac0526131d2b26d43",
+        "classification_sha256": "b21718ea2382a0f4d388f4d8e5ed9f76bf3796e2d87f9ee6f280fd2eafb44ed7"
+      },
+      "labels_sha256": "b21718ea2382a0f4d388f4d8e5ed9f76bf3796e2d87f9ee6f280fd2eafb44ed7",
+      "predicted_class_histogram": {
+        "2": 36529,
+        "5": 2063
+      }
+    },
+    {
+      "source": "TEST-0437_6387-002227882.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 6,
+        "changed": 6393,
+        "completed_inference_blocks": 6,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 111567,
+        "output_sha256": "61654535830ee44988ea20d0401aec962e214cfdceb9edd84e3e9db01412a3ad",
+        "points": 111567,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 3.78239993005991e-05,
+          "cuda_tensor_preparation": 0.001374847990926355,
+          "end_to_end": 0.331177791,
+          "geometry_cpu": 0.01523258,
+          "gpu_initialization_and_initial_upload": 0.192495608,
+          "laz_decode_cpu": 0.042305551,
+          "laz_encoding_and_preservation": 0.071967353,
+          "preprocessing_cpu": 0.057538131,
+          "tensorrt_inference": 0.0017187199741601944
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 111567,
+        "classification_records_changed": 6393,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "7ca12ebd2f24959b3bebc2b285e4db5e8d806bf205b92036ea8efe6e811422e6",
+        "output_sha256": "61654535830ee44988ea20d0401aec962e214cfdceb9edd84e3e9db01412a3ad",
+        "canonical_nonclassification_sha256": "442f04ad2634fdaaf43b4fbf10b162b42eb3d838b0271a420b444d787313c1aa",
+        "classification_sha256": "b816def0faa7dd87faf3c3da3e05e1db4ce2f76f0b35aa093af3e7a9200a1b47"
+      },
+      "labels_sha256": "b816def0faa7dd87faf3c3da3e05e1db4ce2f76f0b35aa093af3e7a9200a1b47",
+      "predicted_class_histogram": {
+        "1": 32,
+        "2": 41541,
+        "5": 69907,
+        "9": 84,
+        "64": 3
+      }
+    },
+    {
+      "source": "TEST-0437_6388-002380768.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 1457,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 45209,
+        "output_sha256": "730968b298df992d6ccb6226359d003d5219488a99e782a4a102b8e91c24ae1e",
+        "points": 45209,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.3167999926954507e-05,
+          "cuda_tensor_preparation": 0.0024412160124629738,
+          "end_to_end": 0.281419134,
+          "geometry_cpu": 0.00600604,
+          "gpu_initialization_and_initial_upload": 0.216552725,
+          "laz_decode_cpu": 0.01749279,
+          "laz_encoding_and_preservation": 0.033103278,
+          "preprocessing_cpu": 0.02349883,
+          "tensorrt_inference": 0.0012277760207653045
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 45209,
+        "classification_records_changed": 1457,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "52abd46ac4e30fe3e723cc534b920e3a79ae0537f2b2476d4a43ee07ecf01c65",
+        "output_sha256": "730968b298df992d6ccb6226359d003d5219488a99e782a4a102b8e91c24ae1e",
+        "canonical_nonclassification_sha256": "bbb2a181b5808b77acfff9a493f45b5b7814c3d6365bf776ae7f322b0ee83d62",
+        "classification_sha256": "43929dca65de25d6ca93e978d91b145ac62a034717ce4a1a7fb70549525ceae4"
+      },
+      "labels_sha256": "43929dca65de25d6ca93e978d91b145ac62a034717ce4a1a7fb70549525ceae4",
+      "predicted_class_histogram": {
+        "1": 151,
+        "2": 20587,
+        "5": 11750,
+        "6": 12706,
+        "64": 15
+      }
+    },
+    {
+      "source": "TEST-0437_6390-002605572.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 23358,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 58156,
+        "output_sha256": "82be347132a7bb69258d010765083c1fbb094fdfecc0213d85d7b1de5acdaaa1",
+        "points": 58156,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.3775999434292316e-05,
+          "cuda_tensor_preparation": 0.001334079953841865,
+          "end_to_end": 0.269784056,
+          "geometry_cpu": 0.00787636,
+          "gpu_initialization_and_initial_upload": 0.187518687,
+          "laz_decode_cpu": 0.02446179,
+          "laz_encoding_and_preservation": 0.043324805,
+          "preprocessing_cpu": 0.03233815,
+          "tensorrt_inference": 0.0008232959955930709
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 58156,
+        "classification_records_changed": 23358,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "a428e41411df046d3442e2c076e0cdf9fd01f21ee1facb06bdb3ff96397acbbd",
+        "output_sha256": "82be347132a7bb69258d010765083c1fbb094fdfecc0213d85d7b1de5acdaaa1",
+        "canonical_nonclassification_sha256": "a5210070f134fedcfbaf7e6920a9e57f7ed9c4212e2d48937b4289cf65ce5b66",
+        "classification_sha256": "f6d535559379c350333d7a378ec202c99eac6ba43ab6f3007936389948fc04cc"
+      },
+      "labels_sha256": "f6d535559379c350333d7a378ec202c99eac6ba43ab6f3007936389948fc04cc",
+      "predicted_class_histogram": {
+        "2": 14996,
+        "5": 43007,
+        "64": 153
+      }
+    },
+    {
+      "source": "TEST-0437_6392-002967840.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 7917,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 85473,
+        "output_sha256": "5d71bc52fcdd2cc7050924b1e00e04493ce16ddcd10cc5248a5b95f437cf494c",
+        "points": 85473,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.556800004094839e-05,
+          "cuda_tensor_preparation": 0.0013700479660183193,
+          "end_to_end": 0.307851577,
+          "geometry_cpu": 0.011629623,
+          "gpu_initialization_and_initial_upload": 0.199417297,
+          "laz_decode_cpu": 0.033147476,
+          "laz_encoding_and_preservation": 0.05621262,
+          "preprocessing_cpu": 0.044777099,
+          "tensorrt_inference": 0.0008754880130290985
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 85473,
+        "classification_records_changed": 7917,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "37460df14efbed36f45104d83e0b2fff03b4aff8fc4fa91015bbd3762d7ea1b1",
+        "output_sha256": "5d71bc52fcdd2cc7050924b1e00e04493ce16ddcd10cc5248a5b95f437cf494c",
+        "canonical_nonclassification_sha256": "cb760899c6e4299a0d4411c1de457a1ed4e936313c1aed57e08a88249f078fef",
+        "classification_sha256": "719facbb6ddeafd1caed4149a09a2ab1ad855c6c4b745980e76d3f49c2dca1b7"
+      },
+      "labels_sha256": "719facbb6ddeafd1caed4149a09a2ab1ad855c6c4b745980e76d3f49c2dca1b7",
+      "predicted_class_histogram": {
+        "1": 2474,
+        "2": 44894,
+        "5": 8869,
+        "6": 29224,
+        "64": 12
+      }
+    },
+    {
+      "source": "TEST-0437_6393-002232225.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 6909,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24054333440,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 170629,
+        "output_sha256": "723d5e28d3da93d8fd5ca1f60a8291ae527d34601cc134f79a2a1c4b49294f35",
+        "points": 170629,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.735999971628189e-05,
+          "cuda_tensor_preparation": 0.0013767360094934702,
+          "end_to_end": 0.4059756,
+          "geometry_cpu": 0.023642903,
+          "gpu_initialization_and_initial_upload": 0.197981967,
+          "laz_decode_cpu": 0.065979768,
+          "laz_encoding_and_preservation": 0.109314737,
+          "preprocessing_cpu": 0.089622671,
+          "tensorrt_inference": 0.0008105280101299285
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 170629,
+        "classification_records_changed": 6909,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "48ed9aff52147a44262cc03eeea7184909d258dd95543edd25115eefac977b3e",
+        "output_sha256": "723d5e28d3da93d8fd5ca1f60a8291ae527d34601cc134f79a2a1c4b49294f35",
+        "canonical_nonclassification_sha256": "b43100d4f6573140ff100e3b8fa02b0526cd4ff7703baf1b69f666e935ba3aef",
+        "classification_sha256": "c56181281c41a09ceb69266e3241686200e2432b2e01f74c18e1e587e1b76f5a"
+      },
+      "labels_sha256": "c56181281c41a09ceb69266e3241686200e2432b2e01f74c18e1e587e1b76f5a",
+      "predicted_class_histogram": {
+        "1": 614,
+        "2": 64164,
+        "5": 104280,
+        "6": 1571
+      }
+    },
+    {
+      "source": "TEST-0437_6394-002843663.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 23621,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24056430592,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 125800,
+        "output_sha256": "2b86c02adff35d3acbe23aa854d2f20ac60f29d6a3afe56758a0b08ce247cf8d",
+        "points": 125800,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.7359999716281892e-05,
+          "cuda_tensor_preparation": 0.002382944062352181,
+          "end_to_end": 0.385885978,
+          "geometry_cpu": 0.017325323,
+          "gpu_initialization_and_initial_upload": 0.223062167,
+          "laz_decode_cpu": 0.051112211,
+          "laz_encoding_and_preservation": 0.084556993,
+          "preprocessing_cpu": 0.068437534,
+          "tensorrt_inference": 0.0008511679917573929
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 125800,
+        "classification_records_changed": 23621,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "e3f44fb55d4b90d18789ae01617cd130e2bc9719cefd23d8889f25cb434c8654",
+        "output_sha256": "2b86c02adff35d3acbe23aa854d2f20ac60f29d6a3afe56758a0b08ce247cf8d",
+        "canonical_nonclassification_sha256": "904e4155c14a2c827a2c1c20264852f02b96ebd1e0e879f0e049a88f6fdfeb33",
+        "classification_sha256": "8e846153699ac32f075a99407c3f8e0f2c3270386ddf41a7baf8ea7444e56fd5"
+      },
+      "labels_sha256": "8e846153699ac32f075a99407c3f8e0f2c3270386ddf41a7baf8ea7444e56fd5",
+      "predicted_class_histogram": {
+        "2": 29362,
+        "5": 96433,
+        "64": 5
+      }
+    },
+    {
+      "source": "TEST-0437_6395-003012885.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 3823,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 88684,
+        "output_sha256": "c3ef93e27d5b16da5d8ae2c7df2b41aa33361d1b7850c76f741276fc8a141c9b",
+        "points": 88684,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.8191999532282353e-05,
+          "cuda_tensor_preparation": 0.0016309440173208714,
+          "end_to_end": 0.313141334,
+          "geometry_cpu": 0.012006382,
+          "gpu_initialization_and_initial_upload": 0.19423539,
+          "laz_decode_cpu": 0.034592616,
+          "laz_encoding_and_preservation": 0.063207738,
+          "preprocessing_cpu": 0.046598998,
+          "tensorrt_inference": 0.0012332159727811813
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 88684,
+        "classification_records_changed": 3823,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "8a07888a50e53b06dac0a5e750c928f81d1a2d2eaf917a882e07ce38204ddc02",
+        "output_sha256": "c3ef93e27d5b16da5d8ae2c7df2b41aa33361d1b7850c76f741276fc8a141c9b",
+        "canonical_nonclassification_sha256": "94f6ec8d359557e4c078f48f53a6ea7198fb98d44194d2f2ff997feee0a50590",
+        "classification_sha256": "45fd840c9e1c675e015a9bda3a6c158215dcc617fc35ed08d4a8d0e81376cac5"
+      },
+      "labels_sha256": "45fd840c9e1c675e015a9bda3a6c158215dcc617fc35ed08d4a8d0e81376cac5",
+      "predicted_class_histogram": {
+        "1": 816,
+        "2": 61680,
+        "5": 25981,
+        "6": 207
+      }
+    },
+    {
+      "source": "TEST-0437_6395-003012894.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 8192,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 40438,
+        "output_sha256": "1c34db276a12dedfc2308d66fca304d9b88c9eb47835ea5bd681a55d01818194",
+        "points": 40438,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.3967999499291183e-05,
+          "cuda_tensor_preparation": 0.001244512028992176,
+          "end_to_end": 0.247359122,
+          "geometry_cpu": 0.005662611,
+          "gpu_initialization_and_initial_upload": 0.191544425,
+          "laz_decode_cpu": 0.01708535,
+          "laz_encoding_and_preservation": 0.027232712,
+          "preprocessing_cpu": 0.022747961,
+          "tensorrt_inference": 0.0008188479989767075
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 40438,
+        "classification_records_changed": 8192,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "5eef9a7293cfc19a93b08696b6776a30b89a21e1f959e79b157ff99d7b4edc60",
+        "output_sha256": "1c34db276a12dedfc2308d66fca304d9b88c9eb47835ea5bd681a55d01818194",
+        "canonical_nonclassification_sha256": "cee93df5111d790161fa35bddc3348db5af4975c432def99a9383c336952932f",
+        "classification_sha256": "2896c4dbd18831fc9c91e883349ba68188dae5c2894e68f0d092a2b76168c975"
+      },
+      "labels_sha256": "2896c4dbd18831fc9c91e883349ba68188dae5c2894e68f0d092a2b76168c975",
+      "predicted_class_histogram": {
+        "1": 741,
+        "2": 8943,
+        "5": 26964,
+        "6": 3647,
+        "9": 116,
+        "64": 27
+      }
+    },
+    {
+      "source": "TEST-0437_6396-002680172.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 537,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 38398,
+        "output_sha256": "15e74a65cdbd10f36b10d0ea3911d3124851d715ea1ff3294fbc8c29630de835",
+        "points": 38398,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.5888000149279833e-05,
+          "cuda_tensor_preparation": 0.001332415945827961,
+          "end_to_end": 0.244550646,
+          "geometry_cpu": 0.004890651,
+          "gpu_initialization_and_initial_upload": 0.190784895,
+          "laz_decode_cpu": 0.016351727,
+          "laz_encoding_and_preservation": 0.025184496,
+          "preprocessing_cpu": 0.021242378,
+          "tensorrt_inference": 0.0012703039795160292
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 38398,
+        "classification_records_changed": 537,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "d84fb22e30ce15754827769950f6bfd3e63efc3a09e33024dab3f0f6a9342289",
+        "output_sha256": "15e74a65cdbd10f36b10d0ea3911d3124851d715ea1ff3294fbc8c29630de835",
+        "canonical_nonclassification_sha256": "bac9c9f32ddfe1fe67aebde8fd6dd180ccaf687cad98276f8813bae340480b05",
+        "classification_sha256": "af81ea30f8501f198538a87f56092c33b5b2b0849a4ef98dace2b1899af1f03a"
+      },
+      "labels_sha256": "af81ea30f8501f198538a87f56092c33b5b2b0849a4ef98dace2b1899af1f03a",
+      "predicted_class_histogram": {
+        "2": 38398
+      }
+    },
+    {
+      "source": "TEST-0437_6397-003044488.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 4814,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 50946,
+        "output_sha256": "82bee5d6c2a7e3da396482df241fc29c4c111a8e3e0f1af849adca1045feaf96",
+        "points": 50946,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.55040000192821e-05,
+          "cuda_tensor_preparation": 0.0023442880772054195,
+          "end_to_end": 0.283703102,
+          "geometry_cpu": 0.006748752,
+          "gpu_initialization_and_initial_upload": 0.205617261,
+          "laz_decode_cpu": 0.022349053,
+          "laz_encoding_and_preservation": 0.040582535,
+          "preprocessing_cpu": 0.029097805,
+          "tensorrt_inference": 0.0013024320155382157
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 50946,
+        "classification_records_changed": 4814,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "87caab70d50bafbcb916eac8f6f4111578f81e8aa2fb3787fcb0a3b90fd8fc05",
+        "output_sha256": "82bee5d6c2a7e3da396482df241fc29c4c111a8e3e0f1af849adca1045feaf96",
+        "canonical_nonclassification_sha256": "6ae2da852aedec69ba30f3a868adf217411c9d8973a371904b983d1673b79143",
+        "classification_sha256": "9e45da5d029a8535a3422c17278281d18b42916b98c8d8ad2d47c7c24c316ec0"
+      },
+      "labels_sha256": "9e45da5d029a8535a3422c17278281d18b42916b98c8d8ad2d47c7c24c316ec0",
+      "predicted_class_histogram": {
+        "1": 2,
+        "2": 48448,
+        "5": 2496
+      }
+    },
+    {
+      "source": "TEST-0437_6398-002899238.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 11632,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 83477,
+        "output_sha256": "5003fc444649d0692bd1b00e683cd1305642b6df9f35ce99cf8063560749d5c2",
+        "points": 83477,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.739199995994568e-05,
+          "cuda_tensor_preparation": 0.0013793279826641084,
+          "end_to_end": 0.300322735,
+          "geometry_cpu": 0.011194462,
+          "gpu_initialization_and_initial_upload": 0.19382649,
+          "laz_decode_cpu": 0.032802736,
+          "laz_encoding_and_preservation": 0.054559139,
+          "preprocessing_cpu": 0.043997198,
+          "tensorrt_inference": 0.0013191680312156675
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 83477,
+        "classification_records_changed": 11632,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "35b8005e1674b63ea8760ef9b2c89bc315d8dcd27293b4058b4e79eb55bc9af5",
+        "output_sha256": "5003fc444649d0692bd1b00e683cd1305642b6df9f35ce99cf8063560749d5c2",
+        "canonical_nonclassification_sha256": "1584366fcdfa5eb8b28a863a0d5b410fbeb2681d4eb74b5dcc13f46c4eafed13",
+        "classification_sha256": "28cd7248d8fbcc1b5ba58d9bd8710d35fdfe36cd2804b8e999585838072380ad"
+      },
+      "labels_sha256": "28cd7248d8fbcc1b5ba58d9bd8710d35fdfe36cd2804b8e999585838072380ad",
+      "predicted_class_histogram": {
+        "2": 72781,
+        "5": 10696
+      }
+    },
+    {
+      "source": "TEST-0437_6398-002899500.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 5303,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 40706,
+        "output_sha256": "9e36e9c1eba627f8dba31fe46ce5535588ee916de2a972d44090b64bcd341de0",
+        "points": 40706,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.579199941828847e-05,
+          "cuda_tensor_preparation": 0.0014530560392886401,
+          "end_to_end": 0.251188364,
+          "geometry_cpu": 0.005366798,
+          "gpu_initialization_and_initial_upload": 0.1956632,
+          "laz_decode_cpu": 0.015925782,
+          "laz_encoding_and_preservation": 0.027050235,
+          "preprocessing_cpu": 0.02129258,
+          "tensorrt_inference": 0.0012964480072259904
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 40706,
+        "classification_records_changed": 5303,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "bcc102f2f51e116bac9962943d01272804d3b97e41e634682159045e57d8a711",
+        "output_sha256": "9e36e9c1eba627f8dba31fe46ce5535588ee916de2a972d44090b64bcd341de0",
+        "canonical_nonclassification_sha256": "82b6caac420e9a18dd8afd4eb5e7cd5bb6a4bd8c2c048224818c6cba20e20163",
+        "classification_sha256": "3cff99fc71f6d7a6fc69678eb261fe74bbd1cf9d09f33290e758a06099a881f8"
+      },
+      "labels_sha256": "3cff99fc71f6d7a6fc69678eb261fe74bbd1cf9d09f33290e758a06099a881f8",
+      "predicted_class_histogram": {
+        "1": 913,
+        "2": 21451,
+        "5": 4181,
+        "6": 14161
+      }
+    },
+    {
+      "source": "TEST-0438_6384-002358447.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 261,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 41733,
+        "output_sha256": "4b2d6e1d0eb11aef0e2d02266491cf0612aed7292fe20e40479cb4927256cb9f",
+        "points": 41733,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.5599999818950894e-05,
+          "cuda_tensor_preparation": 0.0014710400374606252,
+          "end_to_end": 0.248922295,
+          "geometry_cpu": 0.005422411,
+          "gpu_initialization_and_initial_upload": 0.195443047,
+          "laz_decode_cpu": 0.015068762,
+          "laz_encoding_and_preservation": 0.026779094,
+          "preprocessing_cpu": 0.020491173,
+          "tensorrt_inference": 0.0007901760041713714
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 41733,
+        "classification_records_changed": 261,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "4e334e5dafb55726216a555c9af763d32aca1c55fd9d560debfb934b545af67b",
+        "output_sha256": "4b2d6e1d0eb11aef0e2d02266491cf0612aed7292fe20e40479cb4927256cb9f",
+        "canonical_nonclassification_sha256": "000a330c498e55432d1077b0aa30841b1d6745db60ffaafe02b944f4fcdc8da4",
+        "classification_sha256": "b4756c4698b5b1b6c5cad5f2c2d0caf45724a8c52e89a96927d25914627ea82d"
+      },
+      "labels_sha256": "b4756c4698b5b1b6c5cad5f2c2d0caf45724a8c52e89a96927d25914627ea82d",
+      "predicted_class_histogram": {
+        "1": 110,
+        "2": 39618,
+        "5": 34,
+        "6": 1971
+      }
+    },
+    {
+      "source": "TEST-0438_6385-002214808.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 2725,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 64775,
+        "output_sha256": "75fe8f5ca4901b183d8021c5f8211f6f162e30eda9466d353b553b396e798393",
+        "points": 64775,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.479999978095293e-05,
+          "cuda_tensor_preparation": 0.0021238720435649157,
+          "end_to_end": 0.315645988,
+          "geometry_cpu": 0.009164902,
+          "gpu_initialization_and_initial_upload": 0.217884954,
+          "laz_decode_cpu": 0.031194405,
+          "laz_encoding_and_preservation": 0.048834969,
+          "preprocessing_cpu": 0.040359307,
+          "tensorrt_inference": 0.0010917759984731676
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 64775,
+        "classification_records_changed": 2725,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "21dbff308c83c060d7fd78bab8ee6d7b35596e4ea821e8d85e3c1973b5e7cc68",
+        "output_sha256": "75fe8f5ca4901b183d8021c5f8211f6f162e30eda9466d353b553b396e798393",
+        "canonical_nonclassification_sha256": "a8412d39832b9cd5f5447e5a4e8cb74ca80dc94f862f2c40871938c6cd0de1fd",
+        "classification_sha256": "12d8f9d749691a2926f9879394ba18d876269d455a4c59d973383721534c6d1b"
+      },
+      "labels_sha256": "12d8f9d749691a2926f9879394ba18d876269d455a4c59d973383721534c6d1b",
+      "predicted_class_histogram": {
+        "1": 76,
+        "2": 20354,
+        "5": 44305,
+        "6": 40
+      }
+    },
+    {
+      "source": "TEST-0438_6387-002841931.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 6428,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 41159,
+        "output_sha256": "9e6d764c5e8e443c6a9137bc28e66296461d112b6dda0e4e38112dcd4db50c56",
+        "points": 41159,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.4319999385625127e-05,
+          "cuda_tensor_preparation": 0.001513984021730721,
+          "end_to_end": 0.250257946,
+          "geometry_cpu": 0.005411971,
+          "gpu_initialization_and_initial_upload": 0.194694358,
+          "laz_decode_cpu": 0.016243804,
+          "laz_encoding_and_preservation": 0.026631515,
+          "preprocessing_cpu": 0.021655775,
+          "tensorrt_inference": 0.0012526399791240692
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 41159,
+        "classification_records_changed": 6428,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "a9b94e1e6569b9661e1022d65d903aefae523d5cd62e41e608a6bdc6e61a18aa",
+        "output_sha256": "9e6d764c5e8e443c6a9137bc28e66296461d112b6dda0e4e38112dcd4db50c56",
+        "canonical_nonclassification_sha256": "567ac56fa8b54bbf40cd73787df0dc4b5e59bf151ad0698b34ff5c56f0f2db78",
+        "classification_sha256": "0576ce48817715c704a737ca6c88e19d5c82f3f01a9bbe413c11dc7cb50a35cd"
+      },
+      "labels_sha256": "0576ce48817715c704a737ca6c88e19d5c82f3f01a9bbe413c11dc7cb50a35cd",
+      "predicted_class_histogram": {
+        "2": 36239,
+        "5": 4920
+      }
+    },
+    {
+      "source": "TEST-0438_6388-002528097.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 839,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 48103,
+        "output_sha256": "0fc42369fbff0629193edfa9e0b6085364ecd4302465075b6ab5886b61fce64d",
+        "points": 48103,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 3.478400036692619e-05,
+          "cuda_tensor_preparation": 0.0014302080348134042,
+          "end_to_end": 0.255856373,
+          "geometry_cpu": 0.006462511,
+          "gpu_initialization_and_initial_upload": 0.195285635,
+          "laz_decode_cpu": 0.017911584,
+          "laz_encoding_and_preservation": 0.029736916,
+          "preprocessing_cpu": 0.024374095,
+          "tensorrt_inference": 0.0008839039951562881
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 48103,
+        "classification_records_changed": 839,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "d6ba4e5315c359cd5b1a25d0c776b30a037f6967dc33f7b68cab209ce05f5af6",
+        "output_sha256": "0fc42369fbff0629193edfa9e0b6085364ecd4302465075b6ab5886b61fce64d",
+        "canonical_nonclassification_sha256": "47fdc25dc45139cff5ac2ab4e27e56c1199fe497f0a7bffd2926d731e86e6100",
+        "classification_sha256": "47b1fb4b9657dd9245354b54cc626d664555c1341780813c5ad785c4dea33baf"
+      },
+      "labels_sha256": "47b1fb4b9657dd9245354b54cc626d664555c1341780813c5ad785c4dea33baf",
+      "predicted_class_histogram": {
+        "1": 46,
+        "2": 47458,
+        "5": 599
+      }
+    },
+    {
+      "source": "TEST-0438_6390-002319226.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 750,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 41863,
+        "output_sha256": "668ca36ef9c649d53826d447267664e9caa175651c3281996c88975d0cc930e7",
+        "points": 41863,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.3839999455958607e-05,
+          "cuda_tensor_preparation": 0.0014001280032098294,
+          "end_to_end": 0.245778305,
+          "geometry_cpu": 0.005393261,
+          "gpu_initialization_and_initial_upload": 0.19143199,
+          "laz_decode_cpu": 0.015556542,
+          "laz_encoding_and_preservation": 0.026592691,
+          "preprocessing_cpu": 0.020949803,
+          "tensorrt_inference": 0.0012273279875516891
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 41863,
+        "classification_records_changed": 750,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "8c48538f299012b22c59bfdb82dbd4578c1a4ec715a1c2e45190773ef832cc5b",
+        "output_sha256": "668ca36ef9c649d53826d447267664e9caa175651c3281996c88975d0cc930e7",
+        "canonical_nonclassification_sha256": "fb43bb59c561c0f6f9d3caa05f4f3978bd565e0c9e04159dda8adf46f493a5b1",
+        "classification_sha256": "de4771abca5de7bed4daa8ae93e83f3a80e5c5eac1c6605c8bd1cfe0a949f9c3"
+      },
+      "labels_sha256": "de4771abca5de7bed4daa8ae93e83f3a80e5c5eac1c6605c8bd1cfe0a949f9c3",
+      "predicted_class_histogram": {
+        "1": 176,
+        "2": 41553,
+        "5": 22,
+        "64": 112
+      }
+    },
+    {
+      "source": "TEST-0438_6390-002319555.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 8482,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 72688,
+        "output_sha256": "91f88fc17f9e26b76003cfabeb4833cc46d0db8aec14532acf61f9690af4d9a9",
+        "points": 72688,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.6271999813616277e-05,
+          "cuda_tensor_preparation": 0.0013997440012171866,
+          "end_to_end": 0.297881272,
+          "geometry_cpu": 0.009739502,
+          "gpu_initialization_and_initial_upload": 0.193506639,
+          "laz_decode_cpu": 0.02949408,
+          "laz_encoding_and_preservation": 0.057233614,
+          "preprocessing_cpu": 0.039233582,
+          "tensorrt_inference": 0.0011394880264997483
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 72688,
+        "classification_records_changed": 8482,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "2a9684717e6060478e74a5adfa9c20061e165e49a6e44799e85554eb40185d5b",
+        "output_sha256": "91f88fc17f9e26b76003cfabeb4833cc46d0db8aec14532acf61f9690af4d9a9",
+        "canonical_nonclassification_sha256": "d672dfab8b755c3b3483c026fa7195ff7593deec5b5d308eeeeccdbf004fdba6",
+        "classification_sha256": "5be7a144689f7a85b14d5e8adbe3d1898d25790630628e2feb139a0ac8c1b235"
+      },
+      "labels_sha256": "5be7a144689f7a85b14d5e8adbe3d1898d25790630628e2feb139a0ac8c1b235",
+      "predicted_class_histogram": {
+        "2": 14247,
+        "5": 58441
+      }
+    },
+    {
+      "source": "TEST-0438_6390-002319586.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 396,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 36868,
+        "output_sha256": "6624db65515431327e58a282741097db441f9e2f19ce11f26499fc6868f080df",
+        "points": 36868,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.4575999472290278e-05,
+          "cuda_tensor_preparation": 0.0013160320501774548,
+          "end_to_end": 0.250782499,
+          "geometry_cpu": 0.004814211,
+          "gpu_initialization_and_initial_upload": 0.199447242,
+          "laz_decode_cpu": 0.014615142,
+          "laz_encoding_and_preservation": 0.025875129,
+          "preprocessing_cpu": 0.019429353,
+          "tensorrt_inference": 0.0008744959980249404
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 36868,
+        "classification_records_changed": 396,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "e84fa5ba76f6e0c9b6f43150f8a3af0d8303b5d6348d1dc3006e3de2a3ee1a3c",
+        "output_sha256": "6624db65515431327e58a282741097db441f9e2f19ce11f26499fc6868f080df",
+        "canonical_nonclassification_sha256": "ad113098ec2e350fe8f12d7ad4ca8174cf8d9b4b10814eb1e93707e28795f44a",
+        "classification_sha256": "355ae550bbc5c23bc21e7cddd8be8029dc292f8a65f171cd31fcdccf488c3b7a"
+      },
+      "labels_sha256": "355ae550bbc5c23bc21e7cddd8be8029dc292f8a65f171cd31fcdccf488c3b7a",
+      "predicted_class_histogram": {
+        "1": 73,
+        "2": 36789,
+        "5": 6
+      }
+    },
+    {
+      "source": "TEST-0438_6393-002595830.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 2102,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 76198,
+        "output_sha256": "0607bd3adc1de0687859ea1744363c664a5be8d75337743aa830ae39b0b94d2c",
+        "points": 76198,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.5599999353289605e-05,
+          "cuda_tensor_preparation": 0.0015277440156787633,
+          "end_to_end": 0.292083232,
+          "geometry_cpu": 0.010340301,
+          "gpu_initialization_and_initial_upload": 0.193126864,
+          "laz_decode_cpu": 0.029706844,
+          "laz_encoding_and_preservation": 0.051534227,
+          "preprocessing_cpu": 0.040047145,
+          "tensorrt_inference": 0.0008485120087862014
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 76198,
+        "classification_records_changed": 2102,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "720cf6aea0ca8d8686e16a60d28cba51b551e2533e7a9a3fd1a7e5f4e310219e",
+        "output_sha256": "0607bd3adc1de0687859ea1744363c664a5be8d75337743aa830ae39b0b94d2c",
+        "canonical_nonclassification_sha256": "a6b7d869a024ae299911d92845dccc919df8c2ba5a024d81d0669880632242ec",
+        "classification_sha256": "2009786c9d4594a669c672f1b16be24780343575fd89622a4d21bd176ee50c80"
+      },
+      "labels_sha256": "2009786c9d4594a669c672f1b16be24780343575fd89622a4d21bd176ee50c80",
+      "predicted_class_histogram": {
+        "1": 327,
+        "2": 67684,
+        "5": 7936,
+        "6": 251
+      }
+    },
+    {
+      "source": "TEST-0438_6393-002595887.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 7491,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 87507,
+        "output_sha256": "d598f51f492915a12cd715676ec21694ba7ac2082a1052be724b9aea6129f047",
+        "points": 87507,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.4575999472290278e-05,
+          "cuda_tensor_preparation": 0.001564703982323408,
+          "end_to_end": 0.297500321,
+          "geometry_cpu": 0.011678392,
+          "gpu_initialization_and_initial_upload": 0.186616467,
+          "laz_decode_cpu": 0.033844114,
+          "laz_encoding_and_preservation": 0.0572794,
+          "preprocessing_cpu": 0.045522506,
+          "tensorrt_inference": 0.001163807973265648
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 87507,
+        "classification_records_changed": 7491,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "bb822b74f897baf32ba7600ac6c24f77b0cb05a3e838561c5f19353842b89786",
+        "output_sha256": "d598f51f492915a12cd715676ec21694ba7ac2082a1052be724b9aea6129f047",
+        "canonical_nonclassification_sha256": "731e46039e846f66f5b49a6dc1fb341f45fc9ff4f42f8392926fac67f2247e20",
+        "classification_sha256": "64d47a77f07d3ca8a1fcec31007a61c0c9bb40a6a8f907c9d04b60399ac1d24f"
+      },
+      "labels_sha256": "64d47a77f07d3ca8a1fcec31007a61c0c9bb40a6a8f907c9d04b60399ac1d24f",
+      "predicted_class_histogram": {
+        "1": 4656,
+        "2": 57811,
+        "5": 10786,
+        "6": 14254
+      }
+    },
+    {
+      "source": "TEST-0438_6394-002992415.laz",
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 22871,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24060624896,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 43054,
+        "output_sha256": "af90583d65285d67022544bc11ee6031f0b273fc180beecc4a4c7e5790530644",
+        "points": 43054,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.4991999845951796e-05,
+          "cuda_tensor_preparation": 0.00128943997528404,
+          "end_to_end": 0.255446301,
+          "geometry_cpu": 0.005925481,
+          "gpu_initialization_and_initial_upload": 0.197593041,
+          "laz_decode_cpu": 0.017416171,
+          "laz_encoding_and_preservation": 0.028555697,
+          "preprocessing_cpu": 0.023341652,
+          "tensorrt_inference": 0.0007943040058016777
+        }
+      },
+      "independent": {
+        "status": "PASS",
+        "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+        "points": 43054,
+        "classification_records_changed": 22871,
+        "point_order_and_nonclassification_bytes_exact": true,
+        "public_header_non_laszip_vlrs_and_padding_exact": true,
+        "source_sha256": "538b09ef670fe049a07a4433e0596887d02e4cb3c14c9fcf827f50b5fea6e992",
+        "output_sha256": "af90583d65285d67022544bc11ee6031f0b273fc180beecc4a4c7e5790530644",
+        "canonical_nonclassification_sha256": "9a1750e05c1b672feb8dc9586b5dbdee07a2981fdb19eb76a5b0872d4dcb4010",
+        "classification_sha256": "7d3eb6f7f7ebe0136d2781c4e022b43088a522fc1dec4884ac77b28018d3d691"
+      },
+      "labels_sha256": "7d3eb6f7f7ebe0136d2781c4e022b43088a522fc1dec4884ac77b28018d3d691",
+      "predicted_class_histogram": {
+        "2": 24150,
+        "5": 18904
+      }
+    }
+  ]
+}

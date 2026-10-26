@@ -50,6 +50,11 @@ The production qualification is narrow: LAS 1.4, PDRF 7, 42-byte records, 375-by
 
 ## The runnable public-focused preservation utility
 
+The current BYOM extension supports compressed LAS 1.4 PDRF6/7/8 with valid
+variable record lengths and extra bytes. It has separate [real-data U-Net
+qualification](docs/byom/UNET_QUALIFICATION.md), including independent preservation
+of PDRF8/38-byte files. The historical benchmark scope above remains unchanged.
+
 `src/preserve_laz.cpp` implements this separable integrity problem for trusted synthetic/test inputs. It applies **supplied labels**, not a model. It is newly written for this staging release after design/source review, not represented as clean-room work or as the frozen production source/binary. No production preprocessing, inference code or model artifacts are copied into it.
 
 Its prefix parser rejects unsupported versions, formats, record lengths, waveform/EVLR fields, COPC metadata, invalid VLR counts and truncated/oversized prefixes. It permits a variable number of ordinary VLRs/padding within a bounded 16 MiB prefix, unlike the narrower original fixture contract. Its synthetic tests do not expand the historical production qualification.

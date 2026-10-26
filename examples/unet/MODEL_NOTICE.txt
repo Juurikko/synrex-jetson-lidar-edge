@@ -31,6 +31,7 @@ Training data attribution (retain with weights, ONNX, plans and examples):
 FRACTAL, Institut national de l'information géographique et forestière (IGN),
 Hugging Face IGNF/FRACTAL, repository revision
 36e00245ef92fd180f655f6ee410f2e935693cc2, retrieved 2026-10-26.
+Source repository last modified: 2025-04-05T09:37:48.000Z (Hugging Face API).
 https://huggingface.co/datasets/IGNF/FRACTAL
 Data licence: Etalab Open Licence 2.0 (Etalab-2.0).
 Latest source revision/date is recorded in dataset.json and the qualification

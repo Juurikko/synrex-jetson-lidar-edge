@@ -1,0 +1,2 @@
+tensorrt-cu13==10.16.1.11
+tensorrt-cu13-bindings==10.16.1.11

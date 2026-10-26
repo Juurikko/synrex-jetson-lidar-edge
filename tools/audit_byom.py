@@ -37,7 +37,10 @@ def audit(private_source=None):
         source = path.suffix in SOURCE_SUFFIXES or name in {
             "CMakeLists.txt",
             "requirements-byom.lock",
+            "requirements-unet.lock",
+            "requirements-unet-validation.lock",
             "examples/dense_voxel.json",
+            "examples/unet/dense_voxel.json",
         }
         if source and name not in scope["source"]["files"]:
             scope["source"]["files"].append(name)
@@ -59,7 +62,13 @@ def audit(private_source=None):
         category = next(
             (
                 s
-                for s in ("source", "documentation", "original_procedural_media")
+                for s in (
+                    "source",
+                    "documentation",
+                    "original_procedural_media",
+                    "data_derived_media",
+                )
+                if s in scope
                 if name in scope[s]["files"]
             ),
             None,
@@ -77,6 +86,8 @@ def audit(private_source=None):
                 and digest(path) != hashlib.sha256(git("show", f"{BASE}:{name}")).hexdigest()
             ):
                 origin += "; modified for BYOM R0"
+            if category == "data_derived_media":
+                origin = "Derived IGN FRACTAL visualization; original presentation Tuomas Pietilä"
             if path.suffix in SOURCE_SUFFIXES:
                 assert "SPDX-License-Identifier: MIT" in path.read_text(), name
         elif name.startswith("LICENSES/"):

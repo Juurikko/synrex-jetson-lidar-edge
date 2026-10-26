@@ -8,6 +8,12 @@ complete 50,013-point native GPU pipeline and full target suite. The CPU-checkpo
 is retained as the `eaf3ce2` milestone; its NOT_RUN GPU rows describe that earlier checkpoint.
 Physical AGX qualification still remains NOT_RUN. Nothing is pushed or published.
 
+**Second genuine model:** [trained U-Net qualification](UNET_QUALIFICATION.md)
+passes on 2,586,115 held-out real points, through the same binary as the original
+Conv3D. It adds FP16 engine inspection, numerical/quality metrics, real PDRF8
+preservation and sampled memory. The current full GPU suite passes 62 tests with
+one CPU-only skip. These new receipts remain separate from the earlier checkpoints.
+
 This report concerns the new generic BYOM implementation. Historical SegFormer benchmarks,
 class IDs, model conversion comparisons and AGX qualification receipts are unchanged and are
 not used as evidence of new BYOM GPU execution.

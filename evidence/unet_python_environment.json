@@ -1,0 +1,17 @@
+{
+  "python": "Python 3.11.15",
+  "packages": {
+    "torch": "2.9.1+cu128",
+    "numpy": "2.4.4",
+    "scipy": "1.17.1",
+    "scikit-image": "0.25.2",
+    "laspy": "2.6.1",
+    "lazrs": "0.8.0",
+    "onnx": "1.20.1",
+    "onnxruntime": "1.23.2",
+    "tensorrt-cu13": "10.16.1.11",
+    "tensorrt-cu13-bindings": "10.16.1.11"
+  },
+  "scope": "Separate development oracles/training only; no Python/PyTorch in classification",
+  "installation": "New isolated venv reused pre-existing PyTorch read-only; only local small dependencies added"
+}

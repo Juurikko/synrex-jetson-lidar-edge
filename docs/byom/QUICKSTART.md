@@ -120,10 +120,11 @@ portable. Stock TensorRT's engine validation remains an additional compatibility
 
 ## Classify LAZ and independently verify
 
-Supported input: nonempty compressed LAS 1.4, standard 375-byte public header, PDRF 7,
-42-byte point records, exactly one LASzip VLR, no EVLR/waveform/COPC; metadata prefix <=16 MiB.
+Supported input: nonempty compressed LAS 1.4, standard 375-byte public header, PDRF 6/7/8,
+at least 30/36/38 record bytes respectively, one LASzip VLR, no EVLR/waveform/COPC;
+metadata prefix <=16 MiB.
 Coordinates must be finite with positive scales and within the adapter's resource limits.
-Extra Bytes fit the retained writer's 42-byte record contract. No coordinate reprojection,
+Extra Bytes are retained within the declared record length. No coordinate reprojection,
 georeferencing, arbitrary point formats or general LAZ editing is provided.
 
 ```bash

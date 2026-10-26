@@ -1,0 +1,1181 @@
+{
+  "status": "PASS",
+  "architecture_source_commit": "7d047d2802561d075d6ce44679d7e696138c47df",
+  "torch": "2.9.1+cu128",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "seed": 20261026,
+  "training_determinism": "seeded; deterministic algorithms warn_only; MaxPool3d CUDA backward may vary",
+  "epochs": 60,
+  "selected_epoch": 52,
+  "parameters": 62103,
+  "pretrained_weights": false,
+  "split_use": "train optimization; val checkpoint selection; test never loaded by training",
+  "train_files": [
+    {
+      "file": "TRAIN-0436_6432-003123986.laz",
+      "sha256": "2331b4037f77e469a4f78a33e77102a3f7608597bc168e4e3b62e9fa3002a31c"
+    },
+    {
+      "file": "TRAIN-0437_6401-002737416.laz",
+      "sha256": "290645d8fa1916c193d955904abe4009d4182d71d80d4794a3df391f119ae3f6"
+    },
+    {
+      "file": "TRAIN-0437_6403-002890997.laz",
+      "sha256": "78bf5fce0813d351f31f71b4ce0d4b8307240a63a5a792fabd4459c79aa52d01"
+    },
+    {
+      "file": "TRAIN-0437_6422-002198380.laz",
+      "sha256": "66a892983fb46ff16c8e2e75107839096108520ff49d107a4032f1e43065b104"
+    },
+    {
+      "file": "TRAIN-0438_6404-003100433.laz",
+      "sha256": "a11dc5dd2bad705eb9c4d49f56765643e193ef5c056f5223cfdf21a4b2462c55"
+    },
+    {
+      "file": "TRAIN-0438_6407-002916836.laz",
+      "sha256": "cdac49030c29a5e36b9e697ff46c01a109068227c27bf74f69df962231eca261"
+    },
+    {
+      "file": "TRAIN-0438_6407-002917096.laz",
+      "sha256": "e55cbcc9145fd53f952508a6d0146c6741142a4a7bbb3518f21952a7855176e3"
+    },
+    {
+      "file": "TRAIN-0438_6412-002987819.laz",
+      "sha256": "4d51f2b1de4ef9190c4629b1931a29fe4cb7f2b490ef8a6a6c10e3700599500c"
+    },
+    {
+      "file": "TRAIN-0438_6413-002813071.laz",
+      "sha256": "5cec9cd16290f1caddcdc7e8f26712f9bdf90d0592e24cdb6ef8c19f878e61cd"
+    },
+    {
+      "file": "TRAIN-0439_6419-002781933.laz",
+      "sha256": "a5d8d207de3146a47b379537ca6163c25897d41898d0440691f6bd5ed71c64ad"
+    },
+    {
+      "file": "TRAIN-0439_6425-002668029.laz",
+      "sha256": "a4195137d85aec6ec282eb7d7044a1194d50b2873fbb4d27d045e99cab6ae883"
+    },
+    {
+      "file": "TRAIN-0439_6425-002668140.laz",
+      "sha256": "d157145fc216a526d8d71e4c54f09683d0060cd2deab5223b43169111384bf0e"
+    },
+    {
+      "file": "TRAIN-0441_6406-002334880.laz",
+      "sha256": "e562e3a4187747cc1716edbe82697e7f7df4d500deb70e5b35f2f8a939e4b8f5"
+    },
+    {
+      "file": "TRAIN-0441_6418-002822228.laz",
+      "sha256": "3dedc6deb120cf6641c848dad3e66c152aecc7b2609f7408182be79610ef5106"
+    },
+    {
+      "file": "TRAIN-0441_6421-002863759.laz",
+      "sha256": "65108c5442a0e0f6de4ab74284f64eeb743c1b71873d4d45f4f38ff07b80b97b"
+    },
+    {
+      "file": "TRAIN-0441_6432-002638555.laz",
+      "sha256": "bb3eee26e30a4a7ec28e93e8e1a2f56932bdba51920a52f391589a65adf81188"
+    },
+    {
+      "file": "TRAIN-0442_6416-002345776.laz",
+      "sha256": "aea2cc70fdec36e0713c7aed85198d708b517c9106201c0f372b4922d9e96e61"
+    },
+    {
+      "file": "TRAIN-0442_6419-002431405.laz",
+      "sha256": "6c350549ae70efacee0878b498778c301545d5aa31da0b5682c1b2ee426fc3dc"
+    },
+    {
+      "file": "TRAIN-0442_6422-003020639.laz",
+      "sha256": "6b57bfb35f68a0964119c7867d74a961b9ac9c7a8f683053afb7b6a7d9d5f719"
+    },
+    {
+      "file": "TRAIN-0442_6429-003072462.laz",
+      "sha256": "6a19afd976367ae0255fc888f69fbb6cb5316013a5060d8f6c46c81852406c6f"
+    },
+    {
+      "file": "TRAIN-0443_6420-003063796.laz",
+      "sha256": "30f8fff9d5cf34b95e55d5f1ac315911c32e54903ef7de84dab3c59d979678f8"
+    },
+    {
+      "file": "TRAIN-0444_6425-002858108.laz",
+      "sha256": "29aec541e02996191f60d09694a90b44f748f3925a9b14c316fa3d2908ab3751"
+    },
+    {
+      "file": "TRAIN-0445_6431-003317141.laz",
+      "sha256": "b8c49e98388968f1bceb5fe64808b6dfb2e81cef0b815512abfed9fba310df67"
+    },
+    {
+      "file": "TRAIN-0446_6403-003010127.laz",
+      "sha256": "da415efaea006077dfed2b2dc51ec76d9034f5577f9cc62e5713281eb293e706"
+    },
+    {
+      "file": "TRAIN-0446_6425-002741708.laz",
+      "sha256": "c111720d6e5930edc16f13c6137bf46a4f10cc32d0db33dbe6619060f68f30cf"
+    },
+    {
+      "file": "TRAIN-0447_6415-003279873.laz",
+      "sha256": "516ab8a3c3eb852ae428344a68596ee24c1725ff92afbe8a4cc6acdb80942fd4"
+    },
+    {
+      "file": "TRAIN-0447_6425-002666919.laz",
+      "sha256": "238a6a1c3a54214b731bc2dd19a49dbd7a972d3ef50c084fbab9c52e88682dd1"
+    },
+    {
+      "file": "TRAIN-0448_6402-002951837.laz",
+      "sha256": "15a3ba33140605b51c6a2ba29d5a27dbd30d5db06011590d05bbfba83ba3d024"
+    },
+    {
+      "file": "TRAIN-0449_6407-002542855.laz",
+      "sha256": "ed25e1fded6fa27419ef593d456cb7a304a13fcd4e78b86a61c0ec79072649d4"
+    },
+    {
+      "file": "TRAIN-0449_6414-002226652.laz",
+      "sha256": "74f72078a52f14897abb1b336347405f88328f7fafd43d0db52244f73aeb36c7"
+    },
+    {
+      "file": "TRAIN-0449_6418-003014792.laz",
+      "sha256": "77fc56552693e203ef87a5d855a9417f14d982ece54cc596dc26ad9ab1fdc176"
+    },
+    {
+      "file": "TRAIN-0449_6425-002881400.laz",
+      "sha256": "b0dae64f0d936c32069fd71118270fa7205844d8dfbd70a7cd87c7ed06789996"
+    },
+    {
+      "file": "TRAIN-0449_6431-002935669.laz",
+      "sha256": "9cb59412ae83b2e9c5f36af2620d31fcce972d13f8e10401676d8f697967a914"
+    },
+    {
+      "file": "TRAIN-0452_6390-002547224.laz",
+      "sha256": "5d43371a6f86515b5b53843514d5aca69b5ced8b01c31acb26c19af175b07981"
+    },
+    {
+      "file": "TRAIN-0452_6393-003297317.laz",
+      "sha256": "7d57df07bf3e7d08f09625757092e37129439abf03ef4039b4f00b8f6018dc8b"
+    },
+    {
+      "file": "TRAIN-0452_6401-002476962.laz",
+      "sha256": "e55967dcfa7079e69eb984b8cf300aefed1bfb29bc1c5909fa4e33cbefa3a656"
+    },
+    {
+      "file": "TRAIN-0452_6409-002606496.laz",
+      "sha256": "fbadc1e18f318de6171b299e30728ba3b16f54694f5016ee4acab9855faf99b3"
+    },
+    {
+      "file": "TRAIN-0452_6425-003314101.laz",
+      "sha256": "c313ea6e80d32bbc7f899386521900a33bfbe1cfad57c979f4f1b212f11af94a"
+    },
+    {
+      "file": "TRAIN-0453_6396-003168482.laz",
+      "sha256": "f79d622076b8da79d8af8d1d3bb7652fe039c0fff0d004d7789550a819a94738"
+    },
+    {
+      "file": "TRAIN-0453_6426-002702508.laz",
+      "sha256": "50e16801d0e2644cb05020b6dd9523ae01ddc8973e658fd760dbf4e49b35532c"
+    },
+    {
+      "file": "TRAIN-0453_6426-002702601.laz",
+      "sha256": "3406346c5f82cb9d133f5819f8a77ba92f3a01c3b238e2006497e1e60d63e946"
+    },
+    {
+      "file": "TRAIN-0453_6427-002799845.laz",
+      "sha256": "47af0150dd08bcf22d76cd2e0eefa477b22d8936f849dfca38be3d5e270e4047"
+    },
+    {
+      "file": "TRAIN-0453_6432-002616932.laz",
+      "sha256": "98e9ec147876ef3003ca4111fa35571e27800a27454a917e216f3fb84ca6b964"
+    },
+    {
+      "file": "TRAIN-0454_6401-002755708.laz",
+      "sha256": "2c887bec66e430699215d4c9ef1ce20c584b099bb21c5967de3eac61c083a0e4"
+    },
+    {
+      "file": "TRAIN-0454_6408-002876583.laz",
+      "sha256": "aee6abacdeb0d789fab8f6536dbbb91d15ad3f6bbdeda7c750a30de5c19ce54f"
+    },
+    {
+      "file": "TRAIN-0454_6410-002727606.laz",
+      "sha256": "bf9819ea464bd5cbc56ea9bd3b0863513a36ccc000e5a79350d6244763b50f0b"
+    },
+    {
+      "file": "TRAIN-0455_6403-002834356.laz",
+      "sha256": "7513291fc99f67341ab220116836ca507956fb0d989af9bad695c71e885bde97"
+    },
+    {
+      "file": "TRAIN-0455_6408-003181757.laz",
+      "sha256": "c3059b6027e770c7fc37aa0deaa38b39a8083ee9a816b8c368ad57922dcc2107"
+    },
+    {
+      "file": "TRAIN-0455_6416-002781013.laz",
+      "sha256": "9536f310f541de700d91c6b5bb0ded1d0e131acacad5ebfcfee5b779e26f4f61"
+    },
+    {
+      "file": "TRAIN-0455_6418-002618199.laz",
+      "sha256": "5c7d9993726b3279aeaf3812a930d4c7b665d25dd9ec7de72fe1ef2eeaf4dc52"
+    },
+    {
+      "file": "TRAIN-0456_6413-003065064.laz",
+      "sha256": "f04239b892ddea1ceda35f7517413b9c522974e242f75c48658a185a4aeaff24"
+    },
+    {
+      "file": "TRAIN-0456_6420-002218380.laz",
+      "sha256": "3ccb3421d3f0f4e0a227079b2e69eb1b1637cfbd2991442e960bd01ac80ddcd8"
+    },
+    {
+      "file": "TRAIN-0456_6423-002725867.laz",
+      "sha256": "f7caf4344963104934b8c02dc74abbb3dcbe6ee074163cc6f2df6410a67014fc"
+    },
+    {
+      "file": "TRAIN-0456_6427-002599851.laz",
+      "sha256": "02d40af9b6552c91f6ef40f308366afb5602001f0b7560c98839b90614b415ea"
+    },
+    {
+      "file": "TRAIN-0457_6389-002627105.laz",
+      "sha256": "93fce5cd3e473e5d64568431de25d53fe232c3e4ec1a995dd5ff04eb42d448c2"
+    },
+    {
+      "file": "TRAIN-0457_6432-002204844.laz",
+      "sha256": "fc7c76e1a0c98db04ca7ee1e06d25e7b15140f7fddc29436bb42e2d2e373d59a"
+    },
+    {
+      "file": "TRAIN-0458_6400-002945371.laz",
+      "sha256": "644ac6f64711746a49df811e08d044617e0f8e788b068fc41f8ef1db822861a9"
+    },
+    {
+      "file": "TRAIN-0458_6403-002519473.laz",
+      "sha256": "954c460d78d73798602f860fb2de496c3808334987e35769b9a932d4393acb90"
+    },
+    {
+      "file": "TRAIN-0458_6418-003011701.laz",
+      "sha256": "a39068663216bac59b373edb1d1b0f50f6194a9435f57cb1fd4fef6cb1ea9dab"
+    },
+    {
+      "file": "TRAIN-0458_6422-003288645.laz",
+      "sha256": "c415384d13c222ea14bcd6060e0074e92a016b6b6d7a9456157cd6d1ea06f39f"
+    },
+    {
+      "file": "TRAIN-0459_6389-003098652.laz",
+      "sha256": "ee17ee09e6b9e93017bda75fd038da4c74b6f921f1bd5a2135c5955ab8eed455"
+    },
+    {
+      "file": "TRAIN-0459_6408-002471218.laz",
+      "sha256": "c5c9bb3328ca9a928bae34d0b69e53fe28a97fa63bd9d39f7db88b6b23417f77"
+    },
+    {
+      "file": "TRAIN-0459_6432-002313018.laz",
+      "sha256": "d2fbb04cad50369486dde9d1d5601e74f39c788423154c7ab14a86a027a6cb2b"
+    },
+    {
+      "file": "TRAIN-0460_6418-003264646.laz",
+      "sha256": "dfa0f1c7ac25c1bc683af0246afdd18dcdcd89742bfc7bf165ac2cd519031136"
+    },
+    {
+      "file": "TRAIN-0460_6432-003065997.laz",
+      "sha256": "76f79d603780870477a052536f4799e934d568cbf6dd3cccecf22b6434db6000"
+    },
+    {
+      "file": "TRAIN-0461_6410-002394234.laz",
+      "sha256": "1d0a8a140672c5477d14fc00debbae8dede0dafc73fdfc3949a9fd19a694b8a7"
+    },
+    {
+      "file": "TRAIN-0462_6385-002892478.laz",
+      "sha256": "45c6f593b644965bb9149344d4d5ee38acd125d688d85bec39284f514e6e35af"
+    },
+    {
+      "file": "TRAIN-0462_6420-003241400.laz",
+      "sha256": "8ff696eb4a7039e833b4bbea7f0543fe5c3a9618dacffc510561aa413e56ff16"
+    },
+    {
+      "file": "TRAIN-0463_6390-002807022.laz",
+      "sha256": "b6cd2db5748eaaf83930452a47400c60ebe81d26abb6b7fd4688f5c28addf726"
+    },
+    {
+      "file": "TRAIN-0463_6397-002355116.laz",
+      "sha256": "55c48481a95058e2de06f60ff90a2580e4cfc169792aba3467a5a1a19be5336c"
+    },
+    {
+      "file": "TRAIN-0463_6409-002891361.laz",
+      "sha256": "5fa06e460bb0146c882711b02e547f9bec77babaaffbc9243b100c3846d5d4dc"
+    },
+    {
+      "file": "TRAIN-0463_6417-002276559.laz",
+      "sha256": "3805c2c10bd7b11fb1d2dbf65831b99c926eb03a66126a6a86ba751942d61e55"
+    },
+    {
+      "file": "TRAIN-0463_6418-002378041.laz",
+      "sha256": "60a0e3d9e4575ebd67781e9e06957d7af5adf166bd0d9fb013f4f5cbab3308cb"
+    },
+    {
+      "file": "TRAIN-0463_6419-002803544.laz",
+      "sha256": "aadb6ef30a9b28b65dfb0de25ee2b28c19329697a4e6d5184d38bf61c42f4a8f"
+    },
+    {
+      "file": "TRAIN-0464_6394-002550270.laz",
+      "sha256": "6ab22366fccc152741f2d4b202b310ca66a9a2119d6ad3ab29bcbe441b3b9ed6"
+    },
+    {
+      "file": "TRAIN-0464_6413-002621351.laz",
+      "sha256": "fb029699e803574ef388f85dc7eb0d3a258e9f578ae41facf54ab97afe5777c7"
+    },
+    {
+      "file": "TRAIN-0464_6423-002813800.laz",
+      "sha256": "3b8f5502b99a80f07d3f53a1300ff836dcfb0626037e158953a56092b604068d"
+    },
+    {
+      "file": "TRAIN-0466_6384-002349599.laz",
+      "sha256": "673f669d8994a7f826a8af9a8e428d68db42f4a3a7426dc2724d736bd20ab368"
+    },
+    {
+      "file": "TRAIN-0466_6421-002419088.laz",
+      "sha256": "f59ac14890ed58a301c200af3594aae9cb7ace48981c0cc6970412211ac2277d"
+    },
+    {
+      "file": "TRAIN-0466_6422-002362596.laz",
+      "sha256": "c82796931c65761a6c545cb690fdc2ad31b39f16283dc7eebec3eb7dbf6e9dd6"
+    },
+    {
+      "file": "TRAIN-0467_6386-002515369.laz",
+      "sha256": "8918dc819dcfbfb5d965fd3fc8bc04b0cc742cff95f32c41e7e7733758c69548"
+    },
+    {
+      "file": "TRAIN-0467_6392-002867355.laz",
+      "sha256": "57312ff252afc5b7211d9b4e431a990b85cd322e751f831325d5a48865c9753a"
+    },
+    {
+      "file": "TRAIN-0467_6418-002572356.laz",
+      "sha256": "0b320b26e840e23898cd886d1c99fd5674266e769ace11a689a4cbf9ff07f2b4"
+    },
+    {
+      "file": "TRAIN-0468_6384-002388482.laz",
+      "sha256": "846222948c2cc93ae4e419eeecb4169f981880a9829e227bb8da4eba65d3e474"
+    },
+    {
+      "file": "TRAIN-0468_6394-002215843.laz",
+      "sha256": "105f6b14c5c540697d72a206d9089152a63136423f3798e6dc3e10d911d79aa6"
+    },
+    {
+      "file": "TRAIN-0468_6407-002673557.laz",
+      "sha256": "34c2ebd05956b182ba4276ab0d80a620fb4485b4fabaee8db2a02604a40c449c"
+    },
+    {
+      "file": "TRAIN-0468_6411-003120333.laz",
+      "sha256": "de6e2dcf88f7b563efbf805d784f6ceaa85d4a07a233296a7ce9a1291c5817b4"
+    },
+    {
+      "file": "TRAIN-0468_6413-002422579.laz",
+      "sha256": "45fcb4ff671f88ce9642857c7ef93bb4dfdb776c5dce0b061130ad88ea5ae55c"
+    },
+    {
+      "file": "TRAIN-0468_6414-002428678.laz",
+      "sha256": "61650875a5f83742ff3081a4f05db8b7da82a37afee2e719e377e8c5b2a74bd6"
+    },
+    {
+      "file": "TRAIN-0468_6421-002827450.laz",
+      "sha256": "5e0d185f15bbf8ecc004295580890fe5d131df1764f8e4504514c546333b399a"
+    },
+    {
+      "file": "TRAIN-0468_6428-002453791.laz",
+      "sha256": "5787f1fa89319a3d9061e476880f0e8373301759ce245a82fc2801f6f37e871f"
+    },
+    {
+      "file": "TRAIN-0468_6429-003211067.laz",
+      "sha256": "097a94e8f4fd859a840ffc4161dcdbe0d5769a228cf8c061f5c0475c8d560156"
+    },
+    {
+      "file": "TRAIN-0470_6393-003023266.laz",
+      "sha256": "62748098e5578c9177124d1a8429f945fd87335fcea517bdfc495872a87475e1"
+    },
+    {
+      "file": "TRAIN-0470_6394-002782095.laz",
+      "sha256": "a3e2f5d7da55fdd3430597ad6b084fcfd08e190a0dfa4bc98f099ce6aadb12aa"
+    },
+    {
+      "file": "TRAIN-0470_6397-002638289.laz",
+      "sha256": "770d5d6588580f066729e0c24f7576af30af5f34a1ee8707bada34123bc9388d"
+    },
+    {
+      "file": "TRAIN-0470_6423-002243225.laz",
+      "sha256": "1e00e1efc721556499d3d080a921a5e4f7822a27bd8dc7d145d93310c19d4a2d"
+    },
+    {
+      "file": "TRAIN-0471_6388-002796361.laz",
+      "sha256": "eb539c532d71b282d33e751577add40c5d99c0d081150b6ba71b054afc14dcc0"
+    },
+    {
+      "file": "TRAIN-0471_6420-003164473.laz",
+      "sha256": "471228201877cca35b1d852297e38b73b38610e0aff891ad48b626084f297edb"
+    },
+    {
+      "file": "TRAIN-0471_6431-002220052.laz",
+      "sha256": "06cc09596bb897c30f8e164983715734061c9ba03b4bcaf12a992b295b26c80d"
+    },
+    {
+      "file": "TRAIN-0472_6411-002329034.laz",
+      "sha256": "aaf2fd5853835f81db3a1331402ff3c0db12851645dc9c0c0fb1d1a23d06aa6e"
+    },
+    {
+      "file": "TRAIN-0472_6412-003013390.laz",
+      "sha256": "0975ed983f5f0bee5b6b7df9871b14e59683f9bae7d6cb5611165099986a5220"
+    },
+    {
+      "file": "TRAIN-0472_6416-003035764.laz",
+      "sha256": "1a0ad7d3f37d94ff701f390f74ced020787c1b144117cae89c1fcfaf4dc15948"
+    },
+    {
+      "file": "TRAIN-0472_6420-002872691.laz",
+      "sha256": "18c76b9dcf509d6db617877767302385349432b0a6c1e6c35fe2d599c7aa2305"
+    },
+    {
+      "file": "TRAIN-0472_6431-003153841.laz",
+      "sha256": "2310e0d76e5a8a8ac93596b4e31cb2faf0f76827100e2d53c8c14985978eae8e"
+    },
+    {
+      "file": "TRAIN-0472_6432-003181495.laz",
+      "sha256": "6ecb377945b3b3fc67d093be6e40f2e6f033ff05417009369b1d2be281b7c14a"
+    },
+    {
+      "file": "TRAIN-0473_6405-002214725.laz",
+      "sha256": "9e172536523f3c9b25d25b423dd2e97b1ca4890dd5800dff85176e15e8849d36"
+    },
+    {
+      "file": "TRAIN-0473_6413-003136559.laz",
+      "sha256": "a5e39882b08b7f588da4e63dfc052292e60df03a6d4056113fdddc209682f563"
+    },
+    {
+      "file": "TRAIN-0473_6417-002271177.laz",
+      "sha256": "b0968c1ebde2fd968c03fcfb6a9c6e8c1ae5d14665e6c1462f9f1427dcf594aa"
+    },
+    {
+      "file": "TRAIN-0473_6426-002756451.laz",
+      "sha256": "8ff2a0f76888f817e2740798194f8cf0a6b8010e44d87374fe5348cd9201add7"
+    },
+    {
+      "file": "TRAIN-0474_6422-002486419.laz",
+      "sha256": "f3a6a72372378db9e8ed1cac04f5f57c49b9b19226e7d562a52983e249b434ca"
+    },
+    {
+      "file": "TRAIN-0475_6408-002249046.laz",
+      "sha256": "9bfc9504dd5c25472b81cfa2011178616c6eed9e256aadcf8ec76742682a8712"
+    },
+    {
+      "file": "TRAIN-0475_6413-002333165.laz",
+      "sha256": "9203afe35b7570baf6b517397b266da843133ee92ba240bff20b034bf2d32779"
+    },
+    {
+      "file": "TRAIN-0475_6413-002333196.laz",
+      "sha256": "215daf6977f0f39fecf4229a6fb6f8730a2d5b5d2faf41ec4107da84f317598b"
+    },
+    {
+      "file": "TRAIN-0475_6423-002623990.laz",
+      "sha256": "961ee41dcc1b418bc8e0ba318ea922a79035849d0569b79c05529c1ee7381bbc"
+    },
+    {
+      "file": "TRAIN-0475_6425-002342547.laz",
+      "sha256": "28c508eed108f5ddcb9190012ef609624286c793c777895e9fe1551062f6c7a9"
+    },
+    {
+      "file": "TRAIN-0475_6433-002582445.laz",
+      "sha256": "d7b56573eedea6bd9da0836a68db9ec51c31418ab338d16edc43d78a77986f60"
+    },
+    {
+      "file": "TRAIN-0476_6387-002248770.laz",
+      "sha256": "60c4086c86b373cf9740426954dee50da83ce2706064a66e5fff175ade206d49"
+    },
+    {
+      "file": "TRAIN-0476_6406-002259319.laz",
+      "sha256": "1294746e51a0fe9741f528cb32cf4e14b6cae11aa4bb64dec5caa95ff855892e"
+    },
+    {
+      "file": "TRAIN-0476_6422-002517670.laz",
+      "sha256": "eca6018cc83d061f7f34395deb1b315055af0aef5786fa1d5b08e01d3a5f05be"
+    },
+    {
+      "file": "TRAIN-0477_6384-002244574.laz",
+      "sha256": "bd686ea18522112b85385bfef3e3ae7baec90251648908b23e0937ebbfca44d3"
+    },
+    {
+      "file": "TRAIN-0478_6393-002262181.laz",
+      "sha256": "f244cac6384a2408126b04fb0b67bee0aaa193ea8db30f4c0fc396356fcc5afe"
+    },
+    {
+      "file": "TRAIN-0478_6398-003037194.laz",
+      "sha256": "3b8f1f6479a232443ea91e2b47e95c106883c0d3e920e2639129fb3957c4065e"
+    },
+    {
+      "file": "TRAIN-0478_6414-003237040.laz",
+      "sha256": "65fe1a45f91a7610bb5eb2148fa3e9a5a5a9a0037cb15ad0ad81b55d389b7178"
+    },
+    {
+      "file": "TRAIN-0478_6423-003099576.laz",
+      "sha256": "e750a7609f198217e3739584eb720f7192af56abab03b027dd90d82520afec68"
+    },
+    {
+      "file": "TRAIN-0478_6426-002487326.laz",
+      "sha256": "877f590950737a5c856675b25c353405284c1c12529600a18602605cd2055b9d"
+    },
+    {
+      "file": "TRAIN-0478_6427-002337459.laz",
+      "sha256": "677cb54cc13f95322459d6cc575481ceb26dcf3ccfa4090c100bf12268ba83f6"
+    },
+    {
+      "file": "TRAIN-0478_6433-002320420.laz",
+      "sha256": "68699a277da8f2273bab6b8b117e4a79aa4354fc1ec7f40b3d60be197f0676d7"
+    },
+    {
+      "file": "TRAIN-0478_6433-002320430.laz",
+      "sha256": "c0f5ee5194d3acd69a241904a6e8354b7435757375528ea13280dc52604fc4c2"
+    },
+    {
+      "file": "TRAIN-0479_6386-002587790.laz",
+      "sha256": "eabe0907239ee3ea26aafb6880777b969b7407188ff7943e2564c0b546674d3f"
+    },
+    {
+      "file": "TRAIN-0479_6388-002622131.laz",
+      "sha256": "cbe5b79ddc339db0a3a08535febe9ac82238b0f3448c191671f663724e70aaa4"
+    },
+    {
+      "file": "TRAIN-0479_6396-003173187.laz",
+      "sha256": "5e23c68b1538e29f7b2a32fc01eea96b9fe0694ff040afc8577f03e1135a27da"
+    },
+    {
+      "file": "TRAIN-0479_6430-002691732.laz",
+      "sha256": "34cfa57756a06415306b2876cb05765e229b6b07369d1df2185eca0bc4d3b2c6"
+    },
+    {
+      "file": "TRAIN-0480_6393-002687926.laz",
+      "sha256": "fba061dcfcea7d1c15bb3edf66666659de7ea9048f6022b6a7ce17443a403302"
+    },
+    {
+      "file": "TRAIN-0480_6395-002802414.laz",
+      "sha256": "b95e7fc62a1971ce3de2e156ed19d7239f3696dd31df4a05786edc789b1d6a96"
+    },
+    {
+      "file": "TRAIN-0480_6406-003212961.laz",
+      "sha256": "0fcabb8bc860e9bca39d0e6f0c20bae8c17cc9a1ae6441ac834c8b80e926f52a"
+    },
+    {
+      "file": "TRAIN-0480_6414-002510161.laz",
+      "sha256": "290d048e334a808aed1a3aa1817b831d7315ca48c8dba378da78e419ea1d4333"
+    },
+    {
+      "file": "TRAIN-0480_6428-003204919.laz",
+      "sha256": "359a7fa5fcd8f0835b5bee2e26820a06a8de9695971253717b9d99b0e127b1d5"
+    },
+    {
+      "file": "TRAIN-0481_6430-002449216.laz",
+      "sha256": "714e7c5cda8a1b09d9be731aa4a6ab6cc0fb37108433eb9a9fdfb713e365bb86"
+    },
+    {
+      "file": "TRAIN-0482_6408-002388132.laz",
+      "sha256": "e21e6cc2c8908676ea5c52650ee41fd0be0bb7376ccd19028500ad1be7add91a"
+    },
+    {
+      "file": "TRAIN-0483_6409-003107747.laz",
+      "sha256": "f195c911a299c7d25013df97fc0d0c54519db112c60ed7ad971d5bdd011b8369"
+    },
+    {
+      "file": "TRAIN-0483_6410-002670652.laz",
+      "sha256": "3daa3d218973c37788f2a5224572e6c6eaca2e54955b254f419ec80b5b8cb967"
+    },
+    {
+      "file": "TRAIN-0483_6413-002743180.laz",
+      "sha256": "ef196d3b39fbe65750a39ddad93f4fa1e19e1f29ce9f536c8b17a66e595fe244"
+    },
+    {
+      "file": "TRAIN-0484_6416-003234071.laz",
+      "sha256": "1caa764d1cce80c30030c0ba84b7c42ab474d54707d9b9b923f2eda51b6bb381"
+    },
+    {
+      "file": "TRAIN-0484_6422-003020013.laz",
+      "sha256": "bcfffcda86cc0d193feea75051162806e997e103257b7148bcb624cf46930805"
+    },
+    {
+      "file": "TRAIN-0484_6423-002979430.laz",
+      "sha256": "bbe69443ca1a2bb9e4d1ff357429830057881542a5d7bde23dfbbd4e654bcbb8"
+    },
+    {
+      "file": "TRAIN-0485_6393-002750227.laz",
+      "sha256": "61c9f14e22b01b293189a2d9091f27f24be1a6e06c14a1bccf6bf3a557f2e05b"
+    },
+    {
+      "file": "TRAIN-0485_6413-003088230.laz",
+      "sha256": "6bc7f64981b869783ac9f2ab8ec5890048730e7210001a3b96b0b05107a5f3a4"
+    },
+    {
+      "file": "TRAIN-0736_6277-006995897.laz",
+      "sha256": "f38aa5fbc83acb5114669ccaafb174810de1a6611b4441071d242eba1000877f"
+    },
+    {
+      "file": "TRAIN-0736_6293-005103904.laz",
+      "sha256": "2488261639e09405ab94b9d1b02fa93edc6a99b3a99acd70f11ee8258deb8686"
+    },
+    {
+      "file": "TRAIN-0736_6314-004994719.laz",
+      "sha256": "d2f2438b11442728c3fe7e6524921250e4241b35ed161e2a6dea43f7f3b47140"
+    },
+    {
+      "file": "TRAIN-0736_6320-004988005.laz",
+      "sha256": "6ecf15155a7f0ff2792ae0f72ef79b21144e47ccf55f1fcb6d6a4f8032ed82d6"
+    },
+    {
+      "file": "TRAIN-0737_6272-006801272.laz",
+      "sha256": "c0847946d9108ed8677ca4599781e247ca97dd7005308c5fb360ff946c75e2a7"
+    },
+    {
+      "file": "TRAIN-0737_6280-006611901.laz",
+      "sha256": "88699f6260f7906f752c8383ff2ec9940ad6a8ee2866deeebb27a97cd0857521"
+    },
+    {
+      "file": "TRAIN-0737_6312-005318164.laz",
+      "sha256": "feb4ff53e9fa86940d7721a065030eb179b6df1c9da0f1f17b06ee45ea904838"
+    },
+    {
+      "file": "TRAIN-0737_6331-005443247.laz",
+      "sha256": "b855c0b36f007d5b3a101b6586dbd1e1520a682934c611a97bb75ca46e49d96a"
+    },
+    {
+      "file": "TRAIN-0738_6259-007096265.laz",
+      "sha256": "debdc5839d46af224b5078a09ce1731685f2374509a7473fc61af3b1b8cf948b"
+    },
+    {
+      "file": "TRAIN-0738_6282-006892201.laz",
+      "sha256": "90f8b6aa0ed17b774c5f4045ff22db554d799f5d35c614af8a1eb77680d4862f"
+    },
+    {
+      "file": "TRAIN-0738_6295-005134843.laz",
+      "sha256": "17215caf571d6f66b3be9d5683dc20a88439c14a847c15d685ba708fbe1a6086"
+    },
+    {
+      "file": "TRAIN-0739_6268-006991045.laz",
+      "sha256": "225c1875877cce4ebc789751b4219026f924b3e7eb4f9d901e0fa89a5b5d8ca9"
+    },
+    {
+      "file": "TRAIN-0739_6288-005250414.laz",
+      "sha256": "915f5879ee9694925dd8bbd56b7d8644d1121862f614564cd258314b7181be98"
+    },
+    {
+      "file": "TRAIN-0739_6289-004494768.laz",
+      "sha256": "8c479fd184df31a6496bbc3427a71e0571a59b088f8be11d8340985e1c4ee906"
+    },
+    {
+      "file": "TRAIN-0740_6271-006726323.laz",
+      "sha256": "7702a7d313b9b02710cd96db95c406cc6e32b475bbacbfe133c98cb3d7818faf"
+    },
+    {
+      "file": "TRAIN-0740_6277-006874223.laz",
+      "sha256": "cc03843eb5a14bb0cbca3bc45090c7e4795204b659b724c565bf421b4169283e"
+    },
+    {
+      "file": "TRAIN-0740_6311-005229884.laz",
+      "sha256": "d901d244b0ca529435a18ec0f64e1ea77a84920a14c52865fada77f7cc99042d"
+    },
+    {
+      "file": "TRAIN-0740_6331-005420636.laz",
+      "sha256": "f6f133acf8070ec19f38fb74cfa55b1767725aabb8038b5d7a2a5f91c9c09271"
+    },
+    {
+      "file": "TRAIN-0741_6271-006806464.laz",
+      "sha256": "f986090e9be02e299fb189c1740d6b6b264c2784958bb629c5da70f7edda85e1"
+    },
+    {
+      "file": "TRAIN-0742_6277-006965988.laz",
+      "sha256": "a4cbb70fa4bcfaf910b3fbc2314b170c3624c6eb861c51345dbb66e266edd9e9"
+    },
+    {
+      "file": "TRAIN-0743_6271-006953040.laz",
+      "sha256": "a1db95fcc4772d17d53b5267784fc396c3dbc1ce01e570dc718eac3ea914cee1"
+    },
+    {
+      "file": "TRAIN-0743_6284-005096794.laz",
+      "sha256": "3b6d705295c4fb770b65042e1cfb08626b37d82fa0286e3bc49c3fd9457d2d73"
+    },
+    {
+      "file": "TRAIN-0743_6307-005069313.laz",
+      "sha256": "997f3f970d67c62b5d627ecdfa532144a41fa6e5c44121ef802fbb822fef1bb9"
+    },
+    {
+      "file": "TRAIN-0743_6325-004789769.laz",
+      "sha256": "f064b655bc425c604f566a42d6e86351f758a0162182bd3b1a7e7c3500e9a9d9"
+    },
+    {
+      "file": "TRAIN-0744_6300-004728839.laz",
+      "sha256": "96317a03a5d2624f9e99837dbc0280fe1d6e107631fbb18bbcaf67cf54452246"
+    },
+    {
+      "file": "TRAIN-0744_6327-004642959.laz",
+      "sha256": "21f4c11edf3ce3268fa20d1890dceb6a8db90e09a632ea364be24a0d7bd93385"
+    },
+    {
+      "file": "TRAIN-0744_6327-004643160.laz",
+      "sha256": "fbddf3b42c4627f66717ce0324bd45a8b9ebe040c9d4bb3811808c21b8c4d60a"
+    },
+    {
+      "file": "TRAIN-0745_6260-006753711.laz",
+      "sha256": "5b3e2aef0e8a356a4435baeb4ac2dc303244db8dade83627a9a57abeb1ccf1bd"
+    },
+    {
+      "file": "TRAIN-0745_6260-006753953.laz",
+      "sha256": "8921abb67002f1f2f3f341cb1f72ee9a35ba86c71cc950d7b7cf6eacf427b93c"
+    },
+    {
+      "file": "TRAIN-0745_6271-006829481.laz",
+      "sha256": "538e4e812c69e0af49949ba6d544493e93ed7c7bd3bc9fda2608fe9bc6fb652a"
+    },
+    {
+      "file": "TRAIN-0745_6273-006792704.laz",
+      "sha256": "595a9d6ff2cb91da77085f21f8c34a5d1fda211d3778465a633a4b8eb3f30208"
+    },
+    {
+      "file": "TRAIN-0745_6278-006704461.laz",
+      "sha256": "3a890bf2cbe7eeea141fbb28589f0da1786a79c9106dbd1f14add94b33a01008"
+    },
+    {
+      "file": "TRAIN-0745_6286-004922711.laz",
+      "sha256": "e17b2b1513cd44baffef477dabd0da21912250e27b4d6f6a7dce0f672fb7b446"
+    },
+    {
+      "file": "TRAIN-0745_6298-004565198.laz",
+      "sha256": "9d8ec697dd93ae03d41769d76d0faa4a7763081c1d7f683dcfbf0d60c0660c3c"
+    },
+    {
+      "file": "TRAIN-0745_6301-005064137.laz",
+      "sha256": "545d54d9763189c014c2fa45be763a94be739ee6c4667205dc04760126595f49"
+    },
+    {
+      "file": "TRAIN-0745_6305-005253580.laz",
+      "sha256": "ef29b64f9068ef8565a142b71f647a88df3da9ba9c1bcf32b8c7a07f87f87895"
+    },
+    {
+      "file": "TRAIN-0745_6328-004780944.laz",
+      "sha256": "7856cafeab84356d52a17f68f7a15ed90a9465a2bd08bfbebe5ec60c54af5f6f"
+    },
+    {
+      "file": "TRAIN-0745_6329-004475519.laz",
+      "sha256": "b6e23bf77e58a708d850f339445e7d6a9e127e9e4fcb5e497dd00b269ba6cc7b"
+    },
+    {
+      "file": "TRAIN-0746_6268-006744343.laz",
+      "sha256": "c2e025cc111c712c046b8fdc73cc36b47a3ce6897fe1081ac6c5ea7b52da2650"
+    },
+    {
+      "file": "TRAIN-0746_6285-004995674.laz",
+      "sha256": "2cc95b4cbd4050242e8804a7e17bc6c88ba2137fce2206dedf7241f4d49e5c42"
+    },
+    {
+      "file": "TRAIN-0746_6287-005101504.laz",
+      "sha256": "fc27ecccf950f5877ca9595ca2dbb038cd5ad90b38f0e942e61f213ef2f21ebb"
+    },
+    {
+      "file": "TRAIN-0746_6294-004523678.laz",
+      "sha256": "6cdebda01267f41a9074aeb38cc134fc484bd17b623095296bc6efedd01ab878"
+    },
+    {
+      "file": "TRAIN-0746_6306-005279683.laz",
+      "sha256": "99508a6776c70236a6d2fb4d975b7b3b744f264465340d8a2cb58ba101355c73"
+    },
+    {
+      "file": "TRAIN-0746_6317-004641289.laz",
+      "sha256": "213a66762c4dcba8efb20b1f8d344381ad0c7b29f0e4eb6343625b0d52d14465"
+    },
+    {
+      "file": "TRAIN-0747_6258-006789540.laz",
+      "sha256": "074c0e701a60684042b621160c8c83b9a8b2c0fec4aba95bf5682a3953a73bfc"
+    },
+    {
+      "file": "TRAIN-0747_6258-006789559.laz",
+      "sha256": "6ec82d4a2ddc15e03d588afbde1279a08ad0873c6c1defc8468de2e0766f1c44"
+    },
+    {
+      "file": "TRAIN-0747_6277-006659879.laz",
+      "sha256": "611f3b56bee2b09a5adbd6a86563d316940fb20c8636696488b6cee9efd18f31"
+    },
+    {
+      "file": "TRAIN-0747_6287-004696618.laz",
+      "sha256": "acf23a5ca1ca0600dcf3f413ce5f489d6ceeb846f41d1b7e1fd22c026626f0b4"
+    },
+    {
+      "file": "TRAIN-0747_6297-005022942.laz",
+      "sha256": "87341b228c315945ae6bf8b383a0e3f4d6fc656f46d5f0b3e1288481ae1dc5ce"
+    },
+    {
+      "file": "TRAIN-0747_6297-005022984.laz",
+      "sha256": "262327ffe58181cd06f87ddbc39b4d940c3d3c38b0778ac998a833826839278c"
+    },
+    {
+      "file": "TRAIN-0747_6298-005353366.laz",
+      "sha256": "8ce5a6e2bb1974ee0d8a60c97e82cc83a68da6d1fc6d72ecd4646e11c81c4d52"
+    },
+    {
+      "file": "TRAIN-0747_6318-004558955.laz",
+      "sha256": "51f3e7a1d7a280163f83f39aa9c212163fc92490032464803b6bcbe697b2f96d"
+    },
+    {
+      "file": "TRAIN-0747_6320-005091557.laz",
+      "sha256": "e3f47873a7844948e5dbdf44cd383bbc91e45fc82f75d920efabfd9392820f19"
+    },
+    {
+      "file": "TRAIN-0747_6322-004877781.laz",
+      "sha256": "2096712825e11046fec108c6b3d3287c2f37b7144135d595cee37096a2805263"
+    },
+    {
+      "file": "TRAIN-0748_6259-007044401.laz",
+      "sha256": "4895da28468f024f9bdb52f366fff23b7c41aaffdfed859f6ea4f33bc54bcbb2"
+    },
+    {
+      "file": "TRAIN-0748_6259-007044460.laz",
+      "sha256": "4848a10a4f52b66e5a08df6620ca2c2d143012c43d26ea0ee066b44b8cc7a3b6"
+    },
+    {
+      "file": "TRAIN-0749_6276-006818778.laz",
+      "sha256": "861921b4af9ca86fd93e45d4b803bcea859e29ccead6c72395ea99013319118f"
+    },
+    {
+      "file": "TRAIN-0749_6312-004909376.laz",
+      "sha256": "c9f56d09683fc5f9434b75bf9e2d92ff3ce446739d173dc62d0f01569f98dda0"
+    },
+    {
+      "file": "TRAIN-0749_6332-004693525.laz",
+      "sha256": "260d834affd874cfb46e21e9ea6be499ee2806b5cef7b867cdb2d9862d17f7ae"
+    },
+    {
+      "file": "TRAIN-0750_6270-006803417.laz",
+      "sha256": "797e02d473577ea00412f07ac963ee50f24138bc8b9914ecddac8ba7cf306196"
+    },
+    {
+      "file": "TRAIN-0750_6300-005261969.laz",
+      "sha256": "f1ea6fd5299f2118799d61fcfffa35761dc816d37d0cbb0315a3c972f7b94439"
+    },
+    {
+      "file": "TRAIN-0750_6310-005150932.laz",
+      "sha256": "bf0b8047bdecef6b5c7ce5c59d6b4c70d02f9a1503aba251d0504250175e6885"
+    },
+    {
+      "file": "TRAIN-0750_6316-005171478.laz",
+      "sha256": "3a1b5ca76cfa952b9bc5b152a30da77316246d7cc8aaff9a8ffc49e9359b6f60"
+    },
+    {
+      "file": "TRAIN-0750_6319-005355377.laz",
+      "sha256": "5d85efd6872281b2fc7ea12f4dcc1daa5e29a587cdf72f054ba090c5344509d4"
+    },
+    {
+      "file": "TRAIN-0751_6253-006745582.laz",
+      "sha256": "a1ba2bcec51f29fae7c4f3860fcfbc21416fceef817402375a850925f0214a44"
+    },
+    {
+      "file": "TRAIN-0751_6295-004724998.laz",
+      "sha256": "415c21faa62929f290b04c2397cb98320e4b66b34ffe2551a372d6d1b91e6de6"
+    },
+    {
+      "file": "TRAIN-0751_6302-005474997.laz",
+      "sha256": "72c69481d59743adaea034ddef86a4909043de98d1efc8a86e434a6feb1783bf"
+    },
+    {
+      "file": "TRAIN-0751_6304-004800683.laz",
+      "sha256": "37ea3b6d10254460c9be5da0366160dd25e0b885c2c6942393634f0befb9df4a"
+    },
+    {
+      "file": "TRAIN-0751_6305-005004663.laz",
+      "sha256": "c0e14bf099fad045477fc3e62abd32805873240e258072ace03fff1d3017ec9c"
+    },
+    {
+      "file": "TRAIN-0751_6306-004833790.laz",
+      "sha256": "4f320ad52542be6699ab19555d0f3b10a6a9db07292ea1d86043729aef06f974"
+    },
+    {
+      "file": "TRAIN-0751_6309-005215693.laz",
+      "sha256": "38d147c223b4b9e34cf1387fccdd29e44ce65f47c98e29592ef0f6a6c694ad2e"
+    },
+    {
+      "file": "TRAIN-0752_6275-007030708.laz",
+      "sha256": "1f7819b0460744d52b5b3cf842f2b4bcdc76bcaea33049c1268556f70ad998c5"
+    },
+    {
+      "file": "TRAIN-0752_6333-005032422.laz",
+      "sha256": "fd8f73fb31e484f40f57b5621506bdfb6a3238a0b06f1926a082e5288becc178"
+    },
+    {
+      "file": "TRAIN-0753_6267-006634440.laz",
+      "sha256": "df5bd395674f4cce42f752cf44316caf5770d683c15bd80464533e230269d6a6"
+    },
+    {
+      "file": "TRAIN-0753_6286-005262222.laz",
+      "sha256": "69e1574f4bddb84fb899529e87de6616f146db7dd6ae7d1a04b603476c141b5a"
+    },
+    {
+      "file": "TRAIN-0753_6314-004615754.laz",
+      "sha256": "81ae91dc6edb3dfacc5a504adc8aa00d77efca9c9592fc1197ba2416703be586"
+    },
+    {
+      "file": "TRAIN-0753_6315-005236907.laz",
+      "sha256": "ab338eee2522c379b4af470390318e175372f69682bb9217015c5a3c94518f55"
+    },
+    {
+      "file": "TRAIN-0754_6255-006790748.laz",
+      "sha256": "19bd9269ff3f003bb92e3231f1b0df650ceb10e72ba8e9e0dfd90d538ffe06a6"
+    },
+    {
+      "file": "TRAIN-0754_6259-006752813.laz",
+      "sha256": "3d894b2bdd134cff77b81d524867f294317d76beb399f5ca212f16df9f3a15f8"
+    },
+    {
+      "file": "TRAIN-0754_6295-004466042.laz",
+      "sha256": "97bce56b093cee6d3af272f46eca76188f852e92865e7ec8b7620bb41e38815c"
+    },
+    {
+      "file": "TRAIN-0754_6314-005264352.laz",
+      "sha256": "4837f67283d402fc538b36b420a50a4b22d9a5ba7b45075fd6adaef786c4d2ca"
+    },
+    {
+      "file": "TRAIN-0754_6318-004914439.laz",
+      "sha256": "ed82eb109dc3e5162f78b24e09653e055a7f6cda79f2bb68356c8673427d5ea0"
+    },
+    {
+      "file": "TRAIN-0754_6323-004586811.laz",
+      "sha256": "82f13936a706439739f54fde072687f0dd75f5ff835f9ba5bd274178a73b8fd0"
+    },
+    {
+      "file": "TRAIN-0754_6329-005123619.laz",
+      "sha256": "8bf507a6f3457e4bf55c81eaff7a6e2f16de2f74c6f8d66a6f2fe0f5116f1eba"
+    },
+    {
+      "file": "TRAIN-0755_6284-005318901.laz",
+      "sha256": "cc681b8a9db6a75136ed93eddb474985280143d40f9659b18d8f6e4a54533124"
+    },
+    {
+      "file": "TRAIN-0755_6324-004481473.laz",
+      "sha256": "3415503aa93b8f6cbe960b725b5309ff1459e17f54503ef496fe63baa3a39b76"
+    },
+    {
+      "file": "TRAIN-0755_6329-004927203.laz",
+      "sha256": "e129622d750d9095a20b3583c3b6fa1c1966ef46fcc62fd9b5dd849217e1cd58"
+    },
+    {
+      "file": "TRAIN-0756_6303-005194162.laz",
+      "sha256": "44f3d426fbbff93f05e1fe83355c2c22d3ac5ab69af7b104116067c376a96e47"
+    },
+    {
+      "file": "TRAIN-0756_6305-005061183.laz",
+      "sha256": "720d4e3505b41a8ff483353aa3f83b8546b0d583da5bf7e6cad5a9231c6ae3ff"
+    },
+    {
+      "file": "TRAIN-0756_6308-004821818.laz",
+      "sha256": "d3e4499d1ddb8a488ef1b486aa8d3bfc2f6ab75a49f5c5229341c6feb02fffd1"
+    },
+    {
+      "file": "TRAIN-0756_6313-005482042.laz",
+      "sha256": "68ab2a89099d7bce3a50dfa8101738e393871d066e39f7214e45dfdbfc6dfa5b"
+    },
+    {
+      "file": "TRAIN-0756_6321-004429619.laz",
+      "sha256": "46538d16167bf4ca5dd45db902bbf88424f0dc3a8669475c89c01f76620388be"
+    },
+    {
+      "file": "TRAIN-0756_6321-004429957.laz",
+      "sha256": "5a4bf6b1b468bdaed742e8360d634fd1fa92ce7a3f4d5a328713262d694db7ce"
+    },
+    {
+      "file": "TRAIN-0756_6324-004439546.laz",
+      "sha256": "fded72c81aa0bcea7469cd6a3027687dded0963cefae99918062c50080ad27ae"
+    },
+    {
+      "file": "TRAIN-0756_6327-005487493.laz",
+      "sha256": "9496343363f7e8f1d7655ba15ed5db97a5f63567553b655e87a72f90263ca023"
+    },
+    {
+      "file": "TRAIN-0757_6270-006690253.laz",
+      "sha256": "55050cf17cc3a92a20e81f165431f6b6a946e6613c645b6328544a0fa0a2c66b"
+    },
+    {
+      "file": "TRAIN-0757_6299-005364611.laz",
+      "sha256": "84d16b5106450d2329f4204146a7ce90279338849e652e7f2d1e971a6b5700b2"
+    },
+    {
+      "file": "TRAIN-0757_6314-004748650.laz",
+      "sha256": "a6b4f10cc5de482d42005be6846d801d9f8817a9a0dcd887d6115b6d4dcffe6f"
+    },
+    {
+      "file": "TRAIN-0757_6332-005068016.laz",
+      "sha256": "8e13106273fe7c48c1be4cd0fe9f006b79802fb9c8ef2427453ba35d6b8c25b7"
+    },
+    {
+      "file": "TRAIN-0758_6256-007024582.laz",
+      "sha256": "f427626048e744a92d4b57a8640ea0dedb68f990c3658c2229344e335d780968"
+    },
+    {
+      "file": "TRAIN-0758_6257-006655107.laz",
+      "sha256": "04e0f7b9861e5cd1ee5183b54654801fa2eea13f20fda8c48245fd8cf3c9401f"
+    },
+    {
+      "file": "TRAIN-0758_6278-006667251.laz",
+      "sha256": "2e54a975b8f1440024783a4d9ff5449d0a9b0eaebc385b381307c8f13bd82f9c"
+    },
+    {
+      "file": "TRAIN-0758_6280-006602376.laz",
+      "sha256": "564105b0345e21afb3ae1e3a0cf4c640748a76e6087de31804974f723fbc702c"
+    },
+    {
+      "file": "TRAIN-0758_6281-007028033.laz",
+      "sha256": "03516520d140852b4247cf2fa2f90149337d0b44e47d8c4203ecc1a6b6ecf037"
+    },
+    {
+      "file": "TRAIN-0758_6313-005292805.laz",
+      "sha256": "89c5b6a407061a4f38735e77ac5e954300a1eb720531df6e5f0a82fbe987c93d"
+    },
+    {
+      "file": "TRAIN-0759_6259-006708851.laz",
+      "sha256": "9406420cf04da3a64be32c4fabba11bf9d0dd0679039d17610e202ff3814e5f4"
+    },
+    {
+      "file": "TRAIN-0759_6321-004420638.laz",
+      "sha256": "5cf5148744611eea11c957717c4e23dd7d08f462f4ff9bfc7fc3b72736f9aac8"
+    },
+    {
+      "file": "TRAIN-0759_6324-005238409.laz",
+      "sha256": "8d6b06be06104d369979eba2e72e81243040cac4852dbdf0c860e93c7db26f77"
+    },
+    {
+      "file": "TRAIN-0760_6274-006873962.laz",
+      "sha256": "118cb3fbc7d445dccf4e90c3abc0cabdc87777b63d757f2e4545e9078464b332"
+    }
+  ],
+  "val_files": [
+    {
+      "file": "VAL-0436_6431-002496892.laz",
+      "sha256": "2ec3be8faf81d0e211c68e9baf728e0b8f0ef286e26f87b29d69132b38dcc17b"
+    },
+    {
+      "file": "VAL-0437_6406-003279445.laz",
+      "sha256": "8ae80b18e981b88272419ab8a983e753c824e2f9bba618a9a027931a3ddba1ae"
+    },
+    {
+      "file": "VAL-0437_6411-002977031.laz",
+      "sha256": "6e7498e183aa64712278e9a98efdf0ed186b0243a7253f6a8055c3c77c21f24f"
+    },
+    {
+      "file": "VAL-0437_6417-002735365.laz",
+      "sha256": "5ca5760e44a267b7c01d18d0d9db144c04115f61cd0996368591d7ec351f17e5"
+    },
+    {
+      "file": "VAL-0437_6432-002768921.laz",
+      "sha256": "a4ffc6e057ecb93da8a7751117c848fef717923295d2f27d9e6591385e2734ee"
+    },
+    {
+      "file": "VAL-0438_6399-002676001.laz",
+      "sha256": "35249377f37cf42320f51534700e3851485b2fa86baf921fce9f537783a5b355"
+    },
+    {
+      "file": "VAL-0438_6420-002882143.laz",
+      "sha256": "21ba589d1574ca04f339b97125b007335fd2ca8012192581179e138a184a4402"
+    },
+    {
+      "file": "VAL-0438_6431-003058781.laz",
+      "sha256": "8395c5c745e45cb8ce75ede775266d721a6e561b31c168133d83396e87ce6224"
+    },
+    {
+      "file": "VAL-0439_6419-002781992.laz",
+      "sha256": "9671a422ec9f66588a8e9a9a6d525200058f0dd5bdc769d46d58a29c048eab6b"
+    },
+    {
+      "file": "VAL-0439_6433-003040558.laz",
+      "sha256": "d1fb4c7c54d59b921cc11ad7e4bf612c171f18e3e7b99a7e9272517d7d09547a"
+    },
+    {
+      "file": "VAL-0440_6429-002852438.laz",
+      "sha256": "cc38a419816b4b52f499bd737b0d8cee71e4e38f6634b838c8b5edc07a051e93"
+    },
+    {
+      "file": "VAL-0442_6427-002321426.laz",
+      "sha256": "40a477e7fb114ea6e31f2af186236e71a0e5389f0e03615629c8d386ff10e2c5"
+    },
+    {
+      "file": "VAL-0442_6428-002455938.laz",
+      "sha256": "cd8835136134a25e3f7be51a92d7939e717fd4a8693a746a533bc9f9b48005aa"
+    },
+    {
+      "file": "VAL-0442_6429-003072650.laz",
+      "sha256": "864502f92135637bdb67358f62daf198bf996defa1047f584219659cf440e8ba"
+    },
+    {
+      "file": "VAL-0443_6409-003192485.laz",
+      "sha256": "69b0a2c87875b986a4bc1f085a550e60b23faeca9f57d39857e02fe715a2b282"
+    },
+    {
+      "file": "VAL-0443_6431-003130272.laz",
+      "sha256": "871646bff24e81b80d66dcb648cbec890cb2ff9ef0f2aa51e4394df9567cb131"
+    },
+    {
+      "file": "VAL-0444_6401-002475260.laz",
+      "sha256": "c425b929720e1f86b778a0488b709fa638419790f2ebfe27e19555673e4a968a"
+    },
+    {
+      "file": "VAL-0444_6404-003292696.laz",
+      "sha256": "4e27f4b7911dd551d5e0c9b9e67fbf945656aa09f319b5371c011a290f0fd91d"
+    },
+    {
+      "file": "VAL-0444_6412-003057588.laz",
+      "sha256": "4c2ba38ce93b84c641c8a6f4d34095b1924c832a4dc79a2f5e5bf79939dea9a7"
+    },
+    {
+      "file": "VAL-0444_6414-002377031.laz",
+      "sha256": "c2ff5ec2cc8074cd45e9226b704247030eea09d6c117e5f69fcce294ca34c96f"
+    },
+    {
+      "file": "VAL-0444_6417-002315133.laz",
+      "sha256": "a50541416b88019673f1d571d005c0124b398666f5eb95631175adcc8f1fdd15"
+    },
+    {
+      "file": "VAL-0444_6420-003324876.laz",
+      "sha256": "9e91741d1e57c05621bffce71c4dd4dacfae24e1b89c51dc6e96c136f20f2cc0"
+    },
+    {
+      "file": "VAL-0445_6413-002373834.laz",
+      "sha256": "ba7ba1db92c628af7c65e005eb31d1e233405fd07dc380e5c8f43d2b8eb39899"
+    },
+    {
+      "file": "VAL-0445_6417-002421334.laz",
+      "sha256": "5d0f32cf33539d3855884f09de94e208941322df92602253135ac0798fffaed1"
+    },
+    {
+      "file": "VAL-0445_6429-002691455.laz",
+      "sha256": "e99a2b00fcf54549a89db99735fe5dcffc142da2aa4859efdbc2ff7f4215cd71"
+    },
+    {
+      "file": "VAL-0446_6416-003086885.laz",
+      "sha256": "fe8c1cda104add9a8c2fc7bafcf72ea8bed739bdaee0c7f82e846234ef0acb7c"
+    },
+    {
+      "file": "VAL-0446_6421-002951107.laz",
+      "sha256": "c8c91994054997b73a152cbab909b3b34618da1e957f8d18fa7ac56269ab41f2"
+    },
+    {
+      "file": "VAL-0447_6408-002831977.laz",
+      "sha256": "160611cb66f7f4d532ffd87b21dfc0ada3268cada69badf3dae30f678d51c4d4"
+    },
+    {
+      "file": "VAL-0447_6413-002921831.laz",
+      "sha256": "c7cc87859904e888da8fe51875293001b2a8c8e5609f0a2743715945890c25a2"
+    },
+    {
+      "file": "VAL-0447_6424-002424322.laz",
+      "sha256": "511bdb687296e5222413df2aad13aa3121b3c8467a6e37f7fd9018796d4d2543"
+    },
+    {
+      "file": "VAL-0448_6409-002357105.laz",
+      "sha256": "e62334a80c099c88f9bfab0fddafa76821a8c6c174c9558e0f3fb9104dff5674"
+    },
+    {
+      "file": "VAL-0448_6411-002658094.laz",
+      "sha256": "1cc939eea018c46a4cef87de6aadd9d5c0c8b563bed9115d038ff788c683b5d8"
+    }
+  ],
+  "class_voxel_counts": [
+    30669.0,
+    552600.0,
+    1356703.0,
+    77155.0,
+    15559.0,
+    1438.0,
+    1692.0
+  ],
+  "training_seconds": 94.89398633502424,
+  "peak_allocated_bytes": 148917760,
+  "peak_reserved_bytes": 287309824
+}

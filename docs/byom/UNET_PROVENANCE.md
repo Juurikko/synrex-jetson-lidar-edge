@@ -11,12 +11,19 @@ The dependency stays external. No upstream checkpoint is downloaded. All learned
 parameters start from seeded random initialization. Architecture provenance is
 attributed to Adrian Wolny; independent authorship of that architecture is not claimed.
 
+The imported `se.py` credits Anne-Marie Rickmann and relates to
+[ai-med squeeze/excitation](https://github.com/ai-med/squeeze_and_excitation),
+also MIT (copyright Abhijit Guha Roy); its notice is preserved separately.
+No squeeze/excitation module is instantiated or exported in this DoubleConv U-Net.
+
 [FRACTAL's primary dataset card](https://huggingface.co/datasets/IGNF/FRACTAL)
 identifies Etalab-2.0 and separate train, validation and test splits. The pilot
 pins dataset revision `36e00245ef92fd180f655f6ee410f2e935693cc2`, selecting the
 first 256/32/32 sorted LAZ entries from split archive 00. These are real survey
 points and labels. Selection is bounded and reproducible, not representative of
 the entire benchmark. ZIP CRCs and per-file SHA256s are recorded.
+The pinned source repository reports its latest update as 2025-04-05T09:37:48Z;
+retrieval occurred on 2026-10-26. Both are carried with redistributable artifacts.
 
 The [official Etalab Open Licence 2.0](https://github.com/etalab/licence-ouverte/blob/master/open-licence.md)
 allows transformation, derived information and commercial redistribution, subject

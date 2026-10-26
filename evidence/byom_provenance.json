@@ -25,7 +25,7 @@
   },
   {
     "file": "ARCHITECTURE.md",
-    "sha256": "e0c0bd81b94b276acb7c23000268d81701de2b04c1a20d0b898e0ce572b86e9d",
+    "sha256": "c0c290f48f7748167c2f418a0595c0784eddd2021806ac632f942fd36ae8ec54",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -43,7 +43,7 @@
   },
   {
     "file": "BRING_YOUR_OWN_MODEL.md",
-    "sha256": "7250d852bcd2773001e274d768a6d67694033f8c7fb3d99fc8f835c82bb51b75",
+    "sha256": "d59f7db29aade678c5d4fc4fe2dc5d1f9a8ce0e5d2c6868c0e5a9c9f68d01440",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -162,8 +162,14 @@
     "origin": "Separate upstream notice or preserved historical license record"
   },
   {
+    "file": "LICENSES/squeeze-excitation-MIT.txt",
+    "sha256": "8627825cac1c7aecf97231d752d78eec8364949233cb93d6b2d330a4f6afb144",
+    "license": "Third-party/standard license text; see THIRD_PARTY_NOTICES.md",
+    "origin": "Separate upstream notice or preserved historical license record"
+  },
+  {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "17e6d314a4a7b7352a3dd27ed40c5ed874522a9369107451719d4f67d53b60df",
+    "sha256": "ec3c5085fdcea5b27ea475219c8c60b70d72685fdcc89ff971f8e1f1253fe343",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -199,7 +205,7 @@
   },
   {
     "file": "README.md",
-    "sha256": "124ff208f093fde476022b7683d5e6fd0120a608125cc813822ee421cdd50a60",
+    "sha256": "9cf204a3e6753f55a06635e7b697bdbc26a39f7e9f5c22ec1fba11eaa3f33ffe",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -217,7 +223,7 @@
   },
   {
     "file": "THIRD_PARTY_NOTICES.md",
-    "sha256": "2ced132a2257641a3108864fdd83c6a3a879ed3c65381da4679dd4c0b8c3bf9d",
+    "sha256": "2fe148fbc50369c2d98f8acd0069bed23f08fb59143e869fa9131c4e2af70019",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -229,13 +235,19 @@
   },
   {
     "file": "docs/byom/ADAPTER.md",
-    "sha256": "1cab42ac88b69c431261caf5e75bd3b78f60bc23b279558328a562530789b766",
+    "sha256": "c9ec56b347289e65a4e19e2dfa151b99e05ef0d80f95b451c472f2442111cc5a",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "docs/byom/AGX_QUALIFICATION_PLAN.md",
-    "sha256": "70ed999e324225d1c59036a158fde2e8d42350928e8386b1b28e9f8f4be63e38",
+    "sha256": "2cafd3428a8ab0feb1072372171b6fc4b92540b56348a809440f3dfad156683f",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "docs/byom/LITEPT_SPARSE_PLAN.md",
+    "sha256": "18135c26168a85b127dbcfae12f045201c694cd79ca772e0f267f5d623e4166d",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -253,13 +265,13 @@
   },
   {
     "file": "docs/byom/QUALIFICATION.md",
-    "sha256": "d7131c0724de1ed37b8f66be0cacf312aa763ac1fdb6bcabece197f60c99dc3d",
+    "sha256": "64e3472a8b83a309e1b9b88022634aef76208d95d4b1fa790ba36052b98d094d",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "docs/byom/QUICKSTART.md",
-    "sha256": "43c4faf883b60a38aceada74038499e97b34f872672dfe76b0257503c6a33855",
+    "sha256": "3aec1a9ed397b9a32f1dc1d1a8fc04b79d8b236fba3658bb4a5184fd0e849e75",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -277,7 +289,19 @@
   },
   {
     "file": "docs/byom/UNET_PROVENANCE.md",
-    "sha256": "0b8d9dae8d3a6b377e77aae3b27820ca211f65d8fb912a2839422bc884eaf075",
+    "sha256": "9b59958faf637dfe03ac8996e4e3d3dd44357993439779fd014ed695cd461557",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "docs/byom/UNET_QUALIFICATION.md",
+    "sha256": "e4eb2fb8937a70fd3619a8aecf846cad268cfddceb41dea40818712c0deaacbd",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "docs/byom/UNET_QUICKSTART.md",
+    "sha256": "504d5e7451b9282e77598440651f7e7af2835d43ba416614b2b1ae90034cb8d9",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -432,6 +456,78 @@
     "origin": "Historical qualification record"
   },
   {
+    "file": "evidence/unet_dataset.json",
+    "sha256": "aa57d5296d3f241bb08b4e161d9594a3a36bd9b2dd8ba34a4ecc0f8d05e580b1",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_dependency_lock.json",
+    "sha256": "efdb20253a7eebc00bb96f7987bab5a74509c37c0e98403a2ca3619de6ddbb9f",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_download_validation.json",
+    "sha256": "7e801eaed5bb2a20f8bce3dc72ad3ed7c1e42795baf18289afba39c2d358f2a9",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_engine_build.json",
+    "sha256": "53d9e784347f6b3f252d66a8a05b666cf922f7f9ed6b9e4a27a43a98e7ee18dd",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_full_suite.json",
+    "sha256": "fd4b40bb3d634a46aa37196858506c80f85f2ab08565015624afafdafe5b9526",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_native_benchmark.json",
+    "sha256": "5705dc959287f8c9f7d16b643b13de4603bd2f20153f618c9b46a58af53811b9",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_python_environment.json",
+    "sha256": "29e96c5dbc1bfab366f719c040e444f7d0f7b7db95892375836a80910b17c1e6",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_rtx4090_qualification.json",
+    "sha256": "7c4fe47a4bb85cf375e455b91989c08f2b67dcc5b5048866e09c6435ac0bc62b",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_showcase_media.json",
+    "sha256": "8c637ca90f9ca4e3b447f5a83db184d5681414a17d75e5d0f481d688a2191731",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_split_validation.json",
+    "sha256": "08f24ce8e62c3186dba3e2373f831ffed521f678e6f1cd8842848f9d6e9cb958",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_training.json",
+    "sha256": "a578e51c0b4ccc93daca0b6d77dbfcd12e9be37f050e25b16b6462dad736c655",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_training_history.json",
+    "sha256": "d4c4347fc67c7c0a1316a218402c4eed5cb5cbe78fd7aa0b9035b369ae518346",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/video_qa.json",
     "sha256": "44a037a51570271cc0d9b2b9e5ea90a8954a5b0636c89940b3003fc231aabe2b",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
@@ -451,15 +547,15 @@
   },
   {
     "file": "examples/unet/MODEL_NOTICE.txt",
-    "sha256": "c4ba72a121b4196d417c9bdb647fea9bce629135dc49a5a372c3af2a0bd92ae5",
+    "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "BYOM project metadata"
   },
   {
     "file": "examples/unet/dense_voxel.json",
     "sha256": "a954e28a33e3bc12d2e03ce56931acb7a60d1c7cc9c21a0ed0ffa900e22074d1",
-    "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
-    "origin": "BYOM project metadata"
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "media/PERSONAL_CREDITS.md",
@@ -508,6 +604,12 @@
     "sha256": "4b70901b544aa59e5c327a28713d9ca188fc40a973716ad1cc911ae0cbce5ac4",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression"
+  },
+  {
+    "file": "media/unet/pilot-heldout.png",
+    "sha256": "85d644748b539b33c4d1a4f47d4b5cbaf80b9523123d6ef78fdc126de55b5404",
+    "license": "Etalab-2.0 for IGN source data; CC-BY-4.0 for original presentation",
+    "origin": "Derived IGN FRACTAL visualization; original presentation Tuomas Pietilä"
   },
   {
     "file": "native/geometry.cpp",
@@ -576,6 +678,18 @@
     "origin": "Retained authorized public implementation/expression"
   },
   {
+    "file": "requirements-unet-validation.lock",
+    "sha256": "922fbc24da5db53b3d1233a8c92749f9bfddea689f62a1dcd26e0377bcc54a92",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "requirements-unet.lock",
+    "sha256": "7a28c6528b88dec59e394c75118d63ef39b2550bd4db71f4534c21d4e1125646",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
     "file": "src/byom_reference.py",
     "sha256": "33c7b58d8297c64afe7a2735430bba95218684ef319d74c06e57c71452af5b73",
     "license": "MIT",
@@ -637,13 +751,19 @@
   },
   {
     "file": "tools/audit_byom.py",
-    "sha256": "575d36c5d7459e5fd614c258f315faa867bdd015f1e022f45c9eaeb475da451c",
+    "sha256": "5ef93d0936314a2e95947b7e8055cd8eeda7afaba547fd4d81078a000c9bcdce",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "tools/benchmark_native.py",
+    "sha256": "b63f3933911dbc3bf0f386b95d1341d66b1e26fec3af5e0d68fff83dcb590fc6",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "tools/fetch_fractal.py",
-    "sha256": "69e334de5628e05345eec8b193c9ec28e225d59016e8a2d38061526f0eea327e",
+    "sha256": "4357efd24649bdf973ab25c0adf731103f74e81c016065e3d4b137f0dfcf64cd",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -652,6 +772,18 @@
     "sha256": "04dbeb59597f1b483d5f50a952059a719c507674462f332a70687900d907d2c5",
     "license": "MIT",
     "origin": "Retained authorized public implementation/expression"
+  },
+  {
+    "file": "tools/plot_unet_showcase.py",
+    "sha256": "95f9dc9ef9c3ce33342aad2886495349f1e11c8e1c289eaeb897147a46e1ef97",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "tools/prepare_unet_showcase.py",
+    "sha256": "4cca2bac3ddd8d6213c82cc6033f034bc2bf46a2f8b79572ce6f0e00892bb6c7",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "tools/qualify_byom.py",

@@ -1,0 +1,200 @@
+{
+  "status": "PASS",
+  "native_sha256": "e14ee5b059c8c266398ee7f7560f3204f6fe5b956eb3aa832d38d3757faba334",
+  "memory_scope": "nvidia-smi device-wide samples; desktop baseline retained; sampled maximum is not exact peak",
+  "repeat_output_hashes_identical": true,
+  "records": [
+    {
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 53835,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 107172,
+        "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+        "points": 107172,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.61759995482862e-05,
+          "cuda_tensor_preparation": 0.0022649600133299824,
+          "end_to_end": 0.412676307,
+          "geometry_cpu": 0.015423767,
+          "gpu_initialization_and_initial_upload": 0.269552253,
+          "laz_decode_cpu": 0.041956496,
+          "laz_encoding_and_preservation": 0.076384551,
+          "preprocessing_cpu": 0.057380263,
+          "tensorrt_inference": 0.0008728960156440736
+        }
+      },
+      "baseline_device_used_mib": 130,
+      "sampled_max_device_used_mib": 516,
+      "samples": [
+        {
+          "monotonic_seconds": 1094824.437664502,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094824.509104324,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094824.585899161,
+          "used_mib": 142
+        },
+        {
+          "monotonic_seconds": 1094824.668513558,
+          "used_mib": 144
+        },
+        {
+          "monotonic_seconds": 1094824.728697009,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094824.801525571,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094824.861790836,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094824.919137806,
+          "used_mib": 130
+        }
+      ]
+    },
+    {
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 53835,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 107172,
+        "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+        "points": 107172,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.7327999472618103e-05,
+          "cuda_tensor_preparation": 0.0014738880563527348,
+          "end_to_end": 0.377525163,
+          "geometry_cpu": 0.017912967,
+          "gpu_initialization_and_initial_upload": 0.236976564,
+          "laz_decode_cpu": 0.041284377,
+          "laz_encoding_and_preservation": 0.072720349,
+          "preprocessing_cpu": 0.059197344,
+          "tensorrt_inference": 0.0009252159744501114
+        }
+      },
+      "baseline_device_used_mib": 130,
+      "sampled_max_device_used_mib": 516,
+      "samples": [
+        {
+          "monotonic_seconds": 1094825.02746665,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094825.097573619,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094825.169733131,
+          "used_mib": 142
+        },
+        {
+          "monotonic_seconds": 1094825.243455231,
+          "used_mib": 144
+        },
+        {
+          "monotonic_seconds": 1094825.300582922,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094825.365833359,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094825.421673831,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094825.479014704,
+          "used_mib": 130
+        }
+      ]
+    },
+    {
+      "native": {
+        "backend": "CUDA/TensorRT",
+        "blocks": 4,
+        "changed": 53835,
+        "completed_inference_blocks": 4,
+        "gpu_memory_bytes": {
+          "free_after_allocation": 24058527744,
+          "free_before_initialization": 24104665088,
+          "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+        },
+        "memberships": 107172,
+        "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+        "points": 107172,
+        "status": "PASS",
+        "timings_seconds": {
+          "cuda_postprocessing": 2.668799972161651e-05,
+          "cuda_tensor_preparation": 0.0013731840010732413,
+          "end_to_end": 0.384685456,
+          "geometry_cpu": 0.015740587,
+          "gpu_initialization_and_initial_upload": 0.240896357,
+          "laz_decode_cpu": 0.041690136,
+          "laz_encoding_and_preservation": 0.077635572,
+          "preprocessing_cpu": 0.057430723,
+          "tensorrt_inference": 0.001013952001929283
+        }
+      },
+      "baseline_device_used_mib": 130,
+      "sampled_max_device_used_mib": 516,
+      "samples": [
+        {
+          "monotonic_seconds": 1094825.581656327,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094825.651993685,
+          "used_mib": 130
+        },
+        {
+          "monotonic_seconds": 1094825.723653425,
+          "used_mib": 142
+        },
+        {
+          "monotonic_seconds": 1094825.790818646,
+          "used_mib": 144
+        },
+        {
+          "monotonic_seconds": 1094825.851862401,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094825.912885853,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094825.967717659,
+          "used_mib": 516
+        },
+        {
+          "monotonic_seconds": 1094826.022195219,
+          "used_mib": 130
+        }
+      ]
+    }
+  ]
+}

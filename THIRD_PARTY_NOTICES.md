@@ -23,6 +23,7 @@ No upstream library source, binary, dataset, model or font file is vendored. The
 | [ONNX](https://github.com/onnx/onnx) | 1.17.0 development exporter | Apache-2.0; external Python package, absent from native classification. |
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | 1.20.1 independent CPU oracle | MIT; external development dependency, absent from native classification. Distribution component notices remain applicable. |
 | [pytorch-3dunet](https://github.com/wolny/pytorch-3dunet) | `7d047d2802561d075d6ce44679d7e696138c47df` | MIT, copyright Adrian Wolny; [notice](LICENSES/pytorch-3dunet-MIT.txt). External authentic UNet3D architecture, used only for training/export/validation. No pretrained weights used. |
+| [squeeze/excitation](https://github.com/ai-med/squeeze_and_excitation) | Module imported by upstream pytorch-3dunet; no SE block instantiated/exported | MIT, copyright Abhijit Guha Roy; Anne-Marie Rickmann credited for 3D modules; [notice](LICENSES/squeeze-excitation-MIT.txt). No source vendored. |
 | [FRACTAL](https://huggingface.co/datasets/IGNF/FRACTAL) | `36e00245ef92fd180f655f6ee410f2e935693cc2`, retrieved 2026-10-26 | IGN, Etalab-2.0; [licence](LICENSES/Etalab-2.0.md). Real LiDAR data/classified examples retain this licence and attribution separately. Dataset files are not committed. |
 | PyTorch / scikit-image | 2.9.1+cu128 / 0.25.2 U-Net development environment | External training/export dependencies; retain each distribution's component notices. Absent from native classification. |
 

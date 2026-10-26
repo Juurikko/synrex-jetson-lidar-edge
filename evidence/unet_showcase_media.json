@@ -1,0 +1,20 @@
+{
+  "selection": "first sorted test tile and tile with most ground-truth building points; all 32 tiles scored in qualification",
+  "projection": "all source points, increasing elevation, local XY; no interpolation",
+  "files": [
+    {
+      "source": "TEST-0436_6384-002325248.laz",
+      "source_sha256": "d80abb99a278eec90300d074ecada13a676a2f4f8b53dfad5544d90503cb0f3c",
+      "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+      "points": 107172
+    },
+    {
+      "source": "TEST-0437_6392-002967840.laz",
+      "source_sha256": "37460df14efbed36f45104d83e0b2fff03b4aff8fc4fa91015bbd3762d7ea1b1",
+      "output_sha256": "5d71bc52fcdd2cc7050924b1e00e04493ce16ddcd10cc5248a5b95f437cf494c",
+      "points": 85473
+    }
+  ],
+  "sha256": "85d644748b539b33c4d1a4f47d4b5cbaf80b9523123d6ef78fdc126de55b5404",
+  "data_license": "Etalab-2.0, IGN FRACTAL; original presentation CC-BY-4.0 Tuomas Pietil\u00e4"
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "synrex.unet.dependencies.v1",
+  "source_url": "https://github.com/wolny/pytorch-3dunet",
+  "commit": "7d047d2802561d075d6ce44679d7e696138c47df",
+  "license": "MIT",
+  "source_vendored": false,
+  "executed_model": "UNet3D DoubleConv, no squeeze/excitation modules instantiated",
+  "files": [
+    {
+      "file": "LICENSE",
+      "sha256": "ce9edb3d10677ee9b1253d1353ac45bc7c30ba6d1198e9dbbec8fe43d0b101c2"
+    },
+    {
+      "file": "pytorch3dunet/__init__.py",
+      "sha256": "f825a71a60d9d54571cf218227d4d5c4b8d3bf89c22fe7800cbca209bb757e6f"
+    },
+    {
+      "file": "pytorch3dunet/__version__.py",
+      "sha256": "e1a8d37d065f94ab5f2d46fe7f06819f52326375f7614fdfe84bac0f70931971"
+    },
+    {
+      "file": "pytorch3dunet/unet3d/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "pytorch3dunet/unet3d/model.py",
+      "sha256": "6d8076c5ea9ae7f77514d2466004f67e29a9e1d6e459f873605458d108c258b2"
+    },
+    {
+      "file": "pytorch3dunet/unet3d/buildingblocks.py",
+      "sha256": "b9554449ef63c00cc48457efa908a5e45f2234a75155dafd3fb08a7ce32b1ce8"
+    },
+    {
+      "file": "pytorch3dunet/unet3d/se.py",
+      "sha256": "7a8170826dd6a5c617dc3e0955d960464b76de1bcff3a46a813070373d0c182f"
+    },
+    {
+      "file": "pytorch3dunet/unet3d/utils.py",
+      "sha256": "7ebc7d4e92f472e78be974cf21dc4ebb6a9aa33aba4015203b6eff819b5ed6d7"
+    }
+  ]
+}

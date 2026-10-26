@@ -8,6 +8,19 @@
 
 **Native BYOM MIT R0 — local release candidate:** this branch now includes a generic dense-voxel native runtime, CUDA feature preparation/reconstruction, TensorRT 10 execution, versioned model packages and an original synthetic Conv3D ONNX exporter. [Build and BYOM quickstart](docs/byom/QUICKSTART.md) · [adapter specification](docs/byom/ADAPTER.md) · [source/license assessment](docs/byom/PROVENANCE.md) · [current qualification](docs/byom/QUALIFICATION.md).
 
+**Second genuine model: trained MIT U-Net on real FRACTAL LiDAR.** Both models execute
+through the same unchanged runtime binary. On the fixed 32-tile held-out pilot
+(2,586,115 points), the FP16 U-Net reaches 91.10% point accuracy and 82.08% mean
+IoU for ground/vegetation/buildings; bridge IoU is zero and water has no test support.
+All original point identities, unrelated bytes and metadata pass independent
+laz-rs validation. RTX4090 full suite: **62 passed, 1 CPU-only test skipped**.
+[Results and genuine classified examples](docs/byom/UNET_QUALIFICATION.md) ·
+[reproduce training/packaging](docs/byom/UNET_QUICKSTART.md) ·
+[source/data/weight rights](docs/byom/UNET_PROVENANCE.md) ·
+[separate LitePT and existing TorchSparse work](docs/byom/LITEPT_SPARSE_PLAN.md).
+Data/examples remain IGN Etalab-2.0; runtime and original learned parameters are MIT
+with separate notices. AGX execution is NOT_RUN. Publication remains held.
+
 **RTX4090 physical BYOM qualification now passes:** original ONNX export, native SM89 build, genuine TensorRT engine/inference and CUDA reconstruction produce independently verified, repeated classified LAZ for **50,013 points**. The full target suite has **55 passed, 1 CPU-only test skipped**. [RTX4090 evidence and separate phase timings](docs/byom/RTX4090_QUALIFICATION.md). **Physical AGX qualification remains NOT_RUN**; its [separate plan](docs/byom/AGX_QUALIFICATION_PLAN.md) is prepared and the autopilot is untouched. This branch is not pushed or published. Original runtime source is MIT; dependencies and user models keep separate licenses. The existing MIT writer/verifier are retained, and uncertain private model-dependent source and restricted assets are excluded.
 
 **Historical private SegFormer measurements, not BYOM R0 results:** on a physical **NVIDIA Jetson AGX Orin 64GB**, that pipeline processed **2,126,455 points in 10.110652 seconds: 210,318 points/s** on the largest tested file. Across four files, it processed **4,790,076 points in 30.272974 seconds: 158,229 points/s aggregate**. These were one-shot full product executions, including initialization and classified-file output.
@@ -82,7 +95,12 @@ build/synrex-laz-labels INPUT.laz LABELS.u8 OUTPUT.laz
 .venv/bin/python src/verify_laz.py INPUT.laz OUTPUT.laz LABELS.u8
 ```
 
-`LABELS.u8` must contain exactly one byte per point, in original order. The native utility supports the review contract **compressed LAS 1.4 / PDRF 7 / 42-byte records / no EVLRs or waveform data / no COPC index**. It refuses output replacement. This narrow scope is intentional; it is not a general-purpose LAZ editor. [Architecture and failure handling](ARCHITECTURE.md) and the [reproduction report](REPRODUCIBILITY_REPORT.md) give the practical limits.
+`LABELS.u8` must contain exactly one byte per point, in original order. Current native
+support is **compressed LAS 1.4 / PDRF 6, 7 or 8 / at least 30, 36 or 38 record bytes
+respectively / no EVLRs, waveform data or COPC index**. Extra bytes are retained.
+It refuses output replacement. [Adapter limits](docs/byom/ADAPTER.md),
+[architecture](ARCHITECTURE.md) and the original [reproduction report](REPRODUCIBILITY_REPORT.md)
+distinguish the new tests from the narrower historical qualification.
 
 ## Why data integrity matters
 

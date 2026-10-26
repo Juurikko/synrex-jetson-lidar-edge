@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "source_commit": "dc3f3630dc72c2c76139787bd4dfd7c09a1e0e42",
+  "host": "RTX4090-Wsl",
+  "passed": 62,
+  "skipped": 1,
+  "skip_reason": "CPU-only failure contract",
+  "tests_include": "Four genuine GPU cases, relocation, negatives, modern PDRF6/7/8 preservation, extra bytes and independent oracle geometry",
+  "elapsed_seconds": 19.67,
+  "raw_junit_sha256": "a4e3526b7b59c327b2cd06d8fcef5c29a9bbef3a516bb7c083526d90e37d16d0"
+}

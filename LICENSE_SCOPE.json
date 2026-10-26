@@ -14,6 +14,7 @@
       "CMakeLists.txt",
       "examples/dense_voxel.json",
       "examples/export_reference.py",
+      "examples/unet/dense_voxel.json",
       "native/geometry.cpp",
       "native/gpu.hpp",
       "native/include/synrex/runtime.hpp",
@@ -25,6 +26,8 @@
       "pyproject.toml",
       "requirements-byom.lock",
       "requirements-dev.lock",
+      "requirements-unet-validation.lock",
+      "requirements-unet.lock",
       "src/byom_reference.py",
       "src/dense_training.py",
       "src/preserve_laz.cpp",
@@ -36,8 +39,11 @@
       "tests/test_dense_training.py",
       "tests/test_preservation.py",
       "tools/audit_byom.py",
+      "tools/benchmark_native.py",
       "tools/fetch_fractal.py",
       "tools/media_preview.py",
+      "tools/plot_unet_showcase.py",
+      "tools/prepare_unet_showcase.py",
       "tools/qualify_byom.py",
       "tools/qualify_dense_gpu.py",
       "tools/qualify_unet.py",
@@ -70,6 +76,7 @@
       "VALIDATION.md",
       "docs/byom/ADAPTER.md",
       "docs/byom/AGX_QUALIFICATION_PLAN.md",
+      "docs/byom/LITEPT_SPARSE_PLAN.md",
       "docs/byom/PROVENANCE.md",
       "docs/byom/PROVENANCE_REVIEW_R1.md",
       "docs/byom/QUALIFICATION.md",
@@ -77,6 +84,8 @@
       "docs/byom/RELEASE_CANDIDATE.md",
       "docs/byom/RTX4090_QUALIFICATION.md",
       "docs/byom/UNET_PROVENANCE.md",
+      "docs/byom/UNET_QUALIFICATION.md",
+      "docs/byom/UNET_QUICKSTART.md",
       "media/PERSONAL_CREDITS.md"
     ],
     "license": "CC-BY-4.0"
@@ -103,5 +112,12 @@
   "preserve_existing_upstream_notices": true,
   "confirmation_record": "evidence/license_activation.json",
   "copyright_notice": "Copyright (c) 2026 Tuomas Pietilä",
-  "copyright_boundary": "Only personally controlled protectable original expression; no claim over facts, standard formats, ideas, AI output without protectable human authorship, or third-party material."
+  "copyright_boundary": "Only personally controlled protectable original expression; no claim over facts, standard formats, ideas, AI output without protectable human authorship, or third-party material.",
+  "data_derived_media": {
+    "license": "Etalab-2.0 for IGN source data; CC-BY-4.0 for original presentation",
+    "files": [
+      "media/unet/pilot-heldout.png"
+    ],
+    "notice": "Data: IGNF/FRACTAL, source last modified 2025-04-05T09:37:48Z, retrieved 2026-10-26; original presentation Tuomas Pietilä. No MIT relicense of survey information."
+  }
 }

@@ -8,6 +8,10 @@
 
 The guide below retains the independently usable label-writer workflow. Its integration contract applies to `synrex-laz-labels`; the new `synrex-native` runtime performs geometry, inference, reconstruction and explicit class mapping itself within its declared dense-voxel adapter.
 
+The [second-model U-Net quickstart](docs/byom/UNET_QUICKSTART.md) now demonstrates
+trained real-data segmentation through the same binary, with [measured quality,
+limitations and preservation evidence](docs/byom/UNET_QUALIFICATION.md).
+
 ## The integration contract
 
 | You supply | This repository supplies |
@@ -20,7 +24,11 @@ The writer does **not** infer classes, train a model, calculate confidence, solv
 
 ### Supported file boundary (deliberately narrow)
 
-The present public utility accepts compressed **LAS 1.4, point data record format 7, 42-byte records**, with no EVLRs, waveform data or COPC indexing. It rejects unsupported input formats, refuses to replace an existing output and operates on files rather than a live stream. Actual MML, USGS or commercial datasets should be checked against this contract before use; **many LAZ files, including LAS 1.2 or different point-record lengths, will not work unchanged**.
+The current utility accepts compressed **LAS 1.4, point formats 6/7/8, at least
+30/36/38 record bytes respectively**, including extra bytes, with no EVLRs,
+waveform data or COPC indexing. It rejects unsupported formats, refuses output
+replacement and operates on files rather than a live stream. Check each actual
+survey against this contract; LAS 1.2 and legacy/waveform point formats remain unsupported.
 
 For supported inputs, it preserves point count and source order, public LAS header, non-LASzip VLRs and metadata padding, and all decompressed point-record bytes except classification. The LAZ compression VLR is regenerated, so the whole compressed file is **not** byte-identical. Its original qualified production corpus consisted of four LAS 1.4/PDRF7 files with 42-byte records and no EVLRs; the public tool and tests are a separate implementation.
 
@@ -49,7 +57,7 @@ The `synthetic_demo.py` script generates invented LAS records, creates example l
 
 ## Next: integrate the labels from your own model
 
-1. **Inspect the input file**. Confirm LAS 1.4 / compressed PDRF 7 / 42-byte records / no unsupported EVLR, waveform or COPC structure. Preserve the original file; don't perform an implicit laspy rewrite just to make the example work.
+1. **Inspect the input file**. Confirm LAS 1.4 / compressed PDRF 6, 7 or 8 / valid record length / no unsupported EVLR, waveform or COPC structure. Preserve the original file; don't perform an implicit laspy rewrite just to make the example work.
 2. **Run your own segmentation/classification method**. Maintain a stable mapping from its working representation back to the **original source point index** (0 to N−1).
 3. **Translate model class IDs to intended LAS/ASPRS classifications**. Do not write raw neural IDs directly unless they are already exactly the desired output codes. Example conventional codes include 2 for ground and 6 for buildings; LAS's low/medium/high vegetation codes denote defined categories and should not be assumed equivalent to an arbitrary model's single "vegetation" output.
 4. **Export one unsigned byte per source point** to `labels.u8`: no header, separators or indices; binary file length must equal the original point count. Your code must reject missing, duplicate, non-mapped or out-of-range predictions rather than silently reshuffling or truncating.
