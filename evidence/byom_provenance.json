@@ -169,7 +169,7 @@
   },
   {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "05b842d461bc14070642a7821e4e5eba0485e26b5c4a1ab97602b9604bc8e1d9",
+    "sha256": "ab0c317550bd1489749736f79eae4afc4133d8bdc3ac2c6b79f0e084cee9fc7e",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -570,6 +570,12 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_r2_gpu_tests.json",
+    "sha256": "a03bad3d1ad44885515af32bee8e17390adecc281bbf3bbf1ac9c9abec6e37e7",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_r2_independent_metrics.json",
     "sha256": "75b7082110575ed0b5caaf5a70bd9d541115adbcb586e50dbd81f160f6f11480",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
@@ -620,6 +626,12 @@
   {
     "file": "evidence/unet_r2_qgis_style.json",
     "sha256": "c91cd2a25b4c86c13d7631d7fa9866c3dbf834785d652e8f6970fe4d579024e5",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_r2_relocation.json",
+    "sha256": "7432a70ebfdd199a753469d2021ab5a5d9f4bba2bd3df022718d62e1a13ace08",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
     "origin": "BYOM R0 local qualification record"
   },
@@ -979,13 +991,13 @@
   },
   {
     "file": "tools/benchmark_native.py",
-    "sha256": "b63f3933911dbc3bf0f386b95d1341d66b1e26fec3af5e0d68fff83dcb590fc6",
+    "sha256": "1567f33aab01b102d6f32b95c5a1c4b7a6c7ba84815b2f14d33ea826cfb65cf3",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "tools/benchmark_unet_scenes.py",
-    "sha256": "667eeaff2698896e8f8b83155ee47a786b6f6a57869f1109017ab8d558d4ad01",
+    "sha256": "2b7f5f880027d0ff9e3d7016d576fd94e324ebbe948105756de36bf5b9c1fb2b",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -1046,6 +1058,12 @@
   {
     "file": "tools/qualify_las_projection.py",
     "sha256": "6efa8166aa0accfa74dc3bb68bd1b76a564351b3ceca184819f076e63535b055",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "tools/qualify_relocated_models.py",
+    "sha256": "1f8fbc4873a780f11ac43e44ac611d2605da991b9d86ced46c62c2004b3e23a4",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

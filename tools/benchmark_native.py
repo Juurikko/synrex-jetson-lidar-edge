@@ -52,6 +52,7 @@ def main():
         monitor = threading.Thread(target=sample)
         monitor.start()
         try:
+            process_start = time.perf_counter()
             result = subprocess.run(
                 [
                     str(args.native.resolve()),
@@ -68,6 +69,7 @@ def main():
                 text=True,
                 check=True,
             )
+            process_seconds = time.perf_counter() - process_start
         finally:
             stop.set()
             monitor.join()
@@ -75,6 +77,7 @@ def main():
         records.append(
             {
                 "native": receipt,
+                "process_launch_to_exit_seconds": process_seconds,
                 "baseline_device_used_mib": baseline,
                 "sampled_max_device_used_mib": max(s["used_mib"] for s in samples),
                 "samples": samples,

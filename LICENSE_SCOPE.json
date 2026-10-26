@@ -58,6 +58,7 @@
       "tools/qualify_byom.py",
       "tools/qualify_dense_gpu.py",
       "tools/qualify_las_projection.py",
+      "tools/qualify_relocated_models.py",
       "tools/qualify_unet.py",
       "tools/qualify_unet_r2.py",
       "tools/release_checks.py",

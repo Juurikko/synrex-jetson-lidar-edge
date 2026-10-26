@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "source_commit": "129142966408dc7e8ff7fe1618160248aa6aaaf8",
+  "host": "RTX4090 WSL x86_64",
+  "tests": 74,
+  "skipped": 1,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 23.179,
+  "junit_sha256": "2ae8fd832c9b33dc501ea6698220d91dc6b57a31533f2ab63d83be300a6ad7b3",
+  "ctest": "PASS 1/1",
+  "native_build": "PASS: CMake current source; no native behavior change; binary unchanged",
+  "native_sha256": "a604487922198add17f2a6004529e12702c3625629c339b6365e5ccb6f704d83",
+  "gpu_opt_in": true,
+  "skip_reason": "CPU-only backend failure contract",
+  "preserved_frozen_model": true
+}

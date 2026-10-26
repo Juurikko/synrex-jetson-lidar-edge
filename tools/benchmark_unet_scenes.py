@@ -129,6 +129,9 @@ def main():
                 "persistent": warm,
                 "mean_cold_seconds": mean_cold,
                 "mean_persistent_seconds": mean_warm,
+                "mean_process_launch_to_exit_seconds": float(
+                    np.mean([c["process_launch_to_exit_seconds"] for c in cold["records"]])
+                ),
                 "cold_points_per_second": row["native"]["points"] / mean_cold["end_to_end"],
                 "persistent_processing_points_per_second_excludes_io": row["native"]["points"]
                 / mean_warm["wall_seconds"],
