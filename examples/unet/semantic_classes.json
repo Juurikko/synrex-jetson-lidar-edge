@@ -1,0 +1,72 @@
+{
+  "schema": "synrex.semantic_taxonomy.v1",
+  "dataset": "IGNF/FRACTAL",
+  "dataset_revision": "36e00245ef92fd180f655f6ee410f2e935693cc2",
+  "license": "Etalab-2.0 dataset taxonomy; MIT original metadata layout",
+  "sidecar": "synrex.point_semantics.v1: source-order zero-based model output channels",
+  "classes": [
+    {
+      "semantic_id": 0,
+      "name": "other/unclassified",
+      "source_las_codes": [
+        1
+      ],
+      "output_las_code": 1
+    },
+    {
+      "semantic_id": 1,
+      "name": "ground",
+      "source_las_codes": [
+        2
+      ],
+      "output_las_code": 2
+    },
+    {
+      "semantic_id": 2,
+      "name": "vegetation",
+      "source_las_codes": [
+        3,
+        4,
+        5
+      ],
+      "output_las_code": 200
+    },
+    {
+      "semantic_id": 3,
+      "name": "building",
+      "source_las_codes": [
+        6
+      ],
+      "output_las_code": 6
+    },
+    {
+      "semantic_id": 4,
+      "name": "water",
+      "source_las_codes": [
+        9
+      ],
+      "output_las_code": 9
+    },
+    {
+      "semantic_id": 5,
+      "name": "bridge",
+      "source_las_codes": [
+        17
+      ],
+      "output_las_code": 17
+    },
+    {
+      "semantic_id": 6,
+      "name": "IGN permanent aboveground structure",
+      "source_las_codes": [
+        64
+      ],
+      "output_las_code": 201
+    }
+  ],
+  "ignored_training_and_scoring_source_las_codes": [
+    65,
+    66
+  ],
+  "notice": "LAS200 (aggregate vegetation) and LAS201 (permanent aboveground structures) are explicit user-defined SynRex conventions. Standard LAS5 implies high vegetation and is not used for aggregate vegetation in this safe projection. The source dataset codes remain source ontology, not output ASPRS promises. The full model semantic sidecar is authoritative. Source artifacts65/66 are ignored in scoring, never dropped from output."
+}

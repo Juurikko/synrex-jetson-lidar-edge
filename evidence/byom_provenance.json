@@ -169,7 +169,7 @@
   },
   {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "1116623cc16cbd24aacb6a00bc1e5c8669caafc1177612d296db3afa2e4af813",
+    "sha256": "25784a8f1b3d7f2e2027504fd721f37281b9c517a694cbac77c716f8fce4eb30",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -510,6 +510,12 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_r2_download_validation.json",
+    "sha256": "045443d656508ef0da1b1d80c1c36b7ea3c97d10815a7ad8b803fb7395c7b962",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_r2_model_freeze.json",
     "sha256": "90c0831a6930bb5b677c9d8a18f37a43b43c2b3eaa69abb215a9e2b13889ac1b",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
@@ -586,6 +592,18 @@
     "sha256": "a954e28a33e3bc12d2e03ce56931acb7a60d1c7cc9c21a0ed0ffa900e22074d1",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "examples/unet/dense_voxel_asprs_safe.json",
+    "sha256": "304b72b1ba293a5e55127609af141d14c3f0120ecdaec98769144e5df867870a",
+    "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
+    "origin": "BYOM project metadata"
+  },
+  {
+    "file": "examples/unet/semantic_classes.json",
+    "sha256": "464ad0232773d5f285624fd142dfbcb24c72f3b8972b15523c35e9ad006ec98f",
+    "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
+    "origin": "BYOM project metadata"
   },
   {
     "file": "media/PERSONAL_CREDITS.md",
@@ -756,6 +774,12 @@
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
   {
+    "file": "src/verify_semantics.py",
+    "sha256": "94e0d424b5707a52c7a95c774747b2330f65151dbf4d0ed3b4cd6eec5d038bc0",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
     "file": "tests/native/core.cpp",
     "sha256": "00469649d894d2b0737fcbd5fab3191f15814b55a3f43f2c882a515dd22e6635",
     "license": "MIT",
@@ -848,6 +872,12 @@
   {
     "file": "tools/qualify_dense_gpu.py",
     "sha256": "0b1a88175f2756df785787132a486be2f362cb0e7f8bd5003437741b880127ac",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "tools/qualify_las_projection.py",
+    "sha256": "6efa8166aa0accfa74dc3bb68bd1b76a564351b3ceca184819f076e63535b055",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

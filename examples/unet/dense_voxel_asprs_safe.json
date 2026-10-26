@@ -1,0 +1,94 @@
+{
+  "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+  "input": {
+    "name": "features",
+    "shape": [
+      1,
+      4,
+      32,
+      32,
+      32
+    ],
+    "dtype": "float16",
+    "layout": "NCZYX"
+  },
+  "output": {
+    "name": "scores",
+    "shape": [
+      1,
+      7,
+      32,
+      32,
+      32
+    ],
+    "dtype": "float16",
+    "layout": "NCZYX"
+  },
+  "geometry": {
+    "voxel_size_xyz": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "dimensions_xyz": [
+      32,
+      32,
+      32
+    ],
+    "block_size_xyz": [
+      32.0,
+      32.0,
+      32.0
+    ],
+    "overlap_xyz": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "overlap_policy": "first_wins"
+  },
+  "features": [
+    {
+      "kind": "occupancy",
+      "offset": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "count",
+      "offset": 0.0,
+      "scale": 0.0625
+    },
+    {
+      "kind": "local_z",
+      "offset": 0.0,
+      "scale": 0.03125
+    },
+    {
+      "kind": "mean_intensity",
+      "offset": 0.0,
+      "scale": 1.5259021896696422e-05
+    }
+  ],
+  "las_classes": [
+    1,
+    2,
+    200,
+    6,
+    9,
+    17,
+    201
+  ],
+  "limits": {
+    "max_points": 1000000,
+    "max_blocks": 10000,
+    "max_memberships": 4000000,
+    "max_tensor_bytes": 16777216
+  },
+  "licensing": {
+    "spdx": "MIT",
+    "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+    "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+    "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint",
+    "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar."
+  }
+}
