@@ -26,6 +26,7 @@
       "requirements-byom.lock",
       "requirements-dev.lock",
       "src/byom_reference.py",
+      "src/dense_training.py",
       "src/preserve_laz.cpp",
       "src/synthetic_laz.py",
       "src/verify_laz.py",
@@ -34,11 +35,13 @@
       "tests/test_dense_reference.py",
       "tests/test_preservation.py",
       "tools/audit_byom.py",
+      "tools/fetch_fractal.py",
       "tools/media_preview.py",
       "tools/qualify_byom.py",
       "tools/qualify_dense_gpu.py",
       "tools/release_checks.py",
-      "tools/synthetic_demo.py"
+      "tools/synthetic_demo.py",
+      "tools/train_unet.py"
     ],
     "license": "MIT"
   },
@@ -71,6 +74,7 @@
       "docs/byom/QUICKSTART.md",
       "docs/byom/RELEASE_CANDIDATE.md",
       "docs/byom/RTX4090_QUALIFICATION.md",
+      "docs/byom/UNET_PROVENANCE.md",
       "media/PERSONAL_CREDITS.md"
     ],
     "license": "CC-BY-4.0"

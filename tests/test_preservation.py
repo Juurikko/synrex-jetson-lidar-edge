@@ -114,7 +114,7 @@ def test_writer_fails_closed_on_unsupported_or_malformed_input(tmp_path, change)
     source, labels = create(tmp_path)
     raw = bytearray(source.read_bytes())
     if change == "format":
-        raw[104] = 128 | 6
+        raw[104] = 128 | 9
     elif change == "evlr":
         struct.pack_into("<I", raw, 243, 1)
     elif change == "offset":
@@ -143,3 +143,28 @@ def test_no_output_when_parent_is_absent(tmp_path):
     output = tmp_path / "missing" / "classified.laz"
     assert run(source, labels, output).returncode != 0
     assert not output.parent.exists()
+
+
+@pytest.mark.parametrize("format_id,extra", [(6, False), (7, False), (8, False), (8, True)])
+def test_modern_formats_variable_record_lengths_and_extra_bytes(tmp_path, format_id, extra):
+    header = laspy.LasHeader(point_format=format_id, version="1.4")
+    if extra:
+        header.add_extra_dim(laspy.ExtraBytesParams(name="identity", type="uint64"))
+    data = laspy.LasData(header)
+    data.X = np.arange(50013, dtype=np.int32)[::-1]
+    data.Y = data.X % 137
+    data.Z = data.X % 29
+    data.intensity = (data.X % 65536).astype(np.uint16)
+    data.classification = np.ones(len(data), dtype=np.uint8)
+    if format_id >= 7:
+        data.red = (data.X % 65536).astype(np.uint16)
+    if format_id == 8:
+        data.nir = (data.X % 65536).astype(np.uint16)
+    if extra:
+        data.identity = np.arange(len(data), dtype=np.uint64) * 1000000007
+    source, labels, output = [tmp_path / n for n in ("source.laz", "labels.u8", "output.laz")]
+    data.write(source, laz_backend=laspy.LazBackend.Lazrs)
+    labels.write_bytes((np.arange(len(data)) % 256).astype(np.uint8).tobytes())
+    result = run(source, labels, output)
+    assert result.returncode == 0, result.stderr
+    assert verify(source, output, labels)["points"] == 50013

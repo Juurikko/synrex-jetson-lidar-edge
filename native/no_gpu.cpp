@@ -7,7 +7,7 @@ bool gpu_enabled() { return false; }
 Json target_info() {
     throw std::runtime_error("CUDA/TensorRT backend not built; GPU execution NOT_RUN");
 }
-void build_engine(const Package &, const fs::path &) { (void)target_info(); }
+void build_engine(const Package &, const fs::path &, const std::string &) { (void)target_info(); }
 std::vector<std::uint8_t> infer(const Package &, const std::vector<Point> &, const Plan &,
                                 InferenceMetrics *) {
     (void)target_info();

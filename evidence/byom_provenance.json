@@ -102,6 +102,12 @@
     "origin": "Separate upstream notice or preserved historical license record"
   },
   {
+    "file": "LICENSES/Etalab-2.0.md",
+    "sha256": "8ead98cc22756015f4ff21a29d9c6eac4511b7703f2eba44f13af4bb297d8ac1",
+    "license": "Third-party/standard license text; see THIRD_PARTY_NOTICES.md",
+    "origin": "Separate upstream notice or preserved historical license record"
+  },
+  {
     "file": "LICENSES/LicenseRef-Review-Only.txt",
     "sha256": "259a3a318525ca54ec04c6e1ab8ea8571bc105648fa48a9223d27f8ba678718f",
     "license": "Third-party/standard license text; see THIRD_PARTY_NOTICES.md",
@@ -150,8 +156,14 @@
     "origin": "Separate upstream notice or preserved historical license record"
   },
   {
+    "file": "LICENSES/pytorch-3dunet-MIT.txt",
+    "sha256": "ce9edb3d10677ee9b1253d1353ac45bc7c30ba6d1198e9dbbec8fe43d0b101c2",
+    "license": "Third-party/standard license text; see THIRD_PARTY_NOTICES.md",
+    "origin": "Separate upstream notice or preserved historical license record"
+  },
+  {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "c4046c088ef4c8d5d6d3bda448ae941f69f9a89110f30ab8b41bcbd774ce2d59",
+    "sha256": "fa832e5f99e2868dd886003a756d9364b8062853e21308f167c5e08f912515a0",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -260,6 +272,12 @@
   {
     "file": "docs/byom/RTX4090_QUALIFICATION.md",
     "sha256": "6e57c077f8bfbf0b814c7979bb09c4cc2bb91e4451b1e039f66ab8579d8ab463",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "docs/byom/UNET_PROVENANCE.md",
+    "sha256": "3e4d81ab0b03f3f291daa3c29baae7810fb067c1f767a38243758747b29abaa9",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -432,6 +450,18 @@
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
+    "file": "examples/unet/MODEL_NOTICE.txt",
+    "sha256": "c4ba72a121b4196d417c9bdb647fea9bce629135dc49a5a372c3af2a0bd92ae5",
+    "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
+    "origin": "BYOM project metadata"
+  },
+  {
+    "file": "examples/unet/dense_voxel.json",
+    "sha256": "a954e28a33e3bc12d2e03ce56931acb7a60d1c7cc9c21a0ed0ffa900e22074d1",
+    "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
+    "origin": "BYOM project metadata"
+  },
+  {
     "file": "media/PERSONAL_CREDITS.md",
     "sha256": "2f754a93869b01d85b7f1136288b232f8f72b1211f1358a0e507670a57925552",
     "license": "CC-BY-4.0",
@@ -481,7 +511,7 @@
   },
   {
     "file": "native/geometry.cpp",
-    "sha256": "fe5e49ee812cc29371a8275bf6363ac87081a445a245b21e39b4754ce1c46ce9",
+    "sha256": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -493,7 +523,7 @@
   },
   {
     "file": "native/include/synrex/runtime.hpp",
-    "sha256": "09b51411be1f5aebd13d18a0c332759ae0b3671fd49b6ac16fe5b6d0cc654db8",
+    "sha256": "bd1600f3bebe4182831f4beb4c4b194271ecf036e19c192d111afa3b10aec890",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -505,13 +535,13 @@
   },
   {
     "file": "native/main.cpp",
-    "sha256": "f2120964a64995ebe6edc8ca7525b8c265ee40229dc4772e89877622c5e4e72f",
+    "sha256": "8e1f3a15243c09d8a478e5b11805b51bd938d1c9ac2fd910c54481cc536311e2",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
     "file": "native/no_gpu.cpp",
-    "sha256": "b2b869ee68c9dcaa0ab1a718c67699375cd9c967712c2fe880d098840b7a0b1e",
+    "sha256": "83ab7916547fff781ee1a6ceba3c91ae6e2b6b8c5966dacc24d7b53fa6cd0090",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -523,7 +553,7 @@
   },
   {
     "file": "native/tensorrt.cpp",
-    "sha256": "4f93680def442c9c317ea5993def5dd6edbb8d4c82c5f53b3aad75c1d2052b07",
+    "sha256": "e4fc9c41b36d123058b60dc14cfc7f9b813889910b1919f799052d97e8a34df8",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -552,8 +582,14 @@
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
+    "file": "src/dense_training.py",
+    "sha256": "76edf39b71a2bd236996fe2d1f57be0fc3c707616965720f963521a8f1eaae15",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
     "file": "src/preserve_laz.cpp",
-    "sha256": "9ef1fd2b850174f3a56734f4897a89d966feaa26768c1f694f3494a18c76e82f",
+    "sha256": "e4bdb8bcd069fd23dbf82f0fba1ad8a6fc8b04b397a305330d8d2667366c4c77",
     "license": "MIT",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -565,9 +601,9 @@
   },
   {
     "file": "src/verify_laz.py",
-    "sha256": "bf16b16c3042ba85592fc171dcec393060d31a2095858856434736764608aa61",
+    "sha256": "f817d4dc0edcf971f18aa6c97cd25ec2f65a542121d72d29beaebaac325562d4",
     "license": "MIT",
-    "origin": "Retained authorized public implementation/expression"
+    "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
   {
     "file": "tests/native/core.cpp",
@@ -589,13 +625,19 @@
   },
   {
     "file": "tests/test_preservation.py",
-    "sha256": "1f112eb8d08e06a07f3ef7e217855c4176205d34e62b07e898cea1f16a6bc119",
+    "sha256": "5ac36dd8e1c79bbc4c063a4b3fa9da9454f7904c9fa84dac13fc64d953078a03",
     "license": "MIT",
-    "origin": "Retained authorized public implementation/expression"
+    "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
   {
     "file": "tools/audit_byom.py",
     "sha256": "575d36c5d7459e5fd614c258f315faa867bdd015f1e022f45c9eaeb475da451c",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
+    "file": "tools/fetch_fractal.py",
+    "sha256": "ff94ac132168373b33a1767b0dc46ef3fb0d2de5419dfdcc579ac9e309f02611",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -628,5 +670,11 @@
     "sha256": "dfc84368792803bdea47b91f2d867e16c9c4f95f2d5e1e2a9990dcbe596e348e",
     "license": "MIT",
     "origin": "Retained authorized public implementation/expression"
+  },
+  {
+    "file": "tools/train_unet.py",
+    "sha256": "cca0c69947207e83bfd7517be63e2404038ce9264f6824f688c215871736e5ee",
+    "license": "MIT",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   }
 ]

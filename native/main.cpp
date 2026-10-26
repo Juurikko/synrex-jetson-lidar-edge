@@ -37,7 +37,8 @@ void usage() {
            "synrex-native pack --spec SPEC.json --engine MODEL.engine --license NOTICE --out "
            "MODEL.srxmodel\n"
            "synrex-native inspect --model MODEL.srxmodel\n"
-           "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine\n"
+           "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine [--precision "
+           "fp16]\n"
            "synrex-native plan --model MODEL.srxmodel --input INPUT.laz --out PLAN.json\n"
            "synrex-native classify --model ENGINE.srxmodel --input INPUT.laz --out OUTPUT.laz\n";
 }
@@ -94,7 +95,10 @@ int main(int argc, char **argv) {
                     command == "classify",
                 "unknown command");
         const auto expected = command == "inspect" ? 1U : command == "build-engine" ? 2U : 3U;
-        require(args.size() == expected, "unexpected CLI options");
+        require(args.size() == expected ||
+                    (command == "build-engine" && args.size() == expected + 1 &&
+                     args.count("--precision")),
+                "unexpected CLI options");
         const Package package(get("--model"));
         if (command == "inspect") {
             std::cout << package.manifest.dump(2) << '\n';
@@ -103,7 +107,9 @@ int main(int argc, char **argv) {
         const fs::path output(get("--out"));
         require(!fs::exists(output) && !fs::is_symlink(output), "refusing output replacement");
         if (command == "build-engine") {
-            build_engine(package, output);
+            const auto precision = args.count("--precision") ? get("--precision") : "default";
+            require(precision == "default" || precision == "fp16", "unsupported engine precision");
+            build_engine(package, output, precision);
             return 0;
         }
         const fs::path input(get("--input"));
@@ -137,6 +143,12 @@ int main(int argc, char **argv) {
                           {"changed", changed},
                           {"output_sha256", output_hash},
                           {"completed_inference_blocks", metrics.completed_inference_blocks},
+                          {"gpu_memory_bytes",
+                           {{"free_before_initialization",
+                             metrics.gpu_free_before_initialization_bytes},
+                            {"free_after_allocation", metrics.gpu_free_after_allocation_bytes},
+                            {"measurement",
+                             "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"}}},
                           {"timings_seconds",
                            {{"laz_decode_cpu", seconds(decode_start, geometry_start)},
                             {"geometry_cpu", seconds(geometry_start, preprocessing_end)},

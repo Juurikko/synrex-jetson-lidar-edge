@@ -39,12 +39,13 @@ std::vector<Point> decode(const fs::path &input, const Contract &c) {
         require(scale[a] > 0, "LAS coordinate scales must be positive");
     }
     lazperf::reader::named_file reader(input.string());
-    require(reader.pointCount() == count && reader.header().point_record_length == 42 &&
-                reader.header().point_format_id == 7,
+    const auto record_length = little(header.data() + 105, 2);
+    require(reader.pointCount() == count && reader.header().point_record_length == record_length &&
+                reader.header().point_format_id == (header[104] & 63),
             "decoder contract mismatch");
     std::vector<Point> points;
     points.reserve(count);
-    std::array<unsigned char, 42> record{};
+    std::vector<unsigned char> record(record_length);
     for (std::uint64_t i = 0; i < count; ++i) {
         reader.readPoint(reinterpret_cast<char *>(record.data()));
         Point p{};

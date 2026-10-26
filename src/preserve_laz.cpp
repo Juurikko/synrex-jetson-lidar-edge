@@ -59,6 +59,7 @@ struct Metadata {
     Bytes prefix;
     std::uint32_t point_offset{};
     std::uint64_t points{};
+    unsigned format{}, record_length{};
     std::vector<Vlr> vlrs;
     std::size_t compression_index{};
 };
@@ -78,8 +79,11 @@ static Metadata metadata(const fs::path &path) {
     require(std::string(m.prefix.begin(), m.prefix.begin() + 4) == "LASF", "invalid LAS magic");
     require(m.prefix[24] == 1 && m.prefix[25] == 4 && little(m.prefix, 94, 2) == 375,
             "only standard LAS 1.4 public headers are supported");
-    require(m.prefix[104] == (128 | 7) && little(m.prefix, 105, 2) == 42,
-            "requires compressed PDRF 7 with 42-byte records");
+    m.format = m.prefix[104] & 63;
+    m.record_length = static_cast<unsigned>(little(m.prefix, 105, 2));
+    const unsigned minimum = m.format == 6 ? 30 : m.format == 7 ? 36 : m.format == 8 ? 38 : 0;
+    require((m.prefix[104] & 192) == 128 && minimum && m.record_length >= minimum,
+            "requires compressed PDRF 6, 7 or 8 with valid record length");
     require(little(m.prefix, 227, 8) == 0 && little(m.prefix, 235, 8) == 0 &&
                 little(m.prefix, 243, 4) == 0,
             "waveform data and EVLRs are outside this review utility contract");
@@ -159,14 +163,15 @@ static std::uint64_t apply(const fs::path &input, const fs::path &labels, const 
     std::uint64_t changed = 0;
     {
         lazperf::reader::named_file reader(input.string());
-        require(reader.pointCount() == source.points && reader.header().point_record_length == 42 &&
-                    reader.header().point_format_id == 7,
+        require(reader.pointCount() == source.points &&
+                    reader.header().point_record_length == source.record_length &&
+                    reader.header().point_format_id == source.format,
                 "decoder/header contract mismatch");
         lazperf::writer::named_file::config config(reader.header());
         config.chunk_size = 50000;
         lazperf::writer::named_file writer(encoded.string(), config);
         std::ifstream label_stream(labels, std::ios::binary);
-        std::array<char, 42> record{};
+        std::vector<char> record(source.record_length);
         for (std::uint64_t i = 0; i < source.points; ++i) {
             reader.readPoint(record.data());
             char label{};

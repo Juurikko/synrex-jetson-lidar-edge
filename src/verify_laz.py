@@ -33,8 +33,14 @@ def metadata_regions(path: Path) -> dict:
         size, offset, count = struct.unpack_from("<HII", header, 94)
         if size != 375 or not 375 <= offset <= 16 * 1024 * 1024:
             raise ValueError("unsupported metadata prefix")
-        if header[104] != 135 or struct.unpack_from("<H", header, 105)[0] != 42:
-            raise ValueError("requires compressed PDRF 7 / 42-byte records")
+        format_id = header[104] & 63
+        record_size = struct.unpack_from("<H", header, 105)[0]
+        if (
+            header[104] & 192 != 128
+            or format_id not in (6, 7, 8)
+            or record_size < {6: 30, 7: 36, 8: 38}[format_id]
+        ):
+            raise ValueError("requires compressed PDRF 6, 7 or 8 with valid record size")
         if any(header[227:247]):
             raise ValueError("waveform/EVLR fields must be zero")
         prefix = stream.read(offset - 375)
@@ -84,8 +90,9 @@ def verify(source: Path, output: Path, labels: Path, chunk_points: int = 7001) -
             right = b.read_points(chunk_points)
             if len(left) == 0 or len(left) != len(right) or left.array.dtype != right.array.dtype:
                 raise ValueError("decoded record count/type mismatch")
-            x = left.array.view(np.uint8).reshape(len(left), 42).copy()
-            y = right.array.view(np.uint8).reshape(len(right), 42).copy()
+            record_size = left.array.dtype.itemsize
+            x = left.array.view(np.uint8).reshape(len(left), record_size).copy()
+            y = right.array.view(np.uint8).reshape(len(right), record_size).copy()
             wanted = expected.read(len(left))
             actual = y[:, 16].tobytes()
             if actual != wanted:

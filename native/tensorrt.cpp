@@ -120,7 +120,8 @@ static std::string read_model(const fs::path &path) {
     require(bool(in.read(bytes.data(), static_cast<std::streamsize>(count))), "model read failure");
     return bytes;
 }
-void build_engine(const Package &package, const fs::path &output) {
+void build_engine(const Package &package, const fs::path &output, const std::string &precision) {
+    require(precision == "default" || precision == "fp16", "unsupported engine precision");
     const auto model = package.artifact("onnx");
     (void)
         target_info(); // Verify CUDA before building; offline compilation still needs a target GPU.
@@ -140,6 +141,15 @@ void build_engine(const Package &package, const fs::path &output) {
     std::unique_ptr<nvinfer1::IBuilderConfig> config(builder->createBuilderConfig());
     require(bool(config), "cannot create builder config");
     config->setMemoryPoolLimit(nvinfer1::MemoryPoolType::kWORKSPACE, 256ULL * 1024 * 1024);
+    if (precision == "fp16") {
+        // TensorRT 10.x weak typing supports mixed FP16 tactics; deprecated in 10.12,
+        // still necessary for this explicit 10.x contract. Requalify for TensorRT 11.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        config->setFlag(nvinfer1::BuilderFlag::kFP16);
+#pragma GCC diagnostic pop
+    }
+    config->setProfilingVerbosity(nvinfer1::ProfilingVerbosity::kDETAILED);
     std::unique_ptr<nvinfer1::IHostMemory> plan(builder->buildSerializedNetwork(*network, *config));
     require(bool(plan), "TensorRT engine build failed");
     std::unique_ptr<nvinfer1::IRuntime> runtime(nvinfer1::createInferRuntime(logger));
@@ -148,10 +158,16 @@ void build_engine(const Package &package, const fs::path &output) {
         runtime->deserializeCudaEngine(plan->data(), plan->size()));
     require(bool(engine), "cannot initialize built engine");
     check_engine(*engine, package.contract);
+    std::unique_ptr<nvinfer1::IEngineInspector> inspector(engine->createEngineInspector());
+    require(bool(inspector), "cannot create engine inspector");
+    const auto layers = inspector->getEngineInformation(nvinfer1::LayerInformationFormat::kJSON);
+    require(layers != nullptr, "cannot inspect engine");
     write_new(output, std::string(static_cast<const char *>(plan->data()), plan->size()));
     std::cout << Json{{"status", "PASS"},
                       {"operation", "TensorRT_engine_build_and_initialization"},
                       {"target", target_info()},
+                      {"precision_policy", precision},
+                      {"engine_layers", Json::parse(layers)},
                       {"sha256", sha256(output)}}
                      .dump(2)
               << '\n';
@@ -160,6 +176,9 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
                                 const Plan &plan, InferenceMetrics *metrics) {
     const auto initialized_at = std::chrono::steady_clock::now();
     InferenceMetrics measured;
+    std::size_t initial_free{}, initial_total{};
+    cuda_check(cudaMemGetInfo(&initial_free, &initial_total));
+    measured.gpu_free_before_initialization_bytes = initial_free;
     require(package.manifest.at("target") == target_info(),
             "engine target mismatch; rebuild and package on this target");
     const auto serialized = read_model(package.artifact("engine"));
@@ -201,6 +220,8 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         device_features(features.size() * sizeof(GpuFeature)), mapping(c.las_classes.size()),
         labels(points.size() * sizeof(std::uint32_t)), ids(capacity * 4), voxels(capacity * 4),
         groups(capacity * sizeof(GpuGroup)), bad(sizeof(int));
+    cuda_check(cudaMemGetInfo(&free_bytes, &total_bytes));
+    measured.gpu_free_after_allocation_bytes = free_bytes;
     std::vector<std::uint32_t> source_ids, voxel_ids;
     std::vector<GpuGroup> group_list;
     source_ids.reserve(capacity);
