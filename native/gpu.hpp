@@ -24,6 +24,6 @@ void prepare_cuda(void *tensor, bool half, std::uint64_t voxels, const GpuPoint 
                   cudaStream_t stream);
 void scatter_cuda(const void *logits, bool half, std::uint64_t voxels, unsigned classes,
                   const std::uint32_t *point_ids, const std::uint32_t *voxel_ids, unsigned count,
-                  const std::uint8_t *mapping, std::uint32_t *labels, bool first_wins, int *bad,
-                  cudaStream_t stream);
+                  const std::uint8_t *mapping, std::uint32_t *labels, std::uint32_t *semantic_ids,
+                  bool first_wins, int *bad, cudaStream_t stream);
 } // namespace synrex

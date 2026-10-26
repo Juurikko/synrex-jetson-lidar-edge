@@ -82,6 +82,11 @@ def main():
     parser.add_argument("--epochs", type=int, default=60)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--seed", type=int, default=20261026)
+    parser.add_argument(
+        "--balanced-blocks",
+        action="store_true",
+        help="class-presence balanced sampling, based only on training labels",
+    )
     parser.add_argument("--resource-allocation-verified", action="store_true")
     args = parser.parse_args()
     if not args.resource_allocation_verified:
@@ -104,9 +109,30 @@ def main():
     net = model(args.upstream).cuda()
     x, y, train_files = load_split(args.data, "train", spec)
     vx, vy, val_files = load_split(args.data, "val", spec)
+    val_frequencies = torch.bincount(vy[vy >= 0], minlength=7)
+    if args.balanced_blocks and torch.any(val_frequencies == 0):
+        raise ValueError("expanded seven-class campaign requires all seven classes in validation")
     frequencies = torch.bincount(y[y >= 0], minlength=7).float()
     weights = (frequencies.sum() / frequencies.clamp_min(1)).sqrt().clamp_max(20).cuda()
     weights /= weights.mean()
+    presence = torch.stack([(y == c).flatten(1).any(1) for c in range(7)], dim=1).float()
+    # Half uniform, half equal probability per represented semantic class.
+    # Avoid unbounded rare-class weights and retain ordinary background contexts.
+    sampling = 0.5 / len(y) + 0.5 * (presence / presence.sum(0).clamp_min(1)).sum(1) / 7
+    preparation = {
+        "train_tiles": len(train_files),
+        "val_tiles": len(val_files),
+        "train_blocks": len(x),
+        "val_blocks": len(vx),
+        "train_voxel_counts": frequencies.tolist(),
+        "val_voxel_counts": val_frequencies.tolist(),
+        "train_blocks_per_class": presence.sum(0).tolist(),
+        "sampling": "half uniform + half class-presence balanced"
+        if args.balanced_blocks
+        else "uniform",
+        "spec": spec,
+    }
+    (args.out / "preparation.json").write_text(json.dumps(preparation, indent=2) + "\n")
     criterion = torch.nn.CrossEntropyLoss(weight=weights, ignore_index=-100)
     optimizer = torch.optim.AdamW(net.parameters(), lr=0.003, weight_decay=0.0001)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
@@ -117,7 +143,11 @@ def main():
     torch.cuda.reset_peak_memory_stats()
     for epoch in range(args.epochs):
         net.train()
-        order = torch.randperm(len(x))
+        order = (
+            torch.multinomial(sampling, len(x), replacement=True)
+            if args.balanced_blocks
+            else torch.randperm(len(x))
+        )
         losses = []
         for start in range(0, len(x), args.batch):
             ids = order[start : start + args.batch]
@@ -144,7 +174,7 @@ def main():
             "elapsed_seconds": time.perf_counter() - started,
         }
         history.append(record)
-        score = val["mean_iou_present"]
+        score = val["macro_f1_all_seven"] if args.balanced_blocks else val["mean_iou_present"]
         if score > best:
             best = score
             torch.save(
@@ -163,7 +193,9 @@ def main():
                 {
                     "epoch": epoch + 1,
                     "loss": record["train_loss"],
-                    "val_miou": score,
+                    "selection_score": score,
+                    "val_miou": val["mean_iou_present"],
+                    "val_macro_f1": val["macro_f1_all_seven"],
                     "val_common3_iou": val["ground_vegetation_building_mean_iou"],
                     "elapsed": record["elapsed_seconds"],
                 }
@@ -197,6 +229,10 @@ def main():
         ),
         "epochs": args.epochs,
         "selected_epoch": checkpoint["epoch"],
+        "selection_metric": "validation macro-F1 over all seven"
+        if args.balanced_blocks
+        else "validation mean IoU present",
+        "balanced_blocks": args.balanced_blocks,
         "parameters": sum(p.numel() for p in net.parameters()),
         "pretrained_weights": False,
         "split_use": "train optimization; val checkpoint selection; test never loaded by training",

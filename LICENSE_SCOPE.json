@@ -41,6 +41,7 @@
       "tools/audit_byom.py",
       "tools/benchmark_native.py",
       "tools/fetch_fractal.py",
+      "tools/fractal_inventory.py",
       "tools/media_preview.py",
       "tools/plot_unet_showcase.py",
       "tools/prepare_unet_showcase.py",

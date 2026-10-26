@@ -9,7 +9,8 @@ Json target_info() {
 }
 void build_engine(const Package &, const fs::path &, const std::string &) { (void)target_info(); }
 std::vector<std::uint8_t> infer(const Package &, const std::vector<Point> &, const Plan &,
-                                InferenceMetrics *) {
+                                InferenceMetrics *, std::vector<std::uint8_t> *,
+                                const InferenceOptions &) {
     (void)target_info();
     return {};
 }

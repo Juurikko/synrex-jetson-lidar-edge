@@ -47,7 +47,7 @@ template <typename T>
 __global__ void scatter_kernel(const T *logits, std::uint64_t voxels, unsigned classes,
                                const std::uint32_t *points, const std::uint32_t *voxel_ids,
                                unsigned count, const std::uint8_t *mapping, std::uint32_t *labels,
-                               bool first_wins, int *bad) {
+                               std::uint32_t *semantic_ids, bool first_wins, int *bad) {
     const auto i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i >= count)
         return;
@@ -66,8 +66,10 @@ __global__ void scatter_kernel(const T *logits, std::uint64_t voxels, unsigned c
         }
     }
     // Geometry guarantees one reference per source point per block. Blocks share one stream.
-    if (!first_wins || labels[points[i]] == 0xffffffffU)
+    if (!first_wins || labels[points[i]] == 0xffffffffU) {
         labels[points[i]] = mapping[winner];
+        semantic_ids[points[i]] = winner;
+    }
 }
 void prepare_cuda(void *tensor, bool half, std::uint64_t voxels, const GpuPoint *points,
                   const std::uint32_t *members, const GpuGroup *groups, unsigned n,
@@ -84,15 +86,15 @@ void prepare_cuda(void *tensor, bool half, std::uint64_t voxels, const GpuPoint 
 }
 void scatter_cuda(const void *logits, bool half, std::uint64_t voxels, unsigned classes,
                   const std::uint32_t *points, const std::uint32_t *voxel_ids, unsigned n,
-                  const std::uint8_t *mapping, std::uint32_t *labels, bool first_wins, int *bad,
-                  cudaStream_t stream) {
+                  const std::uint8_t *mapping, std::uint32_t *labels, std::uint32_t *semantic_ids,
+                  bool first_wins, int *bad, cudaStream_t stream) {
     if (half)
-        scatter_kernel<<<(n + 255) / 256, 256, 0, stream>>>(static_cast<const __half *>(logits),
-                                                            voxels, classes, points, voxel_ids, n,
-                                                            mapping, labels, first_wins, bad);
+        scatter_kernel<<<(n + 255) / 256, 256, 0, stream>>>(
+            static_cast<const __half *>(logits), voxels, classes, points, voxel_ids, n, mapping,
+            labels, semantic_ids, first_wins, bad);
     else
-        scatter_kernel<<<(n + 255) / 256, 256, 0, stream>>>(static_cast<const float *>(logits),
-                                                            voxels, classes, points, voxel_ids, n,
-                                                            mapping, labels, first_wins, bad);
+        scatter_kernel<<<(n + 255) / 256, 256, 0, stream>>>(
+            static_cast<const float *>(logits), voxels, classes, points, voxel_ids, n, mapping,
+            labels, semantic_ids, first_wins, bad);
 }
 } // namespace synrex

@@ -78,3 +78,22 @@ def test_engine_precision_rejects_unknown_policy(tmp_path):
     )
     assert result.returncode != 0 and "unsupported engine precision" in result.stderr
     assert not engine.exists()
+
+
+def test_features_do_not_depend_on_reference_labels(tmp_path):
+    spec = json.loads((ROOT / "examples/unet/dense_voxel.json").read_text())
+    data = laspy.LasData(laspy.LasHeader(point_format=8, version="1.4"))
+    data.x, data.y, data.z = [0, 0.25, 1.5], [0, 0.5, 2.5], [0, 0.75, 3.5]
+    data.intensity = np.array([100, 200, 300], dtype=np.uint16)
+    data.classification = np.array([2, 5, 6], dtype=np.uint8)
+    a = tmp_path / "a.laz"
+    data.write(a, laz_backend=laspy.LazBackend.Lazrs)
+    data.classification = np.array([64, 9, 17], dtype=np.uint8)
+    b = tmp_path / "b.laz"
+    data.write(b, laz_backend=laspy.LazBackend.Lazrs)
+    aa, bb = list(blocks(a, spec)), list(blocks(b, spec))
+    assert len(aa) == len(bb)
+    for x, y in zip(aa, bb, strict=True):
+        np.testing.assert_array_equal(x["features"], y["features"])
+        np.testing.assert_array_equal(x["ids"], y["ids"])
+    assert any(np.any(x["labels"] != y["labels"]) for x, y in zip(aa, bb, strict=True))

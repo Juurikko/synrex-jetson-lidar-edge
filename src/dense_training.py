@@ -87,11 +87,25 @@ def metrics(confusion):
     support = confusion.sum(1)
     union = support + confusion.sum(0) - confusion.diagonal()
     iou = np.divide(confusion.diagonal(), union, out=np.full(7, np.nan), where=union > 0)
+    predicted = confusion.sum(0)
+    precision = np.divide(confusion.diagonal(), predicted, out=np.zeros(7), where=predicted > 0)
+    recall = np.divide(confusion.diagonal(), support, out=np.zeros(7), where=support > 0)
+    f1 = np.divide(
+        2 * confusion.diagonal(),
+        support + predicted,
+        out=np.zeros(7),
+        where=support + predicted > 0,
+    )
     return {
         "confusion": confusion.tolist(),
         "support": support.tolist(),
         "iou": [None if not np.isfinite(x) else float(x) for x in iou],
         "mean_iou_present": float(np.nanmean(iou)),
+        "mean_iou_all_seven": float(np.nan_to_num(iou).mean()),
+        "precision": precision.tolist(),
+        "recall": recall.tolist(),
+        "f1": f1.tolist(),
+        "macro_f1_all_seven": float(f1.mean()),
         "ground_vegetation_building_mean_iou": float(np.nanmean(iou[[1, 2, 3]])),
         "accuracy": float(confusion.trace() / max(confusion.sum(), 1)),
     }

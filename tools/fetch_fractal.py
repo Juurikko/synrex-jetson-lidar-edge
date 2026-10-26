@@ -79,7 +79,8 @@ def retrieve(url, info, destination):
         content = zlib.decompress(payload, -15) if info.compress_type == 8 else payload
     if len(content) != info.file_size or zlib.crc32(content) != info.CRC:
         raise ValueError(f"ZIP CRC/size mismatch: {info.filename}")
-    destination.write_bytes(content)
+    if not destination.exists():
+        destination.write_bytes(content)
     return {
         "member": info.filename,
         "bytes": len(content),
@@ -94,6 +95,13 @@ def main():
     parser.add_argument("--train", type=int, default=256)
     parser.add_argument("--val", type=int, default=32)
     parser.add_argument("--test", type=int, default=32)
+    parser.add_argument(
+        "--splits", nargs="+", choices=["train", "val", "test"], default=["train", "val", "test"]
+    )
+    parser.add_argument("--test-archive", type=int, default=0)
+    parser.add_argument(
+        "--spread", action="store_true", help="evenly spaced sorted archive members"
+    )
     args = parser.parse_args()
     receipt = {
         "dataset": "IGNF/FRACTAL",
@@ -101,14 +109,17 @@ def main():
         "source_last_modified": SOURCE_LAST_MODIFIED,
         "retrieved": "2026-10-26",
         "license": "etalab-2.0",
-        "selection": "first sorted requested LAZ members of split archive 00; pilot only",
+        "selection": "deterministic sorted member selection recorded per split; bounded pilot",
         "files": {},
     }
-    for split in ("train", "val", "test"):
+    for split in args.splits:
         count = getattr(args, split)
         if not 1 <= count <= 1000:
             raise ValueError("split count must be 1..1000")
-        url = f"{BASE}/data/{split}/{split}-00.zip"
+        archive_index = args.test_archive if split == "test" else 0
+        if not 0 <= archive_index <= 9:
+            raise ValueError("archive index out of range")
+        url = f"{BASE}/data/{split}/{split}-{archive_index:02d}.zip"
         with urllib.request.urlopen(url, timeout=120) as response:
             # Close immediately: obtain total length without downloading the full archive.
             size = int(response.headers["Content-Length"])
@@ -116,14 +127,23 @@ def main():
             members = sorted(
                 (i for i in archive.infolist() if i.filename.endswith(".laz")),
                 key=lambda i: i.filename,
-            )[:count]
+            )
+            if args.spread:
+                members = [members[i * len(members) // count] for i in range(count)]
+            else:
+                members = members[:count]
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
             futures = [
                 pool.submit(retrieve, url, i, args.out / split / Path(i.filename).name)
                 for i in members
             ]
             records = [f.result() for f in futures]
-        receipt["files"][split] = {"archive_url": url, "archive_bytes": size, "tiles": records}
+        receipt["files"][split] = {
+            "archive_url": url,
+            "archive_bytes": size,
+            "selection": "evenly spaced sorted members" if args.spread else "first sorted members",
+            "tiles": records,
+        }
         print(f"{split}: {len(records)} verified real LAZ tiles", flush=True)
         (args.out / "dataset.json").write_text(json.dumps(receipt, indent=2) + "\n")
 

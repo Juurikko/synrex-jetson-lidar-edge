@@ -74,7 +74,14 @@ struct InferenceMetrics {
     double cuda_postprocessing_seconds{};
     std::uint64_t completed_inference_blocks{};
     std::uint64_t gpu_free_before_initialization_bytes{}, gpu_free_after_allocation_bytes{};
+    std::uint64_t tracked_peak_requested_cuda_bytes{};
+    Json persistent_cycles = Json::array();
+};
+struct InferenceOptions {
+    unsigned warmup{}, iterations{1};
 };
 std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point> &points,
-                                const Plan &plan, InferenceMetrics *metrics = nullptr);
+                                const Plan &plan, InferenceMetrics *metrics = nullptr,
+                                std::vector<std::uint8_t> *semantic_ids = nullptr,
+                                const InferenceOptions &options = {});
 } // namespace synrex

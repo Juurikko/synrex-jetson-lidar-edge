@@ -26,21 +26,24 @@ class Scratch {
         synrex::fs::remove_all(root_, ec);
     }
     synrex::fs::path labels() const { return root_ / "labels.u8"; }
+    synrex::fs::path semantics() const { return root_ / "semantics.json"; }
 };
 void usage() {
-    std::cout
-        << "SynRex BYOM R0 — DENSE_VOXEL_SEGMENTATION_V1\n"
-           "synrex-native version\n"
-           "synrex-native target\n"
-           "synrex-native pack --spec SPEC.json --onnx MODEL.onnx --license NOTICE --out "
-           "MODEL.srxmodel\n"
-           "synrex-native pack --spec SPEC.json --engine MODEL.engine --license NOTICE --out "
-           "MODEL.srxmodel\n"
-           "synrex-native inspect --model MODEL.srxmodel\n"
-           "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine [--precision "
-           "fp16]\n"
-           "synrex-native plan --model MODEL.srxmodel --input INPUT.laz --out PLAN.json\n"
-           "synrex-native classify --model ENGINE.srxmodel --input INPUT.laz --out OUTPUT.laz\n";
+    std::cout << "SynRex BYOM R0 — DENSE_VOXEL_SEGMENTATION_V1\n"
+                 "synrex-native version\n"
+                 "synrex-native target\n"
+                 "synrex-native pack --spec SPEC.json --onnx MODEL.onnx --license NOTICE --out "
+                 "MODEL.srxmodel\n"
+                 "synrex-native pack --spec SPEC.json --engine MODEL.engine --license NOTICE --out "
+                 "MODEL.srxmodel\n"
+                 "synrex-native inspect --model MODEL.srxmodel\n"
+                 "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine [--precision "
+                 "fp16]\n"
+                 "synrex-native plan --model MODEL.srxmodel --input INPUT.laz --out PLAN.json\n"
+                 "synrex-native classify --model ENGINE.srxmodel --input INPUT.laz --out "
+                 "OUTPUT.laz [--semantics IDS.json]\n"
+                 "synrex-native benchmark --model ENGINE.srxmodel --input INPUT.laz --out "
+                 "RECEIPT.json --warmup 3 --iterations 10\n";
 }
 } // namespace
 int main(int argc, char **argv) {
@@ -92,12 +95,15 @@ int main(int argc, char **argv) {
             return 0;
         }
         require(command == "inspect" || command == "build-engine" || command == "plan" ||
-                    command == "classify",
+                    command == "classify" || command == "benchmark",
                 "unknown command");
         const auto expected = command == "inspect" ? 1U : command == "build-engine" ? 2U : 3U;
         require(args.size() == expected ||
                     (command == "build-engine" && args.size() == expected + 1 &&
-                     args.count("--precision")),
+                     args.count("--precision")) ||
+                    (command == "classify" && args.size() == 4 && args.count("--semantics")) ||
+                    (command == "benchmark" && args.size() == 5 && args.count("--warmup") &&
+                     args.count("--iterations")),
                 "unexpected CLI options");
         const Package package(get("--model"));
         if (command == "inspect") {
@@ -113,8 +119,18 @@ int main(int argc, char **argv) {
             return 0;
         }
         const fs::path input(get("--input"));
-        if (command == "classify")
+        if (command == "classify" || command == "benchmark")
             require(gpu_enabled(), "CUDA/TensorRT backend not built; inference NOT_RUN");
+        fs::path sidecar;
+        if (args.count("--semantics")) {
+            sidecar = fs::absolute(get("--semantics")).lexically_normal();
+            require(!fs::exists(sidecar) && !fs::is_symlink(sidecar),
+                    "refusing semantic sidecar replacement");
+            require(sidecar.parent_path() ==
+                            fs::absolute(output).lexically_normal().parent_path() &&
+                        sidecar != fs::absolute(output).lexically_normal(),
+                    "semantic sidecar must be distinct and beside output LAZ");
+        }
         const auto decode_start = Clock::now();
         const auto points = decode(input, package.contract);
         const auto geometry_start = Clock::now();
@@ -125,13 +141,69 @@ int main(int argc, char **argv) {
             return 0;
         }
         InferenceMetrics metrics;
-        auto labels = infer(package, points, plan, &metrics);
+        InferenceOptions options;
+        if (command == "benchmark") {
+            const auto warmup = Json::parse(get("--warmup")),
+                       count = Json::parse(get("--iterations"));
+            require(warmup.is_number_integer() && count.is_number_integer() && warmup >= 0 &&
+                        warmup <= 20 && count > 0 && count <= 100,
+                    "invalid persistent benchmark budgets");
+            options.warmup = warmup.get<unsigned>();
+            options.iterations = count.get<unsigned>();
+        }
+        std::vector<std::uint8_t> semantic_ids;
+        auto labels = infer(package, points, plan, &metrics,
+                            sidecar.empty() ? nullptr : &semantic_ids, options);
         require(labels.size() == points.size(), "inference label count mismatch");
         Scratch scratch(output);
         write_new(scratch.labels(),
                   std::string(reinterpret_cast<const char *>(labels.data()), labels.size()));
+        if (command == "benchmark") {
+            const Json receipt{
+                {"status", "PASS"},
+                {"backend", "CUDA/TensorRT"},
+                {"points", points.size()},
+                {"blocks", plan.blocks.size()},
+                {"warmup", options.warmup},
+                {"iterations", options.iterations},
+                {"scope", "Persistent engine/context/buffers and decoded cloud; LAZ I/O excluded; "
+                          "not a streaming service"},
+                {"initialization_seconds", metrics.initialization_and_upload_seconds},
+                {"laz_decode_seconds", seconds(decode_start, geometry_start)},
+                {"geometry_seconds", seconds(geometry_start, preprocessing_end)},
+                {"cycles", metrics.persistent_cycles},
+                {"source_order_labels_sha256", sha256(scratch.labels())},
+                {"tracked_peak_requested_cuda_bytes", metrics.tracked_peak_requested_cuda_bytes},
+                {"peak_scope", "Adapter and TensorRT allocator callbacks; excludes CUDA context "
+                               "and untracked vendor allocations"}};
+            write_new(output, receipt.dump(2) + "\n");
+            std::cout << receipt.dump(2) << '\n';
+            return 0;
+        }
+        if (!sidecar.empty()) {
+            const Json semantic{{"schema", "synrex.point_semantics.v1"},
+                                {"source_sha256", sha256(input)},
+                                {"model_manifest_sha256", sha256(package.root / "manifest.json")},
+                                {"point_count", points.size()},
+                                {"index_order", "original source point record order"},
+                                {"semantic_id_definition",
+                                 "zero-based model output channel; no LAS class collapse"},
+                                {"las_classes", package.contract.las_classes},
+                                {"semantic_ids", semantic_ids},
+                                {"mapped_labels_sha256", sha256(scratch.labels())}};
+            write_new(scratch.semantics(), semantic.dump() + "\n");
+        }
         const auto encode_start = Clock::now();
         const auto changed = apply_labels(input, scratch.labels(), output);
+        if (!sidecar.empty()) {
+            try {
+                fs::create_hard_link(scratch.semantics(), sidecar);
+            } catch (...) {
+                std::error_code ignored;
+                fs::remove(output, ignored);
+                throw;
+            }
+        }
         const auto encode_end = Clock::now();
         const auto output_hash = sha256(output);
         const auto total_end = Clock::now();
@@ -143,10 +215,19 @@ int main(int argc, char **argv) {
                           {"changed", changed},
                           {"output_sha256", output_hash},
                           {"completed_inference_blocks", metrics.completed_inference_blocks},
+                          {"semantic_sidecar", sidecar.empty()
+                                                   ? Json(nullptr)
+                                                   : Json{{"schema", "synrex.point_semantics.v1"},
+                                                          {"sha256", sha256(sidecar)},
+                                                          {"points", semantic_ids.size()}}},
                           {"gpu_memory_bytes",
                            {{"free_before_initialization",
                              metrics.gpu_free_before_initialization_bytes},
                             {"free_after_allocation", metrics.gpu_free_after_allocation_bytes},
+                            {"tracked_peak_requested_cuda_bytes",
+                             metrics.tracked_peak_requested_cuda_bytes},
+                            {"tracked_peak_scope", "Adapter plus TensorRT callbacks; excludes "
+                                                   "context/untracked vendor allocations"},
                             {"measurement",
                              "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"}}},
                           {"timings_seconds",

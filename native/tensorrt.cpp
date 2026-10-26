@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <sys/utsname.h>
 
 #if NV_TENSORRT_MAJOR != 10
@@ -51,17 +52,63 @@ struct Event {
         return static_cast<double>(milliseconds) / 1000;
     }
 };
-class Buffer {
-    void *value_{};
+// Track actual requested allocation lifetimes across TensorRT callbacks and adapter
+// buffers. CUDA context/vendor allocations outside these callbacks are excluded.
+class TrackedAllocator final : public nvinfer1::IGpuAllocator {
+    std::mutex mutex_;
+    std::map<void *, std::uint64_t> sizes_;
+    std::uint64_t live_{}, peak_{};
 
   public:
-    explicit Buffer(std::size_t bytes) {
+    void *allocate(std::uint64_t size, std::uint64_t, nvinfer1::AllocatorFlags) noexcept override {
+        void *p{};
+        if (!size || cudaMalloc(&p, size) != cudaSuccess)
+            return nullptr;
+        try {
+            std::lock_guard<std::mutex> lock(mutex_);
+            sizes_.emplace(p, size);
+            live_ += size;
+            peak_ = std::max(peak_, live_);
+            return p;
+        } catch (...) {
+            cudaFree(p);
+            return nullptr;
+        }
+    }
+    bool deallocate(void *p) noexcept override {
+        if (!p)
+            return true;
+        std::lock_guard<std::mutex> lock(mutex_);
+        const auto entry = sizes_.find(p);
+        if (entry == sizes_.end() || cudaFree(p) != cudaSuccess)
+            return false;
+        live_ -= entry->second;
+        sizes_.erase(entry);
+        return true;
+    }
+    void *allocateAsync(std::uint64_t size, std::uint64_t alignment, nvinfer1::AllocatorFlags flags,
+                        cudaStream_t) noexcept override {
+        return allocate(size, alignment, flags);
+    }
+    bool deallocateAsync(void *p, cudaStream_t) noexcept override { return deallocate(p); }
+    std::uint64_t peak() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        return peak_;
+    }
+};
+class Buffer {
+    void *value_{};
+    TrackedAllocator &allocator_;
+
+  public:
+    Buffer(TrackedAllocator &allocator, std::size_t bytes) : allocator_(allocator) {
         require(bytes > 0, "empty device buffer");
-        cuda_check(cudaMalloc(&value_, bytes));
+        value_ = allocator_.allocate(bytes, 0, 0);
+        require(value_ != nullptr, "device buffer allocation failed");
     }
     ~Buffer() {
         if (value_)
-            cudaFree(value_);
+            allocator_.deallocate(value_);
     }
     Buffer(const Buffer &) = delete;
     Buffer &operator=(const Buffer &) = delete;
@@ -173,7 +220,11 @@ void build_engine(const Package &package, const fs::path &output, const std::str
               << '\n';
 }
 std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point> &points,
-                                const Plan &plan, InferenceMetrics *metrics) {
+                                const Plan &plan, InferenceMetrics *metrics,
+                                std::vector<std::uint8_t> *semantic_ids,
+                                const InferenceOptions &options) {
+    require(options.iterations > 0 && options.iterations <= 100 && options.warmup <= 20,
+            "persistent iteration budget exceeded");
     const auto initialized_at = std::chrono::steady_clock::now();
     InferenceMetrics measured;
     std::size_t initial_free{}, initial_total{};
@@ -183,9 +234,11 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
             "engine target mismatch; rebuild and package on this target");
     const auto serialized = read_model(package.artifact("engine"));
     const auto &c = package.contract;
+    TrackedAllocator allocations;
     Logger logger;
     std::unique_ptr<nvinfer1::IRuntime> runtime(nvinfer1::createInferRuntime(logger));
     require(bool(runtime), "cannot initialize TensorRT runtime");
+    runtime->setGpuAllocator(&allocations);
     std::unique_ptr<nvinfer1::ICudaEngine> engine(
         runtime->deserializeCudaEngine(serialized.data(), serialized.size()));
     require(bool(engine), "TensorRT engine deserialization failed");
@@ -211,15 +264,17 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     std::size_t free_bytes{}, total_bytes{};
     cuda_check(cudaMemGetInfo(&free_bytes, &total_bytes));
     const auto required = input_bytes + output_bytes + gpu_points.size() * sizeof(GpuPoint) +
-                          points.size() * 4 + capacity * (8 + sizeof(GpuGroup)) +
+                          points.size() * 8 + capacity * (8 + sizeof(GpuGroup)) +
                           features.size() * sizeof(GpuFeature) + 260;
     require(required < free_bytes && free_bytes - required > 64ULL * 1024 * 1024,
             "insufficient free GPU memory for bounded adapter buffers");
-    Buffer input(input_bytes), output(output_bytes),
-        device_points(gpu_points.size() * sizeof(GpuPoint)),
-        device_features(features.size() * sizeof(GpuFeature)), mapping(c.las_classes.size()),
-        labels(points.size() * sizeof(std::uint32_t)), ids(capacity * 4), voxels(capacity * 4),
-        groups(capacity * sizeof(GpuGroup)), bad(sizeof(int));
+    Buffer input(allocations, input_bytes), output(allocations, output_bytes),
+        device_points(allocations, gpu_points.size() * sizeof(GpuPoint)),
+        device_features(allocations, features.size() * sizeof(GpuFeature)),
+        mapping(allocations, c.las_classes.size()), labels(allocations, points.size() * 4),
+        semantics(allocations, points.size() * 4), ids(allocations, capacity * 4),
+        voxels(allocations, capacity * 4), groups(allocations, capacity * sizeof(GpuGroup)),
+        bad(allocations, sizeof(int));
     cuda_check(cudaMemGetInfo(&free_bytes, &total_bytes));
     measured.gpu_free_after_allocation_bytes = free_bytes;
     std::vector<std::uint32_t> source_ids, voxel_ids;
@@ -241,52 +296,84 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     cuda_check(cudaStreamSynchronize(stream.value));
     measured.initialization_and_upload_seconds =
         std::chrono::duration<double>(std::chrono::steady_clock::now() - initialized_at).count();
-    for (const auto &b : plan.blocks) {
-        source_ids.clear();
-        voxel_ids.clear();
-        group_list.clear();
-        for (std::size_t i = 0; i < b.members.size(); ++i) {
-            const auto &m = b.members[i];
-            source_ids.push_back(m.point);
-            voxel_ids.push_back(m.voxel);
-            if (group_list.empty() || group_list.back().voxel != m.voxel)
-                group_list.push_back(
-                    {m.voxel, static_cast<unsigned>(i), static_cast<unsigned>(i + 1)});
-            else
-                group_list.back().end = static_cast<unsigned>(i + 1);
+    std::vector<std::uint32_t> previous, previous_semantics, result(points.size()),
+        semantic_result(points.size());
+    for (unsigned cycle = 0; cycle < options.warmup + options.iterations; ++cycle) {
+        const auto cycle_start = std::chrono::steady_clock::now();
+        double prepared_seconds{}, inference_seconds{}, post_seconds{};
+        cuda_check(cudaMemsetAsync(labels.data(), 255, points.size() * 4, stream.value));
+        cuda_check(cudaMemsetAsync(semantics.data(), 255, points.size() * 4, stream.value));
+        for (const auto &b : plan.blocks) {
+            source_ids.clear();
+            voxel_ids.clear();
+            group_list.clear();
+            for (std::size_t i = 0; i < b.members.size(); ++i) {
+                const auto &m = b.members[i];
+                source_ids.push_back(m.point);
+                voxel_ids.push_back(m.voxel);
+                if (group_list.empty() || group_list.back().voxel != m.voxel)
+                    group_list.push_back(
+                        {m.voxel, static_cast<unsigned>(i), static_cast<unsigned>(i + 1)});
+                else
+                    group_list.back().end = static_cast<unsigned>(i + 1);
+            }
+            ids.upload(source_ids, stream.value);
+            voxels.upload(voxel_ids, stream.value);
+            groups.upload(group_list, stream.value);
+            cuda_check(cudaMemsetAsync(input.data(), 0, input_bytes, stream.value));
+            prepared_start.record(stream.value);
+            prepare_cuda(input.data(), input_half, c.voxels, device_points.as<GpuPoint>(),
+                         ids.as<std::uint32_t>(), groups.as<GpuGroup>(),
+                         static_cast<unsigned>(group_list.size()), device_features.as<GpuFeature>(),
+                         static_cast<unsigned>(features.size()),
+                         {{b.origin[0], b.origin[1], b.origin[2]}}, bad.as<int>(), stream.value);
+            cuda_check(cudaGetLastError());
+            prepared_end.record(stream.value);
+            require(context->enqueueV3(stream.value), "TensorRT enqueueV3 failed");
+            inference_end.record(stream.value);
+            scatter_cuda(output.data(), output_half, c.voxels,
+                         static_cast<unsigned>(c.las_classes.size()), ids.as<std::uint32_t>(),
+                         voxels.as<std::uint32_t>(), static_cast<unsigned>(b.members.size()),
+                         mapping.as<std::uint8_t>(), labels.as<std::uint32_t>(),
+                         semantics.as<std::uint32_t>(), c.policy == "first_wins", bad.as<int>(),
+                         stream.value);
+            cuda_check(cudaGetLastError());
+            postprocess_end.record(stream.value);
+            cuda_check(
+                cudaStreamSynchronize(stream.value)); // Also owns lifetime of host upload vectors.
+            prepared_seconds += prepared_end.seconds_since(prepared_start);
+            inference_seconds += inference_end.seconds_since(prepared_end);
+            post_seconds += postprocess_end.seconds_since(inference_end);
         }
-        ids.upload(source_ids, stream.value);
-        voxels.upload(voxel_ids, stream.value);
-        groups.upload(group_list, stream.value);
-        cuda_check(cudaMemsetAsync(input.data(), 0, input_bytes, stream.value));
-        prepared_start.record(stream.value);
-        prepare_cuda(input.data(), input_half, c.voxels, device_points.as<GpuPoint>(),
-                     ids.as<std::uint32_t>(), groups.as<GpuGroup>(),
-                     static_cast<unsigned>(group_list.size()), device_features.as<GpuFeature>(),
-                     static_cast<unsigned>(features.size()),
-                     {{b.origin[0], b.origin[1], b.origin[2]}}, bad.as<int>(), stream.value);
-        cuda_check(cudaGetLastError());
-        prepared_end.record(stream.value);
-        require(context->enqueueV3(stream.value), "TensorRT enqueueV3 failed");
-        inference_end.record(stream.value);
-        scatter_cuda(output.data(), output_half, c.voxels,
-                     static_cast<unsigned>(c.las_classes.size()), ids.as<std::uint32_t>(),
-                     voxels.as<std::uint32_t>(), static_cast<unsigned>(b.members.size()),
-                     mapping.as<std::uint8_t>(), labels.as<std::uint32_t>(),
-                     c.policy == "first_wins", bad.as<int>(), stream.value);
-        cuda_check(cudaGetLastError());
-        postprocess_end.record(stream.value);
         cuda_check(
-            cudaStreamSynchronize(stream.value)); // Also owns lifetime of host upload vectors.
-        measured.cuda_preparation_seconds += prepared_end.seconds_since(prepared_start);
-        measured.tensorrt_inference_seconds += inference_end.seconds_since(prepared_end);
-        measured.cuda_postprocessing_seconds += postprocess_end.seconds_since(inference_end);
-        ++measured.completed_inference_blocks;
+            cudaMemcpy(result.data(), labels.data(), result.size() * 4, cudaMemcpyDeviceToHost));
+        cuda_check(cudaMemcpy(semantic_result.data(), semantics.data(), semantic_result.size() * 4,
+                              cudaMemcpyDeviceToHost));
+        if (!previous.empty())
+            require(result == previous && semantic_result == previous_semantics,
+                    "persistent predictions changed between cycles");
+        previous = result;
+        previous_semantics = semantic_result;
+        const auto cycle_seconds =
+            std::chrono::duration<double>(std::chrono::steady_clock::now() - cycle_start).count();
+        measured.persistent_cycles.push_back({{"warmup", cycle < options.warmup},
+                                              {"wall_seconds", cycle_seconds},
+                                              {"cuda_preparation_seconds", prepared_seconds},
+                                              {"tensorrt_seconds", inference_seconds},
+                                              {"cuda_postprocessing_seconds", post_seconds},
+                                              {"point_coverage", result.size()}});
+        if (cycle >= options.warmup) {
+            measured.cuda_preparation_seconds += prepared_seconds;
+            measured.tensorrt_inference_seconds += inference_seconds;
+            measured.cuda_postprocessing_seconds += post_seconds;
+            measured.completed_inference_blocks += plan.blocks.size();
+        }
     }
     int invalid{};
-    std::vector<std::uint32_t> result(points.size());
     cuda_check(cudaMemcpy(&invalid, bad.data(), sizeof(int), cudaMemcpyDeviceToHost));
     cuda_check(cudaMemcpy(result.data(), labels.data(), result.size() * 4, cudaMemcpyDeviceToHost));
+    cuda_check(cudaMemcpy(semantic_result.data(), semantics.data(), semantic_result.size() * 4,
+                          cudaMemcpyDeviceToHost));
     require(invalid == 0, "nonfinite CUDA tensor feature or occupied-voxel logits");
     std::vector<std::uint8_t> mapped;
     mapped.reserve(result.size());
@@ -294,6 +381,15 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         require(label <= 255, "source point was not reconstructed");
         mapped.push_back(static_cast<std::uint8_t>(label));
     }
+    if (semantic_ids) {
+        semantic_ids->clear();
+        semantic_ids->reserve(points.size());
+        for (const auto id : semantic_result) {
+            require(id < c.las_classes.size(), "semantic index was not reconstructed");
+            semantic_ids->push_back(static_cast<std::uint8_t>(id));
+        }
+    }
+    measured.tracked_peak_requested_cuda_bytes = allocations.peak();
     if (metrics)
         *metrics = measured;
     return mapped;
