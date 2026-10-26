@@ -41,6 +41,7 @@
       "tests/test_preservation.py",
       "tools/audit_byom.py",
       "tools/benchmark_native.py",
+      "tools/benchmark_unet_scenes.py",
       "tools/evaluate_unet_points.py",
       "tools/fetch_fractal.py",
       "tools/fractal_inventory.py",

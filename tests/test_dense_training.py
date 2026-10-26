@@ -9,7 +9,7 @@ import laspy
 import numpy as np
 from test_byom import NATIVE, ROOT, package
 
-from dense_training import blocks, targets
+from dense_training import blocks, metrics, targets
 
 
 def test_fractal_artifacts_are_ignored_and_vegetation_is_merged():
@@ -97,3 +97,14 @@ def test_features_do_not_depend_on_reference_labels(tmp_path):
         np.testing.assert_array_equal(x["features"], y["features"])
         np.testing.assert_array_equal(x["ids"], y["ids"])
     assert any(np.any(x["labels"] != y["labels"]) for x, y in zip(aa, bb, strict=True))
+
+
+def test_macro_metrics_penalize_missing_classes_despite_majority_accuracy():
+    perfect = metrics(np.eye(7, dtype=np.int64) * 100)
+    assert perfect["macro_f1_all_seven"] == perfect["mean_iou_all_seven"] == 1
+    dominated = np.zeros((7, 7), dtype=np.int64)
+    dominated[:, 1] = [1, 1000, 1, 1, 1, 1, 1]
+    result = metrics(dominated)
+    assert result["accuracy"] > 0.99
+    assert result["macro_f1_all_seven"] < 0.15
+    assert result["mean_iou_all_seven"] < 0.15

@@ -227,7 +227,7 @@ def main():
             }
         )
         print(
-            f"validated {len(records)} native trace/sidecar/LAZ: {source.name}, {len(truth)} points",
+            f"validated {len(records)}: {source.name}, {len(truth)} points",
             flush=True,
         )
     # Deliberately replace all reference class bytes, then demand identical neural outputs.
