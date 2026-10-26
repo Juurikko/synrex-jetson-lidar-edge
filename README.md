@@ -41,6 +41,16 @@ The public-focused utility was written for this staging release after reviewing 
 
 **Publication status — 2026-10-26:** this repository is public at [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge). **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). This dated status supersedes earlier staging-only statements; historical audit reports and evidence are retained. Personal developer/project-lead attribution is Tuomas Pietilä. **MIT** applies to the confirmed personally controlled original source/tests; **CC BY 4.0** applies to the original documentation, diagrams and video. Copyright (c) 2026 Tuomas Pietilä applies only to protectable original expression within that scope; factual records and upstream material are excluded. [License scopes](LICENSE_SCOPE.json). See [personal attribution and licensing](PERSONAL_ATTRIBUTION_AND_LICENSING.md). Upstream dependencies retain their own licenses. See the [historical publication-gate report and superseding status](PUBLICATION_BLOCKERS.md).
 
+## Bring your own model: write verified LAZ outputs
+
+**Already have a classifier?** If your model or algorithm can produce one **ASPRS/LAS-compatible classification byte per original source point**, the runnable, model-independent part of this repository can apply those labels to a supported compressed LAZ file and independently verify its preservation. You do **not** need the private SegFormer engine or a Jetson to run this utility.
+
+**[Bring your own model — exact inputs, commands, integration requirements and limitations](BRING_YOUR_OWN_MODEL.md)**
+
+> Example: a survey or forestry developer produces source-ordered, explicitly mapped ground/vegetation/building classification codes, then calls `synrex-laz-labels input.laz labels.u8 output.laz`. The public C++ tool changes the classification field, not the other decoded point-record bytes within its supported LAS contract. **It does not perform neural inference or convert arbitrary internal class IDs into standard LAS semantics.**
+
+**Public geospatial-data question:** Finland's National Land Survey already offers classified LAZ point clouds. Could national datasets additionally offer **versioned, quality-assessed semantic layers and lightweight derived map products**? See [national semantic point-cloud services: what exists, and a realistic extension](PUBLIC_SEMANTIC_POINT_CLOUDS.md). This is a proposal, not an existing capability demonstrated by this software.
+
 ## Run the synthetic integrity demonstration
 
 Prerequisites: Linux, Python 3.12 with venv support, CMake ≥ 3.20, a C++17 compiler and Git. No Jetson, GPU, Python inference framework, pretrained model or real dataset is needed. Dependency downloads are public and free; existing system tools are used without system installation.
