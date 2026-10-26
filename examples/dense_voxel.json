@@ -1,0 +1,25 @@
+{
+  "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+  "input": {"name": "features", "shape": [1, 2, 4, 6, 8], "dtype": "float32", "layout": "NCZYX"},
+  "output": {"name": "scores", "shape": [1, 3, 4, 6, 8], "dtype": "float32", "layout": "NCZYX"},
+  "geometry": {
+    "voxel_size_xyz": [1.0, 1.0, 1.0],
+    "dimensions_xyz": [8, 6, 4],
+    "block_size_xyz": [8.0, 6.0, 4.0],
+    "overlap_xyz": [0.25, 0.0, 0.0],
+    "overlap_policy": "last_wins"
+  },
+  "features": [
+    {"kind": "occupancy", "offset": 0.0, "scale": 1.0},
+    {"kind": "mean_intensity", "offset": 0.0, "scale": 0.000015259021896696422}
+  ],
+  "las_classes": [2, 5, 6],
+  "limits": {"max_points": 1000000, "max_blocks": 10000, "max_memberships": 4000000, "max_tensor_bytes": 16777216},
+  "licensing": {
+    "spdx": "MIT",
+    "author": "Tuomas Pietilä; AI-assisted with OpenAI Codex",
+    "source": "examples/export_reference.py in this repository",
+    "weights": "Original analytic constants; no trained or third-party weights",
+    "notice": "Synthetic engineering fixture; class mapping is explicit test semantics, not validated survey accuracy"
+  }
+}

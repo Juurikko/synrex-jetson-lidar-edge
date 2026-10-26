@@ -1,0 +1,95 @@
+{
+  "schema": "synrex.byom.source_assessment.v1",
+  "private_reference_commit": "25b0f9c10fdfee07e0b6c4d247080102ea5e365d",
+  "private_reference_worktree": "PRISTINE",
+  "private_source_included": false,
+  "restricted_model_artifacts_included": false,
+  "clean_room_claim": false,
+  "reused_public_source": [
+    "src/preserve_laz.cpp",
+    "src/verify_laz.py",
+    "src/synthetic_laz.py",
+    "tests/test_preservation.py"
+  ],
+  "new_source_basis": "Generic explicit adapter contract and public NVIDIA APIs; docs/byom/PROVENANCE.md",
+  "excluded_private_native_files": [
+    {
+      "file": "native/segformer-classified-laz-r0/src/native_classified_laz_preserve.cpp",
+      "sha256": "c96c471a7408c4520632dcf5396e9e751e703be90a24f0e7272637cc3695f695",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-classified-laz-r0/src/verify_classified_point_records.cpp",
+      "sha256": "33f4d033ac4d28b276414121b74be3315b9d0d75f17f7056d8d179293eab2edc",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-e2e-r0/src/native_e2e.cpp",
+      "sha256": "b47b2a9d00589a48cb555a79eb5e7fe7af6e1901660a3b753dca3068d531f37a",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-e2e-r1-generalized/src/native_e2e_r1.cpp",
+      "sha256": "c85a5e2e0f490a99c6c63df2c36da90008fa9f6d293c1d116f7142c5912c0510",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-e2e-r2-service/src/native_e2e_r2_service.cpp",
+      "sha256": "debc3596511a80c4eee74141c39ca5169e7662732f959413183b82f85efd77c9",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-host-r0/src/native_host.cpp",
+      "sha256": "c939e493af6f7d86cf59c27abe3b932ba95cd7f209bc2a8a0dc6173078074996",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-io/include/synrex_segformer_io.h",
+      "sha256": "df0d3db67024cf54de9a8a7326fcd1747e91557c3da9ea3313bab38bf1a708ac",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-io/src/synrex_segformer_io.cu",
+      "sha256": "af15e0544a0bb2f70c04295a8ed2ad9c44ba27cd2b03d8c91ddfdd3517ad6d2b",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-preprocess-r0/src/native_geometry.cpp",
+      "sha256": "34eea2987c506b58e39b258344b1f8c1c13c703bf73b99a62843618377ad0047",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-preprocess-r0/src/native_laz_xyz.cpp",
+      "sha256": "fdeaabba5c8c988af6348f5050a1e754020ca1856963aa25817b7e0017ce0bb0",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-preprocess-r0/src/native_plan_compact.cpp",
+      "sha256": "82771d46b65fb9bfcfb5879717d8b82971fa11518c88baa25089300ffd565628",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-product-runtime-r0p1/src/product_runtime_r0.cpp",
+      "sha256": "56500cf59517d406e213d235641167661e65dd15009822e322dcc5ba5b50378f",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    },
+    {
+      "file": "native/segformer-product-runtime-r1-relocatable/src/product_runtime_r1.cpp",
+      "sha256": "9970c4f8a8ef1b24051d82dd29f021028a418c86be6867c1606a1dcc04a16860",
+      "disposition": "EXCLUDED_UNCLEAR_PUBLIC_RELICENSE_RIGHTS",
+      "reason": "No blanket permissive grant established; model-specific reference lineage. No source included."
+    }
+  ]
+}

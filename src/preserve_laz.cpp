@@ -214,6 +214,15 @@ static std::uint64_t apply(const fs::path &input, const fs::path &labels, const 
     return changed;
 }
 
+// Reuse this audited MIT implementation in the native BYOM executable.
+namespace synrex {
+std::uint64_t validate_laz(const fs::path &input) { return metadata(input).points; }
+std::uint64_t apply_labels(const fs::path &input, const fs::path &labels, const fs::path &output) {
+    return apply(input, labels, output);
+}
+} // namespace synrex
+
+#ifndef SYNREX_LAZ_LIBRARY
 int main(int argc, char **argv) {
     if (argc != 4) {
         std::cerr << "Usage: synrex-laz-labels INPUT.laz LABELS.u8 OUTPUT.laz\n";
@@ -228,3 +237,4 @@ int main(int argc, char **argv) {
         return 1;
     }
 }
+#endif
