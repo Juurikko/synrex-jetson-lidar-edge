@@ -189,6 +189,10 @@ def main():
         "The source bundle also preserves local checkpoints and complete Git history.\n"
         "Restore with: git clone --branch codex/byom-native-mit-r0 source.bundle history\n"
         "Inspect publication_candidate.json and SHA256 identities before use.\n"
+        "When qgis/ready is included, open qgis/ready/synrex-fractal.qgz in QGIS.\n"
+        "Reproduction: source/docs/byom/RELEASE_R4.md and QGIS_R4.md.\n"
+        "Frozen native RTX: seven-class mIoU48.756%; complete237,991 points/s.\n"
+        "AGX NOT_RUN. TensorRT plans require matching targets.\n"
     )
     records = []
     for path in sorted(args.out.rglob("*")):

@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "source_commit": "461f88f81bc90b0fcc32953202a75cd424ff1061",
+  "method": "Fresh clone from public development Git bundle; new venv; fresh public dependency clones; no private engineering repository used",
+  "dependency_commits": {
+    "laz-perf": "b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce",
+    "json": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03"
+  },
+  "native_cpu_build": "PASS",
+  "ctest": "PASS 1/1",
+  "cpu_tests": 76,
+  "gpu_tests": "NOT_RUN 5 skipped",
+  "ruff": "PASS",
+  "release_checks": "PASS",
+  "both_model_packages_inspected_and_hash_validated": true,
+  "synthetic_onnx_reconstructed_exact": true,
+  "relocated_install": "PASS",
+  "git_clean": true,
+  "receipts_sha256": {
+    "pytest.xml": "f9a82242391284e3e169e736ac84de9468999ae20876796e6622a223b3644068",
+    "release-checks.json": "20bc75c59de0b9cc5779b14adb7a3c86d3ae96cda52112d708bd5e1c0088422f",
+    "unet-inspect.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+    "conv3d-inspect.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+    "ctest.log": "343117b4fa21285f11af96727b74945119089abfbe720c5d2ccfe478afe1f6b5",
+    "build.log": "bbe10139e44fde15011c4a2c49339df2dffe6dc3da0d5283c7c4abec126e9092",
+    "relocated-version.json": "66929ae002d238d3634dfe7f36eba672c134275e1af1d573cb58978c6af75817"
+  },
+  "logistics": "Bundle clone required explicit branch/detached checkout; corrected relative model paths before final package/install validation; no model or source code fix required"
+}

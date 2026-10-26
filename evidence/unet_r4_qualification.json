@@ -18,7 +18,9 @@
     "RUFF_RELEASE_CHECKS": "PASS",
     "PHYSICAL_AGX": "NOT_RUN",
     "NEW_GPU_INFERENCE": "NOT_RUN",
-    "PUBLIC_PUSH_UPLOAD": "NOT_RUN"
+    "PUBLIC_PUSH_UPLOAD": "NOT_RUN",
+    "CLEAN_PUBLIC_RECONSTRUCTION": "PASS",
+    "MODEL_HASH_INTERCHANGEABILITY": "PASS"
   },
   "cpu_tests": {
     "passed": 76,
@@ -35,5 +37,6 @@
   "accepted_complete_points_per_second": 237991.41762428806,
   "recommendation": "Ready for scoped RTX/QGIS owner review; known direct-reader limitation has a qualified COPC path. AGX qualification unavailable and not claimed. Publication held.",
   "new_benchmarks": false,
-  "training_or_predictions_changed": false
+  "training_or_predictions_changed": false,
+  "model_interchangeability_scope": "Both compatible model packages inspected in new CPU build; unchanged accepted same-executable real RTX inference receipts retained. No new GPU execution."
 }

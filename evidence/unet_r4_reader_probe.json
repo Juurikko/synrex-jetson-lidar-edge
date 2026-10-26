@@ -196,5 +196,7 @@
   "conclusion": "Reader reuse failure reproduced: isolated prepare/preview PASS; prepare-preview and preview-preview FAIL for all six valid Extra Bytes files. Static inspected source explains duplicate retained VLR concatenation. No claim all upstream issue samples have identical cause.",
   "other_qgis_versions": "NOT_RUN",
   "direct_48byte_qgis": "FAIL",
-  "writer_change_required": false
+  "writer_change_required": false,
+  "probe_executable_sha256": "07bbaa4ff0ae8b63eb2ea69b36d58b2dc786838471aa81ab31051d19a6d38847",
+  "executed_source_matches_committed_probe": true
 }
