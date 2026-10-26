@@ -1,0 +1,135 @@
+{
+  "schema": "synrex.unet.model_freeze.v1",
+  "frozen_at_utc": "2026-10-26T21:54:59.609170+00:00",
+  "training_source_commit": "d7c8514",
+  "source_commit_at_freeze": "7270a24a68506a532fed901a58e5c303677b91bd",
+  "weights_sha256": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4",
+  "onnx_fp16_sha256": "4a043dfacefa9e45f2e80e604b565f7ae90fb35ff81831af8f26cfd3d59ae047",
+  "onnx_fp32_sha256": "316dfd710b455f2324a86e18f39c7df960525fe94fe3702579030f014887fb44",
+  "configuration_sha256": "a954e28a33e3bc12d2e03ce56931acb7a60d1c7cc9c21a0ed0ffa900e22074d1",
+  "protocol_sha256": "615f18267db9dccbd3d2a46fcbbffe18badc80a125fcb8431aa455024ff02f4b",
+  "selected_epoch": 28,
+  "epochs": 40,
+  "model_parameters": 62103,
+  "selection": "highest validation occupied-voxel macro-F1 over all seven; point metrics independently checked before freeze",
+  "validation_point_metrics": {
+    "confusion": [
+      [
+        55267,
+        29979,
+        10092,
+        26666,
+        214,
+        1063,
+        828
+      ],
+      [
+        57394,
+        8042367,
+        121108,
+        29374,
+        125030,
+        17372,
+        1086
+      ],
+      [
+        286564,
+        959817,
+        10364293,
+        77477,
+        5071,
+        5714,
+        3377
+      ],
+      [
+        28059,
+        21765,
+        14611,
+        791620,
+        15,
+        690,
+        492
+      ],
+      [
+        2,
+        27411,
+        660,
+        0,
+        38016,
+        16,
+        40
+      ],
+      [
+        1506,
+        2979,
+        392,
+        6442,
+        8,
+        8398,
+        0
+      ],
+      [
+        109,
+        1,
+        138,
+        3,
+        233,
+        0,
+        5236
+      ]
+    ],
+    "support": [
+      124109,
+      8393731,
+      11702313,
+      857252,
+      66145,
+      19725,
+      5720
+    ],
+    "iou": [
+      0.111035212951262,
+      0.8523354377208306,
+      0.8746745170226732,
+      0.7938316148790531,
+      0.1932532178368816,
+      0.18838043965903992,
+      0.4536082474226804
+    ],
+    "mean_iou_present": 0.49530266964177444,
+    "mean_iou_all_seven": 0.49530266964177444,
+    "precision": [
+      0.12885724211414756,
+      0.8853021343702263,
+      0.9860149473509161,
+      0.8497587974005509,
+      0.22549781418496087,
+      0.2525486422277689,
+      0.4734605298851614
+    ],
+    "recall": [
+      0.4453101708981621,
+      0.9581397116490867,
+      0.8856619199982089,
+      0.9234390820902139,
+      0.5747373195252854,
+      0.42575411913814953,
+      0.9153846153846154
+    ],
+    "f1": [
+      0.19987703658161696,
+      0.9202819536504359,
+      0.9331481375357005,
+      0.8850681505382836,
+      0.323909820561321,
+      0.3170372607497452,
+      0.624113475177305
+    ],
+    "macro_f1_all_seven": 0.6004908335420583,
+    "ground_vegetation_building_mean_iou": 0.840280523207519,
+    "accuracy": 0.9119562359951429
+  },
+  "fresh_test_accessed": false,
+  "fresh_test_selection": "256 evenly spaced sorted official IGNF/FRACTAL test-01.zip members; not downloaded or opened before this freeze",
+  "decision": "Retain 8 base channels and 3 levels; validation all seven IoUs >.05, macro-F1 .6005 versus geometry .2166, no capacity increase justified; no further hyperparameter/model selection on fresh test"
+}

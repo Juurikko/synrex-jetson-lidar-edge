@@ -50,6 +50,7 @@
       "tools/qualify_byom.py",
       "tools/qualify_dense_gpu.py",
       "tools/qualify_unet.py",
+      "tools/qualify_unet_r2.py",
       "tools/release_checks.py",
       "tools/synthetic_demo.py",
       "tools/train_unet.py"
