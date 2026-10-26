@@ -1,0 +1,17 @@
+{
+  "static_validation": "PASS",
+  "qgis_runtime_load": "NOT_RUN",
+  "reason": "QGIS application/bindings absent; no software stack change made",
+  "schema_reference": "https://raw.githubusercontent.com/qgis/QGIS/release-3_44/src/core/pointcloud/qgspointcloudclassifiedrenderer.cpp",
+  "renderer": "classified",
+  "attribute": "Classification",
+  "class_codes": [
+    1,
+    2,
+    200,
+    6,
+    9,
+    17,
+    201
+  ]
+}

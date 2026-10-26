@@ -15,6 +15,8 @@
       "examples/dense_voxel.json",
       "examples/export_reference.py",
       "examples/unet/dense_voxel.json",
+      "examples/unet/dense_voxel_asprs_safe.json",
+      "examples/unet/fractal-classification.qml",
       "native/geometry.cpp",
       "native/gpu.hpp",
       "native/include/synrex/runtime.hpp",
@@ -40,13 +42,17 @@
       "tests/test_dense_reference.py",
       "tests/test_dense_training.py",
       "tests/test_preservation.py",
+      "tests/test_semantics.py",
       "tools/audit_byom.py",
+      "tools/audit_fractal_duplicates.py",
+      "tools/audit_unet_r2.py",
       "tools/benchmark_native.py",
       "tools/benchmark_unet_scenes.py",
       "tools/evaluate_unet_points.py",
       "tools/fetch_fractal.py",
       "tools/fractal_inventory.py",
       "tools/media_preview.py",
+      "tools/plot_unet_r2.py",
       "tools/plot_unet_showcase.py",
       "tools/prepare_unet_showcase.py",
       "tools/qualify_byom.py",
@@ -55,8 +61,10 @@
       "tools/qualify_unet.py",
       "tools/qualify_unet_r2.py",
       "tools/release_checks.py",
+      "tools/seal_semantics.py",
       "tools/synthetic_demo.py",
-      "tools/train_unet.py"
+      "tools/train_unet.py",
+      "tools/verify_unet_outputs.py"
     ],
     "license": "MIT"
   },
@@ -90,9 +98,12 @@
       "docs/byom/QUICKSTART.md",
       "docs/byom/RELEASE_CANDIDATE.md",
       "docs/byom/RTX4090_QUALIFICATION.md",
+      "docs/byom/STREAMING_MILESTONE.md",
       "docs/byom/UNET_PROVENANCE.md",
       "docs/byom/UNET_QUALIFICATION.md",
       "docs/byom/UNET_QUICKSTART.md",
+      "docs/byom/UNET_R2_QUICKSTART.md",
+      "docs/byom/UNET_R2_RELEASE.md",
       "media/PERSONAL_CREDITS.md"
     ],
     "license": "CC-BY-4.0"
@@ -123,8 +134,16 @@
   "data_derived_media": {
     "license": "Etalab-2.0 for IGN source data; CC-BY-4.0 for original presentation",
     "files": [
-      "media/unet/pilot-heldout.png"
+      "media/unet/pilot-heldout.png",
+      "media/unet-r2/heldout-semantics.png"
     ],
     "notice": "Data: IGNF/FRACTAL, source last modified 2025-04-05T09:37:48Z, retrieved 2026-10-26; original presentation Tuomas Pietilä. No MIT relicense of survey information."
+  },
+  "data_derived_metadata": {
+    "license": "Etalab-2.0 IGN taxonomy; MIT original metadata layout",
+    "files": [
+      "examples/unet/semantic_classes.json"
+    ],
+    "notice": "IGN FRACTAL source revision/date and attribution in THIRD_PARTY_NOTICES.md; model semantic IDs and user-defined projection documented explicitly."
   }
 }

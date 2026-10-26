@@ -21,10 +21,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("data", "trained", "qualified", "engine-package", "synthetic", "out"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument(
+        "--media-manifest", type=Path, default=ROOT / "evidence/unet_showcase_media.json"
+    )
     args = parser.parse_args()
     qualification = json.loads((args.qualified / "qualification.json").read_text())
     if qualification["status"] != "PASS":
         raise ValueError("require successful genuine qualification before showcase preparation")
+    if "frozen_model" in qualification:
+        assert sha(args.trained / "best.pt") == qualification["frozen_model"]["weights_sha256"]
     package = args.engine_package
     manifest = json.loads((package / "manifest.json").read_text())
     for artifact in manifest["artifacts"].values():
@@ -38,7 +43,16 @@ def main():
     for name in ("best.pt", "unet-fp16.onnx", "unet-fp32.onnx"):
         shutil.copy2(args.trained / name, args.out / "models" / name)
     shutil.copy2(ROOT / "examples/unet/MODEL_NOTICE.txt", args.out / "models/MODEL_NOTICE.txt")
-    shutil.copy2(ROOT / "examples/unet/dense_voxel.json", args.out / "models/dense_voxel.json")
+    (args.out / "models/dense_voxel.json").write_text(
+        json.dumps(manifest["contract"], indent=2) + "\n"
+    )
+    taxonomy = ROOT / "examples/unet/semantic_classes.json"
+    if (
+        taxonomy.exists()
+        and [row["output_las_code"] for row in json.loads(taxonomy.read_text())["classes"]]
+        == manifest["contract"]["las_classes"]
+    ):
+        shutil.copy2(taxonomy, args.out / "models/semantic_classes.json")
     shutil.copytree(args.synthetic / "engine.srxmodel", args.out / "models/synthetic.srxmodel")
     shutil.copy2(args.synthetic / "reference.onnx", args.out / "models/synthetic.onnx")
     synthetic_dir = args.out / "data/synthetic"
@@ -49,7 +63,7 @@ def main():
         args.qualified / "synthetic-same-runtime.laz",
     ):
         shutil.copy2(path, synthetic_dir / path.name)
-    display = json.loads((ROOT / "evidence/unet_showcase_media.json").read_text())
+    display = json.loads(args.media_manifest.read_text())
     for row in display["files"]:
         source = args.data / "test" / row["source"]
         stem = source.stem
@@ -63,6 +77,24 @@ def main():
             destination = args.out / directory
             destination.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, destination / path.name)
+        sidecar = args.qualified / (stem + "-semantics.json")
+        if sidecar.exists():
+            destination = args.out / "data/semantics"
+            destination.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(sidecar, destination / sidecar.name)
+    if (args.qualified / (Path(display["files"][0]["source"]).stem + "-binding.json")).exists():
+        for row in display["files"]:
+            binding = args.qualified / (Path(row["source"]).stem + "-binding.json")
+            envelope = json.loads(binding.read_text())
+            stem = Path(row["source"]).stem
+            assert envelope["output_sha256"] == sha(args.qualified / (stem + "-classified.laz"))
+            assert envelope["semantic_sidecar_sha256"] == sha(
+                args.qualified / (stem + "-semantics.json")
+            )
+            assert envelope["model_manifest_sha256"] == sha(package / "manifest.json")
+            assert envelope["taxonomy_sha256"] == sha(taxonomy)
+            shutil.copy2(binding, args.out / "data/semantics" / binding.name)
+    shutil.copy2(ROOT / "examples/unet/fractal-classification.qml", args.out / "models")
     shutil.copytree(ROOT / "LICENSES", args.out / "LICENSES")
     source_commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
@@ -97,7 +129,7 @@ def main():
         "NVIDIA TensorRT plan/vendor dependencies retain separate NVIDIA terms.\n"
         "The SM89 x86_64 plan is target-specific; rebuild from ONNX elsewhere.\n"
         "No SDK binaries, private source or restricted pretrained assets included.\n\n"
-        "See source/docs/byom/UNET_QUALIFICATION.md for metrics and rare-class failures.\n"
+        "See source/docs/byom/UNET_R2_RELEASE.md for frozen metrics and limitations.\n"
         "The source directory is an exact export of the committed public repository.\n"
         "The source bundle also preserves local checkpoints and complete Git history.\n"
         "Restore with: git clone --branch codex/byom-native-mit-r0 source.bundle history\n"
@@ -108,7 +140,11 @@ def main():
         if path.is_file():
             name = path.relative_to(args.out).as_posix()
             license_id = (
-                "MIT original synthetic fixture"
+                "Etalab-2.0 taxonomy; MIT original metadata layout"
+                if name == "models/semantic_classes.json"
+                else "MIT original style; IGN semantic names retain Etalab attribution"
+                if name.endswith(".qml")
+                else "MIT original synthetic fixture"
                 if name.startswith("data/synthetic/")
                 else "Etalab-2.0 IGN FRACTAL"
                 if name.startswith("data/")

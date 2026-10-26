@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "host": "i5radeon",
+  "tests": 38,
+  "skipped": 5,
+  "failures": 0,
+  "errors": 0,
+  "junit_sha256": "5b90b215a51d4b033a46bc041cc2d761bab554761d0a94ca5450a41747da4b51",
+  "ctest": "PASS: 1/1",
+  "scope": "CPU static/record/package/geometry tests; GPU tests NOT_RUN on this host",
+  "sanitizers": "ASAN detect_leaks=1 halt_on_error=1; UBSAN halt_on_error=1"
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "host": "i5radeon",
+  "tests": 74,
+  "skipped": 5,
+  "failures": 0,
+  "errors": 0,
+  "junit_sha256": "eabecdeee2bdec289ee16e6a4272ea2fae94c64ead0a6e44e1b89741479139ac",
+  "ctest": "PASS: 1/1",
+  "scope": "CPU static/record/package/geometry tests; GPU tests NOT_RUN on this host"
+}

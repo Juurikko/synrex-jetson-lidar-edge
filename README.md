@@ -126,3 +126,7 @@ The longer-term proposal is onboard UAV classification: transmit compact semanti
 <picture><img src="media/pipeline-portrait.png" alt="Four-stage native LAZ-to-classified-LAZ pipeline on Jetson" width="420"></picture>
 
 Developer and project lead: **Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko))**. Developed using AI-assisted software engineering, including **OpenAI Codex**; human-led architecture, specifications, decisions and verification review are detailed in [Contributions and method](CONTRIBUTIONS_AND_METHOD.md). Existing model research belongs to its respective authors; see [third-party notices](THIRD_PARTY_NOTICES.md). Public repository: [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge).
+
+The frozen FRACTAL seven-class U-Net release candidate, safe LAS projection,
+independent FP16 metrics, real-scene benchmarks and QGIS style are documented in
+[the R2 qualification](docs/byom/UNET_R2_RELEASE.md). Local only; publication requires owner approval.

@@ -177,3 +177,7 @@ using every point in increasing elevation order, without interpolation or smooth
 The first tile makes low-vegetation/ground confusion visible. Metrics include all
 32 tiles, not just this display selection. Data: IGN FRACTAL, Etalab-2.0, source
 last updated 2025-04-05, retrieved 2026-10-26; original presentation CC BY 4.0.
+
+The expanded frozen seven-class campaign is recorded separately in
+[the R2 release qualification](UNET_R2_RELEASE.md) and
+[its reproducible quickstart](UNET_R2_QUICKSTART.md). The results above remain the historical R1 pilot.

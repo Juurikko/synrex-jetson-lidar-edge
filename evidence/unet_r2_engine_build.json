@@ -1,0 +1,1604 @@
+{
+  "engine_layers": {
+    "Bindings": [
+      "features",
+      "scores"
+    ],
+    "Layers": [
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "features"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Input Tensor 0 to /encoders.0/basic_module/SingleConv1/conv/Conv + /encoders.0/basic_module/SingleConv1/ReLU/Relu",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.0/basic_module/SingleConv1/conv/Conv + /encoders.0/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 4,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.0/basic_module/SingleConv1/conv/Conv + /encoders.0/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.0/basic_module/SingleConv1/conv/Conv]\u001e[ONNX Layer: /encoders.0/basic_module/SingleConv1/ReLU/Relu]",
+        "Name": "/encoders.0/basic_module/SingleConv1/conv/Conv + /encoders.0/basic_module/SingleConv1/ReLU/Relu",
+        "OutMaps": 4,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.0/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 432,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 8,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.0/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.0/basic_module/SingleConv2/conv/Conv]\u001e[ONNX Layer: /encoders.0/basic_module/SingleConv2/ReLU/Relu]",
+        "Name": "/encoders.0/basic_module/SingleConv2/conv/Conv + /encoders.0/basic_module/SingleConv2/ReLU/Relu",
+        "OutMaps": 8,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /encoders.0/basic_module/SingleConv2/conv/Conv + /encoders.0/basic_module/SingleConv2/ReLU/Relu"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 864,
+          "Type": "Half"
+        }
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /encoders.0/basic_module/SingleConv2/conv/Conv + /encoders.0/basic_module/SingleConv2/ReLU/Relu"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Output Tensor 0 to /encoders.0/basic_module/SingleConv2/conv/Conv + /encoders.0/basic_module/SingleConv2/ReLU/Relu",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.0/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "AverageCountExcludesPadding": 1,
+        "BlendFactor": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.0/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "CaskPooling",
+        "Metadata": "[ONNX Layer: /encoders.1/pooling/MaxPool]",
+        "Name": "/encoders.1/pooling/MaxPool",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.1/pooling/MaxPool_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Pooling",
+        "PoolingType": "MAX",
+        "PostPadding": [
+          0,
+          0,
+          0
+        ],
+        "PrePadding": [
+          0,
+          0,
+          0
+        ],
+        "StreamId": 0,
+        "Stride": [
+          2,
+          2,
+          2
+        ],
+        "TacticName": "sm50_xmma_pooling_nd_NCDHW_kMAX_kGENERIC_3D_POOLING_MODE_kHALF_0",
+        "TacticValue": "0x457fb0a334d63ae2",
+        "WindowSize": [
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.1/pooling/MaxPool_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Input Tensor 0 to /encoders.1/basic_module/SingleConv1/conv/Conv + /encoders.1/basic_module/SingleConv1/ReLU/Relu",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.1/basic_module/SingleConv1/conv/Conv + /encoders.1/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 8,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.1/basic_module/SingleConv1/conv/Conv + /encoders.1/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.1/basic_module/SingleConv1/conv/Conv]\u001e[ONNX Layer: /encoders.1/basic_module/SingleConv1/ReLU/Relu]",
+        "Name": "/encoders.1/basic_module/SingleConv1/conv/Conv + /encoders.1/basic_module/SingleConv1/ReLU/Relu",
+        "OutMaps": 8,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.1/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 1728,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 16,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.1/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.1/basic_module/SingleConv2/conv/Conv]\u001e[ONNX Layer: /encoders.1/basic_module/SingleConv2/ReLU/Relu]",
+        "Name": "/encoders.1/basic_module/SingleConv2/conv/Conv + /encoders.1/basic_module/SingleConv2/ReLU/Relu",
+        "OutMaps": 16,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /encoders.1/basic_module/SingleConv2/conv/Conv + /encoders.1/basic_module/SingleConv2/ReLU/Relu"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc8",
+        "TacticValue": "0x29d52f76d7883502",
+        "Weights": {
+          "Count": 3456,
+          "Type": "Half"
+        }
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /encoders.1/basic_module/SingleConv2/conv/Conv + /encoders.1/basic_module/SingleConv2/ReLU/Relu"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Output Tensor 0 to /encoders.1/basic_module/SingleConv2/conv/Conv + /encoders.1/basic_module/SingleConv2/ReLU/Relu",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/encoders.1/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "AverageCountExcludesPadding": 1,
+        "BlendFactor": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/encoders.1/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "CaskPooling",
+        "Metadata": "[ONNX Layer: /encoders.2/pooling/MaxPool]",
+        "Name": "/encoders.2/pooling/MaxPool",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/encoders.2/pooling/MaxPool_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Pooling",
+        "PoolingType": "MAX",
+        "PostPadding": [
+          0,
+          0,
+          0
+        ],
+        "PrePadding": [
+          0,
+          0,
+          0
+        ],
+        "StreamId": 0,
+        "Stride": [
+          2,
+          2,
+          2
+        ],
+        "TacticName": "sm50_xmma_pooling_nd_NCDHW_kMAX_kGENERIC_3D_POOLING_MODE_kFLOAT_0",
+        "TacticValue": "0x5faf4a0a8a5670ed",
+        "WindowSize": [
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/encoders.2/pooling/MaxPool_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Input Tensor 0 to /encoders.2/basic_module/SingleConv1/conv/Conv + /encoders.2/basic_module/SingleConv1/ReLU/Relu",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.2/basic_module/SingleConv1/conv/Conv + /encoders.2/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 16,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /encoders.2/basic_module/SingleConv1/conv/Conv + /encoders.2/basic_module/SingleConv1/ReLU/Relu"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.2/basic_module/SingleConv1/conv/Conv]\u001e[ONNX Layer: /encoders.2/basic_module/SingleConv1/ReLU/Relu]",
+        "Name": "/encoders.2/basic_module/SingleConv1/conv/Conv + /encoders.2/basic_module/SingleConv1/ReLU/Relu",
+        "OutMaps": 16,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.2/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 6912,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 32,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.2/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /encoders.2/basic_module/SingleConv2/conv/Conv]\u001e[ONNX Layer: /encoders.2/basic_module/SingleConv2/ReLU/Relu]",
+        "Name": "/encoders.2/basic_module/SingleConv2/conv/Conv + /encoders.2/basic_module/SingleConv2/ReLU/Relu",
+        "OutMaps": 32,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.2/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 13824,
+          "Type": "Half"
+        }
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.2/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Input Tensor 0 to /decoders.0/upsampling/Resize",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /decoders.0/upsampling/Resize"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "CoordTransform": "kASYMMETRIC",
+        "CubicCoeff": -0.75,
+        "ExcludeOutside": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              8,
+              8,
+              8
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /decoders.0/upsampling/Resize"
+          }
+        ],
+        "InterpolationMode": "NEAREST",
+        "LayerType": "Resize",
+        "Metadata": "[ONNX Layer: /decoders.0/upsampling/Resize]",
+        "NNRounding": "kFLOOR",
+        "Name": "/decoders.0/upsampling/Resize",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/decoders.0/upsampling/Resize_output_0"
+          }
+        ],
+        "ParameterType": "Resize",
+        "ResizeScales": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ResizeSelector": "kFORMULA",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/encoders.1/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "[ONNX Layer: /decoders.0/Concat]",
+        "Name": "/encoders.1/basic_module/SingleConv2/ReLU/Relu_output_0 copy",
+        "Origin": "CONCAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/Concat_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Float",
+            "Location": "Device",
+            "Name": "/decoders.0/upsampling/Resize_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "[ONNX Layer: /decoders.0/Concat]",
+        "Name": "/decoders.0/upsampling/Resize_output_0 copy",
+        "Origin": "CONCAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              32,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/Concat_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 16,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              48,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/Concat_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /decoders.0/basic_module/SingleConv1/conv/Conv]\u001e[ONNX Layer: /decoders.0/basic_module/SingleConv1/ReLU/Relu]",
+        "Name": "/decoders.0/basic_module/SingleConv1/conv/Conv + /decoders.0/basic_module/SingleConv1/ReLU/Relu",
+        "OutMaps": 16,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize64x32x64_stage5_warpsize2x2x1_g1_tensor16x8x16",
+        "TacticValue": "0x5820b3dda403c4d0",
+        "Weights": {
+          "Count": 20736,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 16,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /decoders.0/basic_module/SingleConv2/conv/Conv]\u001e[ONNX Layer: /decoders.0/basic_module/SingleConv2/ReLU/Relu]",
+        "Name": "/decoders.0/basic_module/SingleConv2/conv/Conv + /decoders.0/basic_module/SingleConv2/ReLU/Relu",
+        "OutMaps": 16,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 6912,
+          "Type": "Half"
+        }
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.0/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Input Tensor 0 to /decoders.1/upsampling/Resize",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /decoders.1/upsampling/Resize"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "CoordTransform": "kASYMMETRIC",
+        "CubicCoeff": -0.75,
+        "ExcludeOutside": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              16,
+              16,
+              16
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Input Tensor 0 to /decoders.1/upsampling/Resize"
+          }
+        ],
+        "InterpolationMode": "NEAREST",
+        "LayerType": "Resize",
+        "Metadata": "[ONNX Layer: /decoders.1/upsampling/Resize]",
+        "NNRounding": "kFLOOR",
+        "Name": "/decoders.1/upsampling/Resize",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/upsampling/Resize_output_0"
+          }
+        ],
+        "ParameterType": "Resize",
+        "ResizeScales": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ResizeSelector": "kFORMULA",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/encoders.0/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "[ONNX Layer: /decoders.1/Concat]",
+        "Name": "/encoders.0/basic_module/SingleConv2/ReLU/Relu_output_0 copy",
+        "Origin": "CONCAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/Concat_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/upsampling/Resize_output_0"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "[ONNX Layer: /decoders.1/Concat]",
+        "Name": "/decoders.1/upsampling/Resize_output_0 copy",
+        "Origin": "CONCAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              16,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/Concat_output_0"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 8,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              24,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/Concat_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /decoders.1/basic_module/SingleConv1/conv/Conv]\u001e[ONNX Layer: /decoders.1/basic_module/SingleConv1/ReLU/Relu]",
+        "Name": "/decoders.1/basic_module/SingleConv1/conv/Conv + /decoders.1/basic_module/SingleConv1/ReLU/Relu",
+        "OutMaps": 8,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 5184,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "RELU",
+        "Bias": {
+          "Count": 8,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 1,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/basic_module/SingleConv1/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          3,
+          3,
+          3
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /decoders.1/basic_module/SingleConv2/conv/Conv]\u001e[ONNX Layer: /decoders.1/basic_module/SingleConv2/ReLU/Relu]",
+        "Name": "/decoders.1/basic_module/SingleConv2/conv/Conv + /decoders.1/basic_module/SingleConv2/ReLU/Relu",
+        "OutMaps": 8,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          1,
+          1,
+          1
+        ],
+        "PrePadding": [
+          1,
+          1,
+          1
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x16_alignc4",
+        "TacticValue": "0xa5a46bfbd719d757",
+        "Weights": {
+          "Count": 1728,
+          "Type": "Half"
+        }
+      },
+      {
+        "Activation": "NONE",
+        "Bias": {
+          "Count": 7,
+          "Type": "Half"
+        },
+        "BiasAsActInputIdx": -1,
+        "ConvXAsActInputIdx": -1,
+        "Dilation": [
+          1,
+          1,
+          1
+        ],
+        "Groups": 1,
+        "HasBias": 1,
+        "HasDynamicBias": 0,
+        "HasDynamicFilter": 0,
+        "HasReLU": 0,
+        "HasResidual": 0,
+        "HasSparseWeights": 0,
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              8,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "/decoders.1/basic_module/SingleConv2/ReLU/Relu_output_0"
+          }
+        ],
+        "Kernel": [
+          1,
+          1,
+          1
+        ],
+        "LayerType": "CaskConvolution",
+        "Metadata": "[ONNX Layer: /final_conv/Conv]",
+        "Name": "/final_conv/Conv",
+        "OutMaps": 7,
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /final_conv/Conv"
+          }
+        ],
+        "PaddingMode": "kEXPLICIT_ROUND_DOWN",
+        "ParameterType": "Convolution",
+        "PostPadding": [
+          0,
+          0,
+          0
+        ],
+        "PrePadding": [
+          0,
+          0,
+          0
+        ],
+        "ResAsActInputIdx": -1,
+        "StreamId": 0,
+        "Stride": [
+          1,
+          1,
+          1
+        ],
+        "TacticName": "sm75_xmma_fprop_implicit_gemm_indexed_wo_smem_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x16x32_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4",
+        "TacticValue": "0x8dd277d8855e5faf",
+        "Weights": {
+          "Count": 56,
+          "Type": "Half"
+        }
+      },
+      {
+        "Inputs": [
+          {
+            "Dimensions": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "Reformatted Output Tensor 0 to /final_conv/Conv"
+          }
+        ],
+        "LayerType": "Reformat",
+        "Metadata": "",
+        "Name": "Reformatting CopyNode for Output Tensor 0 to /final_conv/Conv",
+        "Origin": "REFORMAT",
+        "Outputs": [
+          {
+            "Dimensions": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ],
+            "Format/Datatype": "Half",
+            "Location": "Device",
+            "Name": "scores"
+          }
+        ],
+        "ParameterType": "Reformat",
+        "StreamId": 0,
+        "TacticValue": "0x0000000000000000"
+      }
+    ]
+  },
+  "operation": "TensorRT_engine_build_and_initialization",
+  "precision_policy": "fp16",
+  "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+  "status": "PASS",
+  "target": {
+    "architecture": "x86_64",
+    "cuda_runtime": 13020,
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "sm": 89,
+    "tensorrt": "101601"
+  }
+}

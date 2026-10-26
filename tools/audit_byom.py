@@ -67,6 +67,7 @@ def audit(private_source=None):
                     "documentation",
                     "original_procedural_media",
                     "data_derived_media",
+                    "data_derived_metadata",
                 )
                 if s in scope
                 if name in scope[s]["files"]
@@ -88,6 +89,8 @@ def audit(private_source=None):
                 origin += "; modified for BYOM R0"
             if category == "data_derived_media":
                 origin = "Derived IGN FRACTAL visualization; original presentation Tuomas Pietilä"
+            if category == "data_derived_metadata":
+                origin = "IGN FRACTAL taxonomy facts and original model/projection metadata layout"
             if path.suffix in SOURCE_SUFFIXES:
                 assert "SPDX-License-Identifier: MIT" in path.read_text(), name
         elif name.startswith("LICENSES/"):

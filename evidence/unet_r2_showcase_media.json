@@ -1,0 +1,72 @@
+{
+  "selection": "Highest reference support for building, water, bridge and permanent structure; chosen for display after model freeze; all 256 test files scored",
+  "projection": "All original points increasing elevation; plan-view, no interpolation",
+  "files": [
+    {
+      "source": "TEST-0737_6255-006722653.laz",
+      "source_sha256": "a2aaef17ca03aa5c75bd618dcc91ce95e219739764922b6b9f4b0ab34d964dc4",
+      "output_sha256": "a431ed7c5573e1e4413c1eefd5c7f7cd5bf6af126aa5afcc238782ac8e80106f",
+      "semantic_sidecar_sha256": "0e937f27dc123b2ec5e354584942b2ea00c1f839c162b6826d12dc0c37eadcca",
+      "points": 72691,
+      "semantic_support": [
+        1458,
+        19162,
+        1008,
+        51063,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "source": "TEST-0737_6243-006721286.laz",
+      "source_sha256": "e8d85145cd93bc8f33f556c6652a8b843cc3e811a265ccf2bb1fc8f724e37d04",
+      "output_sha256": "b14a8a617cbb03f117e69849ebf28b1af65e95aa8bc6b3d13af3234e885838f9",
+      "semantic_sidecar_sha256": "bfb97e9af1ac82886e3575c984409e676ca95d80f522fe3126e0e212f4d9dadd",
+      "points": 42377,
+      "semantic_support": [
+        0,
+        6222,
+        0,
+        0,
+        36155,
+        0,
+        0
+      ]
+    },
+    {
+      "source": "TEST-0935_6372-000167946.laz",
+      "source_sha256": "6efe402170e3e743afeead1c4eeb150e4beb5182929b940f548908794dcd59b8",
+      "output_sha256": "4788311f5e19ba613a66087425625894870d060f7b261c9b0c0b90535bfed6d8",
+      "semantic_sidecar_sha256": "27b4fc449826d4c002b5e169d0c6d987208184ad864e3a8804fa152652cfb24b",
+      "points": 38087,
+      "semantic_support": [
+        409,
+        29714,
+        7,
+        0,
+        0,
+        7945,
+        0
+      ]
+    },
+    {
+      "source": "TEST-0437_6391-002624525.laz",
+      "source_sha256": "99d099721ed1d93a19f2f7350f050a953179954a85465ac96c1e13420d7421e8",
+      "output_sha256": "54cd8a88cbd18633db7e1e04fe493bc1a03cf31fb9a6a570ba1754cf9b69d5de",
+      "semantic_sidecar_sha256": "e74895da7d9f23db655f4babdcc63e32691166b3913c79555f1fdf506f87deb3",
+      "points": 151658,
+      "semantic_support": [
+        0,
+        50149,
+        98945,
+        0,
+        0,
+        0,
+        2564
+      ]
+    }
+  ],
+  "sha256": "df9364dc71b5be5b2ecc19865278d91830f3394732c831889da6cfc57fa6ced3",
+  "data_license": "Etalab-2.0 IGN FRACTAL; original presentation CC-BY-4.0 Tuomas Pietil\u00e4"
+}

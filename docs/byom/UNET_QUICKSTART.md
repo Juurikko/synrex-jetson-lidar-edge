@@ -120,3 +120,7 @@ Use committed, reviewed source and retain the resulting archive SHA256 and
 `publication_candidate.json`. The archive manifest separates real Etalab-2.0
 data, original MIT source/parameters and vendor plan terms. Source/compiled-model
 hash checks are mandatory; archive creation does not authorize publication.
+
+The expanded frozen seven-class campaign is recorded separately in
+[the R2 release qualification](UNET_R2_RELEASE.md) and
+[its reproducible quickstart](UNET_R2_QUICKSTART.md). The results above remain the historical R1 pilot.
