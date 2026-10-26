@@ -732,6 +732,12 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_r3_archive_preflight.json",
+    "sha256": "2b9f00be9656ded18b9e564fe9296497d9dac7d129ae05ecfb28211ca671dea9",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_r3_clean_reconstruction.json",
     "sha256": "fc5e9c30a18ad4a75c49071888be5fcbbeeefffa917d63a662481fba6fc0ef0d",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
@@ -1237,7 +1243,7 @@
   },
   {
     "file": "tools/prepare_unet_showcase.py",
-    "sha256": "aac9a59213ad277ee0547e34eb22025b07fadb2c9923e05596b0bed4fc291991",
+    "sha256": "7ace2502b9554f536e1cb162c2ff5a90c19f3e07e919efad7e8328dfbd71dc89",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

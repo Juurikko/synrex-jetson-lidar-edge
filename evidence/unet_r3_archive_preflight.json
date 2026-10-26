@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "dirty_source_assembly_rejected": true,
+  "failed_attempt_preserved": "showcase-r3.tar.gz",
+  "failed_attempt_sha256": "e1c8058c5e7adc7b0b3ea68d23a5cc9d59744a6c0b1437361e779181e4f1c45c",
+  "failed_attempt_not_release_candidate": true,
+  "reason": "New R3 style was untracked and absent from Git source export; committed and clean-worktree guard added before final assembly",
+  "diagnostic_sha256": "e5dd6978cd810827f61f8158fb56a724998fc4908fa776b43b1689166ba0f7ef"
+}

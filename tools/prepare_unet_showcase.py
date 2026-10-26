@@ -27,6 +27,8 @@ def main():
     parser.add_argument("--qgis-direct", type=Path)
     parser.add_argument("--qgis-copc", type=Path)
     args = parser.parse_args()
+    if subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip():
+        raise ValueError("showcase requires clean committed source, including all style files")
     qualification = json.loads((args.qualified / "qualification.json").read_text())
     if qualification["status"] != "PASS":
         raise ValueError("require successful genuine qualification before showcase preparation")
