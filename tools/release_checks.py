@@ -109,7 +109,9 @@ def check(history: bool, check_only: bool) -> dict:
         assert p.suffix.lower() not in FORBIDDEN, p.relative_to(ROOT)
         assert p.stat().st_size < 20 * 1024 * 1024, p.name
     source_files = [
-        p for p in selected if p.suffix in {".py", ".cpp"} or p.name == "CMakeLists.txt"
+        p
+        for p in selected
+        if p.suffix in {".py", ".cpp", ".cu", ".h", ".hpp"} or p.name == "CMakeLists.txt"
     ]
     for p in source_files:
         assert "SPDX-License-Identifier: MIT" in p.read_text(), p.name
@@ -144,7 +146,8 @@ def check(history: bool, check_only: bool) -> dict:
     for name, record in json.loads((ROOT / "evidence/media_manifest.json").read_text()).items():
         assert hashlib.sha256((ROOT / "media" / name).read_bytes()).hexdigest() == record["sha256"]
     dependency_licenses = {}
-    for line in (ROOT / "requirements-dev.lock").read_text().splitlines():
+    locks = [ROOT / "requirements-dev.lock", ROOT / "requirements-byom.lock"]
+    for line in [line for lock in locks for line in lock.read_text().splitlines()]:
         name, version = line.split("==")
         dist = metadata.distribution(name)
         assert dist.version == version

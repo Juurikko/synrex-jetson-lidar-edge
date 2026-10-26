@@ -21,6 +21,22 @@ int main(int argc, char **argv) {
         require(tensor[7] == 1 && std::abs(tensor[c.voxels + 7] - 0.5f) < 1e-6,
                 "voxel mean feature");
         require(tensor[8] == 0 && tensor[c.voxels + 8] == 0, "empty voxels are zero");
+        auto all_features = spec;
+        all_features["features"] =
+            Json::array({{{"kind", "occupancy"}, {"offset", 0.25}, {"scale", 2}},
+                         {{"kind", "count"}, {"offset", 1}, {"scale", 2}},
+                         {{"kind", "mean_intensity"}, {"offset", 0}, {"scale", 1.0 / 65535}},
+                         {{"kind", "local_x"}, {"offset", 1}, {"scale", 2}},
+                         {{"kind", "local_y"}, {"offset", 0}, {"scale", 1}},
+                         {{"kind", "local_z"}, {"offset", 0}, {"scale", 1}}});
+        all_features["input"]["shape"][1] = 6;
+        const Contract full(all_features);
+        const auto values = reference_tensor(points, plan.blocks[0], full);
+        require(values[7] == 1.5f && values[c.voxels + 7] == 2 &&
+                    std::abs(values[2 * c.voxels + 7] - 0.5f) < 1e-6 &&
+                    values[3 * c.voxels + 7] == 12.75f && values[4 * c.voxels + 7] == 0 &&
+                    values[5 * c.voxels + 7] == 0 && values[8] == 0,
+                "all feature reductions and normalization");
         auto bad = spec;
         bad["input"]["shape"][4] = 112;
         bool refused = false;

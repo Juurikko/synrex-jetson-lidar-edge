@@ -4,7 +4,9 @@
 
 **Developer/project lead:** Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)) · AI-assisted software engineering using OpenAI Codex.
 
-This guide explains **what the published code can do today**. It does not expose or reproduce the separately benchmarked private C++/CUDA/TensorRT classifier, and it does not provide pretrained weights, a trained inference runtime or a guaranteed throughput result.
+**Native BYOM R0:** [native build, packaging and classification quickstart](docs/byom/QUICKSTART.md), [adapter contract](docs/byom/ADAPTER.md) and [qualification status](docs/byom/QUALIFICATION.md) cover the newly implemented generic CUDA/TensorRT runtime on this local branch. Physical BYOM GPU qualification remains NOT_RUN. It does not expose the private reference implementation or restricted pretrained weights.
+
+The guide below retains the independently usable label-writer workflow. Its integration contract applies to `synrex-laz-labels`; the new `synrex-native` runtime performs geometry, inference, reconstruction and explicit class mapping itself within its declared dense-voxel adapter.
 
 ## The integration contract
 

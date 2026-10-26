@@ -1,0 +1,78 @@
+{
+  "schema": "synrex.byom.qualification.v1",
+  "utc": "2026-10-26T19:50:11.242123+00:00",
+  "host": {
+    "name": "i5radeon",
+    "architecture": "x86_64",
+    "kernel": "7.0.0-38-generic"
+  },
+  "gpu_backend_compiled": false,
+  "gpu_allocation_record": null,
+  "gpu_policy": "No remote AGX access or workload/stack changes by this runner",
+  "records": [
+    {
+      "check": "native_build",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": [
+        "cmake",
+        "--build",
+        "<workspace>/build-sanitize",
+        "-j",
+        "4"
+      ],
+      "log_sha256": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+      "output_tail": "[0/2] Re-checking globbed directories...\nninja: no work to do.\n"
+    },
+    {
+      "check": "ctest",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": [
+        "ctest",
+        "--test-dir",
+        "<workspace>/build-sanitize",
+        "--output-on-failure"
+      ],
+      "log_sha256": "b2811d0f87f3e8ad2b6a4a26d4607a646297b88f41de5b8ecb2da626ee16e651",
+      "output_tail": "Internal ctest changing into directory: <workspace>/build-sanitize\nTest project <workspace>/build-sanitize\n    Start 1: dense_voxel_contract\n1/1 Test #1: dense_voxel_contract .............   Passed    0.02 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.02 sec\n"
+    },
+    {
+      "check": "version",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": [
+        "<workspace>/build-sanitize/synrex-native",
+        "version"
+      ],
+      "log_sha256": "48eb4c69b55c01a6e29de40afa5be8e9c715548dce3b3e00f918eea6cbba7483",
+      "output_tail": "{\n  \"adapter\": \"DENSE_VOXEL_SEGMENTATION_V1\",\n  \"cuda_tensorrt\": false,\n  \"runtime\": \"synrex-native-r0\"\n}\n"
+    },
+    {
+      "check": "integration",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": [
+        "<workspace>/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--basetemp=<workspace>/build-sanitize/qualification-pytest",
+        "--junitxml=<workspace>/build-sanitize/qualification/pytest.xml"
+      ],
+      "log_sha256": "d2ed301150acf2bb9054ad3dd4c532ddc92e941f1b2d74bff0fa24ae26f0c2e0",
+      "output_tail": "..............................ssss....................                   [100%]\n=========================== short test summary info ============================\nSKIPPED [4] tests/test_byom.py:475: NOT_RUN: no verified GPU resource allocation\n50 passed, 4 skipped in 4.54s\n"
+    }
+  ],
+  "pytest": {
+    "passed": 50,
+    "skipped": 4,
+    "failed": 0
+  },
+  "NATIVE_BUILD_STATUS": "PASS",
+  "CPU_TEST_STATUS": "PASS",
+  "GPU_TEST_STATUS": "NOT_RUN",
+  "BYOM_E2E_STATUS": "NOT_RUN",
+  "PUBLIC_RELEASE_READINESS": "FAIL",
+  "scope": "Runtime qualification only; license/source assessment and owner publication approval are separate gates"
+}

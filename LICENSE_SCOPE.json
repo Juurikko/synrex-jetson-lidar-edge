@@ -33,6 +33,7 @@
       "tests/test_preservation.py",
       "tools/audit_byom.py",
       "tools/media_preview.py",
+      "tools/qualify_byom.py",
       "tools/release_checks.py",
       "tools/synthetic_demo.py"
     ],
@@ -61,7 +62,9 @@
       "VALIDATION.md",
       "docs/byom/ADAPTER.md",
       "docs/byom/PROVENANCE.md",
+      "docs/byom/QUALIFICATION.md",
       "docs/byom/QUICKSTART.md",
+      "docs/byom/RELEASE_CANDIDATE.md",
       "media/PERSONAL_CREDITS.md"
     ],
     "license": "CC-BY-4.0"

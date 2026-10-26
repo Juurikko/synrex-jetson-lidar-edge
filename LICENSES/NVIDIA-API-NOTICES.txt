@@ -1,0 +1,15 @@
+TensorRT public API headers (external compile-time dependency):
+Copyright (c) 1993-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+SPDX-License-Identifier: Apache-2.0
+
+ONNX-TensorRT parser public API header (external compile-time dependency):
+Copyright (c) 1993-2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+SPDX-License-Identifier: Apache-2.0
+
+See Apache-2.0.txt for the complete Apache license. These notices identify
+upstream headers used for compilation; NVIDIA source/SDK binaries are not
+vendored in this repository. The TensorRT binary libraries and CUDA toolkit
+remain separate vendor dependencies under their applicable NVIDIA agreements.
+Copies of the locally used distribution license texts are retained separately
+as NVIDIA-TensorRT-SLA.txt and NVIDIA-CUDA-License.txt. They do not grant rights
+in restricted model weights or relicense vendor products as MIT.

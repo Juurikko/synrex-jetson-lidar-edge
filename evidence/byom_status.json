@@ -1,0 +1,23 @@
+{
+  "schema": "synrex.byom.status.v1",
+  "MIT_LICENSING_STATUS": "PASS",
+  "NATIVE_BUILD_STATUS": "PASS",
+  "CPU_TEST_STATUS": "PASS",
+  "GPU_TEST_STATUS": "NOT_RUN",
+  "BYOM_E2E_STATUS": "NOT_RUN",
+  "PUBLIC_RELEASE_READINESS": "FAIL",
+  "reason": "No local NVIDIA device or operator-verified nonconflicting AGX allocation; physical TensorRT/CUDA/E2E qualification pending. Local candidate only.",
+  "branch": "codex/byom-native-mit-r0",
+  "local_implementation_checkpoint": "b018205d0dc59797b096ef34de6757dc762e5899",
+  "reference_onnx_sha256": "e9a55b97e1c38e9be057f7f23f395be00418c80d6e160736af53e7a64d43067c",
+  "reference_onnx_export": "PASS: deterministic original 1x1x1 Conv3D graph; no trained weights",
+  "reference_package_creation": "PASS: build/reference/reference-onnx.srxmodel",
+  "tensorRT_engine_initialization": "NOT_RUN",
+  "physical_gpu_execution": "NOT_RUN",
+  "jetson_aarch64_build": "NOT_RUN",
+  "writer_only_compatibility": "PASS: 19 original preservation tests",
+  "private_reference_pristine": true,
+  "agx_accessed": false,
+  "public_push_or_publication_performed": false,
+  "historical_benchmarks_reused_as_byom_evidence": false
+}

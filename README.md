@@ -6,7 +6,11 @@
 
 **Already-georeferenced LAZ → native C++ / CUDA / TensorRT → classified LAZ.**
 
-On a physical **NVIDIA Jetson AGX Orin 64GB**, the demonstrated pipeline processed **2,126,455 points in 10.110652 seconds: 210,318 points/s** on the largest tested file. Across four files, it processed **4,790,076 points in 30.272974 seconds: 158,229 points/s aggregate**. These are one-shot full product executions, including initialization and classified-file output.
+**Native BYOM MIT R0 — local release candidate:** this branch now includes a generic dense-voxel native runtime, CUDA feature preparation/reconstruction, TensorRT 10 execution, versioned model packages and an original synthetic Conv3D ONNX exporter. [Build and BYOM quickstart](docs/byom/QUICKSTART.md) · [adapter specification](docs/byom/ADAPTER.md) · [source/license assessment](docs/byom/PROVENANCE.md) · [current qualification](docs/byom/QUALIFICATION.md).
+
+CPU and CUDA/TensorRT native builds are executed locally on i5radeon. **New BYOM physical GPU inference and LAZ end-to-end qualification are NOT_RUN.** The AGX is left untouched without a verified nonconflicting allocation. This branch is not pushed or published. Original runtime source is MIT; dependencies and user models keep their own licenses. The existing MIT writer/verifier are retained, and uncertain private model-dependent source and restricted assets are excluded.
+
+**Historical private SegFormer measurements, not BYOM R0 results:** on a physical **NVIDIA Jetson AGX Orin 64GB**, that pipeline processed **2,126,455 points in 10.110652 seconds: 210,318 points/s** on the largest tested file. Across four files, it processed **4,790,076 points in 30.272974 seconds: 158,229 points/s aggregate**. These were one-shot full product executions, including initialization and classified-file output.
 
 [![Watch the accepted 30-second engineering showcase](media/preview.gif)](media/synrex-jetson-lidar-r1.mp4)
 
@@ -14,7 +18,7 @@ On a physical **NVIDIA Jetson AGX Orin 64GB**, the demonstrated pipeline process
 
 [Watch/download the 30-second MP4](media/synrex-jetson-lidar-r1.mp4). 1080 × 1350, 30 fps, silent. The survey geometry is original illustration, **not genuine model predictions**. Green sections describe verified engineering; amber drone sections are future concepts. Some GitHub views link rather than autoplay relative MP4 assets; the GIF supplies an embedded preview. It is a 9-second excerpt at 360px width/6 fps; the full accepted MP4 remains unchanged.
 
-## What has been demonstrated
+## Historical SegFormer demonstration
 
 The native product accepts a compressed, already-georeferenced point-cloud file, builds the model's geometric/voxel representation, performs GPU inference, scatters class IDs back to source points and writes a classified LAZ. It preserves source point order and all other point-record data within the qualified file contract. It does not perform sensor georeferencing.
 
@@ -31,15 +35,16 @@ The deployed product requires **no Python or PyTorch runtime**. It still depends
 
 ## What this repository contains
 
-This is an engineering writeup **with runnable model-free source**, not a complete downloadable classifier. It contains:
+The current local candidate contains:
 
+- Configurable `DENSE_VOXEL_SEGMENTATION_V1` native source, SHA256-verified model packages, CUDA kernels, TensorRT engine building/execution and an original deterministic Conv3D exporter. Classification requires a compatible NVIDIA target and a user-supplied or locally built engine.
 - A substantive C++ LAZ preservation utility that applies supplied uint8 labels while retaining the source header, non-LASzip metadata, padding, point order and all other record bytes.
-- An independent **laz-rs** verifier, deterministic synthetic data generator and 19 runnable tests, including negative integrity tests.
+- An independent **laz-rs** verifier, deterministic synthetic data generator, the original 19 preservation tests, CPU adapter/package integration tests and opt-in physical GPU integration tests.
 - Architecture, numerical-validation findings, qualified benchmark receipts and the accepted R1 media.
 
-The public-focused utility was written for this staging release after reviewing the preservation design. **It is not the frozen writer binary measured in the benchmark.** No neural classifier, CUDA kernels, model-dependent preprocessing implementation, weights, ONNX model, TensorRT engine or restricted dataset is included. Historical hardware throughput cannot be reproduced from this repository alone. [Release boundaries and code provenance](PUBLICATION_RIGHTS.md) explain why.
+The retained public-focused writer **is not the frozen writer binary measured in the historical benchmark**. No private model-specific implementation, restricted weights, frozen ONNX/engine or dataset is included. The original synthetic fixture can be exported from source. Historical throughput cannot be reproduced from this generic runtime and is not a claim for it. [BYOM provenance](docs/byom/PROVENANCE.md) explains the current boundary; [publication rights](PUBLICATION_RIGHTS.md) retains the earlier release assessment.
 
-**Publication status — 2026-10-26:** this repository is public at [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge). **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). This dated status supersedes earlier staging-only statements; historical audit reports and evidence are retained. Personal developer/project-lead attribution is Tuomas Pietilä. **MIT** applies to the confirmed personally controlled original source/tests; **CC BY 4.0** applies to the original documentation, diagrams and video. Copyright (c) 2026 Tuomas Pietilä applies only to protectable original expression within that scope; factual records and upstream material are excluded. [License scopes](LICENSE_SCOPE.json). See [personal attribution and licensing](PERSONAL_ATTRIBUTION_AND_LICENSING.md). Upstream dependencies retain their own licenses. See the [historical publication-gate report and superseding status](PUBLICATION_BLOCKERS.md).
+**Existing public baseline — 2026-10-26 (BYOM branch unpublished):** this repository is public at [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge). **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). This dated status supersedes earlier staging-only statements; historical audit reports and evidence are retained. Personal developer/project-lead attribution is Tuomas Pietilä. **MIT** applies to the confirmed personally controlled original source/tests; **CC BY 4.0** applies to the original documentation, diagrams and video. Copyright (c) 2026 Tuomas Pietilä applies only to protectable original expression within that scope; factual records and upstream material are excluded. [License scopes](LICENSE_SCOPE.json). See [personal attribution and licensing](PERSONAL_ATTRIBUTION_AND_LICENSING.md). Upstream dependencies retain their own licenses. See the [historical publication-gate report and superseding status](PUBLICATION_BLOCKERS.md).
 
 ## Bring your own model: write verified LAZ outputs
 
@@ -62,10 +67,10 @@ mkdir -p .deps
 git clone --branch 3.4.0 --depth 1 https://github.com/hobuinc/laz-perf.git .deps/laz-perf
 git -C .deps/laz-perf rev-parse HEAD
 # Expected: b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce
-cmake -S . -B build -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -DSYNREX_BUILD_BYOM=OFF -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target synrex-laz-labels -j 4
 .venv/bin/python tools/synthetic_demo.py --points 50013
-.venv/bin/python -m pytest -q --basetemp=build/pytest
+.venv/bin/python -m pytest -q tests/test_preservation.py --basetemp=build/pytest
 ```
 
 The demo creates invented records, assigns labels using a simple height rule, calls the native C++ writer, then independently decodes both files with laz-rs. **The height rule is a test fixture, not a segmentation model.** The demo refuses to overwrite its files: select a new `--out` directory for another run.

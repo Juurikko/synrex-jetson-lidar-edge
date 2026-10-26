@@ -1,0 +1,422 @@
+{
+  "schema": "synrex.byom.dependencies.v1",
+  "pins": {
+    "laz-perf": "b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce",
+    "nlohmann/json": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03",
+    "TensorRT_headers": "52399f555c2f80cb690a4a558b604e1a5f227e7c",
+    "ONNX_parser_header": "6bde6596eca84abf9afe9b4d21c18c32800fd3ad"
+  },
+  "compiler_only_gpu_target": "x86_64 host / SM87 device code and PTX; no physical GPU execution",
+  "wheel_artifacts": [
+    {
+      "file": "nvidia_cuda_cccl-13.2.75-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 3600170,
+      "sha256": "11a2b1948e8709805a0ccf04441baf5279a9219c13eb11dc13d57bb023151768",
+      "redistributed": false
+    },
+    {
+      "file": "nvidia_cuda_crt-13.2.86-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 133300,
+      "sha256": "e3ab08801bf9b1e6dc979275d25e816bb5000521b648e19c324d5eef0c79f1da",
+      "redistributed": false
+    },
+    {
+      "file": "nvidia_cuda_nvcc-13.2.86-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 44042846,
+      "sha256": "7d3f56c8d705bad35bbba69eb0470d90856fd5d4dc48c6a6173aaf1e9f887cf5",
+      "redistributed": false
+    },
+    {
+      "file": "nvidia_cuda_runtime-13.2.75-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "bytes": 2321965,
+      "sha256": "72bf454902da594e0b833cadeddc8b7100ce1c7cf7ed9023943931be1aa913b7",
+      "redistributed": false
+    },
+    {
+      "file": "nvidia_nvvm-13.2.78-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+      "bytes": 64279462,
+      "sha256": "f5aa433631109bbdec81802c5b5f319bf10bc891fe2f212e4e445845211d6f77",
+      "redistributed": false
+    },
+    {
+      "file": "tensorrt_cu13_libs-10.16.1.11-py3-none-manylinux_2_28_x86_64.whl",
+      "bytes": 3728705565,
+      "sha256": "91142c8ab3c58bed213cf1a563a6eb4e4f0ac529d05b5f909073acece0e3b712",
+      "redistributed": false
+    }
+  ],
+  "source_file_inventory": [
+    {
+      "component_file": "laz-perf/cpp/lazperf/charbuf.cpp",
+      "sha256": "686c96a56a2c371e13cd187ecb9d3a84ecf9e3f83b990354aea11095cbb4d7de",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_byte10.cpp",
+      "sha256": "91a72ed706e4cee46764e31c072071d2c47df83ad3facbbd714d43a17a01b9a5",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_byte14.cpp",
+      "sha256": "cabc9a9153f46dee825d603a7e46f135b7a577e359b71284a55854401d75976c",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_gpstime10.cpp",
+      "sha256": "08b95d95139e6619ef204705ed8110e0c9228d034e8c4fe0656201aa3b2deaac",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_nir14.cpp",
+      "sha256": "80d31c70246d40cd3acd1e1dbc1552be17c13a01042e09dcb60ad10b1a9d15d7",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_point10.cpp",
+      "sha256": "08fb6bf71706cefdb03cfa81efaa4aa85775158d672f4ef7dcecdb2cb27bae3a",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_point14.cpp",
+      "sha256": "4b29d91a86b9a2d0ae5929c8d560413dc0d3dd1e57d0af86be222ebd55d1df63",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_rgb10.cpp",
+      "sha256": "b33b6daabd0fda770fdae4d8fc056f67cb537fd1f6409a609d5a1750714f0dce",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_rgb14.cpp",
+      "sha256": "c761fc67db2e5df7d7f6d90fd4b85434a8b21ae7b0c86339d32b90cc0ae05bc4",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/filestream.cpp",
+      "sha256": "3e1902b6228628ee32fef6a7b6f20aaa766c18fd4e2741e89a49396991254219",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/header.cpp",
+      "sha256": "c2fc814bab974c93a552e7744f2206fc229a9956d319b18c76dd257c3b4c1f3c",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/lazperf.cpp",
+      "sha256": "068bef1f966c4ad1c63b384b6bde8088773498a495b556df31066b3e7301bfe6",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/readers.cpp",
+      "sha256": "a2683c6c39fef0460524ed6c66b9e443d48ec15e2b22fc43ad0c7d58dd190340",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/vlr.cpp",
+      "sha256": "e081a51e310cb8f6fe56ab28c010d9201bbef29475b740d07fac44215e3f0ac2",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/writers.cpp",
+      "sha256": "0081f4d7c7246237ee63d8b47875a86a1192986f64ba4e18fdc2bd93409806cd",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/Extractor.hpp",
+      "sha256": "f0405fe452c3439f3b83261dbf19c77791bb390f842c61444971153ad6e37bcc",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/Inserter.hpp",
+      "sha256": "998328dc87aae5f20958bfb9a9bb22e05a746c4589a31aee121ae85c9cdeb6ba",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/charbuf.hpp",
+      "sha256": "7e6d9f48ff06b0c2bcb25e269c5998bdc1b959561e2d1d519fc101499dcaf07d",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/coderbase.hpp",
+      "sha256": "9bedd5f961e1998002a6d2e27002e2de496dc803e1f380c3b1707c557ea95732",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/compressor.hpp",
+      "sha256": "ed493a5493075b4251f24cfa1e604a0f0c1c91b7fb31a2c690b4f984e6eb5b46",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/decoder.hpp",
+      "sha256": "532ccc488549feb408126c7e25278d0a3d4a7b551dc5ea6d05dcaa053977d2dd",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/decompressor.hpp",
+      "sha256": "b79f351fb89a034a51196b21e75866ee01284f5350653f308e970dd7f8b4ce3e",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_byte10.hpp",
+      "sha256": "8b969dcc319b5f5c47cc93d786c805127c0d19cc9f80ba1d7c3cf661cfd9ddd1",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_byte14.hpp",
+      "sha256": "938c8e0e7a165899dc9a7aac20c46da4b9ca046d9737f73b2938805faa62699a",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_gpstime.hpp",
+      "sha256": "ad52c413ae505fea9e477bb637b54c8fd79f5b8c54b0325ed372f525fc3bc6d3",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_gpstime10.hpp",
+      "sha256": "d48aa16d6e391567baf29d90d9531f1043bb95a08118f728e0ea27a6f0636d80",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_nir14.hpp",
+      "sha256": "befb020c0df18827b4f4a99f09c9e698ce63a1af0bcd5a70a13583d6ffc17ebe",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_point10.hpp",
+      "sha256": "e119ef4eee623f741875333c62ea973e7489281a3e3ac8b01367dd49461bb9d2",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_point14.hpp",
+      "sha256": "744b6f9b986e09bf2f4c92e294a896af331fda0b4d0dc26cbbbf9b2241614eef",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_rgb10.hpp",
+      "sha256": "c24163c37cfaed642e00915403ef1eedb024d7df400e0f23c134ee051a2d9568",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_rgb14.hpp",
+      "sha256": "34f70fe89e027b4fcce56afa89f1f091f8a192d44bb5a9df287a98b4e72d7db1",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/detail/field_xyz.hpp",
+      "sha256": "d516a6d75cdbc78f6487bc0d4d261a75dd1c67960b945c9298ddd2f08b1cc031",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/encoder.hpp",
+      "sha256": "404ffc61c384ffd487b7062217819d6871a973bed6d73a3c5ba1ff0ed7027a80",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/excepts.hpp",
+      "sha256": "5191eed2433d01fd73c53c0b06dd4b049d3825b01580354254f0337905662332",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/filestream.hpp",
+      "sha256": "cf6130dd218bd7b2d52f9fc92fd7a7dd2e27e76f42448dd7af1eb45c489e3068",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/header.hpp",
+      "sha256": "047254820a95e043196f0a7cdddfd9ab96e60d8a13e7b2ba7f462f9be8075b7c",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/las.hpp",
+      "sha256": "ddcde2bd39faa593c156c11e4b67b76b89c0b0896da3faaec693885e400ed9a2",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/lazperf.hpp",
+      "sha256": "bfd5d822febd5e00113d4f089926e72b1cce74e1899b2be4b5b983471e7dc689",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/lazperf_base.hpp",
+      "sha256": "d356f870b4b941fc663a114dfd48f8e178c5d4fe3b30fff22691961a4dfe3cf8",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/lazperf_user_base.hpp",
+      "sha256": "ac738f36d88cda140720041a8e2a1d2b59910368be56bf3008f3549eadc53fa0",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/model.hpp",
+      "sha256": "c8d029ab91c139f93b92dd068c72dad31135258dd7e05db5b44f1d36010ffb7e",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/portable_endian.hpp",
+      "sha256": "a4bab5a0fe2901274788f3c06d199f9f229ccad3c6bb977e870e2b6cda3baecd",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/readers.hpp",
+      "sha256": "f9533dc55616378476c6ede0b3c135996c654f255aec5dd25a6be0202eece92b",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/streams.hpp",
+      "sha256": "e29519b7b757debbfa84dc85fb1ebde6ffd046b58bff7b87a1a51915396fd24e",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/utils.hpp",
+      "sha256": "9fd2c55165b70285dbf3a50d3714669cc83a02f97424774b971894dcb198bb1f",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/vlr.hpp",
+      "sha256": "362c8eece33dffea598ae4bcc642eda8331b2dd82cff6b49518ffdf76bfceac1",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "laz-perf/cpp/lazperf/writers.hpp",
+      "sha256": "56dba580074a34bd4c7b1b09beac7b6684b7c0dfa7a5968500f6490528366572",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "json/single_include/nlohmann/json.hpp",
+      "sha256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6",
+      "license": "MIT",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInfer.h",
+      "sha256": "eb1403af5c331ed0df8da8efc1908d36e440479a41631dd89ca7de69ee5c70c0",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferImpl.h",
+      "sha256": "6990df744da602c1e2ed19e9015c6ce9fc85190eeaf67040a3e53ae3fdc743bd",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferLegacyDims.h",
+      "sha256": "3e10fe5b85545f2e956e6935271badf0b1c72553b698000a61d46d69c5d53030",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferPlugin.h",
+      "sha256": "b3290404a076f3492dc627ffdfc3b1fa803ea0eccc49f23986d645a2d23a63c7",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferPluginBase.h",
+      "sha256": "774e457b2e80f27502ea1aed8132949f6e0788251b5374948e1bfdc9de9fb0ee",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferPluginUtils.h",
+      "sha256": "c1aeed090422a0f214aa3dc334d3e435f3dd3a6cf14caece9fe9ef4daeeb50ec",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferRuntime.h",
+      "sha256": "fc21f284d8c7b6a092f221048483e9362375cda2a7f8e31577318290c1637f76",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferRuntimeBase.h",
+      "sha256": "0cfa22bcffd500e63effc1fe013307440b84694587916e9ea69cdbb13a8d1cd6",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferRuntimeCommon.h",
+      "sha256": "9461c9d07403c5dd1f8a6dea17fa5c3fe5cef7c4290c6768370a1d8139d4ac5d",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferRuntimePlugin.h",
+      "sha256": "cee843344163279c6abaa4c4cb83a518e6da5af7d4e2f571861e1a36c6899fba",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvInferVersion.h",
+      "sha256": "da560c83ecc443b6e195959c2048ce6ba26e85b0347f5f905a63608635f7314e",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvOnnxConfig.h",
+      "sha256": "c1476d809a528fc70213b77442e067ce89088d2a89b74cb07b1b72f1b3c8d5fa",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/include/NvOnnxParser.h",
+      "sha256": "bde5fea708354ad22dd14d722561d99132fa7016871366dd222275491d2c8bc4",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    },
+    {
+      "component_file": "TensorRT/parsers/onnx/NvOnnxParser.h",
+      "sha256": "18735e1b92addcf2a9fd1480721e41d4ba86b39c4e1bb05a3bdde2c8638f6d49",
+      "license": "Apache-2.0",
+      "treatment": "External dependency; original notices retained; not relicensed"
+    }
+  ]
+}

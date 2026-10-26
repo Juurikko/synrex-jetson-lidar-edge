@@ -4,7 +4,7 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-No upstream library source, binary, dataset, model or font file is vendored. The `LICENSES/` copies below preserve notices for the libraries used in the synthetic demo and fonts used in the already-rendered media. Dependency installation is a separate step and does not relicense upstream material.
+No upstream library source, binary, dataset, model or font file is vendored. The `LICENSES/` copies below preserve notices for the libraries used in the synthetic demo and fonts used in the already-rendered media. Dependency installation is a separate step and does not relicense upstream material. For BYOM compilation, separate [NVIDIA API notices](LICENSES/NVIDIA-API-NOTICES.txt), [CUDA distribution license](LICENSES/NVIDIA-CUDA-License.txt) and [TensorRT SLA](LICENSES/NVIDIA-TensorRT-SLA.txt) are retained alongside the Apache and MIT texts; vendor binaries are not shipped.
 
 | Material | Version/identity used | Upstream license / treatment |
 |---|---|---|
@@ -18,6 +18,12 @@ No upstream library source, binary, dataset, model or font file is vendored. The
 | DejaVu font designs | Unmodified system fonts used by accepted media | Bitstream Vera permission notice and public-domain DejaVu changes; [complete notice](LICENSES/DejaVu-font-notice.txt). Rendered media only; fonts not vendored. |
 | [NRCan TreeAIBox](https://github.com/NRCan/TreeAIBox/tree/5380ddec2799f55adb43b63407dd12ccf7abefae) | Frozen reference research commit | Inspected reference lineage identifies CC BY-NC 4.0. Code, weights, configuration, ONNX and TensorRT engine excluded; descriptive attribution only. |
 | NVIDIA Jetson / CUDA / TensorRT | Physical qualification platform | Vendor products/licenses remain separate; no vendor libraries, logos, engine plans or product imagery bundled. |
+| [nlohmann/json](https://github.com/nlohmann/json/tree/v3.11.3) | 3.11.3, `9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03` | MIT; [Niels Lohmann notice](LICENSES/nlohmann-json-MIT.txt). External headers compiled into native BYOM executables, source not vendored. |
+| [OpenSSL](https://www.openssl.org/) | System OpenSSL 3 | Apache-2.0; external EVP SHA256 library. Retain distribution notices when shipping it. |
+| [ONNX](https://github.com/onnx/onnx) | 1.17.0 development exporter | Apache-2.0; external Python package, absent from native classification. |
+| [ONNX Runtime](https://github.com/microsoft/onnxruntime) | 1.20.1 independent CPU oracle | MIT; external development dependency, absent from native classification. Distribution component notices remain applicable. |
+
+The BYOM R0 CUDA/TensorRT backend is original generic integration source under the scoped MIT grant. It calls vendor APIs and requires separately installed NVIDIA libraries. Local compiler/SDK wheels used for build validation stay in ignored dependency directories; no NVIDIA SDK source/binary is added to the release candidate. The original analytic Conv3D fixture has no third-party weights. Its generated model keeps explicit MIT metadata; user-supplied models retain their own terms. See [BYOM provenance](docs/byom/PROVENANCE.md).
 
 The model's configured metadata has seven classes and its network eight channels; no new architecture or model ownership is asserted. Commercial inference requires appropriately licensed or SynRex-trained weights. Existing research, compression algorithms and vendor technologies remain attributed to their authors.
 

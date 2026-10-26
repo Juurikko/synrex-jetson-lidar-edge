@@ -4,6 +4,8 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
+**Native BYOM R0 addition:** `native/` now implements a generic package-driven pipeline, linking the retained MIT writer. Read the [current adapter specification](docs/byom/ADAPTER.md), [build/usage guide](docs/byom/QUICKSTART.md) and [qualification](docs/byom/QUALIFICATION.md). Its regular 3D block geometry and NCZYX feature contract are distinct from the private SegFormer semantics described below. New GPU execution remains NOT_RUN; historical qualification does not transfer to this source.
+
 The verified product boundary begins with an **already-georeferenced compressed LAZ file** and ends with a classified LAZ plus product digests. Sensor acquisition, georeferencing and a live telemetry service are outside that measurement.
 
 ![Native pipeline, landscape](media/pipeline-landscape.png)

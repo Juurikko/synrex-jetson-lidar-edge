@@ -257,6 +257,39 @@ def test_reference_export_is_deterministic_nonconstant(tmp_path):
     assert set(labels) == {2, 5, 6}
 
 
+def test_overlap_policy_changes_context_dependent_oracle(tmp_path):
+    spec = copy.deepcopy(SPEC)
+    spec["features"][1] = {"kind": "local_x", "offset": 0, "scale": 0.125}
+    _, _, model = package(tmp_path, spec)
+    source = scene(tmp_path)
+    _, last = oracle(source, spec, model)
+    spec["geometry"]["overlap_policy"] = "first_wins"
+    _, first = oracle(source, spec, model)
+    assert (first != last).any(), "fixture must expose a wrong overlap policy"
+
+
+def test_signed_coordinates_fractional_grid_and_nonuniform_scale(tmp_path):
+    spec = copy.deepcopy(SPEC)
+    spec["geometry"]["voxel_size_xyz"] = [0.3, 0.4, 0.2]
+    spec["geometry"]["dimensions_xyz"] = [7, 5, 6]
+    spec["geometry"]["block_size_xyz"] = [2.1, 2.0, 1.2]
+    spec["geometry"]["overlap_xyz"] = [0.3, 0.4, 0.5]
+    spec["input"]["shape"] = [1, 2, 6, 5, 7]
+    spec["output"]["shape"] = [1, 3, 6, 5, 7]
+    pkg, _, _ = package(tmp_path, spec)
+    source, _ = create(tmp_path, 31)
+    data = laspy.read(source, laz_backend=laspy.LazBackend.Lazrs)
+    rng = np.random.default_rng(242)
+    for axis in ["X", "Y", "Z"]:
+        setattr(data, axis, rng.integers(-200, 201, len(data)))
+    altered = tmp_path / "signed.laz"
+    data.write(altered, laz_backend=laspy.LazBackend.Lazrs)
+    out = tmp_path / "signed-plan.json"
+    run("plan", "--model", pkg, "--input", altered, "--out", out)
+    expected, _ = oracle(altered, spec)
+    assert json.loads(out.read_text())["blocks"] == expected
+
+
 @pytest.mark.parametrize("policy", ["first_wins", "last_wins"])
 def test_geometry_matches_independent_brute_force_source_identity(tmp_path, policy):
     spec = copy.deepcopy(SPEC)
@@ -441,17 +474,29 @@ def test_relocated_installation_package_and_geometry(tmp_path):
 
 @GPU
 @pytest.mark.parametrize(
-    "policy,dtype", [("first_wins", "float32"), ("last_wins", "float32"), ("last_wins", "float16")]
+    "policy,dtype,feature,alternate_grid",
+    [
+        ("first_wins", "float32", "local_x", False),
+        ("last_wins", "float32", "local_x", False),
+        ("last_wins", "float32", "mean_intensity", False),
+        ("last_wins", "float16", "local_x", True),
+    ],
 )
-def test_real_cuda_tensorrt_to_classified_laz(tmp_path, policy, dtype):
+def test_real_cuda_tensorrt_to_classified_laz(tmp_path, policy, dtype, feature, alternate_grid):
     assert json.loads(run("version").stdout)["cuda_tensorrt"], (
         "GPU qualification requires GPU build"
     )
     spec = copy.deepcopy(SPEC)
     spec["geometry"]["overlap_policy"] = policy
     spec["input"]["dtype"] = spec["output"]["dtype"] = dtype
+    if alternate_grid:
+        spec["geometry"]["dimensions_xyz"] = [11, 3, 5]
+        spec["geometry"]["block_size_xyz"] = [11, 3, 5]
+        spec["input"]["shape"] = [1, 2, 5, 3, 11]
+        spec["output"]["shape"] = [1, 3, 5, 3, 11]
     # Local x makes predictions depend on overlap context, exposing wrong overlap policy.
-    spec["features"][1] = {"kind": "local_x", "offset": 0, "scale": 0.125}
+    scale = 1 / (65535 if feature == "mean_intensity" else spec["geometry"]["block_size_xyz"][0])
+    spec["features"][1] = {"kind": feature, "offset": 0, "scale": scale}
     pkg, spec_path, model = package(tmp_path, spec)
     source = scene(tmp_path)
     engine = tmp_path / "model.engine"
