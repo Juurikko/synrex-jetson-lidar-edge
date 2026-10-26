@@ -19,7 +19,7 @@ def sha(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("data", "trained", "qualified", "engine-package", "out"):
+    for name in ("data", "trained", "qualified", "engine-package", "synthetic", "out"):
         parser.add_argument("--" + name, type=Path, required=True)
     args = parser.parse_args()
     qualification = json.loads((args.qualified / "qualification.json").read_text())
@@ -30,6 +30,8 @@ def main():
     for artifact in manifest["artifacts"].values():
         assert sha(package / artifact["path"]) == artifact["sha256"]
     assert sha(package / "model.engine") == qualification["engine_sha256"]
+    assert sha(args.trained / "unet-fp16.onnx") == qualification["onnx_fp16_sha256"]
+    assert sha(args.trained / "unet-fp32.onnx") == qualification["onnx_fp32_sha256"]
     assert "2025-04-05" in (package / "MODEL_LICENSE.txt").read_text()
     args.out.mkdir(parents=True, exist_ok=False)
     shutil.copytree(package, args.out / "models/unet.srxmodel")
@@ -37,10 +39,22 @@ def main():
         shutil.copy2(args.trained / name, args.out / "models" / name)
     shutil.copy2(ROOT / "examples/unet/MODEL_NOTICE.txt", args.out / "models/MODEL_NOTICE.txt")
     shutil.copy2(ROOT / "examples/unet/dense_voxel.json", args.out / "models/dense_voxel.json")
+    shutil.copytree(args.synthetic / "engine.srxmodel", args.out / "models/synthetic.srxmodel")
+    shutil.copy2(args.synthetic / "reference.onnx", args.out / "models/synthetic.onnx")
+    synthetic_dir = args.out / "data/synthetic"
+    synthetic_dir.mkdir(parents=True)
+    for path in (
+        args.synthetic / "scene/dense-synthetic.laz",
+        args.synthetic / "expected.u8",
+        args.qualified / "synthetic-same-runtime.laz",
+    ):
+        shutil.copy2(path, synthetic_dir / path.name)
     display = json.loads((ROOT / "evidence/unet_showcase_media.json").read_text())
     for row in display["files"]:
         source = args.data / "test" / row["source"]
         stem = source.stem
+        assert sha(source) == row["source_sha256"]
+        assert sha(args.qualified / (stem + "-classified.laz")) == row["output_sha256"]
         for directory, path in [
             ("data/source", source),
             ("data/classified", args.qualified / (stem + "-classified.laz")),
@@ -94,7 +108,9 @@ def main():
         if path.is_file():
             name = path.relative_to(args.out).as_posix()
             license_id = (
-                "Etalab-2.0 IGN FRACTAL"
+                "MIT original synthetic fixture"
+                if name.startswith("data/synthetic/")
+                else "Etalab-2.0 IGN FRACTAL"
                 if name.startswith("data/")
                 else "MIT original parameters; NVIDIA plan terms; MODEL_NOTICE.txt"
                 if name.startswith("models/")

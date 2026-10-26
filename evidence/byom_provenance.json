@@ -301,7 +301,7 @@
   },
   {
     "file": "docs/byom/UNET_QUICKSTART.md",
-    "sha256": "504d5e7451b9282e77598440651f7e7af2835d43ba416614b2b1ae90034cb8d9",
+    "sha256": "197287ad9c161ad16ed7d018349f07dfff8e1d118e135ca8873bf4c15b7e09d4",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -793,7 +793,7 @@
   },
   {
     "file": "tools/prepare_unet_showcase.py",
-    "sha256": "4cca2bac3ddd8d6213c82cc6033f034bc2bf46a2f8b79572ce6f0e00892bb6c7",
+    "sha256": "9cd2682fbae8f9782643a8bb4169c772cdeabc75cb701ccb7286de7768b32496",
     "license": "MIT",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

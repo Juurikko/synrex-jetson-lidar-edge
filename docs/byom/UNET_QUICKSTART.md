@@ -103,3 +103,20 @@ plotting environment and run `tools/plot_unet_showcase.py --data build/unet/data
 This plots actual classified outputs; its source selection is disclosed.
 The checked-in figure is review material. Model, LAZ examples and release archives
 stay in ignored build directories pending explicit owner publication approval.
+
+To prepare the same local showcase layout after qualification, supply the exact
+qualified packages and synthetic runner directory. This copies both genuine
+models, the synthetic pair and two disclosed real-source/classified pairs,
+all notices, a complete source export and Git bundle. It performs no network write:
+
+```bash
+.venv/bin/python tools/prepare_unet_showcase.py \
+  --data build/unet/data --trained build/unet/trained \
+  --qualified build/unet/qualified --engine-package build/unet/qualified/unet.srxmodel \
+  --synthetic build-gpu/dense-50013 --out build/unet/showcase-rc1
+```
+
+Use committed, reviewed source and retain the resulting archive SHA256 and
+`publication_candidate.json`. The archive manifest separates real Etalab-2.0
+data, original MIT source/parameters and vendor plan terms. Source/compiled-model
+hash checks are mandatory; archive creation does not authorize publication.
