@@ -232,13 +232,15 @@ def main():
         "--model",
         args.synthetic / "engine.srxmodel",
         "--input",
-        args.synthetic / "synthetic.laz",
+        args.synthetic / "scene/dense-synthetic.laz",
         "--out",
         synthetic_output,
         environment=environment,
     )
     synthetic_verify = verify(
-        args.synthetic / "synthetic.laz", synthetic_output, args.synthetic / "expected.u8"
+        args.synthetic / "scene/dense-synthetic.laz",
+        synthetic_output,
+        args.synthetic / "expected.u8",
     )
     assert before == digest(native)
     numeric["rmse"] = float(np.sqrt(numeric.pop("squared_error") / numeric["values"]))
@@ -260,7 +262,10 @@ def main():
     elapsed = sum(t["end_to_end"] for t in times)
     receipt = {
         "status": "PASS" if quality_pass and numerical_pass else "FAIL",
-        "quality_gate": "common ground/vegetation/building mIoU >=0.50; accuracy > training-majority baseline +0.10",
+        "quality_gate": (
+            "common ground/vegetation/building mIoU >=0.50; "
+            "accuracy > training-majority baseline +0.10"
+        ),
         "quality_gate_pass": quality_pass,
         "numerical_gate_pass": numerical_pass,
         "native_sha256_before_and_after_model_switch": before,
@@ -276,7 +281,9 @@ def main():
         "test_points": points,
         "test_tiles": len(files),
         "class_mapping": LAS_CLASSES.tolist(),
-        "native_no_python": "PASS: PATH=/nonexistent, empty PYTHONPATH, loader inspected every test invocation",
+        "native_no_python": (
+            "PASS: PATH=/nonexistent, empty PYTHONPATH, loader inspected every test invocation"
+        ),
         "repeatability": {"status": "PASS", "native": repeat_receipt},
         "same_runtime_original_conv3d": {
             "native": synthetic_receipt,

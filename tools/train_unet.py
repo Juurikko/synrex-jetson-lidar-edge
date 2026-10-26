@@ -192,7 +192,9 @@ def main():
         "torch": torch.__version__,
         "gpu": torch.cuda.get_device_name(),
         "seed": args.seed,
-        "training_determinism": "seeded; deterministic algorithms warn_only; MaxPool3d CUDA backward may vary",
+        "training_determinism": (
+            "seeded; deterministic algorithms warn_only; MaxPool3d CUDA backward may vary"
+        ),
         "epochs": args.epochs,
         "selected_epoch": checkpoint["epoch"],
         "parameters": sum(p.numel() for p in net.parameters()),
