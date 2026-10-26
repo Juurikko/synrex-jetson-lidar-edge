@@ -88,6 +88,16 @@ before writing output. All other point bytes, source order, source public header
 VLRs, Extra Bytes descriptors and metadata padding are preserved under the public writer's
 narrow LAS contract. Compression VLR/chunk table bytes can change. Refer to the
 [existing architecture](../../ARCHITECTURE.md) and [verifier](../../src/verify_laz.py).
+Current runtime support is compressed LAS 1.4, point formats 6/7/8, with at least
+30/36/38 record bytes respectively; additional record bytes are retained. Standard
+375-byte public headers and nonempty clouds are required. Waveforms, EVLRs, COPC,
+legacy point formats and uncompressed LAS remain unsupported. The original public
+writer qualification was narrower; the U-Net milestone adds executed modern-format tests.
+
+`build-engine --precision fp16` enables TensorRT 10 mixed FP16 tactics with FP32
+fallback. This is a generic builder policy, not a model adapter. Tensor dtypes
+still come from the contract and ONNX. The build receipt contains detailed engine
+layer inspection so actual FP16 execution can be checked. TensorRT 11 is unsupported.
 
 ## Resource and execution bounds
 

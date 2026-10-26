@@ -31,6 +31,9 @@ Transfer a Git bundle of the qualified descendant of `eaf3ce2` through the appro
 channel, verify the bundle SHA256 and Git revision, and check out that exact revision in a
 new directory. Include pinned laz-perf/json sources and notices. Verify the worktree is clean.
 Never transfer private reference source, pretrained weights, datasets or the RTX4090 engine.
+For the separate trained U-Net qualification below, transfer only the original
+new pilot ONNX/weights and bounded Etalab-2.0 test examples with their notices;
+the exclusion above applies to restricted or unreviewed external assets.
 
 Use existing native aarch64 CUDA/TensorRT 10.x development installations and OpenSSL 3 headers.
 An x86_64 binary or SDK wheel from the RTX4090 workspace is not an AGX installation artifact.
@@ -94,3 +97,20 @@ Save sanitized receipts, source/dependency hashes, independent verification and 
 FAIL or NOT_RUN gates. Preserve the allocation record privately. Finish within the allocation;
 leave the autopilot, software stack and pre-existing files intact. Only after these checks can
 physical AGX qualification be marked PASS. Publication remains a separate owner-approved action.
+
+## Second-model extension after RTX4090 U-Net qualification
+
+Use the qualified 62,103-parameter U-Net ONNX and exact source/data hashes from
+[the U-Net report](UNET_QUALIFICATION.md). Build a new SM87-compatible TensorRT
+FP16 engine locally; the RTX4090 plan is incompatible. Revalidate actual FP16
+layers, logits/point-label agreement and all seven explicit mappings. Use the
+same installed binary for original Conv3D and U-Net, recording its unchanged hash.
+Verify genuine real PDRF8/38-byte held-out LAZ with laz-rs, including metadata,
+every unrelated byte, source order and repeated labels. Re-run all modern-format
+and negative tests plus relocated inference.
+
+Record target-specific latency, throughput, sampled memory, thermal context and
+FP16 numerical drift. The small desktop pilot does not establish AGX performance
+or reliable bridge/water accuracy. Reuse immutable trained artifacts for cross-target
+comparison; training on the AGX is unnecessary. Allocation is still a prerequisite,
+and AGX execution remains NOT_RUN until this entire extension actually executes.
