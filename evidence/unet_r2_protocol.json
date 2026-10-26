@@ -1,0 +1,24 @@
+{
+  "schema": "synrex.unet.r2.protocol.v1",
+  "training_source_commit": "d7c8514",
+  "model": "MIT pinned UNet3D [8,16,32], 62103 parameters; same dense adapter",
+  "data_selection": "1000 train and 256 val original sorted source tiles, official split archive00; no original files transformed",
+  "selection_metric": "validation macro-F1 across all seven semantic channels",
+  "training_budget": "40 epochs, batch8, AdamW .003 cosine .0001; half uniform + half class-presence patch sampling, inverse-sqrt class weighted occupied voxel CE",
+  "inference_features": "occupancy,count/16,local_z/32,mean_intensity/65535; no reference labels, RGB, NIR or label-derived height",
+  "past_test_use": "R1 32 test00 tiles already scored after R1 model freeze; retained as consumed regression, not fresh evidence",
+  "fresh_test_reservation": "After expanded model freeze ONLY: 256 evenly spaced sorted members of official test01 archive; no access before freeze",
+  "fresh_quality_gates": {
+    "all_seven_test_coverage": "Each class requires positive test support; absence is NOT_RUN for full-seven coverage",
+    "point_mean_iou_all_seven_min": 0.4,
+    "point_macro_f1_advantage_over_best_baseline_min": 0.1,
+    "per_supported_class_iou_min": 0.05,
+    "numerical": "FP32 ONNX max_abs <.001, FP16 RMSE<.03, point-label agreement>=.995; report actual failures"
+  },
+  "baselines": [
+    "training majority class",
+    "fixed geometry-only: local 5m XY minimum terrain, 25m minimum filter; ground H<=.5m, building H>2m and 2m cell Z std<.5m, vegetation otherwise; no label fitting"
+  ],
+  "test_not_accessed": true,
+  "inventory_sha256": "9454655a95bd7c8a71cd0668d00abce23a37666d51933acb3d3fa6b137eab493"
+}

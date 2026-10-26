@@ -598,3 +598,112 @@ def test_las_bad_coordinate_scale_is_rejected(tmp_path):
     output = tmp_path / "bad.json"
     run("plan", "--model", pkg, "--input", source, "--out", output, ok=False)
     assert not output.exists()
+
+
+@GPU
+def test_semantic_sidecar_retains_channels_with_collapsed_las_map_and_warm_context(tmp_path):
+    spec = copy.deepcopy(SPEC)
+    spec["las_classes"] = [1, 1, 1]
+    pkg, spec_path, onnx = package(tmp_path, spec, "collapsed")
+    source = scene(tmp_path)
+    # Reference channel IDs are independent of the deliberately collapsed LAS map.
+    raw_spec = copy.deepcopy(spec)
+    raw_spec["las_classes"] = [0, 1, 2]
+    _, raw_ids = oracle(source, raw_spec, onnx)
+    assert len(set(raw_ids)) == 3
+    engine = tmp_path / "collapsed.engine"
+    run("build-engine", "--model", pkg, "--out", engine)
+    engine_pkg = tmp_path / "engine.srxmodel"
+    run(
+        "pack",
+        "--spec",
+        spec_path,
+        "--engine",
+        engine,
+        "--license",
+        ROOT / "LICENSES/MIT.txt",
+        "--out",
+        engine_pkg,
+    )
+    output, sidecar = tmp_path / "out.laz", tmp_path / "semantics.json"
+    result = json.loads(
+        run(
+            "classify",
+            "--model",
+            engine_pkg,
+            "--input",
+            source,
+            "--out",
+            output,
+            "--semantics",
+            sidecar,
+        ).stdout
+    )
+    semantics = json.loads(sidecar.read_text())
+    assert semantics["schema"] == "synrex.point_semantics.v1"
+    assert semantics["point_count"] == len(raw_ids)
+    assert semantics["semantic_ids"] == raw_ids.tolist()
+    assert (
+        semantics["source_sha256"] == __import__("hashlib").sha256(source.read_bytes()).hexdigest()
+    )
+    assert result["gpu_memory_bytes"]["tracked_peak_requested_cuda_bytes"] > 0
+    labels = tmp_path / "ones.u8"
+    labels.write_bytes(bytes([1]) * len(raw_ids))
+    verify(source, output, labels)
+    benchmark = tmp_path / "warm.json"
+    warm = json.loads(
+        run(
+            "benchmark",
+            "--model",
+            engine_pkg,
+            "--input",
+            source,
+            "--out",
+            benchmark,
+            "--warmup",
+            1,
+            "--iterations",
+            3,
+        ).stdout
+    )
+    assert warm["warmup"] == 1 and warm["iterations"] == 3
+    assert len(warm["cycles"]) == 4
+    assert sum(c["warmup"] for c in warm["cycles"]) == 1
+    assert all(
+        c["point_coverage"] == len(raw_ids) and c["tensorrt_seconds"] > 0 for c in warm["cycles"]
+    )
+    assert (
+        warm["source_order_labels_sha256"]
+        == __import__("hashlib").sha256(labels.read_bytes()).hexdigest()
+    )
+    # Failure cannot replace a sidecar or publish a new LAZ.
+    bad_output = tmp_path / "bad.laz"
+    run(
+        "classify",
+        "--model",
+        engine_pkg,
+        "--input",
+        source,
+        "--out",
+        bad_output,
+        "--semantics",
+        sidecar,
+        ok=False,
+    )
+    assert not bad_output.exists()
+    invalid = tmp_path / "invalid-warm.json"
+    run(
+        "benchmark",
+        "--model",
+        engine_pkg,
+        "--input",
+        source,
+        "--out",
+        invalid,
+        "--warmup",
+        1,
+        "--iterations",
+        101,
+        ok=False,
+    )
+    assert not invalid.exists()

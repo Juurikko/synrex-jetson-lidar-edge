@@ -66,6 +66,9 @@ int main(int argc, char **argv) {
         if (command == "version" && argc == 2) {
             std::cout << Json{{"runtime", "synrex-native-r0"},
                               {"adapter", "DENSE_VOXEL_SEGMENTATION_V1"},
+                              {"extensions",
+                               {"synrex.point_semantics.v1", "synrex.dense_tensor_trace.v1",
+                                "persistent_benchmark.v1"}},
                               {"cuda_tensorrt", gpu_enabled()}}
                              .dump(2)
                       << '\n';
@@ -101,7 +104,8 @@ int main(int argc, char **argv) {
         require(args.size() == expected ||
                     (command == "build-engine" && args.size() == expected + 1 &&
                      args.count("--precision")) ||
-                    (command == "classify" && args.size() == 4 && args.count("--semantics")) ||
+                    (command == "classify" &&
+                     args.size() == 3 + args.count("--semantics") + args.count("--trace")) ||
                     (command == "benchmark" && args.size() == 5 && args.count("--warmup") &&
                      args.count("--iterations")),
                 "unexpected CLI options");
@@ -142,6 +146,8 @@ int main(int argc, char **argv) {
         }
         InferenceMetrics metrics;
         InferenceOptions options;
+        if (args.count("--trace"))
+            options.tensor_trace = get("--trace");
         if (command == "benchmark") {
             const auto warmup = Json::parse(get("--warmup")),
                        count = Json::parse(get("--iterations"));

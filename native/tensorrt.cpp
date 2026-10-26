@@ -248,6 +248,14 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     const bool input_half = c.input_dtype == "float16", output_half = c.output_dtype == "float16";
     const auto input_bytes = c.voxels * c.features.size() * (input_half ? 2 : 4);
     const auto output_bytes = c.voxels * c.las_classes.size() * (output_half ? 2 : 4);
+    Json trace_blocks = Json::array();
+    if (!options.tensor_trace.empty()) {
+        require(options.iterations == 1 && options.warmup == 0,
+                "tensor tracing requires a single inference cycle");
+        require((input_bytes + output_bytes) * plan.blocks.size() <= 256ULL * 1024 * 1024,
+                "tensor trace exceeds 256 MiB invocation budget");
+        require(fs::create_directory(options.tensor_trace), "tensor trace directory must be new");
+    }
     std::vector<GpuPoint> gpu_points;
     gpu_points.reserve(points.size());
     for (const auto &p : points)
@@ -344,6 +352,25 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
             prepared_seconds += prepared_end.seconds_since(prepared_start);
             inference_seconds += inference_end.seconds_since(prepared_end);
             post_seconds += postprocess_end.seconds_since(inference_end);
+            if (!options.tensor_trace.empty()) {
+                const auto stem = std::to_string(trace_blocks.size());
+                Json block{{"origin", b.origin},
+                           {"input", stem + ".input.bin"},
+                           {"logits", stem + ".logits.bin"}};
+                for (const auto &entry :
+                     std::vector<std::pair<std::string, std::pair<void *, std::size_t>>>{
+                         {"input", {input.data(), input_bytes}},
+                         {"logits", {output.data(), output_bytes}}}) {
+                    std::string bytes(entry.second.second, '\0');
+                    cuda_check(cudaMemcpy(bytes.data(), entry.second.first, bytes.size(),
+                                          cudaMemcpyDeviceToHost));
+                    const auto path =
+                        options.tensor_trace / block.at(entry.first).get<std::string>();
+                    write_new(path, bytes);
+                    block[entry.first + "_sha256"] = sha256(path);
+                }
+                trace_blocks.push_back(block);
+            }
         }
         cuda_check(
             cudaMemcpy(result.data(), labels.data(), result.size() * 4, cudaMemcpyDeviceToHost));
@@ -390,6 +417,17 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         }
     }
     measured.tracked_peak_requested_cuda_bytes = allocations.peak();
+    if (!options.tensor_trace.empty()) {
+        write_new(options.tensor_trace / "manifest.json",
+                  Json{{"schema", "synrex.dense_tensor_trace.v1"},
+                       {"tensor_contract", c.spec},
+                       {"byte_order", "little-endian"},
+                       {"blocks", trace_blocks},
+                       {"scope", "Actual CUDA-prepared inputs and TensorRT device logits; "
+                                 "diagnostic I/O included in classify total"}}
+                          .dump(2) +
+                      "\n");
+    }
     if (metrics)
         *metrics = measured;
     return mapped;

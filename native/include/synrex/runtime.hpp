@@ -79,6 +79,7 @@ struct InferenceMetrics {
 };
 struct InferenceOptions {
     unsigned warmup{}, iterations{1};
+    fs::path tensor_trace;
 };
 std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point> &points,
                                 const Plan &plan, InferenceMetrics *metrics = nullptr,
