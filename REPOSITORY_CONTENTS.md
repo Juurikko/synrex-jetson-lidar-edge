@@ -18,13 +18,13 @@ The candidate public tree contains technical documentation, original accepted me
 | `THIRD_PARTY_NOTICES.md` | Dependency/reference notices and public upstream links. No private source URLs. |
 | `PUBLIC_RELEASE_AUDIT.md` | Quality-gate review and local/public release boundary. |
 | `REPRODUCIBILITY_REPORT.md` | Executed builds/tests, commands, dependencies and limitations. |
-| `PUBLICATION_BLOCKERS.md` | Resolved original-material license scope, restricted-reference reporting review and later publication authorization gates. |
+| `PUBLICATION_BLOCKERS.md` | Historical staging gates with a dated superseding public-release status; original restrictions retained. |
 | `FINAL_REPORT.md` | Local staging outcome, no-publish/no-target-modification status and scope limits. |
 | `REPOSITORY_CONTENTS.md` | This file-level navigation/provenance map. |
 | `LICENSE` | Active MIT / CC BY 4.0 grants limited to owner-confirmed original expression; upstream licenses unchanged. |
 | `PERSONAL_ATTRIBUTION_AND_LICENSING.md` | Personal attribution, verified Git identity, active owner-confirmed licensing scope, media inspection and remaining ownership questions. |
 | `AUTHORS.md` | Tuomas Pietilä as developer/project lead, AI assistance and upstream credits. |
-| `ABOUT.md` | Personally attributed About/short presentation copy for later authorized publication. |
+| `ABOUT.md` | Personally attributed About/short presentation copy for the public repository. |
 | `CITATION.cff` | Personal citation credit to Tuomas Pietilä, distinct from upstream research/model authorship. |
 | `LICENSE_SCOPE.json` | File-level planned MIT source and CC BY 4.0 documentation/media scope with confirmation state. |
 | `evidence/license_activation.json` | Owner confirmation, active scopes, exclusions and preservation checks; no private source or credentials. |

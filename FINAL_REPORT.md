@@ -4,6 +4,8 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
+> **Superseding publication status — 2026-10-26:** [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge) is published and its public visibility is verified. **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). The original staging report below is retained as history; its statements about no creation/push, no remote, pending publication or `NOT_RUN` describe that earlier stage and are superseded for this repository's release. Licensing, personal/upstream attribution, noncommercial-reference restrictions and the limited model-free release scope remain unchanged. Evidence files and manifests retain their initial-commit contents.
+
 **SYNREX_PUBLIC_SHOWCASE_R0=PASS** for the requested local preparation and review scope.
 
 A new isolated Git repository named `synrex-jetson-lidar-edge` has been prepared with the accepted R1 media, accessible technical README, complete architecture/benchmark/validation writeups, future-UAV experiment plan, contribution/AI-assistance account, rights audit and a runnable model-free C++ LAZ preservation component with independent laz-rs verification.

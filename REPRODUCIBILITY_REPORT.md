@@ -4,6 +4,10 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
+> **Superseding publication status — 2026-10-26:** [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge) is published and its public visibility is verified. **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). The original staging report below is retained as history; its statements about no creation/push, no remote, pending publication or `NOT_RUN` describe that earlier stage and are superseded for this repository's release. Licensing, personal/upstream attribution, noncommercial-reference restrictions and the limited model-free release scope remain unchanged. Evidence files and manifests retain their initial-commit contents.
+
+> **Post-publication check scope:** `tools/release_checks.py --check-only` still checks documentation links, license inventory, benchmark arithmetic, media hashes and scoped hygiene. Its unchanged `--history` option enforces the historical single-commit/no-remote staging state and is not a post-publication history check. Verify the original commit as an unchanged ancestor, documentation-only descendants and normal remote readback separately. The provenance manifest records the initial public commit, rather than hashes of later documentation revisions.
+
 ## Executed local checks
 
 The runnable public-focused preservation utility was built on a Linux x86-64 CPU using GCC 13.3.0, CMake 3.28.3 and Python 3.12. No Jetson, GPU workload, pretrained model, ECLAIR file or paid service was used. The historical hardware benchmark was not rerun.

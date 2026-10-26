@@ -4,7 +4,7 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-Suggested GitHub About description, for a later authorized publication:
+Suggested GitHub About description for the [public repository](https://github.com/Juurikko/synrex-jetson-lidar-edge):
 
 > Native Jetson LiDAR engineering by Tuomas Pietilä: LAZ integrity tools, independent validation and measured file-to-file classification. AI-assisted with OpenAI Codex.
 
