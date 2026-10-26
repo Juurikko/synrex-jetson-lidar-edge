@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "qgis_version": "3.44.14-Solothurn",
+  "application": "Actual QGIS desktop executable, isolated profile, --code",
+  "files": [
+    {
+      "source": "TEST-0737_6243-006721286.laz",
+      "points": 42377,
+      "qgis_provider": "copc",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "2": 19616,
+        "9": 22760,
+        "1": 1
+      },
+      "screenshot": "TEST-0737_6243-006721286-qgis.png",
+      "screenshot_sha256": "c4794e7d787df2d63d6f492b7388589b67174d0b5a12f94cc5d7ccec34dc719d",
+      "output_sha256": "10c0efc6b673dd1cceda3d7fb05314fdba25a68f6567fc803d850c3c79c4e44d"
+    },
+    {
+      "source": "TEST-0737_6255-006722653.laz",
+      "points": 72691,
+      "qgis_provider": "copc",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "6": 26979,
+        "2": 41488,
+        "1": 4201,
+        "200": 23
+      },
+      "screenshot": "TEST-0737_6255-006722653-qgis.png",
+      "screenshot_sha256": "617fb5c33774acb48f0901776138c3edee4a56db6126b2d303c0c4798bf88956",
+      "output_sha256": "3f076ee189dc393e51d858584354c83b9814ecddece3ca53c3648b5145fd3f92"
+    },
+    {
+      "source": "TEST-0741_6244-006630086.laz",
+      "points": 85222,
+      "qgis_provider": "copc",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "1": 9419,
+        "6": 26031,
+        "201": 1776,
+        "2": 46915,
+        "200": 779,
+        "9": 90,
+        "17": 212
+      },
+      "screenshot": "TEST-0741_6244-006630086-qgis.png",
+      "screenshot_sha256": "d1cdc6a23f26a9be82c7c837aee08a72e02fcb43845fd94d7a1e695d1655b1c4",
+      "output_sha256": "b102962449d0f3ef15bf24c95dd640500a57cd73ba0f032ae1b9ab3f8d841b4b"
+    }
+  ],
+  "all_seven_categories_seen": true,
+  "copc_source_indices_and_semantics_verified": true,
+  "exact_qgis_provider_histograms": true,
+  "project_reopen": "PASS",
+  "crs_reprojection": "PASS",
+  "project_crs": "EPSG:2154",
+  "project_sha256": "228317294a71e3b0edb0a4f585ea1328537fc0e142a123010acc4785b164cff9",
+  "immutable_inputs_unchanged": true,
+  "selection": "Three original48-byte direct-QGIS rejection cases; separate COPC views with exact original point index/semantic IDs; no native output changed",
+  "harness_sha256": "0d943746fbe2d8f4f1c480a774056293f701338f9e056a5a1a2b724d8f900397",
+  "application_process_exit_code": 0
+}

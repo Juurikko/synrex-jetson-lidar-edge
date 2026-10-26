@@ -1,0 +1,22 @@
+{
+  "status": "NOT_RUN",
+  "reason": "Active Spatial Edge Lab autopilot owns both supervisor and GPU locks; no nonconflicting allocation",
+  "observed_unit": "synrex-spatial-autopilot-r0.service",
+  "unit_state": "active",
+  "main_pid": 1249253,
+  "supervisor_lock_owner_pid": 1249253,
+  "gpu_lock_owner_pid": 1249253,
+  "active_task": "point-lio:validate-benchmark",
+  "heartbeat_alive": true,
+  "storage": {
+    "root_available_gib_approx": 8.2,
+    "nvme_available_gib_approx": 87,
+    "hard_root_reserve_gib": 5,
+    "hard_nvme_reserve_gib": 50,
+    "existing_programme_budget_bytes": 48426688512
+  },
+  "actions": "Read-only state/process/lock/storage/development-header inspection only; no GPU context, native build, transfer, reserve allocation, process/service/power/stack changes",
+  "physical_inference": "NOT_RUN",
+  "target_engine_build": "NOT_RUN",
+  "observed_utc": "2026-10-26"
+}

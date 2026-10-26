@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "qgis_version": "3.44.14-Solothurn",
+  "application": "Actual QGIS desktop executable, isolated profile, --code",
+  "files": [
+    {
+      "source": "TEST-0438_6393-002595911.laz",
+      "points": 83641,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": true,
+      "qgis_classification_histogram": {
+        "201": 527,
+        "6": 40130,
+        "1": 9975,
+        "200": 2815,
+        "2": 30179,
+        "17": 15
+      },
+      "screenshot": "TEST-0438_6393-002595911-qgis.png",
+      "screenshot_sha256": "88023f85e1999a459abf56ee6dcccd708f94dbd35c5e70b6281ff1976a805f2f",
+      "output_sha256": "1986a89888a72cecceb50bc9fef855b44f1f2fa76081f00cda54cdeef9092288"
+    },
+    {
+      "source": "TEST-0445_6387-003080157.laz",
+      "points": 49256,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": true,
+      "qgis_classification_histogram": {
+        "2": 18176,
+        "9": 1190,
+        "1": 1191,
+        "200": 19457,
+        "17": 8481,
+        "6": 668,
+        "201": 93
+      },
+      "screenshot": "TEST-0445_6387-003080157-qgis.png",
+      "screenshot_sha256": "12ae49e41d95b4577d1835d536d0934da24cb0d9ffed96428be0be8c9c6fc48e",
+      "output_sha256": "f564a568231413f5a179eceeeb20eee2450b2968ccab56d450a812f79f5b3d79"
+    },
+    {
+      "source": "TEST-0921_6373-000625023.laz",
+      "points": 71744,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "9": 17404,
+        "2": 52610,
+        "200": 1484,
+        "1": 246
+      },
+      "screenshot": "TEST-0921_6373-000625023-qgis.png",
+      "screenshot_sha256": "f85279ff4f9e7514d63f87a7d18ad0d3e16bfaa6851caa32adf7bf8891420072",
+      "output_sha256": "1a8b58d5d6be4b546e55bbda45e6bc69bcbbefa486da4a583939020cf256d2a6"
+    },
+    {
+      "source": "TEST-0933_6370-000554696.laz",
+      "points": 103592,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "2": 55426,
+        "1": 44720,
+        "200": 2168,
+        "6": 1278
+      },
+      "screenshot": "TEST-0933_6370-000554696-qgis.png",
+      "screenshot_sha256": "18c3e7d0358c0c1a7607fc94cd79893e151fa5a69a2916ba21a035e21a881996",
+      "output_sha256": "393c4b35adb00034bb5f0a3c62fb2263b79f3ef355e804f468dd1bd19ebd035f"
+    },
+    {
+      "source": "TEST-0935_6376-000225796.laz",
+      "points": 320718,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "2": 22081,
+        "200": 296374,
+        "9": 2202,
+        "1": 7,
+        "6": 53,
+        "201": 1
+      },
+      "screenshot": "TEST-0935_6376-000225796-qgis.png",
+      "screenshot_sha256": "482438d54c316f7ad14568a8459f203a202223e22c8a451f03247a3a13bc8d4b",
+      "output_sha256": "eefd783e7609f8b225a8d54064efda2400d80e1375821ae9978e14c58c698882"
+    },
+    {
+      "source": "TEST-1170_6133-009203818.laz",
+      "points": 120720,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "2": 115117,
+        "200": 1739,
+        "1": 3864
+      },
+      "screenshot": "TEST-1170_6133-009203818-qgis.png",
+      "screenshot_sha256": "a6fb6a6e41ef80212f4cddee2eb797f729a9a50d0feab82cb7db32f078e3d254",
+      "output_sha256": "75c26de3a3e0ae17a1b5d7dc3e1a8aaf304926893807cbe032f89760e642852d"
+    },
+    {
+      "source": "TEST-1175_6130-009399360.laz",
+      "points": 112756,
+      "qgis_provider": "pdal",
+      "crs_authid": "EPSG:2154",
+      "source_crs_matches": true,
+      "missing_crs_explicit_horizontal_assignment": false,
+      "qgis_classification_histogram": {
+        "201": 1267,
+        "200": 82472,
+        "2": 29014,
+        "1": 3
+      },
+      "screenshot": "TEST-1175_6130-009399360-qgis.png",
+      "screenshot_sha256": "65330e5b13dc1510a10c8100c77d1143b25c678bec4a4d82b00abecfb0f97f93",
+      "output_sha256": "e9061ef9ac179e8d1bfa19ecad6edf621f428d53fdcb3125dd0ae561aafab254"
+    }
+  ],
+  "all_seven_categories_seen": true,
+  "copc_source_indices_and_semantics_verified": false,
+  "exact_qgis_provider_histograms": true,
+  "project_reopen": "PASS",
+  "crs_reprojection": "PASS",
+  "project_crs": "EPSG:2154",
+  "project_sha256": "99ecbc89df5d9591102909781c2de8d6e440c21d0fc279c967763ed516b513ff",
+  "immutable_inputs_unchanged": true,
+  "selection": "Post-freeze maximum predicted class support among original PDRF8/38-byte files for viewer coverage only; all256 test results unchanged; original IGN48-byte metadata reader rejection retained as negative evidence",
+  "harness_sha256": "0d943746fbe2d8f4f1c480a774056293f701338f9e056a5a1a2b724d8f900397",
+  "application_process_exit_code": 0,
+  "scope": "Seven original PDRF8/38-byte native classified outputs, full semantic classes and point histograms; direct48-byte limitation separate"
+}

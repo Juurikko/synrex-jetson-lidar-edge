@@ -130,3 +130,11 @@ Developer and project lead: **Tuomas Pietilä ([@Juurikko](https://github.com/Ju
 The frozen FRACTAL seven-class U-Net release candidate, safe LAS projection,
 independent FP16 metrics, real-scene benchmarks and QGIS style are documented in
 [the R2 qualification](docs/byom/UNET_R2_RELEASE.md). Local only; publication requires owner approval.
+
+[R3 performance and actual QGIS interoperability](docs/byom/QGIS_R3.md) adds
+real Windows application checks, indexed viewing copies with source-point IDs,
+a [four-scene performance analysis](docs/byom/PERFORMANCE_R3.md) and
+[clean RC2 reconstruction](docs/byom/RECONSTRUCTION_R3.md). The frozen model and
+RC2 remain unchanged. Physical AGX execution is blocked by the active Spatial Lab
+allocation; see the [safe continuation](docs/byom/AGX_R3_CONTINUATION.md).
+The [GitHub presentation draft](docs/byom/PUBLIC_PRESENTATION_R3.md) is local only.

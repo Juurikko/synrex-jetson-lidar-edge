@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "Viewing derivative identity/format checks using real frozen outputs and mutated staging fixtures; not mock inference",
+  "cases": [
+    {
+      "case": "duplicate_source_index",
+      "status": "PASS",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic_sha256": "1c6e45b5aa8fe8b83dc9a21bb69c3425308eeed0fdf6ab0eb505c0f784b4b816"
+    },
+    {
+      "case": "missing_copc_info",
+      "status": "PASS",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic_sha256": "ed20f2ad369c9f756d7871349c109f0b4fbc4e6ba037bc8878f33d2c4a875edf"
+    },
+    {
+      "case": "fractional_semantic_id",
+      "status": "PASS",
+      "rejected": true,
+      "exit_code": 1,
+      "diagnostic_sha256": "26c1a996c6d5001eedbb8f66117adc1c4d25d42b669b438f46d112a4845b35ea"
+    }
+  ]
+}

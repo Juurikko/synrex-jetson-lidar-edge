@@ -40,3 +40,18 @@ The BYOM R0 CUDA/TensorRT backend is original generic integration source under t
 The model's configured metadata has seven classes and its network eight channels; no new architecture or model ownership is asserted. Commercial inference requires appropriately licensed or SynRex-trained weights. Existing research, compression algorithms and vendor technologies remain attributed to their authors.
 
 The source audit found no blanket public license covering the original private runtime sources. Those sources are not copied into this repository. Tuomas Pietilä has confirmed authority over the newly staged original source, documentation and media; scoped MIT / CC BY 4.0 grants apply to that work only. The design relationship remains disclosed and no excluded upstream/private implementation is relicensed.
+
+R3 viewing interoperability additionally uses existing external **PDAL2.10.0**
+(git version `eb9126`) under its
+[BSD-3-Clause licence](https://github.com/PDAL/PDAL/blob/2.10.0/LICENSE.txt),
+preserved in `LICENSES/PDAL-BSD-3-Clause.txt`. PDAL stages separate COPC viewing
+copies; it is not linked into the native classification executable. The original
+classified LAZ and its full metadata remain separate, hash-bound artifacts.
+
+Existing **QGIS3.44.14-Solothurn** and its **Qt5** installation provide the desktop
+viewer and genuine screenshot interface. They remain separately licensed external
+applications; no QGIS/Qt binary or implementation source is redistributed here.
+See [QGIS licensing](https://qgis.org/license/) (GPL2 or later) and the licences
+in the user's installed distribution for its complete Qt/dependency terms.
+QGIS/Qt interface elements in screenshots retain upstream rights. CC-BY4.0 covers
+only the original presentation; IGN survey information remains Etalab2.0.

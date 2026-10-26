@@ -1,0 +1,17 @@
+{
+  "status": "PASS_WITH_DISCLOSED_PRIOR_FAILURES",
+  "final_direct_application_exit_code": 0,
+  "final_copc_application_exit_code": 0,
+  "prior_failures": [
+    "QGIS direct PDRF8/48-byte original and classified input rejection; retained separately",
+    "Initial harness assumed all inputs embed CRS; corrected explicit viewer-only assignment for missing tags",
+    "Initial immediate quit after checks caused shutdown crash; replaced by queued QgisApp close; both final processes exit0"
+  ],
+  "retained_attempt_file_sha256": {
+    "exit-crash.log": "136685b8dbac6a814066797143b0de88bb153576efba4d1fb026796b7cade9e9",
+    "initial-application-failure.json": "a75e09e5f35313a7c5dd1522879feda0e60231631369150f4bff3f3789977cec",
+    "passed-checks-before-exit-crash.json": "bceceb10985eefa850edd73d9991552b87c56f36e8c377e5dd4e1bd1d4431b00"
+  },
+  "current_qgis_harness_sha256": "0d943746fbe2d8f4f1c480a774056293f701338f9e056a5a1a2b724d8f900397",
+  "copc_qgis_harness_sha256": "0d943746fbe2d8f4f1c480a774056293f701338f9e056a5a1a2b724d8f900397"
+}

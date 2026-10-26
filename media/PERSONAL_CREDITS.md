@@ -29,3 +29,12 @@ Render from a copy into a distinct directory and filename such as `personal-cred
 Copyright (c) 2026 Tuomas Pietilä, for personally controlled protectable original expression in the media listed in [LICENSE_SCOPE.json](../LICENSE_SCOPE.json). Those original video, diagram, thumbnail and GIF portions are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); see the [legal code](../LICENSES/CC-BY-4.0.txt). Suggested attribution: **Tuomas Pietilä — SynRex Jetson LiDAR engineering showcase; AI-assisted development using OpenAI Codex; CC BY 4.0.** Indicate any changes and retain the illustrative/future-concept context.
 
 This sidecar supplies credit without editing the accepted artifacts. DejaVu font contributions retain their [original notice](../LICENSES/DejaVu-font-notice.txt); no ownership of those font contributions, vendor technologies, factual measurements, upstream algorithms, datasets or models is claimed.
+
+R3 files under `media/unet-r3/` are genuine captures from the existing Windows
+QGIS3.44.14 application viewing frozen model-generated FRACTAL classifications.
+They are not procedural or generative illustrations. Original presentation:
+Tuomas Pietilä, CC-BY4.0; IGN FRACTAL survey information: Etalab2.0 (source latest
+update2025-04-05, retrieved2026-10-26). QGIS/Qt interface elements retain upstream
+rights. Exact input/output/screenshot identities, display selection and failures
+are in `evidence/unet_r3_qgis_qualification.json` and
+`evidence/unet_r3_qgis_copc_qualification.json`.

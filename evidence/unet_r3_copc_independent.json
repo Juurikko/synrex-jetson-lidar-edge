@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "schema": "synrex.qgis_copc_view.v1",
+      "status": "PASS",
+      "original_classified_sha256": "b14a8a617cbb03f117e69849ebf28b1af65e95aa8bc6b3d13af3234e885838f9",
+      "original_semantic_sidecar_sha256": "bfb97e9af1ac82886e3575c984409e676ca95d80f522fe3126e0e212f4d9dadd",
+      "points": 42377,
+      "source_order": "SynRexSourceIndex is zero-based original LAZ source record index",
+      "semantic_definition": "SynRexSemanticID retains original model output channel",
+      "copc_sha256": "10c0efc6b673dd1cceda3d7fb05314fdba25a68f6567fc803d850c3c79c4e44d",
+      "all_original_point_bytes_exact_after_index_restore": true,
+      "semantic_ids_exact_after_index_restore": true,
+      "metadata_scope": "COPC viewing derivative with rewritten/index metadata; original LAZ and full metadata stay separate and unchanged"
+    },
+    {
+      "schema": "synrex.qgis_copc_view.v1",
+      "status": "PASS",
+      "original_classified_sha256": "a431ed7c5573e1e4413c1eefd5c7f7cd5bf6af126aa5afcc238782ac8e80106f",
+      "original_semantic_sidecar_sha256": "0e937f27dc123b2ec5e354584942b2ea00c1f839c162b6826d12dc0c37eadcca",
+      "points": 72691,
+      "source_order": "SynRexSourceIndex is zero-based original LAZ source record index",
+      "semantic_definition": "SynRexSemanticID retains original model output channel",
+      "copc_sha256": "3f076ee189dc393e51d858584354c83b9814ecddece3ca53c3648b5145fd3f92",
+      "all_original_point_bytes_exact_after_index_restore": true,
+      "semantic_ids_exact_after_index_restore": true,
+      "metadata_scope": "COPC viewing derivative with rewritten/index metadata; original LAZ and full metadata stay separate and unchanged"
+    },
+    {
+      "schema": "synrex.qgis_copc_view.v1",
+      "status": "PASS",
+      "original_classified_sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a",
+      "original_semantic_sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+      "points": 85222,
+      "source_order": "SynRexSourceIndex is zero-based original LAZ source record index",
+      "semantic_definition": "SynRexSemanticID retains original model output channel",
+      "copc_sha256": "b102962449d0f3ef15bf24c95dd640500a57cd73ba0f032ae1b9ab3f8d841b4b",
+      "all_original_point_bytes_exact_after_index_restore": true,
+      "semantic_ids_exact_after_index_restore": true,
+      "metadata_scope": "COPC viewing derivative with rewritten/index metadata; original LAZ and full metadata stay separate and unchanged"
+    }
+  ],
+  "source_originals_unchanged": true,
+  "verification_tool_sha256": "1ffd7f56f856ddd27b82ad188ee958b55521ce4cf3b869396fd55eeb0fef4c64"
+}

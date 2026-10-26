@@ -1,0 +1,57 @@
+{
+  "schema": "synrex.unet.r3.qualification.v1",
+  "status": "PASS",
+  "scope": "All available RTX analysis, Windows QGIS and clean reconstruction tasks; physical AGX blocked",
+  "parent_source": "f8d3ab81804e0c427684ac08f1b055e75206b861",
+  "parent_tag": "byom-unet-fractal-r2-rc2",
+  "parent_audit_commit": "e3fcb82423b079eb15ceb62f35be37aa76da7e95",
+  "parent_archive_sha256": "c72a762fa14de87033e82eff7bc653a906dc2ff117fb14f847b72e0269250092",
+  "native_source_unchanged": true,
+  "frozen_weights_sha256": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4",
+  "onnx_fp16_sha256": "4a043dfacefa9e45f2e80e604b565f7ae90fb35ff81831af8f26cfd3d59ae047",
+  "engine_sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+  "model_package_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+  "gates": {
+    "PERFORMANCE_ANALYSIS": "PASS",
+    "AGGREGATE_POINT_WEIGHTED_THROUGHPUT": "PASS",
+    "HISTORICAL_COMPARISON_QUALIFIED": "PASS",
+    "QGIS_DIRECT_38BYTE": "PASS",
+    "QGIS_DIRECT_48BYTE_TRIALS": "FAIL",
+    "QGIS_COPC_VIEWING_WORKAROUND": "PASS",
+    "QGIS_CLASSIFICATION_SEMANTIC_CRS": "PASS",
+    "QGIS_PROJECTS_SCREENSHOTS": "PASS",
+    "CLEAN_CHECKOUT_RECONSTRUCTION": "PASS",
+    "LICENCE_ATTRIBUTION_HASH_REVIEW": "PASS",
+    "R3_CPU_STATIC_TESTS": "PASS",
+    "PHYSICAL_AGX_ARM64_BUILD": "NOT_RUN",
+    "PHYSICAL_AGX_ENGINE_BUILD": "NOT_RUN",
+    "PHYSICAL_AGX_INFERENCE_PERFORMANCE": "NOT_RUN",
+    "PUBLIC_PUSH_RELEASE_UPLOAD": "NOT_RUN"
+  },
+  "cpu_tests": {
+    "passed": 69,
+    "skipped_gpu": 5,
+    "junit_sha256": "32c5deccd31976ff3479621db262300e88c25c2423275f24a023212859d286af"
+  },
+  "qgis_unique_original_scenes": 10,
+  "qgis_original_points": 1062717,
+  "complete_process_aggregate_points_per_second": 237991.41762428806,
+  "recommendation": "Ready for owner review as a scoped RTX engineering showcase with qualified QGIS direct38/COPC viewing paths and explicit direct48 limitation. Do not claim physical AGX qualification or production/general-dataset accuracy. Publication remains held.",
+  "remaining_blockers": [
+    "Spatial Edge Lab active supervisor and GPU locks prevent nonconflicting AGX allocation",
+    "Direct48-byte QGIS import failure persists; exact indexed COPC viewing workaround qualified",
+    "Explicit owner publication approval required"
+  ],
+  "evidence_sha256": {
+    "unet_r3_agx_admission.json": "50b88a1657c5985c69876e35b9e285a3c90f018396e1c4274a60ae432c0ab5f9",
+    "unet_r3_clean_reconstruction.json": "fc5e9c30a18ad4a75c49071888be5fcbbeeefffa917d63a662481fba6fc0ef0d",
+    "unet_r3_copc_independent.json": "c05b593574dd008dbe59e7bdc38e89dd3534d66c7464bf9fb769c56cf2d8d663",
+    "unet_r3_copc_negative_tests.json": "32617341035e922995fe4692879598325668acddd2e3dc803ab002f35b7e4bba",
+    "unet_r3_performance_analysis.json": "d26452f37249862e3da14e25651b8de48e8ee129be3da54a88fa96cb326ac654",
+    "unet_r3_qgis_attempts.json": "0ff34ffcf93eb464c86969893d16f66df0080fe9ff20e355a2314b80db69fe25",
+    "unet_r3_qgis_copc_qualification.json": "12728826823bacc9bdb93caf03bc854d417a9a35ee9adf4c1cbd42e7c34c2fc7",
+    "unet_r3_qgis_negative_inputs.json": "36bcf3b1e2f95cb8a8caa1b75ab337753050eb42a8c910d762cee9dde23ef70b",
+    "unet_r3_qgis_qualification.json": "c4e218b5b6d603f393623a2ffa77d5d99ad05d855e4494bd1c28addb99f979cb",
+    "unet_r3_qgis_sidecar_validation.json": "ae2c2c7bb19b35fe6f42a197d8a2976140054aab8d8b9684a5348c2d07dabc4a"
+  }
+}

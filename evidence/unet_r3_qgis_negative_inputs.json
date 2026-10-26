@@ -1,0 +1,74 @@
+[
+  {
+    "name": "data/classified/TEST-0437_6391-002624525-classified.laz",
+    "valid": true,
+    "error": "",
+    "points": 151658
+  },
+  {
+    "name": "data/classified/TEST-0445_6387-003080157-classified.laz",
+    "valid": true,
+    "error": "",
+    "points": 49256
+  },
+  {
+    "name": "data/classified/TEST-0737_6243-006721286-classified.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/classified/TEST-0737_6255-006722653-classified.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/classified/TEST-0741_6244-006630086-classified.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/classified/TEST-0935_6372-000167946-classified.laz",
+    "valid": true,
+    "error": "",
+    "points": 38087
+  },
+  {
+    "name": "data/source/TEST-0437_6391-002624525.laz",
+    "valid": true,
+    "error": "",
+    "points": 151658
+  },
+  {
+    "name": "data/source/TEST-0445_6387-003080157.laz",
+    "valid": true,
+    "error": "",
+    "points": 49256
+  },
+  {
+    "name": "data/source/TEST-0737_6243-006721286.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/source/TEST-0737_6255-006722653.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/source/TEST-0741_6244-006630086.laz",
+    "valid": false,
+    "error": "readers.las: Extra byte specification exceeds point length beyond base format length.",
+    "points": 0
+  },
+  {
+    "name": "data/source/TEST-0935_6372-000167946.laz",
+    "valid": true,
+    "error": "",
+    "points": 38087
+  }
+]
