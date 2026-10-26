@@ -1,0 +1,47 @@
+{
+  "schema": "synrex.unet.milestone.v1",
+  "status": "PASS",
+  "qualification_source": "dc3f3630dc72c2c76139787bd4dfd7c09a1e0e42",
+  "preserved_cpu_checkpoint": "eaf3ce21cf7fd1a2787f1a1b4599e7ab920612a5",
+  "checks": {
+    "MIT_PROVENANCE_REVIEW": "PASS",
+    "RTX4090_NATIVE_BUILD": "PASS",
+    "CPU_TEST_STATUS": "PASS",
+    "SYNTHETIC_ONNX_EXPORT": "PASS",
+    "TRAINED_UNET_ONNX_EXPORT": "PASS",
+    "TENSORRT_FP16_ENGINE_BUILD": "PASS",
+    "REAL_GPU_INFERENCE": "PASS",
+    "BYOM_CLASSIFIED_LAZ_E2E": "PASS",
+    "INDEPENDENT_LAZ_VALIDATION": "PASS",
+    "NUMERICAL_AGREEMENT": "PASS",
+    "HELD_OUT_PILOT_QUALITY": "PASS",
+    "SAME_BINARY_MODEL_REPLACEMENT": "PASS",
+    "RELOCATABLE_INSTALLATION": "PASS",
+    "AGX_QUALIFICATION_READINESS": "PASS",
+    "AGX_PHYSICAL_EXECUTION": "NOT_RUN",
+    "PUBLIC_PUBLICATION": "NOT_RUN"
+  },
+  "CPU_evidence": {
+    "pytest_pass": 59,
+    "GPU_cases_skipped_without_local_device": 4,
+    "ctest_pass": 1,
+    "ASAN_UBSAN_ctest_pass": 1,
+    "ASAN_UBSAN_preservation_and_training_contract_tests_pass": 26,
+    "ruff_and_clang_format": "PASS"
+  },
+  "GPU_evidence": {
+    "full_suite_pass": 62,
+    "CPU_only_skip": 1
+  },
+  "licensing_boundary": "Scoped MIT original runtime/source/weights; upstream and IGN data notices separate; technical review not independent legal certification",
+  "resource_safety": "No AGX connection or workload change; idle RTX used; original PyTorch environment reused read-only in isolated venv; no stack changes",
+  "publication": "Local commits and candidate only; no push or publish",
+  "sparse_backend_investigation": "Existing owner TorchSparse source lock/patch series/status reviewed read-only; no sparse source imported, no learned parity or sparse native adapter qualification claimed",
+  "known_limitations": [
+    "Fixed 320-tile pilot, not full FRACTAL benchmark",
+    "Bridge IoU zero; no water ground-truth support in test subset",
+    "Seeded MaxPool3d training not guaranteed bitwise deterministic",
+    "GPU memory device sampling is not exact allocation peak",
+    "Physical AGX allocation unavailable/unverified; execution NOT_RUN"
+  ]
+}

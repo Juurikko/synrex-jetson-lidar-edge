@@ -1,0 +1,200 @@
+{
+  "status": "PASS",
+  "source_commit": "50fb2a225ab92f18b1fa3bf7ca4132b28033ec5d",
+  "native_binary_unchanged": "e14ee5b059c8c266398ee7f7560f3204f6fe5b956eb3aa832d38d3757faba334",
+  "notice_sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+  "engine_sha256": "e27bffc7aa7db14a083c483114b3c804f3a9f0c1ecfd062ffd0dacbe9f608878",
+  "native": {
+    "backend": "CUDA/TensorRT",
+    "blocks": 4,
+    "changed": 53835,
+    "completed_inference_blocks": 4,
+    "gpu_memory_bytes": {
+      "free_after_allocation": 24058527744,
+      "free_before_initialization": 24104665088,
+      "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+    },
+    "memberships": 107172,
+    "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+    "points": 107172,
+    "status": "PASS",
+    "timings_seconds": {
+      "cuda_postprocessing": 2.5439999531954527e-05,
+      "cuda_tensor_preparation": 0.0032635199185460807,
+      "end_to_end": 0.478043674,
+      "geometry_cpu": 0.014875375,
+      "gpu_initialization_and_initial_upload": 0.335120276,
+      "laz_decode_cpu": 0.04529311,
+      "laz_encoding_and_preservation": 0.072028469,
+      "preprocessing_cpu": 0.060168485,
+      "tensorrt_inference": 0.0009022720009088515
+    }
+  },
+  "independent": {
+    "status": "PASS",
+    "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+    "points": 107172,
+    "classification_records_changed": 53835,
+    "point_order_and_nonclassification_bytes_exact": true,
+    "public_header_non_laszip_vlrs_and_padding_exact": true,
+    "source_sha256": "d80abb99a278eec90300d074ecada13a676a2f4f8b53dfad5544d90503cb0f3c",
+    "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+    "canonical_nonclassification_sha256": "f86ee211dd2d0778b6c50ac526341f47d11c27b78653a3364fea8e4a69c9aaa6",
+    "classification_sha256": "cf14da7021f2528e17e4f1c409a738722591423dd72e4c7ae23542b6d09c66ce"
+  },
+  "relocated_native": {
+    "backend": "CUDA/TensorRT",
+    "blocks": 4,
+    "changed": 53835,
+    "completed_inference_blocks": 4,
+    "gpu_memory_bytes": {
+      "free_after_allocation": 24058527744,
+      "free_before_initialization": 24104665088,
+      "measurement": "cudaMemGetInfo snapshots; device-wide delta, not allocator peak"
+    },
+    "memberships": 107172,
+    "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+    "points": 107172,
+    "status": "PASS",
+    "timings_seconds": {
+      "cuda_postprocessing": 2.6815999764949088e-05,
+      "cuda_tensor_preparation": 0.0024608320314437153,
+      "end_to_end": 0.382044155,
+      "geometry_cpu": 0.014205865,
+      "gpu_initialization_and_initial_upload": 0.245563973,
+      "laz_decode_cpu": 0.040375764,
+      "laz_encoding_and_preservation": 0.071432627,
+      "preprocessing_cpu": 0.054581629,
+      "tensorrt_inference": 0.0011989439725875854
+    }
+  },
+  "relocated_independent": {
+    "status": "PASS",
+    "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+    "points": 107172,
+    "classification_records_changed": 53835,
+    "point_order_and_nonclassification_bytes_exact": true,
+    "public_header_non_laszip_vlrs_and_padding_exact": true,
+    "source_sha256": "d80abb99a278eec90300d074ecada13a676a2f4f8b53dfad5544d90503cb0f3c",
+    "output_sha256": "e509c00da17bde6e38b82118942cb993bfc9e85dd6b97216843d6269371c1c81",
+    "canonical_nonclassification_sha256": "f86ee211dd2d0778b6c50ac526341f47d11c27b78653a3364fea8e4a69c9aaa6",
+    "classification_sha256": "cf14da7021f2528e17e4f1c409a738722591423dd72e4c7ae23542b6d09c66ce"
+  },
+  "relocated_elf_has_no_runpath": true,
+  "installed_model_notice_exact": true,
+  "native_no_python_loaded": true,
+  "final_package_manifest": {
+    "artifacts": {
+      "engine": {
+        "path": "model.engine",
+        "sha256": "e27bffc7aa7db14a083c483114b3c804f3a9f0c1ecfd062ffd0dacbe9f608878"
+      },
+      "license": {
+        "path": "MODEL_LICENSE.txt",
+        "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+      }
+    },
+    "contract": {
+      "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+      "features": [
+        {
+          "kind": "occupancy",
+          "offset": 0.0,
+          "scale": 1.0
+        },
+        {
+          "kind": "count",
+          "offset": 0.0,
+          "scale": 0.0625
+        },
+        {
+          "kind": "local_z",
+          "offset": 0.0,
+          "scale": 0.03125
+        },
+        {
+          "kind": "mean_intensity",
+          "offset": 0.0,
+          "scale": 1.5259021896696422e-05
+        }
+      ],
+      "geometry": {
+        "block_size_xyz": [
+          32.0,
+          32.0,
+          32.0
+        ],
+        "dimensions_xyz": [
+          32,
+          32,
+          32
+        ],
+        "overlap_policy": "first_wins",
+        "overlap_xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "voxel_size_xyz": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "input": {
+        "dtype": "float16",
+        "layout": "NCZYX",
+        "name": "features",
+        "shape": [
+          1,
+          4,
+          32,
+          32,
+          32
+        ]
+      },
+      "las_classes": [
+        1,
+        2,
+        5,
+        6,
+        9,
+        17,
+        64
+      ],
+      "licensing": {
+        "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+        "notice": "Carry MODEL_NOTICE.txt including MIT architecture notice and Etalab-2.0 IGN FRACTAL attribution. Pilot, not a full benchmark.",
+        "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+        "spdx": "MIT",
+        "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+      },
+      "limits": {
+        "max_blocks": 10000,
+        "max_memberships": 4000000,
+        "max_points": 1000000,
+        "max_tensor_bytes": 16777216
+      },
+      "output": {
+        "dtype": "float16",
+        "layout": "NCZYX",
+        "name": "scores",
+        "shape": [
+          1,
+          7,
+          32,
+          32,
+          32
+        ]
+      }
+    },
+    "schema": "synrex.srxmodel.v2",
+    "target": {
+      "architecture": "x86_64",
+      "cuda_runtime": 13020,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "sm": 89,
+      "tensorrt": "101601"
+    }
+  }
+}

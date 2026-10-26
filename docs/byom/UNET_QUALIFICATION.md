@@ -97,6 +97,13 @@ process with identical labels and classified-LAZ bytes. Three further isolated
 benchmark runs also produced identical outputs. The original 50,013-point Conv3D
 fixture then passed through the same unchanged binary and its independent oracle.
 
+Final dated IGN notices were subsequently packaged with the identical engine and
+rechecked on 107,172 real points. A relocated installed executable and separately
+relocated package produced the same classified bytes; the installed ELF has no
+RUNPATH/RPATH and the installed example notice is exact. The source binary hash
+remained unchanged. [Final package/relocation receipt](../../evidence/unet_final_package_relocation.json)
+records this metadata-only packaging step at source `50fb2a2`.
+
 Independent laz-rs checks passed on the RTX4090 target and again on i5radeon after
 download: exact source point order, every unrelated decompressed record byte,
 public header, non-LASzip VLRs and metadata padding. These are real PDRF8/38-byte
@@ -109,6 +116,8 @@ measured intensity, relocated inference and negatives. CPU: **59 PASS, 4 GPU SKI
 plus native CTest PASS. Bad hashes, tensor names/shapes, targets, class maps,
 engine bytes, unsupported inputs and output overwrites reject. No CPU inference
 fallback exists.
+ASan/UBSan CTest and the 26 preservation/training-contract tests also pass, including
+the variable-record-length and real-input-shaped geometry paths.
 
 ## Latency, throughput and memory
 

@@ -295,7 +295,7 @@
   },
   {
     "file": "docs/byom/UNET_QUALIFICATION.md",
-    "sha256": "e4eb2fb8937a70fd3619a8aecf846cad268cfddceb41dea40818712c0deaacbd",
+    "sha256": "b0d4985ef7cba409e82be278c7a5c3e4e23fe7951bc67bec79ea61c7dd6eec59",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
@@ -480,8 +480,20 @@
     "origin": "BYOM R0 local qualification record"
   },
   {
+    "file": "evidence/unet_final_package_relocation.json",
+    "sha256": "efab3e35a90d37fdc2c8586e8974eae258871153d1fc78b95acc6b733eb6427f",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
     "file": "evidence/unet_full_suite.json",
     "sha256": "fd4b40bb3d634a46aa37196858506c80f85f2ab08565015624afafdafe5b9526",
+    "license": "Factual evidence; no personal claim over underlying facts/upstream",
+    "origin": "BYOM R0 local qualification record"
+  },
+  {
+    "file": "evidence/unet_milestone_status.json",
+    "sha256": "a5d6e74c285bdfd8149fcb7854294fb1af2a005b030b4a472d0df0bc64bcc0c6",
     "license": "Factual evidence; no personal claim over underlying facts/upstream",
     "origin": "BYOM R0 local qualification record"
   },
