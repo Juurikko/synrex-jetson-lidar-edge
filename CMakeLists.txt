@@ -90,7 +90,7 @@ install(FILES LICENSE LICENSE_SCOPE.json THIRD_PARTY_NOTICES.md DESTINATION "${C
 install(DIRECTORY LICENSES/ DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/licenses")
 install(DIRECTORY docs/byom/ DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/docs/byom")
 install(DIRECTORY examples/ DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/examples"
-  FILES_MATCHING PATTERN "*.py" PATTERN "*.json" PATTERN "__pycache__" EXCLUDE)
+  FILES_MATCHING PATTERN "*.py" PATTERN "*.json" PATTERN "*.txt" PATTERN "__pycache__" EXCLUDE)
 else()
   install(TARGETS synrex-laz-labels RUNTIME DESTINATION bin)
 endif()
