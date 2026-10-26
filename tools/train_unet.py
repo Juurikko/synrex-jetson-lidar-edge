@@ -92,8 +92,12 @@ def main():
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
     torch.set_num_threads(8)
-    torch.use_deterministic_algorithms(True)
+    # Upstream UNet3D uses MaxPool3d. PyTorch 2.9 has no deterministic CUDA
+    # backward for it. Retain the genuine architecture, surface warnings and
+    # record this reproducibility limit rather than claiming bitwise training.
+    torch.use_deterministic_algorithms(True, warn_only=True)
     torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     spec = json.loads((ROOT / "examples/unet/dense_voxel.json").read_text())
@@ -188,6 +192,7 @@ def main():
         "torch": torch.__version__,
         "gpu": torch.cuda.get_device_name(),
         "seed": args.seed,
+        "training_determinism": "seeded; deterministic algorithms warn_only; MaxPool3d CUDA backward may vary",
         "epochs": args.epochs,
         "selected_epoch": checkpoint["epoch"],
         "parameters": sum(p.numel() for p in net.parameters()),
