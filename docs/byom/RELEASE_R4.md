@@ -22,7 +22,7 @@ native scenes and their authoritative semantic sidecars remain independently ver
 The ready COPCs carry original source indices plus all seven semantic IDs, and their
 reordered decoded point values match the native classified files exactly.
 
-Build the public source using [these dependency/build commands](RECONSTRUCTION_R3.md).
+Build the public source using [these dependency/build commands](RECONSTRUCTION_R4.md).
 For CPU packaging/verification, install `requirements-dev.lock` and `requirements-byom.lock`.
 Classification requires the existing matching CUDA/TensorRT 10 environment and a verified
 nonconflicting GPU allocation. No private engineering repository is needed. NVIDIA SDKs,

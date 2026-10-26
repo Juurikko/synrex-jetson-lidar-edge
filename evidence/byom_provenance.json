@@ -175,7 +175,7 @@
   },
   {
     "file": "LICENSE_SCOPE.json",
-    "sha256": "e2842547f3d7dc8841384d1f264373633472cfd37a22d9084efb97a296f0d72d",
+    "sha256": "f4e7c5ee06d22b359006e5cbee12f520e7b37bae1d2c17b397bd11298300a083",
     "license": "Scope metadata; grants limited to LICENSE_SCOPE.json",
     "origin": "Retained public project record"
   },
@@ -211,7 +211,7 @@
   },
   {
     "file": "README.md",
-    "sha256": "0f28dc16040b20b24643125520154afa0004e0733b0ab4a59d4c58d3d859ed76",
+    "sha256": "67867724f7270d79d0f2f35690d809ac654fbd1cdf2c3b779fa664b49b9423fc",
     "license": "CC-BY-4.0",
     "origin": "Retained authorized public implementation/expression; modified for BYOM R0"
   },
@@ -336,6 +336,12 @@
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },
   {
+    "file": "docs/byom/RECONSTRUCTION_R4.md",
+    "sha256": "ad51a89b17854c199fdbc4f5e1a6757507d1d1b91ad9326870606dcb3abf4f0b",
+    "license": "CC-BY-4.0",
+    "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
+  },
+  {
     "file": "docs/byom/RELEASE_CANDIDATE.md",
     "sha256": "4c4dc66a2c9aaec1ad81fa1b259ae971885592fe1e6093a96e1aee06a243f92e",
     "license": "CC-BY-4.0",
@@ -343,7 +349,7 @@
   },
   {
     "file": "docs/byom/RELEASE_R4.md",
-    "sha256": "77da6a083b98d9da01d736d2e18facce91ad166212c792935cbda2714d9290a7",
+    "sha256": "d762282d08949025408a537e45be60e5f2194ae741d354991182e21008c74158",
     "license": "CC-BY-4.0",
     "origin": "New generic BYOM work under Tuomas Pietilä's assignment; AI-assisted with OpenAI Codex"
   },

@@ -60,7 +60,7 @@ CC BY 4.0 Tuomas Pietilä; QGIS/Qt interface retains upstream rights. Colours sh
 predictions, including mistakes. [One-command export and QGIS diagnosis](docs/byom/QGIS_R4.md).
 
 Build from this public source and public dependencies using the
-[clean reconstruction instructions](docs/byom/RECONSTRUCTION_R3.md).
+[clean reconstruction instructions](docs/byom/RECONSTRUCTION_R4.md).
 Then follow the [two-model release quickstart](docs/byom/RELEASE_R4.md),
 [synthetic Conv3D commands](docs/byom/QUICKSTART.md) or
 [frozen trained U-Net commands](docs/byom/UNET_R2_QUICKSTART.md).
