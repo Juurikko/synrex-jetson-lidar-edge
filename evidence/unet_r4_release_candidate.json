@@ -1,0 +1,81 @@
+{
+  "schema": "synrex.unet.r4.release_candidate.v1",
+  "status": "PASS",
+  "tag": "byom-unet-fractal-r4-rc2",
+  "source_commit": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+  "archive": "showcase-r4-rc2.tar.gz",
+  "archive_bytes": 117492721,
+  "archive_sha256": "a2b6fa566b8982859e2e7b7f1a986291d0f056bb2460ccc8199a7f540dd0d82c",
+  "source_bundle_sha256": "c085db39b0e4be51acb86f5b5dc2cbbe14c0c5d3eb0103042cbe4f9403fb47b1",
+  "publication_manifest_sha256": "6eb083b5c8bb1e72d3c45942c1c37ff425310931b742a093cb404b7197843d60",
+  "manifest_files_verified": 482,
+  "source_export_git_blobs_verified": 247,
+  "native_pairs_independently_verified": 24,
+  "copc_views_independently_verified": 13,
+  "models_sha256": {
+    "MODEL_NOTICE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+    "best.pt": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4",
+    "dense_voxel.json": "75ca414e4a9dd68e1edd0013af8ce2d095aa4b00dca60469d418cb0e333240d7",
+    "fractal-classification.qml": "6a7eb129e824105fc119865e7e134a3f4bdd47ede357e128d60296d611dc702d",
+    "semantic_classes.json": "464ad0232773d5f285624fd142dfbcb24c72f3b8972b15523c35e9ad006ec98f",
+    "synthetic.onnx": "e9a55b97e1c38e9be057f7f23f395be00418c80d6e160736af53e7a64d43067c",
+    "synthetic.srxmodel": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59"
+    },
+    "unet-fp16.onnx": "4a043dfacefa9e45f2e80e604b565f7ae90fb35ff81831af8f26cfd3d59ae047",
+    "unet-fp32.onnx": "316dfd710b455f2324a86e18f39c7df960525fe94fe3702579030f014887fb44",
+    "unet.srxmodel": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+    }
+  },
+  "model_package_manifest_sha256": {
+    "synthetic.srxmodel": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+    "unet.srxmodel": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+  },
+  "qgis_project_sha256": "2e9ea1e807f0efa889879b0af328ee67657fca4c574a625c52aca6b230842ce2",
+  "qgis_export_receipt_sha256": "357928445c7dbc7f6dc964ea3b9de5a3df7385acda66d8970b73db4b06b8519e",
+  "qgis_desktop_receipt_sha256": "c6e9b8b9b4280fd71edb5d24738d8ff073e40b31d4adb18cd32076e1c7384ea0",
+  "independent_full_audit_sha256": "0004c072433f1419f1f7c030343f057349ff3c4aaf2f7b4e7dd4137f48665bf0",
+  "fresh_bundle_clone_release_checks": "PASS",
+  "fresh_bundle_clone_ruff": "PASS",
+  "final_source_cpu_build": "PASS, exact candidate checkout; unchanged build inputs from fresh compiled checkpoint461f88f",
+  "final_source_ctest": "PASS 1/1",
+  "cpu_pytest": "PASS 76; 5 GPU NOT_RUN; tested sources unchanged through final source",
+  "r3_preserved": true,
+  "parent_r3": {
+    "source": "77ed8401bcb48e89d53ed0edf3b62b652b678f98",
+    "audit": "6896277bc39eee20a32ee69a41173af29f751b8c",
+    "archive_sha256": "b57436b963412dbacce4ca1edd972a98dd1e07df7553638af3306c4239f6592c"
+  },
+  "preserved_r4_rc1": {
+    "source": "7fe425d1607d6d7894e750f1e2be75c5f840f936",
+    "archive_sha256": "2e3953653d330052b37608b36897259acc0f1c4ba20c6b978b8dd89d19abdf13"
+  },
+  "gates": {
+    "READER_CAUSE_DIAGNOSIS": "PASS",
+    "QGIS_DIRECT_48BYTE": "FAIL",
+    "ONE_COMMAND_COPC_EXPORT": "PASS",
+    "ALL_POINT_VALUES_AND_SEVEN_SEMANTICS": "PASS",
+    "ACTUAL_QGIS_APPLICATION": "PASS",
+    "CRS_STYLE_PROJECT": "PASS",
+    "R3_ARCHIVE_SOURCE_INTEGRITY": "PASS",
+    "MIT_ATTRIBUTION_SCOPE_REVIEW": "PASS",
+    "CPU_NATIVE_BUILD": "PASS",
+    "CPU_TESTS": "PASS",
+    "RUFF_RELEASE_CHECKS": "PASS",
+    "PHYSICAL_AGX": "NOT_RUN",
+    "NEW_GPU_INFERENCE": "NOT_RUN",
+    "PUBLIC_PUSH_UPLOAD": "NOT_RUN",
+    "CLEAN_PUBLIC_RECONSTRUCTION": "PASS",
+    "MODEL_HASH_INTERCHANGEABILITY": "PASS"
+  },
+  "full_points_per_second": 237991.41762428806,
+  "seven_class_miou": 0.48755974311318834,
+  "publication": "HELD_FOR_EXPLICIT_OWNER_APPROVAL",
+  "recommendation": "Ready for scoped MIT source and genuine RTX/QGIS showcase owner review. Direct48 reader limitation remains FAIL with diagnosed lifecycle cause and independently qualified COPC export. Physical AGX and all publication actions NOT_RUN.",
+  "future_proposal": "docs/byom/FUTURE_MILESTONES_R4.md only; no implementation started"
+}
