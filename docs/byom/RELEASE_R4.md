@@ -1,8 +1,10 @@
-# R4 source and QGIS showcase release candidate
+# R4 source and QGIS showcase — published R4 RC2 research prerelease
 
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
-Local candidate for explicit owner publication approval. R4 adds a convenient verified
+[R4 RC2](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+was published as a public RTX/QGIS research prerelease on 2026-10-27. This document
+retains the frozen release-candidate qualification context. R4 adds a convenient verified
 COPC/QGIS export, an executed reader-lifecycle diagnosis, final public presentation and
 a separate future-development proposal. It changes no native inference code, model
 weights, preprocessing, frozen predictions, dataset partitions or accepted benchmark.
@@ -11,7 +13,7 @@ R3 remains immutable: tag `byom-unet-fractal-r3-rc1`, source
 `77ed8401bcb48e89d53ed0edf3b62b652b678f98`, audit
 `6896277bc39eee20a32ee69a41173af29f751b8c`, archive SHA256
 `b57436b963412dbacce4ca1edd972a98dd1e07df7553638af3306c4239f6592c`.
-The current candidate is a descendant, with exact source/artifact identities recorded in
+R4 RC2 is a descendant, with exact source/artifact identities recorded in
 `evidence/unet_r4_release_candidate.json` after archive verification. No old tag/archive
 is overwritten. Large datasets, weights, ONNX and plans stay in ignored release packages.
 
@@ -95,7 +97,8 @@ restricted TreeAIBox assets or private-repository dependencies. Exposure to refe
 work is disclosed in the [source provenance review](PROVENANCE_REVIEW_R1.md), not presented
 as a clean-room process or legal certification.
 
-Source release and artifact upload remain held for explicit owner approval. The prepared
-README, release notes, technical showcase, screenshots, complete source bundle and model/
-example packages are reviewable locally. Do not upload SDKs, test/train archives or private
-references. Proposed streaming, sparse and Thor work is [separate](FUTURE_MILESTONES_R4.md).
+The source and `showcase-r4-rc2.tar.gz` archive were published under owner authorization;
+see the [public research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2).
+Prepublication staging descriptions in frozen evidence remain historical. Do not upload
+SDKs, test/train archives or private references. Streaming, sparse and Thor work is
+[separate from this release](FUTURE_MILESTONES_R4.md).
