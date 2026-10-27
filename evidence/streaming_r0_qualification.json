@@ -1,0 +1,217 @@
+{
+  "schema": "synrex.streaming.r0.qualification.v1",
+  "status": "PASS",
+  "scope": "B0 and bounded B1 physical RTX slice, B2 numerical/semantic parity, B4 event/map modes; later milestones explicitly gated",
+  "executed_source_commit": "a20051f2490adb92a6cc36f390906639b875ea20",
+  "accepted_r4_source": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+  "accepted_r4_tag_object": "0598b83f8c190c86a5071eb0cf5592eb7788ba1b",
+  "final_r4_audit": "c3451b6db942560829a360de3562624fcdc4282d",
+  "gates": {
+    "B0_VERSIONED_PROTOCOL_AND_SOURCE_IDENTITY": "PASS",
+    "B0_BOUNDED_FRAME_ASSEMBLY_AND_CPU_FIXTURES": "PASS",
+    "B1_PERSISTENT_CUDA_TENSORRT_SESSION": "PASS",
+    "B1_BOUNDED_QUEUES_BACKPRESSURE_CANCELLATION": "PASS",
+    "B1_REAL_RTX_TWO_FROZEN_MODELS": "PASS",
+    "B1_NATIVE_PRODUCTION_NO_PYTHON": "PASS",
+    "B2_OFFLINE_STREAM_INPUT_TENSOR_PARITY": "PASS",
+    "B2_OFFLINE_STREAM_LOGIT_PARITY": "PASS",
+    "B2_ORIGINAL_IDS_TIMESTAMPS_FRAME_BOUNDARIES": "PASS",
+    "B2_ALL_SEVEN_CHANNELS_AND_LAS_MAPPING": "PASS",
+    "B2_LOSS_LATE_REORDER_ACCOUNTING": "PASS",
+    "B3_STAGE_PROFILE": "PASS",
+    "B3_GPU_VOXEL_INDEX_OPTIMIZATION": "NOT_RUN",
+    "B4_COMPLETE_CLASSIFIED_POINT_EVENTS": "PASS",
+    "B4_BOUNDED_SEMANTIC_MAP_AND_DELTAS": "PASS",
+    "B4_OPTIONAL_ASYNC_LAZ_COPC_EXPORT": "NOT_RUN",
+    "B5_TWO_DENSITY_THREE_RATE_SHORT_REPLAYS": "PASS",
+    "B5_SUSTAINABLE_RATE_MOTION_OCCLUSION_LONG_DURATION": "NOT_RUN",
+    "B5_GENUINE_SOURCE_GPS_TIMESTAMP_SENSOR_TRANSPORT": "NOT_RUN",
+    "B6_ARM64_SM87_SM110_GATED_CONFIGS": "PASS",
+    "PHYSICAL_AGX_ORIN": "NOT_RUN",
+    "PHYSICAL_THOR": "NOT_RUN",
+    "R4_EXISTING_FILE_CLASSIFIER_GPU_COMPATIBILITY": "PASS",
+    "FROZEN_MODEL_PACKAGES_UNCHANGED": "PASS",
+    "CPU_RELEASE_ASAN_UBSAN_CTEST": "PASS",
+    "CPU_PYTEST": "PASS",
+    "RUFF_PROVENANCE_LICENSE_TREE_CHECK": "PASS",
+    "PUBLIC_PUSH_PR_STREAMING_RELEASE": "NOT_RUN"
+  },
+  "tests": {
+    "cpu_ctest": {
+      "passed": 2,
+      "failed": 0
+    },
+    "asan_ubsan_ctest": {
+      "passed": 2,
+      "failed": 0
+    },
+    "cpu_pytest": {
+      "passed": 81,
+      "gpu_skipped_not_run": 5,
+      "failed": 0,
+      "junit_sha256": "7021f9206be79153a7f770e20d5baac4cfe7ecffc499b7c19d366d914b7202ba"
+    },
+    "physical_legacy_gpu_pytest": {
+      "passed": 5,
+      "deselected": 31,
+      "failed": 0,
+      "junit_sha256": "c783cf854eaf89d02bd3e5d741be337e75984d4302f4774189d3a0ca92c8faf5"
+    },
+    "rtx_ctest": {
+      "passed": 2,
+      "failed": 0
+    },
+    "short_campaign": {
+      "commands": 14,
+      "command_expectations": "PASS",
+      "intentional_failure_receipts": [
+        "packet-loss-receipt",
+        "out-of-order-receipt"
+      ]
+    }
+  },
+  "actual_neural_equivalence": {
+    "synthetic": {
+      "status": "PASS",
+      "freshly_classified_points": 3108,
+      "windows": 4,
+      "semantic_histogram": [
+        585,
+        1944,
+        579
+      ],
+      "maximum_absolute_logit_error": 0.0,
+      "input_tensors_byte_identical": true,
+      "labels_and_source_order_exact": true,
+      "engine_deserializations_per_session": 1,
+      "package_verifications_per_session": 1
+    },
+    "unet": {
+      "status": "PASS",
+      "freshly_classified_points": 91117,
+      "windows": 6,
+      "semantic_histogram": [
+        9798,
+        46028,
+        3917,
+        29370,
+        92,
+        1089,
+        823
+      ],
+      "maximum_absolute_logit_error": 0.0,
+      "input_tensors_byte_identical": true,
+      "labels_and_source_order_exact": true,
+      "engine_deserializations_per_session": 1,
+      "package_verifications_per_session": 1
+    }
+  },
+  "threaded_trained_replay": {
+    "assembly": {
+      "assembled_points": 91117,
+      "dropped_points": 0,
+      "incoming_points": 91117,
+      "late_points": 0,
+      "missing_sequences": 0,
+      "partial_frames": 0,
+      "rejected_chunks": 0
+    },
+    "freshly_classified_points": 91117,
+    "emitted_points": 91117,
+    "dropped_points": 0,
+    "map_updates": 13506,
+    "map_resident_voxels": 10942,
+    "incoming_points_per_second": 75390.40980851464,
+    "freshly_classified_points_per_second": 75390.40980851464,
+    "map_updates_per_second": 11174.894639571086,
+    "replay_incoming_points_per_second": 92189.37959062794,
+    "replay_freshly_classified_points_per_second": 92189.37959062794,
+    "replay_map_updates_per_second": 13664.955614770251,
+    "wall_seconds_including_initialization_and_output": 1.208601999,
+    "replay_seconds_excluding_initialization": 0.988367645,
+    "acceptance_to_output_seconds": {
+      "p50": 0.014330297,
+      "p95": 0.71085055,
+      "p99": 0.71085055
+    },
+    "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+    "cpu_map_update_seconds": 0.142599433,
+    "cpu_parse_assembly_seconds": 0.6348131839999999,
+    "host_peak_rss_bytes": 442806272,
+    "input_queue": {
+      "capacity_frames": 2,
+      "high_water_frames": 1,
+      "producer_waits": 0,
+      "rejected_pushes": 0
+    },
+    "output_queue": {
+      "capacity_frames": 2,
+      "high_water_frames": 1,
+      "producer_waits": 0,
+      "rejected_pushes": 0
+    }
+  },
+  "first_start_session_initialization_seconds": 0.220082924,
+  "diagnostic_window_stage_totals": {
+    "completed_inference_blocks": 12,
+    "cpu_geometry_seconds": 0.011853955,
+    "cuda_preparation_seconds": 0.0018830079734325409,
+    "cuda_scatter_seconds": 6.175999902188779e-05,
+    "d2h_seconds": 0.0009481279999017715,
+    "freshly_classified_points": 91117,
+    "h2d_and_zero_seconds": 0.0012197440061718224,
+    "tensorrt_seconds": 0.002090112015604973,
+    "window_seconds": 0.034297248
+  },
+  "profiling_decision": "CPU JSON decode/assembly dominates the threaded replay. CUDA preparation and TensorRT stages are small. No new CUDA index/voxel kernel or neural throughput speedup claimed.",
+  "device_samples": {
+    "count": 46,
+    "period_seconds": 0.2,
+    "maximum_device_wide_memory_used_mib": 528,
+    "maximum_utilization_percent": 8,
+    "maximum_power_watts": 55.43,
+    "scope": "Sampled across the short campaign, includes desktop/context baseline; transient peaks may be missed"
+  },
+  "performance_scope": "Short offline-emulated streaming probe. Includes JSON decode, source identity, geometry, genuine inference, all-point JSON events and map deltas. No comparison speedup or sustainable sensor rate asserted. Requested high rates exhibit explicit schedule lag. Replay timer ends after output sync; final input/event hashes, receipt serialization and process teardown are excluded.",
+  "source_time_scope": "Exact input UNIX frame timestamps preserved. Licensed LAZ fixtures have explicitly emulated timestamps/nullable returns, not original GPS-time decoding.",
+  "source_provenance": "New independently licensable MIT source against public R4 interfaces; no private engineering source or third-party model/data binaries in Git. Existing notices and Etalab-2.0 attribution retained.",
+  "package_and_binary_integrity": {
+    "model_packages_before_after": "PASS",
+    "binary_before_after": "PASS",
+    "native_gpu_file_classifier_sha256": "828741e5c8553fe382164fa4f23dea4f446cd7370d1e74d60664c3ab7a4433a8",
+    "runtime_linkage_no_libpython_or_libtorch": "PASS"
+  },
+  "executed_source_sha256": {
+    "CMakeLists.txt": "18677f290546ecd9e6b2c3faf20bc8b201b1a694650726f4dac9ba6a1810a3a1",
+    "cmake/targets/orin.cmake": "1fdf9005c7d4077b3df252cf13dc713f13406c53b43df3a30c4465175b0cfd78",
+    "cmake/targets/thor.cmake": "8d74af2aa46a95a9f2587eaaf3fd2330572eb197b32bb4432c4c35b5f392969b",
+    "native/geometry.cpp": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
+    "native/gpu.hpp": "177be471c90f15eb8110d743dfdf05ed867ea5dfeb136d29e6dd069485715c23",
+    "native/include/synrex/runtime.hpp": "50b0119acf071a683d8012b1d2cce1d9f658bc71b482289f31131fbc0fd5fd0e",
+    "native/include/synrex/service.hpp": "f46809f07b2e2b5b802a8297539a64766a65ee6256a4339ba852f3006fd1d96e",
+    "native/include/synrex/session.hpp": "095f90400818bbe810d18fbd7d20f84e54b58dad1054fbfe1ec63cf2574a2363",
+    "native/include/synrex/stream.hpp": "b056e59567cd02187d7112e4d05e7d0718713454a255e6daff7111157ddbbb71",
+    "native/kernels.cu": "952fa44918a4bd087889b298601d21918f91d9c4c31b2f387c8dd9d5944cd919",
+    "native/main.cpp": "e549613eda0fd6552cf7b03fcaee3ed3526324133f3f34145884ce5760829e05",
+    "native/no_gpu.cpp": "edeab5ed7246c383e0cf53cbd3a52198c4ea44eb0ece14afa100d3244d7c8743",
+    "native/package.cpp": "66adae634fe4acdc628db9135b0a10fdb150a623bd628c6e0646e6947676812f",
+    "native/service.cpp": "5b6d0c0ad46419156c65d9dd3ee15ead1b6ce15b0e815ad294dfb65d36df99dd",
+    "native/stream.cpp": "1181b13aab4570e53abfde4df688059966c05e16fe309b8c3be432da9c393446",
+    "native/stream_main.cpp": "7ea9949f8f833fdb90049ad15fc87ec2801787defa1f5179259ab55d11b8bec3",
+    "native/tensorrt.cpp": "966d7b46876c4fc358f0f7f78ecd38e50668145a343789f9f15bc9e188a493ec",
+    "tests/native/core.cpp": "00469649d894d2b0737fcbd5fab3191f15814b55a3f43f2c882a515dd22e6635",
+    "tests/native/stream.cpp": "c3c3af510f745c14a4b049a9d10e4846383cd9bbf78282356db66b76a641ec9e",
+    "tests/native/stream_gpu.cpp": "947c202253faa3770b2a172cf8fdd69cc2ea43e24da0f422f27ffdfe468aee0d",
+    "tools/qualify_streaming.py": "a983f8f1f495eefc97cde762793bee45d6a69ea7e9c8714166a71a6823e23876"
+  },
+  "source_archive_sha256": "18133e5ec5913bf4cc84482baedb8dd4a12fa3ec072da1b0505b1146f5957595",
+  "raw_sanitized_campaign_receipt": "streaming_r0_rtx_campaign.json",
+  "unimplemented_or_unqualified": [
+    "Live sensor transport and original sensor clock conversion",
+    "New CUDA voxel/index generation",
+    "Optional asynchronous LAZ/COPC exporter",
+    "Long duration, motion and occlusion qualification",
+    "Physical ARM64/Orin/Thor builds and inference"
+  ],
+  "publication": "No push, PR, main change, tag change or release. Local commits only; isolated RTX workspace. No AGX/Thor access."
+}

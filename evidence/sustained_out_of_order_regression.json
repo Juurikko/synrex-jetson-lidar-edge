@@ -1,0 +1,35 @@
+{
+  "schema": "synrex.out_of_order_regression_resolution.v1",
+  "status": "PASS",
+  "original_failing_test": {
+    "status": "FAIL",
+    "expected_late_points": 4,
+    "actual_late_points": 12,
+    "initial_run": "1 failed, 5 passed; before the correction committed in 3f933ff",
+    "reproduction_status": "FAIL as expected",
+    "reproduction_log_sha256": "e10d5bc77e9f2742c4c5a0c1dc8345751a350859a6b9daec79632d81adbb6689"
+  },
+  "native_negative_receipt": {
+    "GPU_INFERENCE": "NOT_RUN",
+    "assembly": {
+      "assembled_points": 48,
+      "dropped_points": 16,
+      "incoming_points": 64,
+      "late_points": 12,
+      "missing_sequences": 1,
+      "partial_frames": 1,
+      "rejected_chunks": 3
+    },
+    "scope": "CPU_protocol_only",
+    "status": "FAIL"
+  },
+  "resolution": "The approved strict assembler discards the partial frame on a sequence gap and rejects the swapped packet plus the unassemblable tail. Twelve points are late, and sixteen received points are dropped. The original test expectation counted only one packet. No parser/assembler behavior was relaxed.",
+  "corrected_test": {
+    "status": "PASS",
+    "expected_late_points": 12,
+    "incoming_equals_assembled_plus_dropped": true,
+    "log_sha256": "f6b6e232e0345fa742cf57cbc60c8884709a6f029bd43161ca6e812c9175f2a8"
+  },
+  "input_sha256": "542b0bc6ebdef008b749b65294ef4b30a7564645d90ef758688e230d7e8bb6d3",
+  "production_neural_inference": "NOT_RUN; this is a CPU protocol rejection regression"
+}

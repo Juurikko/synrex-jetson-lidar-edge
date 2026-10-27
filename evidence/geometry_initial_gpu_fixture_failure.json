@@ -1,0 +1,10 @@
+{
+  "schema": "synrex.geometry_gpu_fixture_failure.v1",
+  "status": "FAIL",
+  "source_commit": "f0f6c6992d751f42de824d5aa3f1fb2421d661ab",
+  "native_error": "nonfinite/out-of-range XYZ",
+  "neural_equivalence": "NOT_RUN",
+  "reason": "The new 1e12 fixture exceeded the unchanged point-stream absolute XYZ budget of 1e9. Replay serialization correctly rejected it before neural qualification.",
+  "resolution": "Use 1e8 for stream/GPU fixtures. Keep 1e12 and 1e15 cases in the CPU geometry API tests. Do not relax the stream schema.",
+  "original_log_preserved": true
+}

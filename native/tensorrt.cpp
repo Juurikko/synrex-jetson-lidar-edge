@@ -3,10 +3,14 @@
 // Original generic TensorRT 10 backend using NVIDIA's documented public APIs.
 #include "gpu.hpp"
 #include "synrex/runtime.hpp"
+#include "synrex/session.hpp"
+#include "synrex/benchmark.hpp"
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 #include <algorithm>
+#include <atomic>
 #include <chrono>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -17,6 +21,12 @@
 #error "This adapter supports TensorRT 10.x; qualify API changes separately"
 #endif
 namespace synrex {
+static std::atomic<std::uint64_t> tracked_device_live{0}, pinned_host_live{0};
+Json session_resources() {
+    return {{"status", "PASS"}, {"live_tracked_device_bytes", tracked_device_live.load()},
+            {"live_pinned_host_bytes", pinned_host_live.load()},
+            {"scope", "Requested owned allocations only; driver context and untracked vendor caches excluded"}};
+}
 static void cuda_check(cudaError_t status) {
     require(status == cudaSuccess, std::string("CUDA: ") + cudaGetErrorString(status));
 }
@@ -26,6 +36,10 @@ class Logger final : public nvinfer1::ILogger {
             std::cerr << "TensorRT: " << message << '\n';
     }
 };
+static Logger &shared_logger() {
+    static Logger logger;
+    return logger;
+}
 struct Stream {
     cudaStream_t value{};
     Stream() { cuda_check(cudaStreamCreate(&value)); }
@@ -55,7 +69,7 @@ struct Event {
 // Track actual requested allocation lifetimes across TensorRT callbacks and adapter
 // buffers. CUDA context/vendor allocations outside these callbacks are excluded.
 class TrackedAllocator final : public nvinfer1::IGpuAllocator {
-    std::mutex mutex_;
+    mutable std::mutex mutex_;
     std::map<void *, std::uint64_t> sizes_;
     std::uint64_t live_{}, peak_{};
 
@@ -68,6 +82,7 @@ class TrackedAllocator final : public nvinfer1::IGpuAllocator {
             std::lock_guard<std::mutex> lock(mutex_);
             sizes_.emplace(p, size);
             live_ += size;
+            tracked_device_live += size;
             peak_ = std::max(peak_, live_);
             return p;
         } catch (...) {
@@ -82,6 +97,7 @@ class TrackedAllocator final : public nvinfer1::IGpuAllocator {
         const auto entry = sizes_.find(p);
         if (entry == sizes_.end() || cudaFree(p) != cudaSuccess)
             return false;
+        tracked_device_live -= entry->second;
         live_ -= entry->second;
         sizes_.erase(entry);
         return true;
@@ -91,7 +107,7 @@ class TrackedAllocator final : public nvinfer1::IGpuAllocator {
         return allocate(size, alignment, flags);
     }
     bool deallocateAsync(void *p, cudaStream_t) noexcept override { return deallocate(p); }
-    std::uint64_t peak() {
+    std::uint64_t peak() const {
         std::lock_guard<std::mutex> lock(mutex_);
         return peak_;
     }
@@ -172,7 +188,7 @@ void build_engine(const Package &package, const fs::path &output, const std::str
     const auto model = package.artifact("onnx");
     (void)
         target_info(); // Verify CUDA before building; offline compilation still needs a target GPU.
-    Logger logger;
+    auto &logger = shared_logger();
     std::unique_ptr<nvinfer1::IBuilder> builder(nvinfer1::createInferBuilder(logger));
     require(bool(builder), "cannot initialize TensorRT builder");
     std::unique_ptr<nvinfer1::INetworkDefinition> network(builder->createNetworkV2(0));
@@ -235,7 +251,7 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     const auto serialized = read_model(package.artifact("engine"));
     const auto &c = package.contract;
     TrackedAllocator allocations;
-    Logger logger;
+    auto &logger = shared_logger();
     std::unique_ptr<nvinfer1::IRuntime> runtime(nvinfer1::createInferRuntime(logger));
     require(bool(runtime), "cannot initialize TensorRT runtime");
     runtime->setGpuAllocator(&allocations);
@@ -432,4 +448,297 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
         *metrics = measured;
     return mapped;
 }
+
+// Optional page-locked staging, allocated once per session and synchronized before reuse.
+class PinnedStaging {
+    void *data_{};
+    std::size_t bytes_{};
+  public:
+    explicit PinnedStaging(std::size_t bytes) : bytes_(bytes) {
+        cuda_check(cudaMallocHost(&data_, bytes)); pinned_host_live += bytes_;
+    }
+    ~PinnedStaging() { if (data_ && cudaFreeHost(data_) == cudaSuccess) pinned_host_live -= bytes_; }
+    PinnedStaging(const PinnedStaging &) = delete;
+    PinnedStaging &operator=(const PinnedStaging &) = delete;
+    void *data() const { return data_; }
+};
+// Track B: independent persistent window session; legacy infer() remains the R4 reference.
+class PersistentSession final : public InferenceSession {
+    const std::chrono::steady_clock::time_point started_ = std::chrono::steady_clock::now();
+    Package package_;
+    std::string manifest_sha256_ = sha256(package_.root / "manifest.json");
+    std::size_t capacity_;
+    SessionOptions options_;
+    std::unique_ptr<PinnedStaging> host_points_, host_ids_, host_voxels_, host_groups_, host_labels_, host_semantics_, host_bad_;
+    std::uint64_t pinned_bytes_{};
+    int device_{};
+    std::uint64_t windows_{}, successful_enqueues_{}, classified_source_points_{};
+    bool poisoned_{};
+    double initialization_seconds_{};
+    std::uint64_t input_bytes_{}, output_bytes_{};
+    TrackedAllocator allocations_;
+    Logger &logger_ = shared_logger();
+    std::unique_ptr<nvinfer1::IRuntime> runtime_;
+    std::unique_ptr<nvinfer1::ICudaEngine> engine_;
+    std::unique_ptr<nvinfer1::IExecutionContext> context_;
+    std::unique_ptr<Buffer> input_, output_, points_, features_, mapping_, labels_, semantics_,
+                            ids_, voxels_, groups_, bad_;
+    Event upload_start_, upload_end_, prepare_end_, infer_end_, scatter_end_;
+    Stream stream_; // Destroyed first: synchronize before any device resource is released.
+  public:
+    PersistentSession(const fs::path &root, std::size_t capacity, const SessionOptions &options)
+        : package_(root), capacity_(capacity), options_(options) {
+        cuda_check(cudaGetDevice(&device_));
+        const auto &c = package_.contract;
+        require(capacity > 0 && capacity <= c.max_points && capacity <= 1000000,
+                "unsafe persistent window point budget");
+        require(package_.manifest.at("target") == target_info(),
+                "engine target mismatch; build a separately licensed target package");
+        const auto serialized = read_model(package_.artifact("engine"));
+        runtime_.reset(nvinfer1::createInferRuntime(logger_));
+        require(bool(runtime_), "cannot initialize persistent TensorRT runtime");
+        runtime_->setGpuAllocator(&allocations_);
+        engine_.reset(runtime_->deserializeCudaEngine(serialized.data(), serialized.size()));
+        require(bool(engine_), "persistent engine deserialization failed");
+        check_engine(*engine_, c);
+        context_.reset(engine_->createExecutionContext());
+        require(bool(context_), "persistent context initialization failed");
+        input_bytes_ = c.voxels * c.features.size() * (c.input_dtype == "float16" ? 2 : 4);
+        output_bytes_ = c.voxels * c.las_classes.size() * (c.output_dtype == "float16" ? 2 : 4);
+        const auto required = input_bytes_ + output_bytes_ +
+            capacity * (sizeof(GpuPoint) + 4 * sizeof(std::uint32_t) + sizeof(GpuGroup)) +
+            c.features.size() * sizeof(GpuFeature) + c.las_classes.size() + sizeof(int);
+        std::size_t free{}, total{};
+        cuda_check(cudaMemGetInfo(&free, &total));
+        require(required <= 512ULL * 1024 * 1024 && free > required + 64ULL * 1024 * 1024,
+                "persistent adapter exceeds memory budget/headroom");
+        auto buffer = [&](std::size_t bytes) { return std::make_unique<Buffer>(allocations_, bytes); };
+        input_ = buffer(input_bytes_); output_ = buffer(output_bytes_);
+        points_ = buffer(capacity * sizeof(GpuPoint));
+        features_ = buffer(c.features.size() * sizeof(GpuFeature));
+        mapping_ = buffer(c.las_classes.size()); labels_ = buffer(capacity * 4);
+        semantics_ = buffer(capacity * 4); ids_ = buffer(capacity * 4);
+        voxels_ = buffer(capacity * 4); groups_ = buffer(capacity * sizeof(GpuGroup));
+        bad_ = buffer(sizeof(int));
+        if (options_.pinned_staging) {
+            auto host = [&](std::size_t bytes) { pinned_bytes_ += bytes; return std::make_unique<PinnedStaging>(bytes); };
+            host_points_ = host(capacity * sizeof(GpuPoint));
+            host_ids_ = host(capacity * 4); host_voxels_ = host(capacity * 4);
+            host_groups_ = host(capacity * sizeof(GpuGroup));
+            host_labels_ = host(capacity * 4); host_semantics_ = host(capacity * 4); host_bad_ = host(sizeof(int));
+        }
+        const std::map<std::string, int> kinds{{"occupancy", 0}, {"count", 1}, {"mean_intensity", 2},
+                                               {"local_x", 3}, {"local_y", 4}, {"local_z", 5}};
+        std::vector<GpuFeature> features;
+        for (const auto &f : c.features) features.push_back({kinds.at(f.kind), f.offset, f.scale});
+        cuda_check(cudaMemcpy(features_->data(), features.data(), features.size() * sizeof(GpuFeature),
+                              cudaMemcpyHostToDevice));
+        cuda_check(cudaMemcpy(mapping_->data(), c.las_classes.data(), c.las_classes.size(),
+                              cudaMemcpyHostToDevice));
+        require(context_->setTensorAddress(c.input_name.c_str(), input_->data()) &&
+                    context_->setTensorAddress(c.output_name.c_str(), output_->data()),
+                "persistent tensor binding failed");
+        initialization_seconds_ = std::chrono::duration<double>(
+            std::chrono::steady_clock::now() - started_).count();
+    }
+    const Contract &contract() const override { return package_.contract; }
+    Json identity() const override {
+        return {{"schema", "synrex.persistent_session.v1"}, {"backend", "CUDA/TensorRT"},
+                {"target", package_.manifest.at("target")}, {"artifacts", package_.manifest.at("artifacts")},
+                {"contract", package_.contract.spec}, {"manifest_sha256", manifest_sha256_}, {"package_verifications", 1},
+                {"engine_deserializations", 1}, {"execution_contexts", 1}, {"cuda_streams", 1},
+                {"max_window_points", capacity_}, {"completed_windows", windows_},
+                {"successful_enqueue_calls", successful_enqueues_}, {"classified_source_points", classified_source_points_},
+                {"geometry_mode", geometry_name(options_.geometry)}, {"pinned_staging", options_.pinned_staging}, {"pinned_host_bytes", pinned_bytes_},
+                {"initialization_seconds", initialization_seconds_},
+                {"tracked_peak_requested_cuda_bytes", allocations_.peak()}};
+    }
+    Json benchmark_model(const std::vector<Point> &points, unsigned warmup, unsigned seconds) override {
+        require(warmup <= 30 && seconds > 0 && seconds <= 120, "model-only duration budget");
+        const auto prepared = run(points, {});
+        (void)prepared;
+        const auto plan = geometry(points, package_.contract, options_.geometry);
+        const auto represented = plan.blocks.back().members.size();
+        streaming::LatencyHistogram batches;
+        constexpr unsigned batch = 32;
+        auto phase = [&](unsigned duration, bool measured) {
+            const auto start = std::chrono::steady_clock::now();
+            std::uint64_t calls = 0;
+            double cuda_seconds = 0;
+            while (std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count() < duration) {
+                upload_start_.record(stream_.value);
+                for (unsigned i = 0; i < batch; ++i) {
+                    require(context_->enqueueV3(stream_.value), "model-only enqueueV3 failed");
+                    ++successful_enqueues_;
+                }
+                upload_end_.record(stream_.value);
+                cuda_check(cudaStreamSynchronize(stream_.value));
+                const auto elapsed = upload_end_.seconds_since(upload_start_);
+                calls += batch; cuda_seconds += elapsed;
+                if (measured) batches.add(static_cast<std::uint64_t>(elapsed * 1e9 / batch));
+            }
+            const auto wall = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+            return Json{{"enqueue_calls", calls}, {"cuda_seconds", cuda_seconds}, {"wall_seconds", wall},
+                        {"inferences_per_wall_second", calls / wall}};
+        };
+        const auto warmed = phase(warmup, false), measured = phase(seconds, true);
+        return {{"schema", "synrex.model_only_sustained.v1"}, {"status", seconds >= 30 ? "PASS" : "FAIL"},
+                {"session", identity()}, {"warmup", warmed}, {"measurement", measured},
+                {"batch_average_inference_latency", batches.json()}, {"batch_enqueues_per_sync", batch},
+                {"source_points_represented_per_inference", represented},
+                {"source_point_equivalents_per_second", represented * measured.at("inferences_per_wall_second").get<double>()},
+                {"freshly_classified_emitted_source_points", 0},
+                {"scope", "Actual TensorRT enqueueV3 repeatedly executes the last CUDA-prepared block. Batched timing includes stream scheduling; excludes geometry, H2D, scatter, queues and output. Point-equivalent rate is not fully classified source throughput."}};
+    }
+    WindowResult run(const std::vector<Point> &points, const fs::path &trace) override {
+        require(!poisoned_, "persistent session is poisoned after failed execution");
+        require(!points.empty() && points.size() <= capacity_, "persistent window exceeds point budget");
+        cuda_check(cudaSetDevice(device_));
+        const auto wall = std::chrono::steady_clock::now();
+        const auto &c = package_.contract;
+        GeometryProfile geometry_profile;
+        const auto plan = geometry(points, c, options_.geometry, &geometry_profile);
+        const auto geometry_seconds = std::chrono::duration<double>(
+            std::chrono::steady_clock::now() - wall).count();
+        if (!trace.empty()) {
+            require((input_bytes_ + output_bytes_) * plan.blocks.size() <= 256ULL * 1024 * 1024,
+                    "persistent tensor trace exceeds budget");
+            require(fs::create_directory(trace), "tensor trace directory must be new");
+        }
+        std::vector<GpuPoint> gpu_points;
+        gpu_points.reserve(points.size());
+        for (const auto &p : points) gpu_points.push_back({{p.xyz[0], p.xyz[1], p.xyz[2]}, double(p.intensity)});
+        std::vector<std::uint32_t> ids, voxels, labels(points.size()), semantics(points.size());
+        std::vector<GpuGroup> groups;
+        ids.reserve(capacity_); voxels.reserve(capacity_); groups.reserve(capacity_);
+        Json trace_blocks = Json::array(), timeline_blocks = Json::array();
+        std::uint64_t occupied_voxels = 0;
+        double h2d{}, prep{}, inference{}, scatter{}, d2h{};
+        int invalid{}; // Remains alive through the exception synchronization path.
+        auto upload = [&](Buffer &device, const auto &values, PinnedStaging *host) {
+            if (host) {
+                const auto bytes = values.size() * sizeof(values.front());
+                std::memcpy(host->data(), values.data(), bytes);
+                cuda_check(cudaMemcpyAsync(device.data(), host->data(), bytes, cudaMemcpyHostToDevice, stream_.value));
+            } else device.upload(values, stream_.value);
+        };
+        try {
+            upload_start_.record(stream_.value);
+            upload(*points_, gpu_points, host_points_.get());
+            cuda_check(cudaMemsetAsync(labels_->data(), 255, points.size() * 4, stream_.value));
+            cuda_check(cudaMemsetAsync(semantics_->data(), 255, points.size() * 4, stream_.value));
+            cuda_check(cudaMemsetAsync(bad_->data(), 0, sizeof(int), stream_.value));
+            upload_end_.record(stream_.value);
+            cuda_check(cudaStreamSynchronize(stream_.value));
+            h2d += upload_end_.seconds_since(upload_start_);
+            for (const auto &b : plan.blocks) {
+                const auto block_started = std::chrono::steady_clock::now();
+                ids.clear(); voxels.clear(); groups.clear();
+                for (std::size_t i = 0; i < b.members.size(); ++i) {
+                    const auto &m = b.members[i];
+                    ids.push_back(m.point); voxels.push_back(m.voxel);
+                    if (groups.empty() || groups.back().voxel != m.voxel)
+                        groups.push_back({m.voxel, static_cast<unsigned>(i), static_cast<unsigned>(i + 1)});
+                    else groups.back().end = static_cast<unsigned>(i + 1);
+                }
+                occupied_voxels += groups.size();
+                upload_start_.record(stream_.value);
+                upload(*ids_, ids, host_ids_.get()); upload(*voxels_, voxels, host_voxels_.get());
+                upload(*groups_, groups, host_groups_.get());
+                cuda_check(cudaMemsetAsync(input_->data(), 0, input_bytes_, stream_.value));
+                upload_end_.record(stream_.value);
+                prepare_cuda(input_->data(), c.input_dtype == "float16", c.voxels,
+                    points_->as<GpuPoint>(), ids_->as<std::uint32_t>(), groups_->as<GpuGroup>(),
+                    static_cast<unsigned>(groups.size()), features_->as<GpuFeature>(),
+                    static_cast<unsigned>(c.features.size()), {{b.origin[0], b.origin[1], b.origin[2]}},
+                    bad_->as<int>(), stream_.value);
+                cuda_check(cudaGetLastError());
+                prepare_end_.record(stream_.value);
+                require(context_->enqueueV3(stream_.value), "persistent enqueueV3 failed");
+                ++successful_enqueues_;
+                infer_end_.record(stream_.value);
+                scatter_cuda(output_->data(), c.output_dtype == "float16", c.voxels,
+                    static_cast<unsigned>(c.las_classes.size()), ids_->as<std::uint32_t>(),
+                    voxels_->as<std::uint32_t>(), static_cast<unsigned>(b.members.size()),
+                    mapping_->as<std::uint8_t>(), labels_->as<std::uint32_t>(),
+                    semantics_->as<std::uint32_t>(), c.policy == "first_wins", bad_->as<int>(), stream_.value);
+                cuda_check(cudaGetLastError());
+                scatter_end_.record(stream_.value);
+                cuda_check(cudaStreamSynchronize(stream_.value));
+                h2d += upload_end_.seconds_since(upload_start_);
+                prep += prepare_end_.seconds_since(upload_end_);
+                inference += infer_end_.seconds_since(prepare_end_);
+                scatter += scatter_end_.seconds_since(infer_end_);
+                if (options_.timeline) timeline_blocks.push_back({
+                    {"host_submission_begin_offset_seconds", std::chrono::duration<double>(block_started - wall).count()},
+                    {"host_after_stream_sync_offset_seconds", std::chrono::duration<double>(std::chrono::steady_clock::now() - wall).count()},
+                    {"cuda_event_h2d_zero_seconds", upload_end_.seconds_since(upload_start_)},
+                    {"cuda_event_preparation_seconds", prepare_end_.seconds_since(upload_end_)},
+                    {"cuda_event_tensorrt_seconds", infer_end_.seconds_since(prepare_end_)},
+                    {"cuda_event_scatter_seconds", scatter_end_.seconds_since(infer_end_)}});
+                if (!trace.empty()) {
+                    const auto stem = std::to_string(trace_blocks.size());
+                    Json block{{"origin", b.origin}, {"input", stem + ".input.bin"},
+                               {"logits", stem + ".logits.bin"}};
+                    for (const auto &entry : std::vector<std::pair<std::string, std::pair<void *, std::size_t>>>{
+                        {"input", {input_->data(), input_bytes_}}, {"logits", {output_->data(), output_bytes_}}}) {
+                        std::string bytes(entry.second.second, '\0');
+                        cuda_check(cudaMemcpy(bytes.data(), entry.second.first, bytes.size(), cudaMemcpyDeviceToHost));
+                        const auto path = trace / block.at(entry.first).get<std::string>();
+                        write_new(path, bytes); block[entry.first + "_sha256"] = sha256(path);
+                    }
+                    trace_blocks.push_back(block);
+                }
+            }
+            upload_start_.record(stream_.value);
+            cuda_check(cudaMemcpyAsync(host_labels_ ? host_labels_->data() : labels.data(), labels_->data(), labels.size() * 4, cudaMemcpyDeviceToHost, stream_.value));
+            cuda_check(cudaMemcpyAsync(host_semantics_ ? host_semantics_->data() : semantics.data(), semantics_->data(), semantics.size() * 4, cudaMemcpyDeviceToHost, stream_.value));
+            cuda_check(cudaMemcpyAsync(host_bad_ ? host_bad_->data() : &invalid, bad_->data(), sizeof(int), cudaMemcpyDeviceToHost, stream_.value));
+            upload_end_.record(stream_.value);
+            cuda_check(cudaStreamSynchronize(stream_.value));
+            d2h = upload_end_.seconds_since(upload_start_);
+            if (options_.pinned_staging) {
+                std::memcpy(labels.data(), host_labels_->data(), labels.size() * 4);
+                std::memcpy(semantics.data(), host_semantics_->data(), semantics.size() * 4);
+                std::memcpy(&invalid, host_bad_->data(), sizeof(int));
+            }
+            require(invalid == 0, "nonfinite persistent CUDA feature or occupied logits");
+            WindowResult result;
+            for (std::size_t i = 0; i < points.size(); ++i) {
+                require(semantics[i] < c.las_classes.size() && labels[i] == c.las_classes.at(semantics[i]),
+                        "persistent source point not reconstructed");
+                result.semantic_ids.push_back(static_cast<std::uint8_t>(semantics[i]));
+                result.las_codes.push_back(static_cast<std::uint8_t>(labels[i]));
+            }
+            if (!trace.empty()) write_new(trace / "manifest.json",
+                Json{{"schema", "synrex.dense_tensor_trace.v1"}, {"tensor_contract", c.spec},
+                     {"byte_order", "little-endian"}, {"blocks", trace_blocks}}.dump(2) + "\n");
+            ++windows_; classified_source_points_ += points.size();
+            result.timings = {{"cpu_geometry_seconds", geometry_seconds}, {"h2d_and_zero_seconds", h2d},
+                {"cuda_preparation_seconds", prep}, {"tensorrt_seconds", inference},
+                {"cuda_scatter_seconds", scatter}, {"d2h_seconds", d2h},
+                {"completed_inference_blocks", plan.blocks.size()}, {"freshly_classified_points", points.size()},
+                {"occupied_voxels", occupied_voxels},
+                {"geometry_minimum_seconds", geometry_profile.minimum_seconds},
+                {"geometry_assignment_seconds", geometry_profile.assignment_seconds},
+                {"geometry_grouping_seconds", geometry_profile.grouping_seconds},
+                {"geometry_record_sort_seconds", geometry_profile.record_sort_seconds},
+                {"geometry_member_sort_seconds", geometry_profile.member_sort_seconds},
+                {"geometry_direct_points", geometry_profile.direct_points},
+                {"geometry_boundary_fallback_points", geometry_profile.boundary_fallback_points},
+                {"window_started_steady_ns", std::chrono::duration_cast<std::chrono::nanoseconds>(wall.time_since_epoch()).count()},
+                {"window_seconds", std::chrono::duration<double>(std::chrono::steady_clock::now() - wall).count()}};
+            if (options_.timeline) result.timings["timeline_blocks"] = timeline_blocks;
+            return result;
+        } catch (...) {
+            cudaStreamSynchronize(stream_.value); // Host upload vectors remain alive through unwind.
+            poisoned_ = true;
+            throw;
+        }
+    }
+};
+std::unique_ptr<InferenceSession> create_session(const fs::path &package, std::size_t capacity, const SessionOptions &options) {
+    return std::make_unique<PersistentSession>(package, capacity, options);
+}
+
 } // namespace synrex

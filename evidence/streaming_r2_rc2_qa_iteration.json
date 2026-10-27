@@ -1,0 +1,9 @@
+{
+  "initial_video_sha256": "4de8f9f2bb247823eb654fec942b95aefd438145d9125e64eceb9194ec8bb911",
+  "issue": "Final overview map event stopped at 400653 due binary floating-point int truncation",
+  "correction": "Round and bound uniform overview event ordinal; rerender full film and repeat decode",
+  "initial_gate": "FAIL",
+  "final_gate": "PASS",
+  "final_video_sha256": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+  "final_overview_event_stop": 400654
+}

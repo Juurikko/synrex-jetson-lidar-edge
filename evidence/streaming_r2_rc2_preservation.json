@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "baseline": "eb4cab0",
+  "tracked_files_checked": 449,
+  "changed_preexisting_files": [],
+  "rc1_archive_and_mp4": {
+    "build/streaming-r2-review/streaming-r2-rc1.tar.gz": "a73aa7ce4b4bfd27377bf2d691e213bba70881ca5fefe817c3f460214b650805",
+    "build/streaming-r2-review/streaming-r2-rc1/media/synrex-streaming-r2-review.mp4": "4840f129c253c903ec4141932a5536d68cb27fd83ac6db0f7223078c7c786725"
+  },
+  "model_runtime_benchmark": "All accepted bytes unchanged",
+  "public_actions": "NOT_RUN",
+  "target_device_access": "NOT_RUN"
+}

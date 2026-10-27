@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "baseline_payloads_verified": 648,
+  "proof_sha256": "a3154646d8be582bb67159a0747cf41553c8211cdba981ffc3860a69ec0bedf9",
+  "frames": 120,
+  "fps": 30,
+  "seconds": 4,
+  "reviewer": "Codex visual review",
+  "review": "Frame 0, 1s and 3s inspected at 1080 and contact-sheet scale; immediate perspective motion, readable first-frame scope, correct semantic errors retained. Full 120-frame proof decode passed. Map glyph/camera refinements reviewed separately before full film.",
+  "final_renderer_sha256": "5cc84cfe702384f23b8c27a074095419a054078ed04f9b88340b4ae062998450",
+  "opening_unchanged_by_map_endpoint_correction": true
+}

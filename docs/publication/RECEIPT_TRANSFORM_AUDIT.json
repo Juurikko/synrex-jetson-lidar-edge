@@ -1,0 +1,33 @@
+[
+  {
+    "path": "evidence/streaming_r2_rc3_preservation.json",
+    "source_lines": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "operation": "Replace seven protected_sha256 keys with stable relative artifact identifiers; retain every digest and original field; add explicit derivative notice.",
+    "public_identifiers": [
+      "prior-artifacts/streaming-r2-rc2/owner-review/synrex-streaming-r2-rc2-owner-review.tar.gz",
+      "prior-artifacts/rc2-reference/media/synrex-streaming-r2-rc2.mp4",
+      "prior-artifacts/rc1/streaming-r2-rc1.tar.gz",
+      "prior-artifacts/rc2-reference/media/thumbnail.png",
+      "prior-artifacts/rc2-reference/media/preview.mp4",
+      "prior-artifacts/rc2-reference/media/contact-sheet.jpg",
+      "prior-artifacts/rc2-reference/evidence/FINAL_REPORT_RC2.json"
+    ],
+    "numeric_and_gate_fields_unchanged": true
+  },
+  {
+    "path": "evidence/streaming_r2_rc4_render.json",
+    "source_lines": [
+      20
+    ],
+    "operation": "Replace encoder installation path with executable basename; retain encoder_sha256; add explicit derivative notice.",
+    "numeric_and_gate_fields_unchanged": true
+  }
+]

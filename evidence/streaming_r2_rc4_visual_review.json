@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "reviewer": "OpenAI Codex agent",
+  "review_type": "Decoded visual/editorial inspection; not owner approval",
+  "video_sha256": "f8c8852a2d5ba55cc524da9a224692e5a9fd2ef9b7be2e844814517c5e39f8b9",
+  "source_video_sha256": "acce2565328a8763b4ce8c44a697ff891be407144a65b1bf5e596bf89298e40a",
+  "reviewed_artifacts_sha256": {
+    "contact-sheet.jpg": "cb8120ed213c7df95f4c42f41bf63d2086afa67a5092bd4d978bb2dd4777c4ed",
+    "rc3-contact-sheet.jpg": "4b739678ca37c540bd34b0d52d691913816089abf7ca7b53ed4920c72e11a6c2",
+    "rc3-all-transitions.jpg": "34cd2839728e1c18f4d6ca3b276fa4c8458b4ba26778d64c864aa93e12d8c7f2",
+    "rc4-all-transitions.jpg": "db28c938c96f72777416dd42fbae16bad6f4368165caf52fa9bf5856f137e41e",
+    "rc3-local-pulse-review.jpg": "9a6d5ab47031fe2bb99de92b0105f09fbb5b0e127f398455b04735dd1bb8a574",
+    "mobile-readability.jpg": "d3ce4e13876ef8753d36a0cf31c9e86b22b0155dfd7914571d8d364c650c4f4a",
+    "rc4-transition-f0840.jpg": "5f058187774bf7b56b9b580892b04be23b2f1f2a027f85b18a79f1792e202bb2",
+    "rc4-transition-f0990.jpg": "c9b783e4c6499c834fbff2d487bfc9a62c5e6d76e92a8d41d3c25c8a1a1043de",
+    "rc4-decoded/rc4-036.97s-f1109.jpg": "4a0ab14495716c6842b0e31eb448c6b6a4ef626649c8c490f955a1c199fbf9bd"
+  },
+  "source_transition_seconds": [
+    5,
+    9,
+    13,
+    17,
+    28,
+    34,
+    40,
+    42.4,
+    45
+  ],
+  "final_transition_seconds": [
+    5,
+    9,
+    13,
+    17,
+    28,
+    30.4,
+    33
+  ],
+  "transition_frames_reviewed": "Every boundary at -2,-1,0,+1,+2 frames; extended nine-frame sheets at new join and closing cut",
+  "local_flash_source_sequences": [
+    [
+      846,
+      850
+    ],
+    [
+      1032,
+      1036
+    ],
+    [
+      1163,
+      1167
+    ]
+  ],
+  "removed_source_frames": [
+    840,
+    1200
+  ],
+  "flashing_effect_removed": "PASS: all 360 recent-event overlay frames excluded; no replacement effect",
+  "map_replay_reset_removed": "PASS: both repeated map-capture passes absent",
+  "mobile": {
+    "status": "PASS",
+    "width": 432,
+    "height": 540,
+    "scope": "Principal titles, benchmark values/context, labels and repository readable in decoded samples; footer fine print smaller; no calibrated device claim"
+  },
+  "numerical_cards": "Original approved 2.4 / 2.6 s timing intact; separate benchmark contexts retained",
+  "final_frame": "Genuine classified building and repository/status; no new end effect",
+  "limitations": [
+    "Agent visual judgment only",
+    "No human owner approval",
+    "No photosensitivity certification",
+    "No physical mobile-display playback"
+  ],
+  "publication": "NOT_RUN"
+}

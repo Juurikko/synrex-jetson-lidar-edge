@@ -1,0 +1,340 @@
+{
+  "status": "PASS",
+  "schema": "synrex.streaming_r2.rc4.provenance.v1",
+  "video_sha256": "f8c8852a2d5ba55cc524da9a224692e5a9fd2ef9b7be2e844814517c5e39f8b9",
+  "source_video_sha256": "acce2565328a8763b4ce8c44a697ff891be407144a65b1bf5e596bf89298e40a",
+  "source_commit": "8e78417e732968d06ff0b9e63f45c394fe03837d",
+  "rc3_provenance_sha256": "c093f3b5d8b53987715eb6eaa968e000308cc0bae39bf401d829145788d4e182",
+  "retained_rc3_frames": [
+    [
+      0,
+      840
+    ],
+    [
+      1200,
+      1470
+    ]
+  ],
+  "removed_rc3_frames": [
+    840,
+    1200
+  ],
+  "map_shots_in_final": 0,
+  "map_annotation_overlays_in_final": 0,
+  "new_rendered_geometry": false,
+  "ground_truth_used_as_prediction": false,
+  "palette": "Original seven-class RC3 palette unchanged; same actual frozen native U-Net output",
+  "comparison": "Approved synchronized height-shaded source XYZ versus actual prediction divider preserved",
+  "original_source_provenance": {
+    "schema": "synrex.streaming_r2.rc3.visual_provenance.v1",
+    "status": "PASS",
+    "baseline_source_seal": "eb4cab0",
+    "candidate_source": "e33679c",
+    "renderer": "Deterministic CPU perspective point splats, Numba z buffer; no meshes or inpainting",
+    "renderer_sha256": "64a1dd6f2a2e4dfe96c433fd8b9c61e99fae9894faf20db9b05304dd25e77b34",
+    "font_sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+    "bold_font_sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895",
+    "palette": [
+      [
+        138,
+        146,
+        151
+      ],
+      [
+        167,
+        124,
+        67
+      ],
+      [
+        44,
+        155,
+        89
+      ],
+      [
+        242,
+        89,
+        75
+      ],
+      [
+        53,
+        123,
+        217
+      ],
+      [
+        185,
+        110,
+        208
+      ],
+      [
+        247,
+        182,
+        46
+      ]
+    ],
+    "classes": [
+      "Other",
+      "Ground",
+      "Vegetation",
+      "Building",
+      "Water",
+      "Bridge",
+      "Permanent structure"
+    ],
+    "scene_bindings": [
+      {
+        "scene": "urban",
+        "source": "inputs/streaming-r2-rc1/qgis-r4-foundation/data/source/TEST-0438_6393-002595911.laz",
+        "source_sha256": "2eb37d235685d10acc04a564bed00f175803cf974d33b7f08f47210b3bd08867",
+        "sidecar_sha256": "2a50ae163116513c063813feed0c62acb614bd72a5e658b0924fca6f37578c93",
+        "classified_sha256": "1986a89888a72cecceb50bc9fef855b44f1f2fa76081f00cda54cdeef9092288",
+        "binding_sha256": "5927306af37a2f04202aac7583419ed015ef6ae39d9a2ecfc4c4bab5f2661d09",
+        "local_origin": [
+          438500.0,
+          6392750.0,
+          11.292
+        ],
+        "points": 83641,
+        "verification": {
+          "status": "PASS",
+          "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+          "points": 83641,
+          "classification_records_changed": 14969,
+          "point_order_and_nonclassification_bytes_exact": true,
+          "public_header_non_laszip_vlrs_and_padding_exact": true,
+          "source_sha256": "2eb37d235685d10acc04a564bed00f175803cf974d33b7f08f47210b3bd08867",
+          "output_sha256": "1986a89888a72cecceb50bc9fef855b44f1f2fa76081f00cda54cdeef9092288",
+          "canonical_nonclassification_sha256": "4331138a2aaee8594f04a7c19c1167229104ba84bde3560c33c08d52fc83d95d",
+          "classification_sha256": "a4427945021d13bf5a286dbb0fcd269c235468e1b290119ee5276f8ca642d60e",
+          "output_hash_binding_verified": true,
+          "semantic_schema": "synrex.point_semantics.v1",
+          "semantic_sidecar_sha256": "2a50ae163116513c063813feed0c62acb614bd72a5e658b0924fca6f37578c93",
+          "semantic_model_binding": true,
+          "full_model_channel_ids_preserved": true
+        }
+      },
+      {
+        "scene": "tower",
+        "source": "inputs/streaming-r2-rc1/qgis-r4-foundation/data/source/TEST-0741_6244-006630086.laz",
+        "source_sha256": "4c23d0b8960c9f04b05e62b41425be9563d03d76afe94f6de1c84d4719af9ec9",
+        "sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+        "classified_sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a",
+        "binding_sha256": "0c6295d2097bac38bc07b0922f7f7b9131aa681bb06d11d336e2aa093bb0950c",
+        "local_origin": [
+          741250.0,
+          6243200.0,
+          2.265
+        ],
+        "points": 85222,
+        "verification": {
+          "status": "PASS",
+          "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+          "points": 85222,
+          "classification_records_changed": 36155,
+          "point_order_and_nonclassification_bytes_exact": true,
+          "public_header_non_laszip_vlrs_and_padding_exact": true,
+          "source_sha256": "4c23d0b8960c9f04b05e62b41425be9563d03d76afe94f6de1c84d4719af9ec9",
+          "output_sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a",
+          "canonical_nonclassification_sha256": "61cf518fb876de0e0a3c4928eaffb5ae99225d919143158635d601cf2ae57020",
+          "classification_sha256": "7a339d4c14096c8ecb87b08d8ef51b206e931023c250cb23788a95abe82fc7e4",
+          "output_hash_binding_verified": true,
+          "semantic_schema": "synrex.point_semantics.v1",
+          "semantic_sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+          "semantic_model_binding": true,
+          "full_model_channel_ids_preserved": true
+        }
+      }
+    ],
+    "forest_recording": {
+      "schema": "synrex.streaming_r2.visual_provenance.v1",
+      "status": "PASS",
+      "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+      "model_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+      "engine_sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "input_sha256": "cc0ef0d0efcff3e683348ec79b3120f194309900f6cb61a172f5af2b6461b873",
+      "events_sha256": "cfad43fc86503f4ab3feef6816eafba2b0195dd42abd436cd0f9a0fa74231d4e",
+      "receipt_sha256": "3f0aacd0b0b46ce18224a40fa69d47bd4401c018fde98f749439cba78339e74c",
+      "predictions_sha256": "4c1c7209e0da8bf7adda458af03341666aa99b0918b09207b21f83efbf7af0d1",
+      "snapshots_sha256": "15d0393566f50907f08250ecef8bf1ff900bfdbdf3ab5e8893047bef10b0764d",
+      "frames": 25,
+      "freshly_classified_source_points": 400654,
+      "coverage": 1.0,
+      "duplicate_points": 0,
+      "dropped_points": 0,
+      "map_deltas": 400654,
+      "peak_map_cells": 24458,
+      "final_map_cells": 24458,
+      "semantic_histogram": [
+        302,
+        101491,
+        294794,
+        3,
+        703,
+        2,
+        3359
+      ],
+      "scored_reference_points": 400654,
+      "actual_disagreements": 21938,
+      "disagreement_example_source_ids": [
+        16,
+        51,
+        155,
+        214,
+        1058,
+        1060,
+        1419,
+        1424,
+        1427,
+        2098,
+        2099,
+        2363,
+        2622,
+        2623,
+        2633,
+        2634,
+        2637,
+        2639,
+        2694,
+        2727,
+        2732,
+        2923,
+        2936,
+        2985,
+        2989,
+        2999,
+        3003,
+        3008,
+        3012,
+        3017,
+        3027,
+        3237
+      ],
+      "map_policy": "Capacity 65536; 1 m grid; last accepted observation revision; no TTL",
+      "confidence": "Unavailable; never invented",
+      "render_timing": "Illustrative playback of recorded frames",
+      "neural_execution": "Native recorded fresh frame classifications; no map label reuse",
+      "successful_neural_enqueues": 117,
+      "execution_contexts": 1,
+      "recording_p99_ms": 274.477963,
+      "recording_latency_gate": "FAIL",
+      "recording_latency_scope": "Includes large JSON event file writes; media correctness only",
+      "qualification_scope": "Short media recording, not a new sustained performance trial"
+    },
+    "derived_map_event_cache_sha256": "43fcea25cbbfec02a331ae0d121182b3cb6f9c9a4ce9456e43ea58db3b4a0fb1",
+    "native_events": 400654,
+    "new_cells": 24458,
+    "reobservations": 376196,
+    "semantic_changes": 6510,
+    "map_representation": "Real classified source cloud with fixed-radius 3px round outlines at actual recent delta cell centres. No cubes, surfaces, occupancy enlargement or invented geometry.",
+    "map_timing": [
+      {
+        "film": [
+          28,
+          34
+        ],
+        "events": [
+          0,
+          400654
+        ],
+        "timing": "4.156687229 s capture stretched to 6 s, uniform event-count retiming"
+      },
+      {
+        "film": [
+          34,
+          40
+        ],
+        "events": [
+          0,
+          400654
+        ],
+        "timing": "Same capture repeated with different 18 m XY crop and viewpoint"
+      }
+    ],
+    "map_focus_xy_local": [
+      [
+        25,
+        25
+      ],
+      [
+        15,
+        35
+      ]
+    ],
+    "map_detail_crop": "18m XY radius, centers [25,25] and [15,35]; cumulative counters cover full capture",
+    "point_decimation": "NONE for primary source shots. Map context explicitly cropped to 18m XY radius; ordinary projection/clipping/occlusion only.",
+    "geometry": "Original XYZ minus recorded local origin, no deformation; cell centres floor(XYZ)+0.5",
+    "camera": "Illustrative view only. Never sensor motion or acquisition trajectory.",
+    "prediction_source": "Frozen actual trained U-Net outputs only. Reference labels never rendered.",
+    "historical_diagnostic_latency": {
+      "status": "FAIL",
+      "p99_ms": 274.477963,
+      "scope": "Historical JSON recording; excluded from accepted benchmark claims"
+    },
+    "publication": "NOT_RUN",
+    "timestamp": "Actual recorded per-source-point Unix ns, emulated replay clock; paired by verified source ID. No sensor clock or per-delta wall-clock claim.",
+    "semantic_map_scope": "Bounded 1m representation, not reconstruction. Incoming source observations, frozen fresh predictions and native upsert events remain distinct.",
+    "imported_point_rasterizer_sha256": "5cc84cfe702384f23b8c27a074095419a054078ed04f9b88340b4ae062998450",
+    "qa_source_sha256": "75abca8f1647bd8f845f26edcdf310ee74873517ab7c939bc7c5fe8f3a3cc488",
+    "map_recent_event_window": 2200,
+    "map_annotation": "Thin 3px round projected-cell outlines, screen overlay, not depth-tested. White first insertion / cyan reobservation; true per-cell geometry is not enlarged.",
+    "model_payload_sha256": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+    },
+    "copc_scope": {
+      "status": "PASS",
+      "scenes": [
+        {
+          "scene": "urban",
+          "copc_sha256": "18fcb489998129b57cc8547088ca8c4888ec820ab2800908f418532fd358f842",
+          "sidecar_sha256": "2a50ae163116513c063813feed0c62acb614bd72a5e658b0924fca6f37578c93",
+          "points": 83641,
+          "max_xyz_error_m": 3.552713678800501e-15,
+          "copc_to_own_semantic_sidecar_parity": "PASS",
+          "copc_to_video_prediction_differences": 0,
+          "prediction_scope": "Same frozen R4 prediction sidecar in COPC and film.",
+          "project_crs": "EPSG:2154",
+          "header_crs": "None",
+          "explicit_viewing_crs_assignment": true,
+          "qgis_project_sha256": "7f2ddddcd7dfa67ef3bab008103ddcff34a877aaedbd5785096bd33691bacc61"
+        },
+        {
+          "scene": "tower",
+          "copc_sha256": "cefd5d5294d181b3ba02a4ce55f59c74d6489736205e405a55a3a85cc4cd56b0",
+          "sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+          "points": 85222,
+          "max_xyz_error_m": 8.881784197001252e-16,
+          "copc_to_own_semantic_sidecar_parity": "PASS",
+          "copc_to_video_prediction_differences": 0,
+          "prediction_scope": "Same frozen R4 prediction sidecar in COPC and film.",
+          "project_crs": "EPSG:2154",
+          "header_crs": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993_v1\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]",
+          "explicit_viewing_crs_assignment": false,
+          "qgis_project_sha256": "7f2ddddcd7dfa67ef3bab008103ddcff34a877aaedbd5785096bd33691bacc61"
+        },
+        {
+          "scene": "forest",
+          "copc_sha256": "06902c4c5c00a25bd4aa0fd31e89934a5064e86f51b1f2ddb8f57f7a5399e148",
+          "sidecar_sha256": "c16264729a368eeb31f3bed81384f1dfd3469e77904b6e1727553b559ef3ae07",
+          "points": 400654,
+          "max_xyz_error_m": 0.0,
+          "copc_to_own_semantic_sidecar_parity": "PASS",
+          "copc_to_video_prediction_differences": 9939,
+          "prediction_scope": "Forest COPC is a separate preserved native export; video uses independently reverified short JSON recording predictions. They are not interchangeable prediction arrays.",
+          "project_crs": "EPSG:2154",
+          "header_crs": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993_v1\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]",
+          "explicit_viewing_crs_assignment": false,
+          "qgis_project_sha256": "7e9e757ccb4797787c4a56590c5df1a34dd760cc41bac26fd255eb8218009159"
+        }
+      ],
+      "map_events_reverified": 400654,
+      "new_cells": 24458,
+      "semantic_changes": 6510,
+      "qgis_scene_correctness": "PASS: independent COPC source-ID/XYZ/predicted-label parity and preserved project CRS; new QGIS GUI playback NOT_RUN",
+      "new_qgis_gui": "NOT_RUN"
+    }
+  },
+  "scope": "Original provenance is historical context; RC3 map timing/crop fields do NOT describe RC4, which contains no map-event shot.",
+  "model_and_source_integrity": "All original RC3 manifest payloads including models, source geometry, accepted states and prediction sidecars independently rehashed",
+  "publication": "NOT_RUN"
+}

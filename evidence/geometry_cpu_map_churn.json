@@ -1,0 +1,71 @@
+{
+  "cases": [
+    {
+      "capacity": 1,
+      "model_free_observations_per_second": 7261400.637260554,
+      "operations": {
+        "delta_events": 51200,
+        "eviction_scanned_cells": 7999,
+        "existing_updates": 43200,
+        "insertions": 8000,
+        "late_rejections": 1,
+        "observations": 51201,
+        "peak_cells": 1,
+        "removals": 7999
+      },
+      "status": "PASS",
+      "wall_seconds_including_oracle_snapshots": 0.007051119
+    },
+    {
+      "capacity": 64,
+      "model_free_observations_per_second": 4944429.368950556,
+      "operations": {
+        "delta_events": 51200,
+        "eviction_scanned_cells": 507904,
+        "existing_updates": 43200,
+        "insertions": 8000,
+        "late_rejections": 1,
+        "observations": 51201,
+        "peak_cells": 64,
+        "removals": 7936
+      },
+      "status": "PASS",
+      "wall_seconds_including_oracle_snapshots": 0.01035529
+    },
+    {
+      "capacity": 1024,
+      "model_free_observations_per_second": 674161.0137877455,
+      "operations": {
+        "delta_events": 51200,
+        "eviction_scanned_cells": 7143424,
+        "existing_updates": 43200,
+        "insertions": 8000,
+        "late_rejections": 1,
+        "observations": 51201,
+        "peak_cells": 1024,
+        "removals": 6976
+      },
+      "status": "PASS",
+      "wall_seconds_including_oracle_snapshots": 0.075947732
+    },
+    {
+      "capacity": 4096,
+      "model_free_observations_per_second": 257270.5175348115,
+      "operations": {
+        "delta_events": 51200,
+        "eviction_scanned_cells": 15990784,
+        "existing_updates": 43200,
+        "insertions": 8000,
+        "late_rejections": 1,
+        "observations": 51201,
+        "peak_cells": 4096,
+        "removals": 3904
+      },
+      "status": "PASS",
+      "wall_seconds_including_oracle_snapshots": 0.199016197
+    }
+  ],
+  "schema": "synrex.cpu_map_churn.v1",
+  "scope": "Model-free map-only test. Moving coordinates, new cells, eviction, repeats, class updates, late points and aging; NOT neural classification throughput",
+  "status": "PASS"
+}

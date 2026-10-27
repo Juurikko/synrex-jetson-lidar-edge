@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "draft_sha256": {
+    "LINKEDIN_POST_MAIN_RC4.md": "58ff35054d2efe6e8651f37666bee8ad0ee54fed588fc8c0b8c053c8b47ecb33",
+    "LINKEDIN_POST_TEASER_RC4.md": "1ce829ee231ea623e130429c87668629fea53a41926df8453b2d971a1940f961",
+    "LINKEDIN_FIRST_COMMENT_RC4.md": "2cb772067de9cc497a1c03aa6d7a7d5b266cda8da5803df887e8161cd11d2ccb",
+    "LINKEDIN_CLAIM_AUDIT_RC4.md": "5c2e62ff6190512fc78ec70993453ac82ecbae999cd8488b936d21ed5a75380d",
+    "THUMBNAIL_CAPTION_RC4.md": "5e9e95c647752864a3856b7f04fe561fd203a412237e76364f60821dcb821f06"
+  },
+  "main_words": 214,
+  "main_hashtags": [
+    "#LiDAR",
+    "#Robotics",
+    "#EdgeAI",
+    "#Geospatial"
+  ],
+  "manual_voice_and_scope_review": "PASS",
+  "publication": "NOT_RUN",
+  "release_url": "[ADD VERIFIED STREAMING R2 RELEASE URL AFTER OWNER PUBLICATION]"
+}

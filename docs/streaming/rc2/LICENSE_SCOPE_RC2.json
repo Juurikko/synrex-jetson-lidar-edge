@@ -1,0 +1,15 @@
+{
+  "schema": "synrex.streaming_r2.rc2.license_scope.v1",
+  "developer": "Tuomas Pietilä",
+  "ai_assistance": "OpenAI Codex under owner specifications and review",
+  "baseline": "All eb4cab0 licensing scopes and notices remain unchanged",
+  "new_original_source_MIT": ["tools/streaming_r2_rc2.py", "tools/streaming_r2_rc2_qa.py", "tools/streaming_r2_rc2_package.py", "requirements-streaming-media-rc2.lock"],
+  "new_original_presentation_CC_BY_4_0": ["docs/streaming/rc2/", "RC2 original video/text/layout/camera presentation"],
+  "data_and_derived_information": "IGN FRACTAL Etalab 2.0; source update 2025-04-05; exact baseline source/model attribution retained",
+  "trained_models": "Unchanged baseline model and architecture notices apply separately",
+  "evidence": "Factual metadata; no new blanket licence grant over baseline or third-party material",
+  "Numba_llvmlite": "External installed renderer compiler dependencies; BSD-2-Clause; no dependency binaries redistributed",
+  "other_dependencies": "Separate NumPy/Pillow/laspy/lazrs/pyproj/DejaVu/FFmpeg licences; baseline notices and distribution notices apply; no binaries redistributed",
+  "blanket_MIT_archive_claim": false,
+  "publication": "NOT_RUN"
+}

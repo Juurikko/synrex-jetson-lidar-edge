@@ -1,0 +1,83 @@
+{
+  "cases": [
+    {
+      "capacity": 1024,
+      "evicting_update_seconds": 0.003045712,
+      "existing_update_seconds": 9.768e-05,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 336210.3836475675,
+      "model_free_existing_updates_per_active_second": 10483210.483210484,
+      "operations": {
+        "delta_events": 3072,
+        "eviction_scanned_cells": 1048576,
+        "existing_updates": 1024,
+        "insertions": 2048,
+        "late_rejections": 0,
+        "observations": 3072,
+        "peak_cells": 1024,
+        "removals": 1024
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 4096,
+      "evicting_update_seconds": 0.012689711,
+      "existing_update_seconds": 0.00010023000000000001,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 80695.29715846169,
+      "model_free_existing_updates_per_active_second": 10216502.04529582,
+      "operations": {
+        "delta_events": 6144,
+        "eviction_scanned_cells": 4194304,
+        "existing_updates": 1024,
+        "insertions": 5120,
+        "late_rejections": 0,
+        "observations": 6144,
+        "peak_cells": 4096,
+        "removals": 1024
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 16384,
+      "evicting_update_seconds": 0.08280287900000001,
+      "existing_update_seconds": 0.00010476999999999999,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 12366.719761036327,
+      "model_free_existing_updates_per_active_second": 9773790.20712036,
+      "operations": {
+        "delta_events": 18432,
+        "eviction_scanned_cells": 16777216,
+        "existing_updates": 1024,
+        "insertions": 17408,
+        "late_rejections": 0,
+        "observations": 18432,
+        "peak_cells": 16384,
+        "removals": 1024
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 65536,
+      "evicting_update_seconds": 0.34566941500000004,
+      "existing_update_seconds": 0.00011242,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 2962.367960729184,
+      "model_free_existing_updates_per_active_second": 9108699.519658424,
+      "operations": {
+        "delta_events": 67584,
+        "eviction_scanned_cells": 67108864,
+        "existing_updates": 1024,
+        "insertions": 66560,
+        "late_rejections": 0,
+        "observations": 67584,
+        "peak_cells": 65536,
+        "removals": 1024
+      },
+      "status": "PASS"
+    }
+  ],
+  "schema": "synrex.cpu_eviction_service.v1",
+  "scope": "CPU map-only operation service probe; actual changing coordinates and verified LRU removal/aging; dummy classes, no neural classification claim; short probes do not establish sustained stream rates",
+  "status": "PASS"
+}

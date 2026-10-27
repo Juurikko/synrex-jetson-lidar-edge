@@ -1,0 +1,13 @@
+{
+  "schema": "synrex.eviction_access_resolution.v1",
+  "status": "PASS",
+  "earlier_condition_receipt": "eviction_access_blocker.json",
+  "resolution": "Owner completed the endpoint-required Tailscale SSH identity check. Strict verified SSH access restored; completed stable receipts retrieved and closing experiments resumed.",
+  "post_auth_preflight": {
+    "gpu": "RTX 4090",
+    "utilization_percent": 0,
+    "used_mib": 130,
+    "reported_linux_compute_processes": 0
+  },
+  "access_policies_or_host_key_checking_modified": false
+}

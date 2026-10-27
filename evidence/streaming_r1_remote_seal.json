@@ -1,0 +1,91 @@
+{
+  "schema": "synrex.streaming_r1.remote_seal.v1",
+  "status": "PASS",
+  "native_source_commit": "f39fa29",
+  "gpu_after_all_trials": {
+    "sample": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.92
+    },
+    "windows_desktop_processes": [
+      "ShellExperienceHost.exe",
+      "dwm",
+      "explorer.exe",
+      "ChatGPT.exe",
+      "SystemSettings.exe",
+      "ShellHost.exe",
+      "SearchHost.exe",
+      "TextInputHost.exe"
+    ],
+    "reported_linux_compute_processes": 0
+  },
+  "qualified_variants": {
+    "d4f7b87": {
+      "source_archive_sha256": "8b644cd0b2d654b36bab52c7a6357bbf9590ff8db3ee23d517d59f6e9ecde810",
+      "source_files": 358,
+      "source_mismatches": [],
+      "binaries_sha256": {
+        "synrex-live": "746f7cfe05243846a1161d1153018304cde4d365dac1b1310b07e3410801a76c",
+        "synrex-sustain": "7c8cb5905a5c0bf18287fa6ddf7823f726b892d79d09789193d31e2395714be3",
+        "synrex-stream": "c03a4786cde8b10a54d60389e2915248c6690fc96b08d09a21e2c90e00ec44ea",
+        "synrex-native": "0da2bcee7de038dde3d776817ca377ab2ad6733041c32f1526a373135c9c1da9",
+        "synrex-stream-gpu-tests": "8962cf59e7fc9396f198f54c9fdcfb2aa0004424e5730699ae0412179c743965",
+        "synrex-laz-labels": "3b01069e41f58572ec64ef67cd89f8393d7a0073e344c321d2212414edb13855"
+      }
+    },
+    "7b32215": {
+      "source_archive_sha256": "ed70bce817655c7c3f8187e31aef4019ae65e807d6a3eddc799c925e040f560c",
+      "source_files": 368,
+      "source_mismatches": [],
+      "binaries_sha256": {
+        "synrex-live": "c200cbdca492fcfd734e870efd991027c95a481b069a648b565986a95ff739b2",
+        "synrex-sustain": "b92e199fffecb60ac85379873c548b52b57247b729b82ea7beac9a9b5493055e",
+        "synrex-stream": "13590867307c5b075c86b8e9f3535797d92246f87d9938f11ab86e889f42ab6c",
+        "synrex-native": "8f1f58aeeba7604680e8f38fabd27f4950adf5be85207c62371c74f936dbb2e8",
+        "synrex-stream-gpu-tests": "14a97590b6c2a7f732112038cccd7b0328ed641185dc1f39f2ab43e910e3ad6d",
+        "synrex-laz-labels": "3b01069e41f58572ec64ef67cd89f8393d7a0073e344c321d2212414edb13855"
+      }
+    },
+    "f39fa29": {
+      "source_archive_sha256": "3a0037ab47913ffc4ba983fe551b50770ecde7fe431d684a7547f4c9ff152c60",
+      "source_files": 380,
+      "source_mismatches": [],
+      "binaries_sha256": {
+        "synrex-live": "85d09ceccffdceee7ce780746b3b495bbfa613a8e9e3b555cdcb779d50f204f2",
+        "synrex-sustain": "bbdc335b2f5f6b1f1698bfa69c160ac10a77e89261ff0434ffab6659882262c1",
+        "synrex-stream": "bf79f49afddce5144397468797182c9865f016361c9aec562aa38ff333c40bec",
+        "synrex-native": "5b77bebe8434669e44a4a6f165193579ee446dcd5164f671475a1d83b189b756",
+        "synrex-stream-gpu-tests": "74e61e1b77396b336f64bb4d4a126a46ba687031396b2931dd2cca8647809be9",
+        "synrex-laz-labels": "3b01069e41f58572ec64ef67cd89f8393d7a0073e344c321d2212414edb13855"
+      }
+    }
+  },
+  "models_final": {
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    },
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    }
+  },
+  "scene_sources_sha256": {
+    "TEST-0447_6390-002819414.laz": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+    "TEST-0437_6398-002899556.laz": "a20166855fddc71a7136f9a7eacc0b6f4ac9d101324500331762736b1755b46f",
+    "TEST-0944_6564-005900112.laz": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274"
+  },
+  "auxiliary_tools_sha256": {
+    "r1-close-controller.py": "cd8040c83bef1730feefe9e8d1b7d8520f8743ac3ae98d77655875e0e5118b02",
+    "r1-close-controller-v2.py": "6f0e41d5db63b93ee8b55389801b60c31e87f3e71b9e741d4f11d5bb6967fc50",
+    "r1-export-close-tools/streaming_export.py": "b3bd45a21f5ce2069d7c78a5efb01ffc534dcf4bc2a6bb82705e49fc57f9f9fe",
+    "r1_close_export.py": "f42024bb47340bc6f0c56c89cc87795e1ecd089d0efad55b626d74a3108423f8",
+    "r1_close_export_v2.py": "54087977ecc1d5315278037a0a661278bae10388f4ae9cc9882bc086b60b4b40",
+    "r1_model_only.py": "cce9064f57fc9d291bd99b50176cb834bd64909b8fd4e43d7cf2f1fef788e058"
+  }
+}

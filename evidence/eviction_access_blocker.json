@@ -1,0 +1,22 @@
+{
+  "schema": "synrex.eviction_access_blocker.v1",
+  "status": "NOT_RUN",
+  "scope": "Only receipt retrieval and optional closing experiments after the completed stable campaign; existing physical GPU PASS evidence remains valid",
+  "completed_campaigns": [
+    "matched frozen/indexed original churn fixtures",
+    "adaptive 65,536-cell churn through repeated 1M points/s",
+    "stable A 2M/3M, B 3M, C 2.5M: controller exited zero after all 12 native PASS lines"
+  ],
+  "pending": [
+    "retrieve complete stable receipt and metrics",
+    "2M/16384-point full-capacity revisit",
+    "post-fill cancellation at 6500ms",
+    "final remote source/model/resource seal"
+  ],
+  "blocker": "RTX endpoint requires an additional Tailscale SSH identity authentication check. The check was requested from the owner; no host-key checking or access-policy changes made.",
+  "verified_fallbacks": {
+    "configured_forwarded_endpoints": "Both reset connection before authentication",
+    "ordinary_SSH_LAN_with_known_host_identity": "Connection timed out"
+  },
+  "preservation": "All remote source, native binaries, models and receipts retained. No running compute experiment remained when the authenticated campaign session completed."
+}

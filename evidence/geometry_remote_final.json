@@ -1,0 +1,29 @@
+{
+  "schema": "synrex.geometry_remote_final.v1",
+  "status": "PASS",
+  "qualified_source_commit": "3f97a490860529505b1ebfad03e2726e2081dbe2",
+  "archive_sha256": "56e14e26298ca2ac3f1ec26a46863f0ef2bb350d83406d721451eac62f1c5c25",
+  "archived_source_files": 298,
+  "source_mismatches": [],
+  "native_sha256": "8309bad9253e76c45c1255906924cf8db700e7850809fd71e7411e28306b6bf6",
+  "sustain_sha256": "a52d815dc923931845a85d1e080ce8d61c8ad6c9e95de95b226d263742a45a97",
+  "models_final": {
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    },
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    }
+  },
+  "r4_gpu_regression": {
+    "status": "PASS",
+    "passed": 5,
+    "log_sha256": "78f68d4ea9df2d7cee6f0cc6f40bce4ac355abb97b6d425be77793937e7ec68c"
+  },
+  "gpu_after_regressions": "NVIDIA GeForce RTX 4090, 610.88, 24564 MiB, 130 MiB, 0 %, 3.89 W",
+  "compute_processes_after_regressions": ""
+}

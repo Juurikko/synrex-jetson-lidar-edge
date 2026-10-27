@@ -1,0 +1,60 @@
+{
+  "schema": "synrex.streaming_r1.sustained_parity.v1",
+  "status": "PASS",
+  "baseline_native_source": "7b32215",
+  "optimized_native_source": "f39fa29",
+  "cases": [
+    {
+      "status": "PASS",
+      "rate": 1000000,
+      "cells": 65536,
+      "churn_mm": 0,
+      "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "input_sha256": "49c234ad5c29cf57fdca6879b1736e1a887b40014825c093298e05a325cbacf9",
+      "output_sha256": "27c170f248fbb94fd8ec9e9d90fdc299052d3a825864959aec55d75f49567ccd",
+      "snapshot_equivalence": "Each independent subscriber verifies the full final snapshot against its oracle, with identical complete source/class/delta sequence; optimized repeated snapshots also hashed."
+    },
+    {
+      "status": "PASS",
+      "rate": 1000000,
+      "cells": 65536,
+      "churn_mm": 0,
+      "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "input_sha256": "49c234ad5c29cf57fdca6879b1736e1a887b40014825c093298e05a325cbacf9",
+      "output_sha256": "27c170f248fbb94fd8ec9e9d90fdc299052d3a825864959aec55d75f49567ccd",
+      "snapshot_equivalence": "Each independent subscriber verifies the full final snapshot against its oracle, with identical complete source/class/delta sequence; optimized repeated snapshots also hashed."
+    },
+    {
+      "status": "PASS",
+      "rate": 1000000,
+      "cells": 65536,
+      "churn_mm": 0,
+      "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+      "input_sha256": "96a13fb4f829ece904d51462ace6a5f4f525476cf42b1db94767998d572c88a0",
+      "output_sha256": "79e75b4ca960d6bb08c99245d9e317990c10eefc88c991cdca527fa161e1af38",
+      "snapshot_equivalence": "Each independent subscriber verifies the full final snapshot against its oracle, with identical complete source/class/delta sequence; optimized repeated snapshots also hashed."
+    },
+    {
+      "status": "PASS",
+      "rate": 1000000,
+      "cells": 4096,
+      "churn_mm": 64000,
+      "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "input_sha256": "cab1e761d8eca5ba92b3b991bf6ac0f2d7deb41dea64881f48f13d619693a56c",
+      "output_sha256": "784f66d610e2b0a91c11234e8406fc2e57d70eab9642cdd6ee21853985088dbd",
+      "snapshot_equivalence": "Each independent subscriber verifies the full final snapshot against its oracle, with identical complete source/class/delta sequence; optimized repeated snapshots also hashed."
+    },
+    {
+      "status": "PASS",
+      "rate": 1000000,
+      "cells": 4096,
+      "churn_mm": 64000,
+      "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "input_sha256": "cab1e761d8eca5ba92b3b991bf6ac0f2d7deb41dea64881f48f13d619693a56c",
+      "output_sha256": "784f66d610e2b0a91c11234e8406fc2e57d70eab9642cdd6ee21853985088dbd",
+      "snapshot_equivalence": "Each independent subscriber verifies the full final snapshot against its oracle, with identical complete source/class/delta sequence; optimized repeated snapshots also hashed."
+    }
+  ],
+  "independent_oracle_checks_every_delta": true,
+  "scope": "Identical version-2 wire contracts, timestamps, point windows and map configuration; host arrival/publication clocks excluded from canonical digest."
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "synrex.streaming_r2.media.v1",
+  "status": "PASS",
+  "width": 1080,
+  "height": 1350,
+  "fps": 24,
+  "seconds": 54,
+  "decoded_frames": 1296,
+  "audio": "None",
+  "text_bounds": "PASS: all rendered text boxes within portrait safe area",
+  "minimum_text_pixels": 22,
+  "all_unique_text_blocks": 97,
+  "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+  "secondary_source": {
+    "source_name": "TEST-0741_6244-006630086.laz",
+    "points": 85222,
+    "source_sha256": "4c23d0b8960c9f04b05e62b41425be9563d03d76afe94f6de1c84d4719af9ec9",
+    "classified_sha256": "880ba03c12d4451719bb60d15c744619b661fb4e96d068a6e4e8228d3e39549a",
+    "sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+    "binding_sha256": "0c6295d2097bac38bc07b0922f7f7b9131aa681bb06d11d336e2aa093bb0950c",
+    "model_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+    "origin": "Published and independently reverified R4 native predictions"
+  },
+  "verification_sha256": "0654cc0a9c55a4870ab8308fae34fa19e77250c60396d76a9cca344a6cb5b3eb",
+  "qgis_image_sha256": "1dd8cfb24f56a3c96903de74eb4f38a06577865b8bd37f44fc745a35ac7ebd0a",
+  "renderer_sha256": "8f543a763826a8ab9f7923006a9df30606e96adbbd649a83d1dea294ae1d1a06",
+  "font_name": "DejaVuSans.ttf",
+  "font_sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280",
+  "ffmpeg_version": "7.0.2-static",
+  "viewing_decimation": "Every third source point; all source records freshly classified",
+  "camera": "Illustrative orbit only; no claimed real flight/physical capture",
+  "map_frames": "25 independently verified recorded native-delta states; slowed playback",
+  "scene_quality": "Actual reference/prediction disagreements; not GT-coloured predictions",
+  "files": {
+    "synrex-streaming-r2-review.mp4": {
+      "sha256": "4840f129c253c903ec4141932a5536d68cb27fd83ac6db0f7223078c7c786725",
+      "bytes": 20719463
+    },
+    "chapter-51.png": {
+      "sha256": "b8e5436a9d167239429f591aaf54660556d2fdeec198b02c445a97abcae10341",
+      "bytes": 182423
+    },
+    "opening-frame.png": {
+      "sha256": "17fdef683f313254c5e7a25fc7f1f3092eab4f7be78397abd62d7a2d65480252",
+      "bytes": 382019
+    },
+    "chapter-02.png": {
+      "sha256": "b1ad84c3662dbeef39f4c70513ecaf17bb5211de12e3eae84dea3ab151756ba5",
+      "bytes": 382009
+    },
+    "chapter-24.png": {
+      "sha256": "169ca65326ce6b941f636e36e79daa6c331990234809c1b74d6ae65be307fbe0",
+      "bytes": 148556
+    },
+    "chapter-39.png": {
+      "sha256": "e085b555c4d4d182b8184e501e2583195185da94f6c1e3b5f33004b619cc7525",
+      "bytes": 122621
+    },
+    "thumbnail.png": {
+      "sha256": "c74f97bf1fbd4ded1ffa0fd0a82441329ce7aaf2d7f50b61feb723b322ab6335",
+      "bytes": 174049
+    },
+    "contact-sheet.png": {
+      "sha256": "d49a376fb66bb40257051569cf7976d3dcb740950aaebf8fde5c13381f24f68d",
+      "bytes": 897856
+    },
+    "chapter-07.png": {
+      "sha256": "c74f97bf1fbd4ded1ffa0fd0a82441329ce7aaf2d7f50b61feb723b322ab6335",
+      "bytes": 174049
+    },
+    "encode.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "chapter-15.png": {
+      "sha256": "8a5c327deaf0b7eb019eb0c2cbffc84eb7166a596413c566f71eeca05b94bdd1",
+      "bytes": 132467
+    },
+    "decode.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "chapter-46.png": {
+      "sha256": "8c4f27622be1d0bdfcff7e930ca07c14b9d75175bdcc9abdf6f5674fa7143eda",
+      "bytes": 1154202
+    },
+    "chapter-33.png": {
+      "sha256": "09f076054c2f4c78d985234eec64eb8f10ba3becef8b5e3f3dad689d45fa4da5",
+      "bytes": 124370
+    }
+  }
+}

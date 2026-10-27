@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "method": "Two frame-accurate trim ranges and hard concat; single H.264 generation from qualified RC3",
+  "filter_complex": "[0:v]split=2[a][b];[a]trim=start_frame=0:end_frame=840,setpts=PTS-STARTPTS[x];[b]trim=start_frame=1200:end_frame=1470,setpts=PTS-STARTPTS[y];[x][y]concat=n=2:v=1:a=0[out]",
+  "source_sha256": "acce2565328a8763b4ce8c44a697ff891be407144a65b1bf5e596bf89298e40a",
+  "video_sha256": "f8c8852a2d5ba55cc524da9a224692e5a9fd2ef9b7be2e844814517c5e39f8b9",
+  "source_frames": [
+    [
+      0,
+      840
+    ],
+    [
+      1200,
+      1470
+    ]
+  ],
+  "output_frames": 1110,
+  "seconds": 37,
+  "audio": "Source silent; output silent",
+  "encoder": "ffmpeg-linux-x86_64-v7.0.2",
+  "encoder_sha256": "e7e7fb30477f717e6f55f9180a70386c62677ef8a4d4d1a5d948f4098aa3eb99",
+  "tool_sha256": "d64a404f978d416042efda2801e7b60cc1970107fae7e44f014d6fc466275299",
+  "added_visual_effects": [],
+  "geometry_or_prediction_changes": false,
+  "public_derivative_notice": "Historical receipt derivative: encoder local installation directory omitted; executable basename and exact encoder SHA256 retained. All render parameters, output measurements, hashes and recorded gates unchanged."
+}

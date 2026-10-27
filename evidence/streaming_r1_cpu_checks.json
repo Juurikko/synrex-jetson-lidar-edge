@@ -1,0 +1,48 @@
+{
+  "schema": "synrex.streaming_r1.cpu_checks.v1",
+  "status": "PASS",
+  "implementation_commit": "7b32215",
+  "ctest": {
+    "status": "PASS",
+    "tests": 7
+  },
+  "asan_ubsan_ctest": {
+    "status": "PASS",
+    "tests": 7,
+    "scope": "Full native suite; final transport source additionally rebuilt and wire/export tests rerun"
+  },
+  "python_cpu": {
+    "status": "PASS",
+    "passed": 89,
+    "physical_gpu_skipped": 5
+  },
+  "final_wire_asan": {
+    "bounded_queue_cancel": "PASS",
+    "bounded_state_observations": 1048576,
+    "canonical_output_bytes": "PASS",
+    "coordinate_transform": "PASS",
+    "fragmentation_eof_deadline": "PASS",
+    "loopback_reconnections": 2,
+    "malformed_envelopes_rejected": 3,
+    "neural_inference": "NOT_RUN: CPU protocol test",
+    "point_and_delta_bytes": "PASS",
+    "sequence_gap_duplicate_clock": "PASS",
+    "slow_socket_deadline": "PASS",
+    "status": "PASS",
+    "truncations_rejected": 6286
+  },
+  "async_export_asan": {
+    "status": "PASS",
+    "tests": 2
+  },
+  "license_hygiene_link_check": "PASS",
+  "logs_sha256": {
+    "r1-ctest-final.log": "6af10d562a4775f3aaa9c426d829c8138eb56656bb393b46a45c1ed8f6c043a3",
+    "r1-final-pytest2.log": "7266b4a4d85274a9ca20edd5528b9a2adb31a963af1bae28908a56a77b68b908",
+    "r1-sanitize-final-ctest.log": "f31f316179ae0005cb70005e60e70a7259faaf2c1db026dab1df8aa0c45e3b27",
+    "r1-final-wire-asan.json": "5881f9fcab4da528286907016bfd2f9cf03a7ad49eed99892a0f04c5818cb72d",
+    "r1-final-export-asan.log": "dca83e9de72b001067ceb0e0fb834819ed85ee10867279b2a5909e3ca66203d2",
+    "r1-release-review3.log": "da74dcd120f494b6607145af2d66383fc158a8152bbad1749b753c0e98075002"
+  },
+  "neural_execution": "NOT_RUN: CPU receipts only; separate RTX receipts"
+}

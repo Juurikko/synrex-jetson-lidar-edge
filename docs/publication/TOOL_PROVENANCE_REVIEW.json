@@ -1,0 +1,175 @@
+[
+  {
+    "path": "tools/streaming_r2_rc2.py",
+    "sha256": "5cc84cfe702384f23b8c27a074095419a054078ed04f9b88340b4ae062998450",
+    "creation_commit": "e8784a9b7eeae54e3c9be588fba69d751ef09d5f",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc2/LICENSE_SCOPE_RC2.json:6",
+    "imports": [
+      "PIL",
+      "argparse",
+      "hashlib",
+      "imageio_ffmpeg",
+      "json",
+      "laspy",
+      "math",
+      "numba",
+      "numpy",
+      "pathlib",
+      "shutil",
+      "streaming_r2_replay",
+      "subprocess",
+      "sys",
+      "verify_semantics"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc2_package.py",
+    "sha256": "5ab6f5c51385340b66b8719351e8f25b8549b4a857829358d60cfaa830553326",
+    "creation_commit": "8c82c26dce9bcafc1b50f0c2b5882a3825dcdec1",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc2/LICENSE_SCOPE_RC2.json:6",
+    "imports": [
+      "hashlib",
+      "io",
+      "json",
+      "pathlib",
+      "shutil",
+      "streaming_r2_rc2",
+      "subprocess",
+      "tarfile"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc2_qa.py",
+    "sha256": "13fffa5c7e50817a00edf686f04aeb2df7747058d2ce0d851b7b7c162b716b59",
+    "creation_commit": "8c82c26dce9bcafc1b50f0c2b5882a3825dcdec1",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc2/LICENSE_SCOPE_RC2.json:6",
+    "imports": [
+      "PIL",
+      "argparse",
+      "json",
+      "math",
+      "numpy",
+      "pathlib",
+      "streaming_r2_rc2",
+      "subprocess",
+      "sys",
+      "time"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc3.py",
+    "sha256": "64a1dd6f2a2e4dfe96c433fd8b9c61e99fae9894faf20db9b05304dd25e77b34",
+    "creation_commit": "7a3dffe2f7ad19852782239311f9ce59c6f36f5b",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc3/STORYBOARD_RC3.md:49",
+    "imports": [
+      "PIL",
+      "argparse",
+      "json",
+      "math",
+      "numpy",
+      "pathlib",
+      "streaming_r2_rc2",
+      "subprocess"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc3_package.py",
+    "sha256": "8e443b7db09345b9ce6e7ad2deafd7ee61e0ea2d825b50ff1a0e62a053933073",
+    "creation_commit": "7a3dffe2f7ad19852782239311f9ce59c6f36f5b",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc3/STORYBOARD_RC3.md:49",
+    "imports": [
+      "hashlib",
+      "io",
+      "json",
+      "pathlib",
+      "shutil",
+      "streaming_r2_rc3",
+      "streaming_r2_rc3_qa",
+      "subprocess",
+      "tarfile"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc3_qa.py",
+    "sha256": "75abca8f1647bd8f845f26edcdf310ee74873517ab7c939bc7c5fe8f3a3cc488",
+    "creation_commit": "7a3dffe2f7ad19852782239311f9ce59c6f36f5b",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/streaming/rc3/STORYBOARD_RC3.md:49",
+    "imports": [
+      "PIL",
+      "json",
+      "laspy",
+      "math",
+      "numpy",
+      "pathlib",
+      "streaming_r2_rc3",
+      "subprocess",
+      "time"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc4.py",
+    "sha256": "d64a404f978d416042efda2801e7b60cc1970107fae7e44f014d6fc466275299",
+    "creation_commit": "8a62143afa4d4033e02b6b492d355b8f04451844",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/RC4_MEDIA_LICENSE.md:5",
+    "imports": [
+      "PIL",
+      "argparse",
+      "hashlib",
+      "imageio_ffmpeg",
+      "io",
+      "json",
+      "math",
+      "numpy",
+      "pathlib",
+      "shutil",
+      "subprocess",
+      "tarfile"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc4_claims.py",
+    "sha256": "c5044a5368cf601754c4187303b433d72910f7d62e933798559b9a835e3fb389",
+    "creation_commit": "8a62143afa4d4033e02b6b492d355b8f04451844",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/RC4_MEDIA_LICENSE.md:5",
+    "imports": [
+      "csv",
+      "json",
+      "numpy",
+      "pathlib",
+      "re",
+      "streaming_r2_rc4"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  },
+  {
+    "path": "tools/streaming_r2_rc4_readback.py",
+    "sha256": "b23c43cd1d528813e4741aebb5e1ef3cee8bd3a619d19002f38da556c820c15e",
+    "creation_commit": "8a62143afa4d4033e02b6b492d355b8f04451844",
+    "original_author": "Tuomas Pietilä with Codex assistance under owner specifications",
+    "grant": "docs/RC4_MEDIA_LICENSE.md:5",
+    "imports": [
+      "argparse",
+      "gzip",
+      "hashlib",
+      "json",
+      "pathlib",
+      "tarfile"
+    ],
+    "review": "Original offline point renderer/editorial/verification/packaging implementations and revisions; author creation patch checked; external APIs imported, no vendored dependency or restricted model implementation. Private-history packagers preserved as historical tools and explicitly not used for public packaging."
+  }
+]

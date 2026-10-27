@@ -1,0 +1,5423 @@
+{
+  "schema": "synrex.streaming_exact_ab.v1",
+  "status": "PASS",
+  "scope": "Artifact comparison/map-only replay. Original events and tensors were produced by actual native neural inference; stress map updates are model-free fixtures.",
+  "trace_comparisons": [
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "e71ad54395df5b581a75cc4351e65b7d226adf8f9aa78cf28c2d835c0bbd8419",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "00b933b3cd06dfb6cb19b7cc8295d1609936d3881f9148ee19970b62d31a4de6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "6da9bc368ba6727f99005470212acc23820c276ec73ca1468e9480e447958121",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "e461ce4cb20d7583ddf38c289fe121a97b559659fce1074202a4070d8528d60d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "908581a0f96970ab57459f0540d68a157e436a7a5c3bc934c438a1493d2032df",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "e49c3c756b77e984bec77464fe91832ff1f475b36abeec11f77c432427230df4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "327aae085c12d27e836c91d88906996fd32c0792210ed7afe8304ff4e6ef8346",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "b66c9c869729db482bec30c03f14b8ed5c73830487bf1c37d98a765a883b5552",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "510f5f3c1baabf8d8773675eb5cdf4efb3d88d43acccf67e3a214cd313e3ebfa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "323761f2f9b08b69f81cefc9289c85246e59623807f0d9e4afaf131c50ab6a78",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "8eef0694625d5ca978a48b3ad93ecad34f51a36b732196e43a20c56eef12c47f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "e422b29ae724a314fe6a42d936f2f26014c46ce4e8a6e4bc3c2380a3b8d1815a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "3bfc8bb9563390bfb5da72927d1c82a6a286e3e318b53cd273cd15b30a30651c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "2785a901764e6b277c798a0626a56511781be00b4ea30a3669e68710ffd9a3b0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "9391e5305d69d9bf483c67cfca8a153cca4b22fd8582c164d0459c2adcb7543b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "c2d5dfc2cc7149f4b441066f3ea55fec8c49840f956d2d64fd482a0b5bfc7cc3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "21cc5511c20762b8d93cee4f141700a9f1f2754f16710844d60c7d6f1ee3ed8e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "72a1d7e6234c78c756419069fc54559738c9556ecd36dd891107b34810aafbc3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "eae9f576344c08f9ededf5585e69571cba8978d03c87f8462c0f258fdebf3d40",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "f5fd2cd36cb20afd6c1d66b803ea7a3ca7e71c49a5768381ade91a3f5e9f9496",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "804457e288aa014aee47936b4c37f4a80d29bd5e591b6470ba6c66681a54b84b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "be177e7732d8c7e0a6f52ceda14ee17596b054c7bd92c0d4b5ce812cdb215857",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "e4fb3dfff6644b6f6ebde7b2fb464a85e9999a83c19cf75d213b305791dd93c1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "65a5c299720f84b712d6b2cfcc74ec4c34111e15a55fe4e32c89780024a174e1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "1635576ea2bd2f01b887af69f60ebf6d7e98e2d60cfc191b47d5bb95540261ac",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "7a44c7abe8c112712ac9fb846cddccd858fe7835b083a777ad5da107825b5dab",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "e1c2fd93efeed2ae0dff70550c61dc8fc4a77656f1a37e7d9af23445bde9211b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "75442a5e4915707e7577e983ae8c5f91fa2a41e3b07e0f3c0a6f09e0a69c2f38",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "b90c4b5482c815506f402b6b5281582899394684e9737d667c1e47d73b449f0a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "2449c3f6ae0e9f42ddd47499bc0674c472c9b912420b962e58b3e5d6482f1d3a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "317b135ac8b4d3626d10a799f899eb28ff9e8e6ac308d41e42de53d939445db1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "8e8f44217d75976011c62659b3c736fd33bb93f099012044748dee6d2191a68e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "b98d6c6afa40db85c49f2663965f3f47d0bf5ae0b739b75d2e28d480cdf81366",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "08c446c165cd6f155c135cdcca5881a43eed6b37452116fdaf1bce51f33abe99",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "00025053213b13cc4df730137c450dd2448221b47d7c7863bae4a89c49e53b86",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "0757da3919e849f482bf31f11a769a00b0af74e0d74e64a1c2e9533e9b817a4a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "91f327fd28afb03b067673d05b8b0ff6540ea300243d27559a028abcf2da2815",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "afc8a57cfac824f1d25927e80550b06f1e168d7b14614611266520d8eafe20e4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "f296320b272bf74841f3054d4261dd229d660851d539342c28e73b6e477252ad",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "581e3738b2d43560bc49af542e7cc22c8bc2725ad9e4177aa4e482f70e03c3cc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "36db0c4fd7623d07a927a5013fef2abce388deab191d678ae4ec740685e7b25c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "9bb0ea13c87ec8abd9ae7202d7cbd105c235ee7d9bf482ac7a4e87979b74b5a4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "939131e4215349841d1fe14a2770f509bf688597f0d39bb546325333b6c633c8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "6c9361e72530fc0f232cdd81f48bf67cc15fa8115e3f0b4a97cfe5b73037a268",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "097ac9aea2f61cf03dca4915de03d4aa1133d372849c3275099a449e9b2bb898",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "4daa6450409e5414446efde0955c7da48771876e7598447da762c02a6935d5ba",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "aff3bd4de71a60dda9bd124a215aafe1b9053e77de77710b020ba8aa4bf0df2b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "6a7534f836f6d37c0256e44540efb48e4df71db0d21c822da70b95a8e9aee526",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "b2d050819253ba6d7a121eb7114ce04e681fed4e1d08a9f043b33b126bdaa2e5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "63eb7437c6bc939c5135b40a8492351936210cdeb7cfd23a31a69afbf65146d9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "44116bddad675ca5cdae712024e6eb1de1fb52be0b5c9556f74bc9418ee40f5c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "0470709b379ee86cf303915759f6e166352eda947184b1cd0050c82903522a44",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "be67d41ca74e4000a835a914da53ddf9e049688cca46c62ec8a30f60b7081bdc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "9a41aaba51d7a2f23d394347a642fc111ec7b078b855979a5dee973987840d9b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "37f952dd73f778bda163fce2d12d70f5a9bd8be9d66bdc7dcc5640275439b640",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "d7a8bc8eff1ae7dfd2f58269525fa183bb245dba49948fe4ff634f063e13bb56",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "cc427de398d6ccbf998240bfcbed92b090b0b8fc6fa7fede158e2ff13b12b85a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "ff3e75eb4ad99daec7823da12b4fd936efa5d87386ac699181c3bec4207977a6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "19e84e5bdf8602238f2e3de683011b0985f7bdaaf7dee831803f9cbda7ef80a1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "a960f39536d92c9e353c262a1796ee8378a8174b40f8603f539bb04f29db464b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "1fd94a55d04b03bbd796231b274c42edbdd5d93cb3b6fad1812b890a747e0eb1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "2bfe90d2441903520fb8dad92191175f4c47c8ee1ce4bda4cac89ae15e5e26ef",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "4ce98eba8cb82bd7cb24a4afa41f2f78867909e0e7e4922e1886ced05709981b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "997d550a5dbd33b5177317708f6750eef64cf3ee4b16b58b68160f1f8300af45",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "010c4745a258ba790ab210726d03206e649ccbde3682958e2833fcb8e4f378b4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "aa9d3bf248ca7cebd9e163c89f13b87a32088f56b5dcf24655025d8e67a238b1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "1811d77fc2d50827bb7a59c53ceeed887293e3c8d28aeff7e7977c0fa33e2ae4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "d80bbbfc07994ea0886ace42bfea1861210555d75a24b19bea816dfac07fcb6a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "dd21b28f1b60b88719233e71b109d81590d0a452ce5dff1557714508170d7458",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "bb5f2bbbfe18f37a401aa2096ba4482cc1d36a9a143aaaf704cf9f196d2bd907",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "5097218739828c87e53d2e57eb7dbfb9be9938e77ec2b6e437ac1e1d077f9627",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "4c134fd16b1d6eafaa160aef66a06e1a8eeb3cb7be6f50fff7618232659f2e3b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "6f625e65ba48f957a25a26cefbe2bd94d5f5aaa0ef85616410ce12e4e6c7f460",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "b317273d7c145b9d2dfb04573f0588b2a501a740db64d22b817b9a898e22338d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "ea5ba7eb24238b4608f34d989770c32cba7d3afb40ea597090630180e18be362",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "aa186cab0adfb7af3a84e2fb3359e94226b192496cf584c5525e46ec59115062",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "6247978410cad0f30909f59434badfe9f7a29208bf94816233e92d78db341b09",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "cb1aea1b56b25c773096a44fb09200966033776149cac42db4dc7728042aea15",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "affe6d5762ea724393d569258bcbab9c466687e475d12138153dcab3c966b26e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "7222c59890db4faf5a9fa019d241c4d00f5c4d4b73162f77e16811f5ba14d474",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "cf673369af4698d6db7da0e1ece80dfb795403ff819d1273a0f0e62c1999bf95",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "5f9268ece7a56a72cabe573949f155d3d451a32c69c8156f8e9d9dd6e0c78534",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "c569cb676779af72fc13a12a4b32e768e1957f249b3b1f2b16df12b1da47aadb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "371cd8039987e1588dbc3905cba73c5d2b56a4cf24189ff89eff5937cae9e1e6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "afdaa677d81f2d09ecdfa60f1a527248699536ecf620ee57733bd2d67b70fc40",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "d702e9e1cc0879f58c74be8e67fdfa8e90cebf8939bc3e9e514b69f3fb5a5c2d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "f8c1e4b250e71bf61272293434ed09e4e6e410e108bc43b6e5e8699e622b000a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "d990164555165457079d1d19637531d7a2b46d742cb2f774e0f55a6a9683703a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "83b718651a5207b9eed074801169e9761accf7b65a0e0616fd1f1e366bcfc66e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "f1499bcdd8f5dcb6ffb9285a997dd7faca595b8cec2258ea50b2e03f35a8987e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "2e2f92e7f6c893e289c61539498139dc469c66b30be424b44767e256bc88174b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "db91c03e98ca706d70ed20c0a613239b720d3a23d7fa07aa451f95eeaa5d0cc6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "fd6ef561362471ee3ac385b129b93f6edaf19bee86d293c8b7fe08b021135681",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "b9c259ba613e892d4a89eb689077eca8f4eb3b1f93a84e27f8d64026b7b6a222",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "086d3285316efd1640131bf5af9490f6e082f7074f48c31b1462d5c6bc88e446",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "07a706a4ac9be3268110bd4298847de4748a42682d5ce71c214cfbf9bc252f8f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "051040a29cab37859bd6205b240bb395c744cc4629ebe704b67c2b31bfe13238",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "387fb3e589d79a85e51d282e1acac594725003d973eae9a606d31ae18664e8d6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "a1c801344163f32dfb674e70859080c37cb235fa726927213e050fc605e9053c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "37dc535a793b0392a522ff4da2c646bf9e136128ee13d794d34cfdf9fe83ff20",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "a85c5e9f77221bac5405a596115965956477fdc56632fe8fde207ba925cd4d3d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "8445a1f75c737638c5a40cfd216fece4f5dc60f1f46fced2188a61930bb6b891",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "abff170a9103e1b22b7a846131061460734eef58c064f864199eb7aa7e5b9433",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "dfd1679c34e7ba1cc9c9fb538c2919ee20e4740ff85e92ae52f9366dd3a83f23",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "df1e0ee2bdffbea1e9a4f0250c46a7f82cc84affbe3637946d1d736b15e6b5e8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "5698e3d51b366742420124626aee4e833893e8b0b03bcc3ed8c77ebf6873c113",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "c4219ea0b2bb07dbe6e36776b01736a22e1f913a01738fed541db9e30b55a50e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "b098fe7ae9045a2857edd7ea7630266997572772be4208c656d4ed42d72ee6e3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "0e6acce53f60779fe6b6a813dfe93daf5969a107ce51b4b6fb7962ff1468deca",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "679eb7214ae73cf59e1d007e7092378b315824c8ff8284b92a4ce4c1e117aa0b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "12c7ed074bffb0cd227524878f1146d2c1d3d45b39ae495842ebd42a04e27a07",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "d229b491e11d3f16a5df9d43496753c087577a501a688f97af3c1ab1936f7ccb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "54850908afc0c59eaeb8bbdc76b77c2d5484948feee78c3ad77c745cb9feba09",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "cca07f7de0d63f2ea2416adddc094cc55a7fd53f03ef185ea02536e676bb9b33",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "0bf5598df86465316eac44c8e436fd556c95bab039db3afbb462fbfcc32589fc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "1d5e9cb4e58724e33498c045637f3dc34b2328dfc711c0a7b43d9471688d5296",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "6fa19779d5dbb9c5d5a239c63dce1368fa3bc0bb5dec64e0c8038ced5276ade1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "a4bbd2c0122be83064b8256af23937c8529103718da0ffd6ca34c8a9410eb36c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "b5c32df3734560d1b23993f880a89f889060d9ede098d08f52b128a0bac56324",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "36f72730cbb4e4bfbd4bbd73a6d14aa20927718d0c5c052a5a03e3ceed7c02fe",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "c22eb22fc0b34242e2a976892ca01dbe6651a25dbe814ce03767de07b3092d19",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "1776d3dcfeb93fee1a88b9bb566cf5313bb928a53ccd7c9c4116614a61e4df4f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "a01f0a07a14d68bdd4d50da21a3a125876f026fb3ae68b10ec14d4f7f26aaf8a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "01af8ca1f5cc9dddde32579a96c8e7e133b9d766949334af49970815e36f957c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "709721e22a5b982444894191581965b1b5991b4df14c6023018cc2d904fddf56",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "60b80603ec238735f980a997205085f300bb592342fc549fd6dea5b4d0ee8b30",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "6bfbd9dd09ea2a91f8bcbd29c6677bf48a06ddb4c44db5ca932bae0e6d914631",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "04ad41d6719acd403aedee35f59637d8c37476f00854b2d9709a0d4b4a97130f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "5823976b5883a10824c3092aa3b1f152860fe504fe0217b1fd217083ba723e99",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "b3ddef94ccb2060a81ba86d658032345c5203bc1004de7b9b62d3a97e1d94db3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "b6d2bff60cff0a1ecb6060b945b4a2a02241f5a544541b82a261ae8537cbf188",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "f1c44fe8dd495fefd1dbe63b600c4fa4f6f8d2f42aac0eb7368b7cc9da07cd68",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "c069ad28490fd854a95a1e3cb1190b3c39fe190064e2d275eb80586cc80c0fc2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "7d1f73f2402ca4c48502e6722854ca15d7c2b9c18b2faea1656062182bd4d3ca",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "cf14a4a8463fcc2772b3a9ae81a9dc998bccd6634f35cc112b79e5ae0b190833",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "0e9e315c21f5e0854cdfce6ed30877ac017a8f29f9a5f369472c22b635a2cd24",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "86e5d192c44414a0c7c6bc9b948ceac6299710e3b9ed6c92d922ec89a06578fe",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "a9f5f3f035d686fdd08dad089aa4b3cd27f54fa571f3c0c5003cc30f65112148",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "44749824a31d590548e45d718a14e14b128c0c047f449ca7252d50dedc50cd91",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "817c2f005a4510d9223cc0d6f97b2e4a16d25606fd5fb0e41a7f303e8fa47550",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "23c95a3ac11dce3b7379c54c7d06035d53ceb0ee0a65a5688766353089a005b5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "1e942219207492325a516f97919e317efa7ca8005e36662817ccbc9277fb0df3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "56831cb3266223a9faa7434b90f3f6f94121bfc0198bdbbc9d71fd6393e749e4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "8f40f3d66ceca232d16c5020540fa2610781e294b9eb820281141c0d492282e3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "96051c06d9af2f676216ac4a5c345156f82bd77aceef8bb97d75b798a9131f5c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "df2a711522e44de9d5640aa4fba85b417b368fe71c8e04b9577661ba90b6444b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "f0b39602fbb91ab7132f960092b7cc2b444b6ae6931b0dd9981fa8bfa341fdf7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "003eb58ed7e646c873f49676dae398d26f6c9f57d799f445b225412f363641cf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "ce1f7c887c7e8337142eb46affb876922ff927147f56c6587e75a3f8b41f8822",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "b4dcde68ec7ba81772edad589954f91cf43dbc9511bef546a835cbbe4054d441",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "a4f9b0b2c9e36224a52306185cfcf9451301e9daf3dbbd7ede3decfea7987240",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "4f2abdb8c9cb0eef86de69e033a4b0497511a26e159798b5290ba116936add33",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "0ff4f63f72936183c5674f65e4205411ae9ec9489a29a3db7af25646f55bbc97",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "3e48564b0f87526639cfe0b9b12d9496db239f4af845a917ff4f278f999042af",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "9275c399be5bbbcce8236a2ad8220a5f0ed7aaf44a3a3f2a7fdbcfe9cb1185e7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "df59b947b3670f2bbbd08738f6e69c3da9f37ca13dfb4eaf34253d73ca7e1530",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "8dc8f78430d9ecf470a24ca90aa53dd12572c5f527dcfc8373fa76698a9a071e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "4b5a4ee34ba31aaafc13ab6f345449ed45af9cb5a87304ed6ce800649879db03",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "eb5bd9e20730053345421fbfdb38c28b224c5ce75d81f276e00f08cc4a68ae8a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "cd869ff4b8e3846ea4591064911fea1d994063b71ec544a29d02d58fdfa88728",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "7bfb5ec63c299d92e2a1f14acefe1a70a58c6f3be8be541be98a75427872565d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "95a32a674f0065ebc336f4f4ef69a3014084c4c1bf2941449332c60d8cb3ed39",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "131e15adf264d8341b1cbbaef7a04b3b7027b49c1ef7e983450a8ee464fff0b7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "907e84e3cd906c6967e1c9b1ac4f34fc1bd5cc2711f908149ff4e8fcdd6ae565",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "76ad663fff74dd93ed0ee4441332d39999470872084533b6fe6d5e0513bc8724",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "808eb5030018b28737f4e201e0cf2440eccf2d512e15949ee62998c865d9c910",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "96cd29582a6a63257c4c34dbcfca0fa5251256967177c4408444b945b77b5ae3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "4d78831b8bd6563be849a64c5e8c4ee2edebf621e7ccb53cd2ae2989e5a7e4a8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "ba0f756932d30e71e2d66633717121bea308a5e3b7225a2bb24ecce852e627b1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "fd0d6bc1b3e23dfdd98cb17ab19cbead7c03a385b5a3c00cad58043e9b8df71a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "24d050d32908db19943677781311c11b948cd01131892f444d1c1f51ae0542b1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "59a2d5f1b6ced4f8e3a031d0797b2be086ee91de3a9954ae0656905396e6fec0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "c2d904c10eb2a1675f6e458201698ef8980d60c10205d94006f335ad532c7da0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "b06f8ac3732538a6502e55399bcacc3b2bee9ded2075b6715a3d84acee40b71a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "06982dcd132a0d4b0fc7663ac38b90fc0ded795b516638ad64f042f4543a9cea",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "d8b72b69b3ba021df8783b6bb6ea72dc57de47bb4e9e7a6d783ed2ac700ed159",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "b0e53994ece41e16a39b10ff6915c43befddecef22db1a37dfd3d78b9b7b1b1a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "39e42076275d000589d78f14c5b619b4aeb413d7479bd4331fe59411be7609bf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "f1948de41ebd64129dcbfe7d3bca6ff634e83dd7570657a8117bf32af1131e93",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "35a8b287b68ac4eb119daf5471e48acbb308023a1eb132d699a4feea3518faaa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "dd8925716b664946253e871a0d5347bbe93f19692b829be991fda3e03aebc341",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "85b903c2e7f5666abe2642b85cb89f2545a4bba8bff72028173b7d9d87f8f220",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "3a55045b2e764a54f46248ed84cc6f1801e486a821bb6f2c2cd0ac54d4947308",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "55d35b23ffeeedabd7f5b1040741949f44f1c1ee7936f34b8de939fa30c07a8c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "115ba1c87d235b67c7bfd50a29509f1ed0bc8bec7fc69f7e866b2f774e6dde3c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "0f016bcd04afb493b6033af75b6fb56348d76f1d09e1c092df6ddac8f091936f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "b9e601367a5c13bb2da583146b62b24a64b85981562626118d16d27064a2b8f8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "0edf69cf353afdc228748848928615ed6505bfc8f8226d4e226f65c9e5f1525c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "9fc0d646a2bc8e5ca4c64358f9b5d14bec0c49092959c869432057ba80c57c73",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "dcc72ede14c7fc28a8878ceae0b37526a2be9d80b8e6e5e4f1d31f70ceaf5408",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "65c61abb1e67de2872cedfa2fc317957bd9481cc38cc9937caaec340224ac6bc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "417a97258bc294339700da396cda4c17a470549bd6588d497e647736fb9856d7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "7397ca44df51302a5be3ed6959c5987ef4744d5e8371b2e2a886bdc2da213d98",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "d2c749d83f40bc59c91535adb9b48c7fa84f5c1369f9398746ed28ed41bfd5f3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "e0a28acf7b9349ddd081fe87123697f501cd7e5ce90428e0e9b05848f8266bea",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "7a2ecf76c66ecd479e35ddf31ee717e55ddc7776ff333e2c5ad9a822cdd027d6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "ac9a70bcf791a27ac82a86b34cfd533def46d43f8fd8465b1e0018ee5cdea2a7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "b200d6469b2eee4a923fa1de16c1aa1e762f447597afc7db02ac3e91d6214c03",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "5adfd9c38ff111f496678354b8d0a32f608a1faa91d0ec1eac0c09264d300a73",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "1e3339c1ccfd467cd36246c21750dab695dd6ee7367aec5c588402cc53922c35",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "0f9c5c7d22002b470846a4cfba305e4b00e737960a55c3f27c79447529537d8b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "8095ca71bc9606cb41e2547aa248968eb410a05c3983dae54120085ebf6866b2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "cbae793295695a1c606934448b3e5b3f9abf94dfe783facc3f9d71cde29fa7c9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "fd93580f085b0e2e3b6eb66e01f5f0869a26f653164aea63444fb0f01cab1dc9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "e908f2be056537343591503d4d1de5bd1126a30242b61f7aded4a72395d71aba",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "c157c4e67bfc64e5d6bfdcdd2637c72834024d35c4d8606241591e3dd66179d6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "485dae768d447b373edc8ec7355d7023345f6dafb416c4c0adf1876cdb57533f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "5c02642245194107051a7c2aa9fdad268bbda1329a3fc31833daf690b789ca27",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "d8de058fd2e6e9b8080b6e2f4a3d9f3f1ad647ab5411bd6fd794a46919694782",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "67c408a70ff156c444c637deee3ff937f8a72488e91f60e479de52e62aead7f8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "4d75a7352a26c89639f9bca35529460accc171446cacee77b0f8455c783afdcf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "e3d6661be74b7991473cdb4a08c3c7cb59dc445895495e349c818842b62176c9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "8ade83723194bd79da1a8023a4395338a06a102e27a3f920058d588a99e97559",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "0d0387f04357d818da730189833b274556200153c72967edfe1dedb502fe5705",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "5a894ca04d80bac83efa065ef762852713aff91d151edf8e323d229bbf1f04bc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "80efa14d52dc2292935cb868c557128c7ae57c4d6b5c7fb8dd9b3ff1fa526159",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "f040a98b449c1b5ef8e59f8a5274d9a2bd6b32c4677e6cf75d31d56bfafca7c6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "a295a3eb2a408a10cc396e7e0007106e1cc3e80a1c221960053020c4d5a1bb30",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "4a1f1fd14ddbebb8dd8ac96f2579bf826a1489f7a7af4abd4407942f035da874",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "ca3a1d82764a066e4ecb2585d0c1113b3dffc994f057eb53611046930bf94723",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "ce1130073de9948c04717f0d904775d81fd2c573a36411cf0a417a36d0bf1451",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "e5e31af870039a48af75e0688905365d49d578701294767cff0feabae720d692",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "ae95b2dfde74edffd12db23d75b1e61516a992622e0ca83cb2801649605f7bf9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "3e902c20b1abcd67c9a4e80f1cc7c326abcf2ce829e81936fb1e430c346398d8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "d7f7bf1d143c09b1ea3588c81614be378c0166ab19f2dee2072efcdaecf9bca3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "6031a80305a4a325c189cf28209b7f3fa75c72e854e73ce4532aec99de6dbd91",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "b33ea5f2258a62a2fcdbb8c54ca726e36b84457ec8200e45a568168492990f24",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "e8ad02c28e3d47c61c4c2ca6a14e73d778235db506158cc4edcd6cbb034b4f35",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "5a44126b9a2273c93fcdf5a3a69dc00ac048930148ec8cc7ce87a50a783c3840",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "f637b9a61401ecc04e85b9028d8f32dff8b4194643c6e86cf5fa9438118b2799",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "fd978054f4322a00e5b62e37c16ae5affb197fe9bca07c496abfaa5c1edaea73",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "8c86906cb4e5b9bfc03c69c529967627fe1c9cdd3b8552bb0620ce6ff4f3c084",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "dc2fd598bc34dd959204e968ef8eb3b66ba1de50732944d4cfde11760ec689ca",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "5caf8dd647e23be31ef562190ffe132402e62acc69fcc3f39e21ea7fa57604c0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "38b8beea542eb59cd69bbdd9e74aa229c126897eaf203f7344b3deee8a4de27e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "4b4e8a6a2c21215a5f4cf64406e163a900daeecc5c72611df7ef28dd85caee26",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "064dd593d396d5cfbd0ececd4764f4019673f8a0725c7f3742635858f82da9e2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "cec0de30bf756a591c7159e7059b641cd30547c5d6934407ad94ceb889a72416",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "29f52ba760e30ac1d780f1befd00216db1ddbdd1f8fd7353c2251e435456bb29",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "b5080ecb0a075e4cac08c8e2e47fd4bbefe7698314e2dc202f0c9c3372b4524f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "b4de1aea7c9b1567e8cf08f2a7a95e30b0cb3bf7e0d3ce08b9a72ad1d7b7c24a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "0ccfded7738d520df5f0a92e0e2414b61eba3ef32458d972cee7a109f12dd4de",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "fbf314bd1e718dc462559f6ab691d21bb6a0f92539465947c3b9feee5a02cc76",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "fc5c2de97ddbd45cc03d111be61e14e5cdaa088ad71c6fa2137bfe3c85f16150",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "318e441e4e454c8ac514f26a158dfe7b54274333d03db1c8cc6cfd8e3e93768b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "cbe2505d20a5698acff2d64fec7a89b85438996ef681819f373bad315319a451",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "da1f620807aeca00b79bd340088553657d6da23e8f4ab19682256140a9b354c3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "c7d724c0c2eb4ee3229a1c67722b253f9034939e90f1b3c8f28041ca188bb064",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "01b7caaaf4e1eeccdefe197cf45b85327c419f9701f6f54f037e429d033fd1c9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "ad3993f91173d27d30f64f40134ef8fc8d2055f87e1f9993a175f869e3f79c78",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "36c1987da84fde606a6dc805b026366b9eb4b088a2a29c62f7dd39290cf45d50",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "eca7be381c34dc8c8562d3fcee96ee12b3efb9aa21bcd90a14487a395a88ebf7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "c6e9f8da5a387685bbe3c9dbef619bf537f408494fd80afab1c6f4db5905e665",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "5ae513acaa36986df6841b267f8761cc78d27238bbc00949e6b0b84d80e586f8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "697d96341437150d1c1795649f595e57cf9bd63baf5f67fe7f17525351b61347",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "be34088f6e9417feaeb9ab0c5b7a449c0b2e2da024373a78e610aa316b339c97",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "1b2c2e5ed3209239037290003cb8441158f46a0c5ca74bfcc83077319e03db44",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "38d1bbf74634415d5066f9d75635d169a5337e170b4a0c91022728463072062c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "1c21c6a6e5539416a586b0b9ae2d74d7afb7ffe5254c201da4fd5e734701ebf8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "5255ee7d20cd6a520ef65a2cca3074adad0ecd07fffe82964f9061641019e4e2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "0fcbb40bff399ff5ea8d453743c7d538d49cf9aacba92815c208ef41eef028ac",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "f54bf27950ea7ed8cdb1ed904dbeb23a2a2542744ff5107ec1f31b1f04c06077",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "7170677748a12c1bfe95bf51b74116a5ee2dd423ce25875a2872f5bdc483f8ab",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "6b36278040e32e4a1c73d8eca1f1d3339f3f290afa47865fc0fc30c914cd6dd5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "da2892f11f66cb28436f26ebb8f55e909ab65d7cc05be2bc99559d1ca9cb5aa2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "53967a2163ad11aa764c2e475f561159965a5134ce4cb5a7186d4c0abc67db42",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "c978b6001aed5b66b97408bde20dce25ee67c1a6825919485759ef6b6c2aefe3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "acdde25e137d3acc619a63bfbd272a5849a9baf1d09fa8426fdae08907df0e28",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "f92bdf5030111410c7a0feb7325e564b937c6ef70a920852dfb2fa8199c538c8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "909d22ff32c979223d00821f3b235a23012277b2d2e8721b7cc5485d3fd6cb87",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "cb32d04922d5b0ebc1f75dd5dd00fed6e49a4adaeabb80898df94d1762ed66d6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "b2e39b9faefebf09f814df2f86dc92813bbd6ddc9f6f8a7b963dc7702bac21d8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "ace9df28b290c4b2302acac619606e675dd042c687da824f61d372ebdbada84d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "af6749f85b311cb17b27ed9c94022c897a3b7fb640d02d35b710af43c3fd2481",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "27e49428374e746da277c156cbf1e44bd0dbe81a7b434f05263f017fcf46bfd9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "f989770452a9e42b364db2ac2f5a6f93eec386e7d36790d3d1d94124ccc29afe",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "1c06fbdde74a1284b1f71b03c2d12a5fe8fa399915c0fa47778fa727ef07e063",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "6357e96cc1db380419dabf74c9d1022be19755404d49ad8b4e6fa3b070e02266",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "5393e22f8908f7a50808dc0f3d1a43906f84c1b9a5898931e6c57b479da4da0a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "6cca6c14c57e9659cc389ff11cb701c647e663c406dc1fc26b7f0007ed2eb0c7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "3861907e3bae21a8a638ce5d063b5f3dde7550a98930ad06e1804a456a70aba2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "b5e29757f8b7122a15d158bd41fa10e5b20a6b5a93d45a6a1767fbd260627368",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "97e6e8d7e17bdc8e54d498f33ce0907bba8dd68f5339674e898fd6388a35c004",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "219681481af2c5b931c112aaaee20e2cfaeab60ac3473bc200bc395c1a41b854",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "49ae748383fa9d11b0d7241d4a942c9907baf8ed70a138e9ff5a04c7f50a98f3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "67deafdbfbdfffc793e81cbc528e554b0d2e36a9b6eaccd60c3aae4a8dd6b8dc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "1443219bcc35199f35c5b0953d7481575a1c7a99266f67b1761903532f28c53e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "e68dcfd2d285f0dcd4d5a463818d425669669b619f6fae7392cbf5d0962261c3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "f62ebe53917ba41f74c2bc400be37cf88a6e6a461d81890a27cba3fa49fddc69",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "55d0c2a447e86eed84cb070218df1da3d5d3b606ee5e47baf2afc0977f29b92e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "7d5cf0edf9fa0ed688cb12181d799ba23a7fd2f5db0f5306ff09ee3989159527",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "cfc6b244721e45c0738c1a8d12ed086f242069365b3b1b830e625f5897d54f3d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "9e0e7c9473f31f1cbceb16ccdb11cd9e609581b4f7e33d79d3f850f02090c97d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "570b603553ebdf4c2785ef05c6d884a472ba5abb93a71924a282aef282b83387",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "9f2c69712b12af7ab8c2a6853f07d7889d59e63e0de1675d50f9274d69a54fef",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "b05f6dd30679a03dedc9e34d73699df9f08945e43075f6d256641f87ae44c30c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "cfb15cfde7ca0e58d5dc39f5321b7929d6dae53f608a1dbc9d781426ad812d13",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "2b84e34d2187bc9f6aac16f4b0bc9ab9e662d6cd68390ab4de0b5b8ae0dcdd94",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "24bbac3d0f4870030af79e97f503f443859def24526c528397cc2f0efc1cac06",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "1cb0319f897539a4bd1eedf10cb78f3142498c81d49b1333a3e4dfb745a47900",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "e6eaf545b00b63d70f2b781877d92c48801cf5be7db59e94082d46af02b2ecc8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "b8297015234d3bcecdd94ec2f117c1706b046263303c690064939f00b3edbfad",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "926a3a89e0f966bf1088a1a18dc70466c0bcb254b014f019dee314187c1da69f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "e3920f5f750b3bc823eef3824d6540752b48e6c062319fe49c30d18242305caa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "a427eb2f2f1972ebdf6e72d78243801f6e658224a44dad171d5ffe3830da6981",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "aefe16e5108964a71e83e2d9f0066dbf8447e021071a9023ca87a30c2aeb5eb7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "a6063df7f380b82fe8384acfd53454251d33932c1da84f38de8ad1f9c85c8ab6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "dd4eea410926c64388a42cea78880194cbcc3631dcb185ebba1a80e2eb98261e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "25d874c380837b9a0bc89e3b9af1efb9d1ce60ce23101c065de35b885e2bbf75",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "205e4d2ed38eb8893d04eb41489832a5a5a276b74aaa1c53304d00c05b00f556",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "0729d4772add96e10b75643aeb4784a6ac862376ab6fccacfb6cc78ad4089992",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "aa19062f7f86a787b7e9de74879465f499d95958d05c4f2bb98030e472b78b18",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "49e0978141a2a10d55c5030a1131d239f0562c7d515a901f63e9db4461a98c28",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "a90f0369b8c3a52c2298ade4837f7045fb91fd7dd4f6a6fd49e43299c798568a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "94a4a6771f29a54220a07e3139b5a5d954911fd586dd85a479181ebc2df4d5a0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "5683cc6d131914f1dba1669d8df968701b68f94ce60d0f40dd81ddc7d0239a4c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "f85b152dff0cc099af1357a89b4ffd564dde926348e615aa7789e04f3ede7e40",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "146be534ceed0fea0c40d24726384af5b7d166db0bc330e3b56230dd9852803c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "6ca2a3af269c40851b18bce8a16f8c3cb58d0f2f4190c29c42db745d0d8a8a1b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "6c10862efc70ac8a49284416ce4fd9ee6fad63e10f5c484e45eea878f033313d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "1bb46351aaccb98ff1aec538fa57e18e22805674ec173557820ef09f582ea623",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "b0b4d68dcc37758ffc2e1838e5d931d43f679b1c4c9940b1227ec77fc0e9e4a5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "4aa2050f5d57f848fbb5d0f3e4fafbcaba859c529d05756773b521ae323f93d1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "0214fd8d21c2f105ec6e48416dec206e08973b95d7ade4804fccf863cd36488f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "185387fb5123a32410e9cd6361cbcc6b9d597d53b5e089cd790455631b880d80",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "4c1b7956c542a3e39c16f68a3acb0598d292e94f7002e7b9ae3f3a6296bb4b59",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "87f04d1f2a692aa064743a7ad007c116712754a33cc95fc6729003670f7fa945",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "c01a98cf3c0cb95b349921fdccae803bfd63d37c1690543c7888cad18f6046aa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "025fc99949713aa0bea21933f59b4b2ffa31b1d7978c9285885aa1868b01e59d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "265bff2a4296429403034c286174615251b30413aadc01b62a964fde306925e8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "4c356749b547f3e3378e04167b4b5190cbdfcd375159a942ea7f9d788ad5e9a3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "f5fec00c21243879c4c734acb17b8ee560e92fcc15048a6d8e6391b8279e5de7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "1d0d3c07baf57f44342b61b0b0fe8ea3afddda17eb99db3c9fb9355ff112c011",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "1470a82db5ea46011d0bf4c2ea1093d9d3dd2973b735963b46a238b0b223b54d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "bd183c4e725122ce9fe412a167443b84b543452de38c61b7430cfcd7aa1e17fc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "a47c26d06cfc51a0fd352f936a519dbf4e095232d483088052fba45fcc5c2e3c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "7d06f76bfddba80112c13b14d41a23d2bbaff5a36a507c33919527993de3d574",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "5f76743ca40267ca5c6ca0305208e583e1a2c0a4ecdca992736427857e5e59e9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "68cd8d76f90f0219e9512b6e61b0143c27df324adbe8bac5ff3bb97f0e79ec42",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "95b35d66aa88d7d8f08d044d2aae370bc9a1166ef8c4fd9371bd25dbcba2c54c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "12c2ea762ff78cc6a0dd0f7b4b2922c1ef83923af3d84308e1a361c9034771f9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "b266aad656a6e1869491c0b98a9b9c16d1bf8eb9af361912808633a37d16c4a3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "49641525c9f2774a51ef5e3addec8659a343e8072ffcf360a8aede8f62f0f578",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "e999ff5f132f529b7d1e97f69444be2415c72c9ca720b7867f8de25ec1c45f0f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "5bd59d956a15645e133f6b0809a368e93e40a590b920005ce74fcc432dae4a58",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "870e8df6f318907f520ef00cee71e90a1800a30dddf901b90fd5290ec9701a20",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "8c94a8526310056577cd4745c8cbb2d917db1c20a84a4f67c7b3a11e3a773baf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "5809bea0b633aab134d3d305663d5971d64f023390a1c287c8e419a5dfd2e9da",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "f9ae38ad83cac812cb4f63bd26ba796dc889ec12084fd034de3d8dea98aad4f4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "6c0525be9c2d388c796a75f0a484086306ddc412feb7fdfb9a04bb84338e66f1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "c1dd02fc1f5ba133766c2e0fda89473a75e88d038bba017230bdb520df15fc64",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "a68fcfbfa96188663a642fc7e2272b26fd1a2e8c93777e58c8bd88c570235e6e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "48af18dfec3a83b770a2eabab210fa2784da894da6641b517c04ee97514f531e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "4ca8cc8a4f52cb8b1ef1ff29d26cffd16ab5c908119b68cb4a3176ac169e1f73",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "be0fcc2bc2824df6eb623795dc36513debcb1b2ae8e9a086685c997bfeab3e50",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "a6d353df2ad47259050d06aac9281afad797475d47ae90aac2e5475a21909cc5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "f73c099677083071184b4750e127a4b3675c67e52eb94d8a23e7ab2403efbbb6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "5fd314ff8c956c34e6155d9fc5a8cc0776f5ff8842e7f98a21072ed66e729e01",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "d048353d63acbc79167b2057bebbb55b51ffe10554b8ab6bbf03c6b7f0162043",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "88bcd52570d28528f7b4a52324f0411554825e1b3f3441c3ed2189a1b55ee72f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "67f087eae7d1ec46aff76d22b0bfa9849904d4478f1a07d7e4fec2876ffc4ef2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "251e4e65c30e615ac3d533657fb0000c00b9a0bed0c16424d706a2e264fbb953",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "5844cccc87da0a2d9998a3cb239015cad63d1a621615aab60e0e2220ee103716",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "8b338ccfa97f490822d222058fdcd0f6a089af7a5603f903fec1cc00b85baebc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "b87d49c27417156a9a6dad35ae54f06b3724d81dd34e08407ced1a99fdfd7c6c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "e306253c61a5077e19f6501eae6b702c81dace4d02a1baa411a33e9f3e5ee167",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "c04dcab78a71a6c0eb977a41e8102429021827937d52fc293593dc9801f66568",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "9519b1bed92d70280c68d9aa77618dbc1c23e9ac965d6759b2a28044f0a3f7cd",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "8dae852a6d3e1ccb5479cb5ec0d551240fa55491483e9e64a10636677fee650c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "ed358eb7bc565fba1083ccdeeb7b244f2508f1cdc79a1f4a56c0c09726c60036",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "429395b3bb53e183de15ba25d7c9fc4ce35316b7c5849893b1de4236b7ab576d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "096fd0a044643e76db88d55385a716fbdcd740282822ed1434ea79171ed49951",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "8d5098054db5568b662a5b5abd9108fc508f0e4e1e312fa0ab90991fa5b14783",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "3d4d512438d34ce0c01bd8c10700e02162ac077c27260171c5ff2476c6172fc8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "d7b6793d44b84ed25857d716a52fdca458dd3f95e221b938fb57e1531b633452",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "516fb023bc58ac8c4cd204a3d2231294a942bd5752d89b9416cb80b8dd866dfd",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "a4b7536effd93bbd212ee2a9c8f9fe07eebabc8ec1b6b8fa35cdce36b502a379",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "0e0ca753fc26f74a9bdf4a441d16913f714a2fcb08491a34055e3b8fed4a957c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "6a1e97ffd41730ce6553b604a18d70c920c23b2ad8147d6d864d76063edc00be",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "ad5b10375e10e4fa7f41a6f7e39417672d7e92abaa7541173b7aad35575d6646",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "3a7a9c44904fc9024ddc949daf0ba73c79ffe6497fcb1bb20b88c487892aa712",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "79b451174ef5e5f4afb514260d9833b107cc3600eaffc26be43b80b191dca16b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "1f4b121863d9a669fb8becb9a660a1d88843ba47b0a919662d653177e145f9aa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "4324d57b215c751ac40c2dc46ab0337dd9453ce3eca90e520e5555bb5bab483f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "ac4fa3b4e058abd0219c3dc93036203ee7b987f3aed6e286db715c83c31c63ce",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "06ccbfe00603d10c153cfd5698ca1d6e20d65a97826e9b4b7158b7e9fbe0f199",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "34228d0346ce8a33a632ec525bc52eb8527e1108089f28056a9b91b1a5f4d5fc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "d008449e9d670b3209394658c9742685058e6b5c11675df9b0f2fabc33e9a893",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "480359e75db7ff429781c5b3f0cb906d85bec5d20c7a30d78c73a1e5de9ba191",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "eda6dc1c80392656743a40f3ef06a86d6df803b56747f9dda2862c8992c5d2c2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "3930ecaa44561fc270088afda13354767d36d624da812460482bbe8e896da89f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "5a8d95ad563206a4d09a8a90b476313191ffad633c80f80b3aad61060e2d72a4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "40bc2e20ba2ffd4452cba0e753a9acb4738ae01ceca87abac7eef8bdedad9f6b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "88f69a4a5e622cc54c8d2fe2fb003f1fbde15d9888eeb491b762ec35913cd26d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "1c2fb9777197999dbe88e76804b66e6fd44d8af318be3f80fe7999d56d542c73",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "c88992774aff704e7f96c9bbe6296344dbda854d6732d911535d7f27aa66cf82",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "c5d832029794b158fdf52d12cfd51a3f4ad0f86c4137c5d19909c8eb6c81009c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "02f9fab9f2a0960f3bb3110b277243b2ab692e04b9f4e4084d02e7db7ce2852c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "3c39cda846fa5a64b744870b59f1b0a6e1604aaa04b0a44feaf94f989c52e703",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "c4297388a1ad686937830dc31af5c5e2bfc01523715a4f8a7999539fdc02d0cc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "3e5b09cd41448f28c105c2a88b5a7ee6daae9b22c8a6277b6feeb005f5ef89e0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "3c13566c0687397469f34a1207f99e2809f1d8fd8053e914157f84a50db809db",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "311a788e63f6dfc34279539591420f4a03c4a3ed4fce9c4a61832cfeb2e2531f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "3599356dd87fd409e9a8ab33819e99fefb77be692173caf08fd673f55eac0955",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "239725e450393e9da88c780806284683d1c9ffea828f00284dc301bd070ac87d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "f714629d4f6239cd548d6342be549d31096402c7f3b58042eeb5e99f496911d6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "1262c6dcad16427bf6de9adb55aaf789fa342f5ffd0dce04d3b36be3e494e5e8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "6f9348824057ccdd43ff1ae47a3e8f2b8e5ee9092bb7fa8b48b2ea6a096f49d5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "cc54cb25a711224a866ba4edf8c56c78663fdb933098414ac1579b7cfb482d1b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "67bb50c22033ef0e7648626b708c47b0c2625a38a1037a777e2b937ba53469b6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "1a3e91a61b3d9c254f9a91fbc1a3af6c113ffb22af4bade2972e79836efe4dca",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "21efd90830fd44885f8b8dda7f9e8b559f81ec8c81214a66de77bb897e425982",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "ecab9c068877ff4a99eaa03f39005791cadf8613f4c987aeab0aa5ccbe29e36c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "04fbe0d856078a8eb58036c9e17adee0d843679483539a3b082774bcf483fa72",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "a6b48dbfb967e6fa8165f7b41cb739ba0e6b954445a06cdcdd65dde039eee414",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "2cd718488db49a840d80e2171d97c2f880139778d84247af3f6d93ec4d8d878f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "c0f90be18990c13f2eab9f06a19b498ceb4a9327af0235400fd5560bd8bdeaca",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "ed3ac162623d480d6d003565b2c12be3d7d2f8fe068ff2e7fe07bee9e26a7eaa",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "67ab5d6a082eb2b15d8bd7a8364b4a5b3994a21de424d770590f61f133a401db",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "577055d0e14795ed0712d7d7ec84f5197f38bf99a1f25b595045a31a1b1e5550",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "674320a3bdacabc26cfdea6f426de9b67d75202a0be5f7ff1d596f144938641c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "a7d45361049818bc638f3bc0221a75b8ce254d7a9970a93bd8c0fb36273dc0f8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "9cdd7766eb3128188c1a6e6d32e38193bbf465d238446e73e3ee98f67cbc9f3c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "db13a38fe770f9dca5d2bb160b5866bf368c3f563cef763fe1edc4d56e8f2fed",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "756fd20bb695da0d404caf9ed0ea0aee88300224c3f0816cb92e15c2d9a39f69",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "855eea681f679bbeb64a0ac16260e555b6d6715d4e676e9ee8d6c234093084e5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "980b710d9217774598f43cae3366700a49ee967d873615b32002fcd16865aedf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "c3543fa9a6d5b556d6f81ca079e0d18642edaa77d6c61a76f33906facc49b7f7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "3bbc11d7d3ea4a0f85f460a46ad702e9837d280588961553d743f054d3938cbb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "ba81f89c74c2ea3c7aed961f8e5d1fcbbd1333afa193f0289276d7808740c9c6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "70abf0d231b5a181bcf0727c4457f87f16266c32b87197a343318992ff78bd8a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "26fa5b5d043af03e3c425958a8b0760ca7779e8093a8ff9abf8f3b4ccc763f83",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "9f2615ef0fdf29f896af33e1dda97280f4fae14a5d31e3f5e4a1c0c89ffd4565",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "6762bf4f48c31b58d1f30fa3e82c4e658f28e98c37dd7e4111534df241435faf",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "0234219b21c27b79608832d73d019dce74f675524353f3a9b6dbecded57cfb8e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "127c295c0654de6380bb6f5bd1fe892db10c66c7e558c70a21cf1d694d4ba939",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "2f5d021ebcb8938722ae2caf75921834d773ad81bc38f66d5efbc1099584956d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "1f4ce7c7f2a944ab57cb275fd9a2421f18cd01cce6a025a6b397918852420543",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "6f0e757b9c089dcaca9f3cc30b7053fa047b32fa7f10e1ec9e5c48fe4f2cd72e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "b814602a16ee32f61db51223e95c8e23fbc0f16305272c5f0632d5fcc0a14850",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "0fb3ee480c75fef79df109d00d428cd2826b5ceeed9dae9b85f995bb0c50c2d4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "a898802fad333726dfa8709c3f23af6eb0beae341aee968b130edd7ccb20c996",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "b7d3a4d8035b23e902878dea4c220cc3e87c1509c7c619fafbe74aca7a1ee4c0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "e33749da93ef25dbb83cdccea95565b20ce40df2420c546a9174cb5a3eff8c33",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "088a6fde1f047d0d537d1ec5859448bd44f0b5c622bd693a9289e8cdb4681950",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "d059e0d6f07692ed964f4026bb9471883797894690a6d8c08cdb96f47afe8401",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "64ba8b2264783ed6d6d80ee8bef396ca2aca09b1577abd6397d882d97eb02655",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "300e607548acfea6d831974b258338ed1affb539487fc4e41180c616827dcd85",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "5d1a2daa98e95d4d8a8417191a67c452aaffc3fcfbe88f53895675aead9e220f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "b651e4ee3ce5a200ac92a060dd86278d3f56c49fdb0180db9efe38c207e47fa3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "8cd5dba18258fd9ae6e7ef41a19ae16cf986d11b2058e9b2dadd897d44a4c03f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "298211976e98f364a220b59eddf836b7bb8af8cd0442a7a76c81c4d9004f32b5",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "203da9c09de9c00dd69c7f3bd0423abd594d9c71eaf99a7c0fc56e736e0b39cb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "192f89292c9d17b46daae1a6395a64f447a735fbe9f7a5f91f2ed7d2a0bb0fa3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "be19f0b157f4ba17472b4588ffd7f145becd27b220025ad9294f90a631cc2f6a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "12b04b7a21b3d3b89790191ec3e8bd725f91e7b0f23c624cca47d7cac6d70950",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "debe52dc01312c5c12888ff0001407d5b7983b28f0527eef1a9721c26852f847",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "23bb11f7890e9cb0a6128e196ca15eaea5411415b96071ae2f17767c5e38b3b4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "fc22ec91eba57dc93b74c8cddd24fc48c7cfa0ec25b4591c07a2ca19739eec37",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "32bb698b4a0323e75b92096d41e3e3b726729a4e10ad6c7c999aa95692aa8cdc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "b455bf993771bf02e836c72d52a550c695db6b20d86ca935de99c51122a6cc4f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "61cac5661ff5ffa53bb575e96787731a5bc0d28cd4defbb5c5d08dbad8dda2d9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "9789f237892150689567df21075666c9559a34e10e531f72e77f9561799c31dd",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "96b8976db20973bf359c446bc6915333daacad169e5b42c70feb34ea67c14dcc",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "5e37f2f8e1eb4ce0d74acf2b7b69d6fb22cd9dadfc722d21ede2c806889c9961",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "c6eaea54af6cc974b5eaed9817c9c2ca4a305f6fee0a524eb0d9d544aa3555c7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "ca62d1b3ef8aaa14f6fd36fd5717e2574b4d0bf886a64ecfd34daa53227a6e6b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "7190a08b0d3042b34622fbbafa10ed7ec154800e51059b955681c5ed4eafe0e2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "35d3ecd1ae8059dd2f7f0a34da31498b409b945b74690f8ae42aeb58207932a3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "40267a6411fa416d68ab2ad01084105657b35d8df705ef2f4da3361379ac0d49",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "b24b23cd9b64c6dde0808d7ed05ca01e2e66094fa14a39829f497f7e0782e919",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "8233ae1abb48e0f3510a5307b62a8e3c90a748ae0962a4c45c3868c61ce7d075",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "6ae03aa5ec53003668be57f4652312e8739e9a0441d6c0e49493e3cb3aff3b9f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "2358fa47edb3d57b34a496a6a31a6c6e31022a28d5b0503b9750426e73a07c4a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "943760672a42b7fc9f1a68f5cd3a358b808886b741c9059d02469a343a0e22b3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "a59e066499af33836be89ddc9019f9ea436f3b25205d050bf70b27b94b9953e6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "5389da1557f17c5b37a83db238a96117b43f92ef4ce6ff002eb726161f7fe6ce",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "deb935203694f9b57e9055460527e716e36c860e8a8b0f7a345fd4b801c50ef6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "c868a9baa5710ceb3277ca9c4c976e186ac7f7f272a84f525943224fc5c4dd24",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "22085035e0b7100ff7dfa7798916dad56244bd8f2f6d7bdc61534515091146d9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "294d49603e055b6957f53be8e88e7de41ed5187cea99b9bd0442a90bd7fb5489",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "b3a05e1ccb58d2dedfd7cbff343cd94ff1bdbf2338ad8957d8132af4cfb6206b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "1c41f9e2e3b86af47187ab0fbd67c6f1b5013808273298b1196d18ff6a3ca8a4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "4e290552d6211e159206625d974e18b2aa48411e1f5bda26aa878bdd745e4542",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "6efcf0353f36dbbb21658d455ab251f184f1b6b31341962dda0cd87f9d5a5578",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "afb90d343b9c2820fee54f73bfc1c3de9274b61635ca6102edea96c532ce63ce",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "51a44677672426b7825b990b2eccdf3fc956a06770c9170fc459c2623e4ceb0a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "5dc656937c57b70aab50e71295f658920073ed65456efc9eb6ecf824b83c50b7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "19fc32b6c7dde0b797906aa785a6fd56e5ca87ffe18a2aad4607d6ec0348c554",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "ac981f04cc3ef5cf44bff6557c9a4276979f6783b04e7f4c963aa72b4eeff49b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "fc4e7fc64b008461025447b0409d6276edfa7b2dcbb2709a2d946f30e20ebe06",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "a851bdf12ce095be6b74123b0027da92feb65293c2da3f45ef3d1e682aef7cb4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "f78ab38041c76d01e63c23493e4d80a890256128444a8cce5bd62d196cd0432b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "88879124ed5a09263f1e2ce3393f63110e5dc62237785b5f1b24484e3d3d9905",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "9ba7fd393b5f866dbd69a29628f81581344198a9e27ac705035bebed8102b4ae",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "ccabf9a154210713c2a3ca70f1efb47106d0664e24b767c5adf01a3910bcdf40",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "194b5601a571649682f972eb2216e7e2a4329609f6e520b52998d10b03b0ab92",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "3c5ea6d8a47ddee74d4b5732aa8d2676a862a960e2b0be0690a03782aa95f165",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "f3e42ce5cc195263165475bece5f9a9dba01b2f844229d80d5e4f8e5f8d24e04",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "f71396602121edbac9a9f40d04b6d0329d5cb9ea527b81f2c7364f9bc1ee3484",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "2d9f603b869b5bd1e927db20d9474bbcd35387308875b47d5c2f24326375cebe",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "2b91915f993a0d8b960477e04046a4dd7377cb489b795cf6244b24f5480afd3c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "31411fdeea0238201ed98c751eea2d4eac323cdd8a78aa52d066e0e545bf37a7",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "e5b4a511afd2cd55ab4ef516cafe44b44ee77d53c42f2c03c8470eb66d63a1e6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "0.input.bin",
+      "bytes": 1536,
+      "sha256": "857bc9c31d9421c707f217abd2aeb7ba9d378682439647fa78cd9a61da2adb66",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "0.logits.bin",
+      "bytes": 2304,
+      "sha256": "fd6cc54aa5e3cfc5abf285a11fd4a6a48c9f5c5d96bc794809cfbd157c8006fb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "1.input.bin",
+      "bytes": 1536,
+      "sha256": "f33b68e174b79f1767d4a60b5ec94145193376557ab1597f4f67071f5dc9da50",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "1.logits.bin",
+      "bytes": 2304,
+      "sha256": "0445d76ea72266a86d8a7ce21bdcfbffcafcfea9e6a6ce9ffd0babb29047eb9c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "10.input.bin",
+      "bytes": 1536,
+      "sha256": "6e86178c77fea45ff273d9db19f880704c0881f9b2cb5fb5f5094c9a0b9fbd8a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "10.logits.bin",
+      "bytes": 2304,
+      "sha256": "12a6588b95384d1a21d0523f427b0f0f94fab1ffa865545d48b7af3f10a41521",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "11.input.bin",
+      "bytes": 1536,
+      "sha256": "4f0ac579dde2f8dd57fd4b4c2fac9022e9fb6b048986d41a028f3aff620d092b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "11.logits.bin",
+      "bytes": 2304,
+      "sha256": "a90c6977ef9c7e59adae1eb8f2c94926ae8293284430384b5310a25e7b8ad8a8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "12.input.bin",
+      "bytes": 1536,
+      "sha256": "e6655ac1bb6c50b2ff7112c3ace9ab3a5b26a29ee36f1a775638eab879910b72",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "12.logits.bin",
+      "bytes": 2304,
+      "sha256": "5cd5a34942e3e93a41ade0b72714371a6a19f4192241844a40c6b221a52d4935",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "13.input.bin",
+      "bytes": 1536,
+      "sha256": "4587d872d7008e614b68949fe78280692914cf4e1773e60c66604023e28128c3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "13.logits.bin",
+      "bytes": 2304,
+      "sha256": "b011dc231320ec19f2c1c8da6a27f3c1c6d2f09022885fc24af52e6917366a21",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "14.input.bin",
+      "bytes": 1536,
+      "sha256": "13e383bda2648ce26b36ae3d42dd25b79173b7c5a8efd53c0f27ca83a4fbb1d1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "14.logits.bin",
+      "bytes": 2304,
+      "sha256": "4d5253ed9c3459cc56cc0d7597b9630d66e7d2b55bc3dba8e94e8e27deefbfac",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "15.input.bin",
+      "bytes": 1536,
+      "sha256": "99255a9ebaa0dd2b80c4e212eb8da27ad22946daad0b2e8362daf28ab626c55d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "15.logits.bin",
+      "bytes": 2304,
+      "sha256": "4b40e0ecdffe9fd6634eb87226fb7e8afa258d7002aac0f386da4a5ebea6f969",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "16.input.bin",
+      "bytes": 1536,
+      "sha256": "984661e4fbd974faab8e56379d00e552c7ae7738d6425406a6c75767ae74484f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "16.logits.bin",
+      "bytes": 2304,
+      "sha256": "248975c216091e96b667d63a50b3a5b43581798e0f43757802fd064a965a2aef",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "17.input.bin",
+      "bytes": 1536,
+      "sha256": "bd6c7c409eb047662510478b05c20bb38b7a529164cd9f9c0ced0fa259767a1e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "17.logits.bin",
+      "bytes": 2304,
+      "sha256": "e6141174549729b99f66b4d47d37971746ecf6b7666a3babd2e8bfe98690bf99",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "18.input.bin",
+      "bytes": 1536,
+      "sha256": "9625201ac4a1e3da2c5ce7c8bcfd39ec0857420ddca22daa26344c164098bb3c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "18.logits.bin",
+      "bytes": 2304,
+      "sha256": "96894b112f32a459d971f5c0c870e2939a900ac3920b27fdc6a71e8a4050385f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "19.input.bin",
+      "bytes": 1536,
+      "sha256": "c4519c8ba9b6b9bcd5ecbdc654e214c801d94a6e3caa50fa991174699957c61d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "19.logits.bin",
+      "bytes": 2304,
+      "sha256": "476ea4d9b9947fb6c38bb34bc81592865b8f0acfc67813d4f3e3444c621b4b4f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "2.input.bin",
+      "bytes": 1536,
+      "sha256": "d1fe4df80a80509124f4f99c9bb80403c41011a4c76088b274b6daf12e5cdb7b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "2.logits.bin",
+      "bytes": 2304,
+      "sha256": "1100139ec8028aedf51a6bcfe99045235a8398cd2a393327b59217b3618c8896",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "20.input.bin",
+      "bytes": 1536,
+      "sha256": "f43bacd599c1d267acab3b7c7fa14d0820fa69e64f639d2b25488847314da24d",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "20.logits.bin",
+      "bytes": 2304,
+      "sha256": "2ffb55ccca44a439390734ee73ffb8a945199d55351c4766f211a9011f95b7cd",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "21.input.bin",
+      "bytes": 1536,
+      "sha256": "e619a5385cb7abfd17730d4acd77fa58f9a4471e7b88ba4e5617cfd8611720a0",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "21.logits.bin",
+      "bytes": 2304,
+      "sha256": "9ff064f581ddc78fe7abc15ff2548352160ba63a27f780a9e439cc5e545010ed",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "22.input.bin",
+      "bytes": 1536,
+      "sha256": "ea3d1425c3e34abeee2bb3b177d2116ae7cc3b21d11011e3ead6c3ae64494824",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "22.logits.bin",
+      "bytes": 2304,
+      "sha256": "79984fbe0901d799559e00b91cd53f024fa204b2731e059e01202e0d1a56b10a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "23.input.bin",
+      "bytes": 1536,
+      "sha256": "a690f6b25c2f08d435a4a3de1d57512c3bae377d131a2d6d41fa236d060b11be",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "23.logits.bin",
+      "bytes": 2304,
+      "sha256": "07d40dcdfab126270f33c57ccfea23a43f0178c803124e11902e562ccc7b153f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "24.input.bin",
+      "bytes": 1536,
+      "sha256": "609b583d19cdaef14c4cfd89afa50c64febc76a36426d9fa7899283158d4aee3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "24.logits.bin",
+      "bytes": 2304,
+      "sha256": "94f1a48d5062252b555896ea0fa934b1f1cc9016f8312706363915a39ccd123f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "25.input.bin",
+      "bytes": 1536,
+      "sha256": "961390f42dd1deb9183abaa8804709fe96ba8c5af09ee2ae7f5c57a4916203ae",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "25.logits.bin",
+      "bytes": 2304,
+      "sha256": "76f386a220acddef1e072efe3beaaea131269dac616b786d06a3ab9bd80a0b22",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "26.input.bin",
+      "bytes": 1536,
+      "sha256": "44c78766463747913cbd4970e71afacc0c8fd3defa03879c485f7053ba80a51e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "26.logits.bin",
+      "bytes": 2304,
+      "sha256": "a8ac72328439785accc7225051d38edfe78e2c782c7076a4858d902bdd4b1977",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "27.input.bin",
+      "bytes": 1536,
+      "sha256": "634131ad8f0ba984b61e605d226c3bca0ae081133fe9f8210ad9a8dc7c1b6d70",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "27.logits.bin",
+      "bytes": 2304,
+      "sha256": "f974c22c1f924d629323331b1d08116afeb88fb732a40b3fa9c7466497636fa2",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "28.input.bin",
+      "bytes": 1536,
+      "sha256": "209ac2d43d9ee7de9a5f098bd9fc60ce6d63a77cbd7d744e69ec45327ecef73e",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "28.logits.bin",
+      "bytes": 2304,
+      "sha256": "a86de1281419e8b61697d9acb0488e69b390800a231e6e399ca566fe6c1ff92b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "29.input.bin",
+      "bytes": 1536,
+      "sha256": "61a40757a013c7155ace2bfa83e1b3e369091665ec1aef7b9e3b615750d3bbdb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "29.logits.bin",
+      "bytes": 2304,
+      "sha256": "f08b01f89c4692e6e72deb5cbfe568670bbffe1c6cf2e8d9a4583a7c1999ebce",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "3.input.bin",
+      "bytes": 1536,
+      "sha256": "7cfe90fba47438a27f4e16a2982ab047cc82430225cb98584c2b13e19748ce92",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "3.logits.bin",
+      "bytes": 2304,
+      "sha256": "1f3068433c2359d0fcb7b0ff80e68db517d43c4b1574abe0564b3449d291479a",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "30.input.bin",
+      "bytes": 1536,
+      "sha256": "9a2786f29e84afd31d3a776608a2b316a9897176c314e44ba545a0d5bd9c74b1",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "30.logits.bin",
+      "bytes": 2304,
+      "sha256": "16129088e2a0a1e0327c8bfc0f95d5a26d0de30d281146fb7007fc866d271d71",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "31.input.bin",
+      "bytes": 1536,
+      "sha256": "3372f3ab8b7a909bdf79c94cacab500475c1025d8ce180d52e3065bb9cfe6a91",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "31.logits.bin",
+      "bytes": 2304,
+      "sha256": "7c57fbc8f15c81e1fd75fedf10b76358de2d8cc40ae40b501450d3c8bbc524af",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "32.input.bin",
+      "bytes": 1536,
+      "sha256": "d0264499c4f06c5b7de0409911c44aa9f92719d925ef35d8be13665fa08d16d4",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "32.logits.bin",
+      "bytes": 2304,
+      "sha256": "926bac29837754ec4f4c5e36aec69963db61a42cb21aca8a8983ba679501d4c6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "33.input.bin",
+      "bytes": 1536,
+      "sha256": "c0122f3b6aac9abd21acac744a116110c3364f0c76bf2f37d874fcbf95ee6808",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "33.logits.bin",
+      "bytes": 2304,
+      "sha256": "6aeff429bf000004c1150fd5e7f738c76d88c82414c9e3d9f018b9ccd4d9f43b",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "34.input.bin",
+      "bytes": 1536,
+      "sha256": "c0620f412e53affb1ca787cb30bfbc8af56ecd43934fcfea1f6d212f5538d614",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "34.logits.bin",
+      "bytes": 2304,
+      "sha256": "6a086b4b1863836cd01e8c8a259d8c7956e067e9f59c1cd61ad90b30645a5653",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "35.input.bin",
+      "bytes": 1536,
+      "sha256": "3a7488816628ca2f9b4dee2f47485afa9da2649d4f911a0a66d993d17ac35e19",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "35.logits.bin",
+      "bytes": 2304,
+      "sha256": "2b3ba33194db0a0db4e3d2a40896f8109227b2ece987e5b4ea36a2b98187335f",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "4.input.bin",
+      "bytes": 1536,
+      "sha256": "878572e076a991b6de3f04534d60653acdcd426fdce4e466d83ddea685f11da9",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "4.logits.bin",
+      "bytes": 2304,
+      "sha256": "f82802132130a09b59fbfc2279bec5318f131cd43aee7a440c3477f93456e6c8",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "5.input.bin",
+      "bytes": 1536,
+      "sha256": "9ad13d17c67b6011f938d19f2dbf29d68978430d06c136ce49ccfbae48d081b6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "5.logits.bin",
+      "bytes": 2304,
+      "sha256": "548c2b1886bfaa55d27ffd3d615719bc69059477b8353d5c8ec6283e26908b8c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "6.input.bin",
+      "bytes": 1536,
+      "sha256": "2e460c91970d958f3249f9a6305f9f887bd60462e57220743c0fcafda6fe4524",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "6.logits.bin",
+      "bytes": 2304,
+      "sha256": "014d692c190740b8b61d6408475a21d0b7241465173c99fa6760c706ae44f166",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "7.input.bin",
+      "bytes": 1536,
+      "sha256": "4eeee72220953f5b4896293c6bc278fc36b98f0fc60d0786925cba4ebd66abc3",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "7.logits.bin",
+      "bytes": 2304,
+      "sha256": "605220692f6c4691df9e6e9f56553153983537a594a0f9cb15b4dc893111f4f6",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "8.input.bin",
+      "bytes": 1536,
+      "sha256": "51fe955e7f532ae4eeaab9999dc83955e6cbf7a20c7a4a710ab14384b20c42cb",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "8.logits.bin",
+      "bytes": 2304,
+      "sha256": "6e493fffba1ae9267ad48d6e74474f1fd8f0b345a7a5530f3d3f1fe2a269e14c",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "9.input.bin",
+      "bytes": 1536,
+      "sha256": "40203e155c8bccc683b4e563664fecc2ca8899bd4ec8de2eb5ccc4bd059b2550",
+      "status": "PASS"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "file": "9.logits.bin",
+      "bytes": 2304,
+      "sha256": "c7770e32caf74808108d6ece695f5305c4eb88cc9d19caef482a358f1bed578f",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 0,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "9ffafea518fe91c30344ab484977ce4bdd545e235ab8bb425064ea902eafe7df",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 0,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "ef527bac1cbc5379e111349a0f875e20aca0ad70995c690ea26943d2273ea85a",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 1,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "9e5b0764043b33060cbe699c229caa35e88706420b4412e553ffa2cf22617dc1",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 1,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "cb99f190182eba2cd72087dc24ab47b85b342fe1e27b2f827275e01516d4d4f7",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 2,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "c6f3a4c8941a59baf03f4217456538b6eda23813a51a07ca1c126932bc4e6bce",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 2,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "d58d0c6a03e6a51de268915a548d1e90ac1fa11310aa0061f57c1b30290680d5",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 3,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "48854fbfa247e366b1dcc27f56149cf0e90bca49e630cf977becf089afdb8a1f",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 3,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "ad3d77c947f4482558a12e975ab10265d62a39165704958e254f451f99d75dad",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "0f3cc2f817d441d47d766a323ae2cc7ef14fb6ba517dc09ea09a8a18b6e6d97f",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "b8c3cbd21fa7363565486f4cf0f8defa8cf9c7f81ced880e1ee598dec8137b7a",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "713cd3114312777cb87647a8d1e2770013480235036236b974aaf16204b1c89b",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "919d2eeb9e7d418c47bb6b2dfb07343e508eb69f60729c242e2df4f0a03d3e28",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "2.input.bin",
+      "bytes": 262144,
+      "sha256": "46dc4d3ea49ee7e33569ca64d09da3c451a69ff8f3c327ac2b1e9a05a1215591",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "2.logits.bin",
+      "bytes": 458752,
+      "sha256": "a3b9ca4a9afcea1629469da4ed3b16cafd785f2e91340dbc9d8f88d4911ebe77",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "3.input.bin",
+      "bytes": 262144,
+      "sha256": "a6680696296fb2f8a05a7cf0bc5d25cba1fe5de83161f4518800319ba79f473d",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "file": "3.logits.bin",
+      "bytes": 458752,
+      "sha256": "2caed9cae0f1181777fec546c75c82252a9a4279e940ae79cecb30b671a65405",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "c1f464bcf647709666a4ad90612ef32f96d7f21b67c49cb7b361a35370dbc196",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "8041a053fcd17803dff0ea57a9165f2fdf130a645fdf18dc52795f7023b738e0",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "1c4b64aa89bd7abf59b5be422e920db4427d5515d22ce26147d74a6ff0587d69",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "25bf10c04d7ae3b7869366b9a93856cdf38dccb44aea871e01edb08876f4f705",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "2.input.bin",
+      "bytes": 262144,
+      "sha256": "3be99e8287bf94a918e88d18251d3b182a90827ce1d56085eafbee6a590fe9ca",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "2.logits.bin",
+      "bytes": 458752,
+      "sha256": "4e5485c98c1048e7e39df0a87550f2efdbf0fde2fd4a417bf9e67aca3d053ba5",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "3.input.bin",
+      "bytes": 262144,
+      "sha256": "e991cf2d8400c138a0dd9bd48979563ab8a11e748b7c7600288db711b6c8d768",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "file": "3.logits.bin",
+      "bytes": 458752,
+      "sha256": "59640359923186dea8a440044efa5c3a80679fce7fb85677d10a260d35ae44ea",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 6,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "f4eb82c35e664d597beb26f5f95d379acf09dc9e005fcc8d9905eb7235965312",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 6,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "61a985ca547949c4c15998927a3e818da28ea6151ee100211ce8d899feb7c83d",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 6,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "a6bd7b4a6d0224db8d14788ca88876bc8e0f330949b8ebeb79a635580fe01dd4",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 6,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "adec38eabed57a2a1f01e1a4f9823302102f6fde0b8a22a2bea428aeff0fe986",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "2bd250aa9baf6eeadbb0e4f3522b4e4d661cd88ac2cf9f70188b6461ad42e9f2",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "7f9b03681d26656f7b111c98276a5b2a25d23f39ac0482af068a01997feba025",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "b40e74e5c491a37cb05d27cc139fe5a1d312ca1a1b56a07f506213edb40539cc",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "f31628b5cd50deb5cc18e900d1dd1f129b7a79a43b1ad017d7895479f752ac72",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "2.input.bin",
+      "bytes": 262144,
+      "sha256": "03d4a5567ee43e68d23bb930731aca890601b62ec2ce5b488dcdc1d058f3eab8",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "file": "2.logits.bin",
+      "bytes": 458752,
+      "sha256": "1aecaca6ea63a45b872cdd3f35f802bac849aee45e9b71d5fd31541622e2edbe",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "c6d35c512ca539e22a2bcc9804d2e646c32102d1e1c0c38534ab230449617111",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "cbf5e3188a7c4865e6dc88792c3dc3fc56e674957a3ea4a28e0aa641b670e57d",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "abde3dfefce28900635c58e76942229ba6e1239035b1e8e798c139f90501dd90",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "e84b75982068ecbc24924f8c96b8f64822746f7d2228c2f6e27bf31defafb26c",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "2.input.bin",
+      "bytes": 262144,
+      "sha256": "453acc001ac8dac9520dd0ff38c6ebf2c8c62b8516eefad3bee612013b3eef78",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "2.logits.bin",
+      "bytes": 458752,
+      "sha256": "0d225bf42fa240abeffbf06b60405fc09d3c90f5e0fe4f09637454b5ef3707d0",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "3.input.bin",
+      "bytes": 262144,
+      "sha256": "08557d09fec3e25fdc28c3843351998e072e8a74d4935ed2e13ea58b24e644f5",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "file": "3.logits.bin",
+      "bytes": 458752,
+      "sha256": "ede79d30e07f716db80bfc7fc323227a67d7303ddff47081496a4ec251d9cb12",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "0.input.bin",
+      "bytes": 262144,
+      "sha256": "4bf47839b7f45d7ee4fec6f225c0ae977f5d2cb7b820703fd97f0c5dcff7b931",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "0.logits.bin",
+      "bytes": 458752,
+      "sha256": "d555263e18d0f48780a4fed19cb36cbac223fdf70c419c0c937d1bfc25ae1117",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "1.input.bin",
+      "bytes": 262144,
+      "sha256": "0995041a4c3fab9a0b4433eb3b6cde1df79ec0f28db86d883f4e3ca464bb06e0",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "1.logits.bin",
+      "bytes": 458752,
+      "sha256": "23eff71cd3872eb0785adec25544c53d13c9f409d41521a84758ecd73c7c4b6e",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "2.input.bin",
+      "bytes": 262144,
+      "sha256": "93e20614078006443786e80d570146866272a48ce0e9b9313c55e9e7a18b62c4",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "2.logits.bin",
+      "bytes": 458752,
+      "sha256": "c7ab928c7887332eaffef03b82b668d6fe820af33443fddf39e0286eece607c3",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "3.input.bin",
+      "bytes": 262144,
+      "sha256": "6b2e31d8dc0d974dc2ef14e306b973e9a9d0c8864ee1ee5432ad474856edf85c",
+      "status": "PASS"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "file": "3.logits.bin",
+      "bytes": 458752,
+      "sha256": "d68461a5ed521c1109e115ed3a277895074c5aa20632af85ce543a57dc498405",
+      "status": "PASS"
+    }
+  ],
+  "event_comparisons": [
+    {
+      "model": "synthetic",
+      "frame": 0,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "cbe649421c7266b249d4e05994b624799b3a3ccf0ffc40bab72ec4c0f24260c5"
+    },
+    {
+      "model": "synthetic",
+      "frame": 1,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "3b35780c71a45f15e0b909ec219f001f2eebeefd707a3ea8be80748e51f873ea"
+    },
+    {
+      "model": "synthetic",
+      "frame": 2,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "3a1a004a4444f3ed77e81ca24290e1e9f8dcf0ce228324870115b40f04790315"
+    },
+    {
+      "model": "synthetic",
+      "frame": 3,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "be41a2943cefdf54ed8d176aa23a555a389bfbb0f2919d7aedc3dbce8bb5fa5a"
+    },
+    {
+      "model": "synthetic",
+      "frame": 4,
+      "points": 4096,
+      "status": "PASS",
+      "canonical_sha256": "de54894dd908c7087ddcb7db6ef529a73926ae763221156dadc124515245f5fd"
+    },
+    {
+      "model": "synthetic",
+      "frame": 5,
+      "points": 8192,
+      "status": "PASS",
+      "canonical_sha256": "c75eef0d13f646b7153d8f3516877e856600463c0ea4fa78ce366e811ed536f0"
+    },
+    {
+      "model": "synthetic",
+      "frame": 6,
+      "points": 16384,
+      "status": "PASS",
+      "canonical_sha256": "f9f452f20f7f0ed99a6cb2f85c850d96cd1052ac64474deeef648a7987010160"
+    },
+    {
+      "model": "synthetic",
+      "frame": 7,
+      "points": 32768,
+      "status": "PASS",
+      "canonical_sha256": "4c0812b22e75b4d87e0b2b0bb3e3c907a792b7f6a1cb870e8ac9c93930010737"
+    },
+    {
+      "model": "unet",
+      "frame": 0,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "bc86c07907fc314d7e10d5333bbdfffe75ea2c3ad7a28339aac48549abe03560"
+    },
+    {
+      "model": "unet",
+      "frame": 1,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "1629dc1e3ce8486e5e20941a234620322c7b3fd8ce2f98dc861bbc6d71468389"
+    },
+    {
+      "model": "unet",
+      "frame": 2,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "0a7358d3fa81f1d1a4c3608adc26cdfdb0623b78b633bff4cb1918a2f3cc1e50"
+    },
+    {
+      "model": "unet",
+      "frame": 3,
+      "points": 777,
+      "status": "PASS",
+      "canonical_sha256": "c6f75981d0cdb2a9974815169568a402a404326e1fb08ec1a77327ae6be3e261"
+    },
+    {
+      "model": "unet",
+      "frame": 4,
+      "points": 50096,
+      "status": "PASS",
+      "canonical_sha256": "30512ccb563bf73e0d7690ddff8b06f7d4583ff4d105be89fb67b2eb38d9ea59"
+    },
+    {
+      "model": "unet",
+      "frame": 5,
+      "points": 37913,
+      "status": "PASS",
+      "canonical_sha256": "d580e6d1386aa12a7ac5e9950dc4917c6fd918f45798edf3142a0fdbdbeff78f"
+    },
+    {
+      "model": "unet",
+      "frame": 6,
+      "points": 4096,
+      "status": "PASS",
+      "canonical_sha256": "7b0c19cc3d570f46d76bc6d6ea68155b3e62bfb2b7751922960e8d1f8f1e4f0c"
+    },
+    {
+      "model": "unet",
+      "frame": 7,
+      "points": 8192,
+      "status": "PASS",
+      "canonical_sha256": "711cdbe45fd0b1fc0efb687cf831066dd8ebad1e4f335dd2b8c62c12f99c737e"
+    },
+    {
+      "model": "unet",
+      "frame": 8,
+      "points": 16384,
+      "status": "PASS",
+      "canonical_sha256": "b91c01d89e449425d86b97c25e57fef209e0a145b48eb2e36ead6e7023589967"
+    },
+    {
+      "model": "unet",
+      "frame": 9,
+      "points": 32768,
+      "status": "PASS",
+      "canonical_sha256": "6557585cb4e2344fac2cadce30709f08f1d52218d5d8146fedb7961c766411e8"
+    }
+  ],
+  "map_comparisons": [
+    {
+      "model": "synthetic",
+      "case": 0,
+      "source_events": [
+        "0-event.json",
+        "1-event.json",
+        "2-event.json",
+        "3-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "b22f89dce9c213187bb44034c3e523b7e05f4357fa42b14edf7e512b592c0eb4",
+      "output_bytes": 1796429,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "synthetic",
+      "case": 0,
+      "source_events": [
+        "0-event.json",
+        "1-event.json",
+        "2-event.json",
+        "3-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "67a5a85e88dba01cc84dea904b3907933c8dd1cbd33d304180702e09460fabd3",
+      "output_bytes": 3696599,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "synthetic",
+      "case": 1,
+      "source_events": [
+        "4-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "9bdbdcf154f0346f8e3065bcf8ef5ad774303f57b018055ea2f49a518021afba",
+      "output_bytes": 5690172,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "synthetic",
+      "case": 1,
+      "source_events": [
+        "4-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "d3d7d9d9a3e87cc39a6d12e517c62fdc886c57c1efd356803c17ba41548eacac",
+      "output_bytes": 6407552,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "synthetic",
+      "case": 2,
+      "source_events": [
+        "5-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "1c43e19e0fb9321192dc2c62ac19318ccb1c8477509ff0f6aa9629e5535c5fdc",
+      "output_bytes": 11330690,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "synthetic",
+      "case": 2,
+      "source_events": [
+        "5-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "d3a7e73ee21d1ee43cee7a0e59e18d1593a9b2a5941de4e9edde271853bc7b89",
+      "output_bytes": 11231586,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 0,
+      "source_events": [
+        "0-event.json",
+        "1-event.json",
+        "2-event.json",
+        "3-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "1ccc42e4fa812a3e89de093ff88e4321841363c84d39c617136699991f47d8e4",
+      "output_bytes": 1805683,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 0,
+      "source_events": [
+        "0-event.json",
+        "1-event.json",
+        "2-event.json",
+        "3-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "ce10dfc6550223168dedd3ad529a66e42d026bed8cfb2ca46e8b7ce171ad033b",
+      "output_bytes": 3705853,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 1,
+      "source_events": [
+        "4-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "e5388f5f7c9e180674e5c80a87562954b486103bdd26a4dc29222071712d47b1",
+      "output_bytes": 62287287,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 1,
+      "source_events": [
+        "4-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "f8cd0171fcc93c002f2106b491b61c0bc1b82376a47718bb86f045b8c221bcd6",
+      "output_bytes": 55382563,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 2,
+      "source_events": [
+        "5-event.json"
+      ],
+      "capacity": 64,
+      "full_output_sha256": "378718938a7048f4ee688232ba59181f9aae2c93b5f8b666e835c22f9b3dfe63",
+      "output_bytes": 43160164,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    },
+    {
+      "model": "unet",
+      "case": 2,
+      "source_events": [
+        "5-event.json"
+      ],
+      "capacity": 65536,
+      "full_output_sha256": "323ada782fe0e41cae255aa08fa769acf884350402d68066ecd0424ff8a85a91",
+      "output_bytes": 42183160,
+      "status": "PASS",
+      "checks": [
+        "point fields/semantic IDs",
+        "snapshots",
+        "deltas/eviction",
+        "repeated observations",
+        "class updates",
+        "late observations",
+        "aging",
+        "unknown confidence",
+        "coordinate mismatch rejection without mutation"
+      ]
+    }
+  ],
+  "reference_map_binary_sha256": "ef97e92b01e92417f4f8299f25e3218b976d2cb62910679bf1ebcc3ad70b6805",
+  "optimized_map_binary_sha256": "ee8a55488bfce3ec44ef5563484b11312767f5367536459c687fc2f0434fabf2"
+}

@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "video_sha256": "acce2565328a8763b4ce8c44a697ff891be407144a65b1bf5e596bf89298e40a",
+  "reviewer": "Codex agent, decoded-image visual review",
+  "inspected_sha256": {
+    "contact-sheet.jpg": "7d1136ffa28646f59de9c5f0289bb93652efdbec1bd7da9e389e8e0cab3c1594",
+    "decoded-contact-1.jpg": "281b651b01de20863c8243aa7b66bd0545a86184c4158ce965dff827193ba149",
+    "decoded-contact-2.jpg": "3f519ccf12ca03e93eb0b624db120fc17b9ae04670f9601f25166ff20ffc5892",
+    "decoded-contact-3.jpg": "e89729eb56b0ca26aa22eb030a775fba4a929d4a60d059b9a3130224d9c97e54",
+    "decoded-contact-4.jpg": "1f76de892c5a6425f39d8d54cd6261f4bf22c985dd1bb7e188b5b1679b72856e",
+    "mobile-frame-0.png": "05088debbfaa7fea4576ab69ce221c587a366a4cdd400026974b685743af010c",
+    "frame-0-decoded.png": "9d3556b44859973893dc83181b6318be3993b9ee84c5fce33077e325053f2331",
+    "rc2-contact-sheet.jpg": "3124ad2a7d6f91e9b7b555a54e38b57977004bdaa7e8d5de3928a31c586a8b96",
+    "rc2-to-rc3-comparison.jpg": "6d9381808ba3a42116834c9101eaeac027f3da3acedd3f9a6b9a68805d355da9",
+    "decoded-proof-contact-sheet.jpg": "a5658433a159092364308d3083be47525bfbbfd2add953ae9d549fa9c5b399fa",
+    "proof-contact-sheet.jpg": "437f956f187a5d3b6a514b535a113dc6a42340f1008193f683878a88fe24554f",
+    "decoded/013.00s-f0390.jpg": "6ffd230b501f0fc7905a8d68c699cb65263bde12d0740c6195f7b66518303a7b",
+    "decoded/035.00s-f1050.jpg": "1e9b58062d8235092b4aa5b0372dd08f92e3ec2cce1d1ac695c8d4750967cce1",
+    "decoded/048.97s-f1469.jpg": "c34579a7aa7b2367c11d66be14fa086b21bacc9c188a4003ebe1d9af50dcafb7"
+  },
+  "findings": {
+    "opening": "Frame zero shows genuine predicted point geometry with large headline; 360px reduction readable; source geometry moves immediately.",
+    "composition": "Roof planes, building walls, ground/courtyard and vegetation crowns are readable together. Urban reverse-side and canopy shots provide medium/close scale. Camera pitch is 36.004–39.133 degrees down from exact vectors.",
+    "motion": "Purposeful coupled lateral/forward movement and restrained crane orbit; decoded consecutive-frame changes and independent projection parallax substantiate spatial motion.",
+    "crane": "Final 720px focal keeps crane geometry clear of subtitle; checked full decoded 13s and 14–16.97s sheet.",
+    "reveal": "Original XYZ with explanatory height shade and genuine predictions share identical moving camera; divider is aligned.",
+    "map": "Real classified source context remains visible; actual recorded delta-centre outlines advance with disclosed event-count timing, crop and repeated capture. No cubes or giant block motif. Counters and recorded emulated clock are legible at full size.",
+    "benchmark": "~2M/s qualified scene-A 60-second tests, ~1.5M dense/full-churn, and separate 600,014,848-point ten-minute ~1M/s full-churn run remain distinct.",
+    "ending": "All 45–48.97s decoded samples show clean actual classified urban hero, subtle motion, requested stack and repository; no block effect or visualizer filler."
+  },
+  "limitations": [
+    "Agent visual judgement, not human owner approval.",
+    "Full realtime playback was headless; no GUI, calibrated display or physical mobile playback tested.",
+    "Small attribution/technical footnotes are secondary at mobile reduction; principal headline, scene composition and closing URL reviewed.",
+    "Map annotations are projected 2D rings and may show through source points; bounded map is not a detailed reconstruction.",
+    "No new QGIS GUI playback; independent COPC/source/sidecar and project CRS checks passed.",
+    "Forest COPC and short recording have distinct preserved predictions; 9,939 cross-artifact differences documented, neither substituted."
+  ],
+  "publication": "NOT_RUN"
+}

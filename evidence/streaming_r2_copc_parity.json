@@ -1,0 +1,13 @@
+{
+  "schema": "synrex.qgis_copc_view.v1",
+  "status": "PASS",
+  "original_classified_sha256": "caa02d82f96db8e556f88e57d35c8ab4a684eae2b253bef24130c23d62afb393",
+  "original_semantic_sidecar_sha256": "c16264729a368eeb31f3bed81384f1dfd3469e77904b6e1727553b559ef3ae07",
+  "points": 400654,
+  "source_order": "SynRexSourceIndex is zero-based original LAZ source record index",
+  "semantic_definition": "SynRexSemanticID retains original model output channel",
+  "copc_sha256": "06902c4c5c00a25bd4aa0fd31e89934a5064e86f51b1f2ddb8f57f7a5399e148",
+  "all_original_point_bytes_exact_after_index_restore": true,
+  "semantic_ids_exact_after_index_restore": true,
+  "metadata_scope": "COPC viewing derivative with rewritten/index metadata; original LAZ and full metadata stay separate and unchanged"
+}

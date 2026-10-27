@@ -1,0 +1,107 @@
+{
+  "cases": [
+    {
+      "explicit_eviction_order": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "operations": {
+        "delta_events": 8,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 3,
+        "insertions": 7,
+        "late_rejections": 1,
+        "observations": 11,
+        "peak_cells": 3,
+        "removals": 4
+      },
+      "resolution_metres": 0.001,
+      "status": "PASS"
+    },
+    {
+      "explicit_eviction_order": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "operations": {
+        "delta_events": 8,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 3,
+        "insertions": 7,
+        "late_rejections": 1,
+        "observations": 11,
+        "peak_cells": 3,
+        "removals": 4
+      },
+      "resolution_metres": 0.125,
+      "status": "PASS"
+    },
+    {
+      "explicit_eviction_order": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "operations": {
+        "delta_events": 8,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 3,
+        "insertions": 7,
+        "late_rejections": 1,
+        "observations": 11,
+        "peak_cells": 3,
+        "removals": 4
+      },
+      "resolution_metres": 1.0,
+      "status": "PASS"
+    },
+    {
+      "explicit_eviction_order": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "operations": {
+        "delta_events": 8,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 3,
+        "insertions": 7,
+        "late_rejections": 1,
+        "observations": 11,
+        "peak_cells": 3,
+        "removals": 4
+      },
+      "resolution_metres": 32.5,
+      "status": "PASS"
+    },
+    {
+      "explicit_eviction_order": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "operations": {
+        "delta_events": 8,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 3,
+        "insertions": 7,
+        "late_rejections": 1,
+        "observations": 11,
+        "peak_cells": 3,
+        "removals": 4
+      },
+      "resolution_metres": 1000.0,
+      "status": "PASS"
+    }
+  ],
+  "schema": "synrex.map_temporal_policy.v1",
+  "scope": "CPU dummy classes; explicit recency/equal-time/old-new-cell expectations, generic resolution and non-expiring age behavior; not neural throughput",
+  "status": "PASS"
+}

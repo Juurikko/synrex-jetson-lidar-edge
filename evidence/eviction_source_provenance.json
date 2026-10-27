@@ -1,0 +1,83 @@
+{
+  "schema": "synrex.eviction_source_provenance.v1",
+  "status": "PASS",
+  "qualified_native_source_commit": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "source_archive_sha256": "01bd7ce98f406f7f72c162c7b35af6b81f67f2263bdd47f1c5b5b8c92a1a1984",
+  "baseline_checkpoint": "958c418d6799196605155f0223418d6f3b4f5c4d",
+  "original_source_license": "MIT, only independently licensable source listed in LICENSE_SCOPE.json",
+  "documentation_license": "CC-BY-4.0",
+  "source_origin": "Original implementation based solely on accepted public SynRex MIT source and the approved engineering contract; standard C++ containers, no imported private implementation",
+  "models_and_lidar": "Frozen separately licensed packages and IGN/FRACTAL data outside Git; no weights or point binaries committed",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "2a373e33e1807e31eacf1ad4006e0fd764ba7950a9bc0e7f3beaa8fa98285cf4",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/include/synrex/map_oracle.hpp",
+      "sha256": "8af4190b2327c3ace0cb639c93a2dc92161fbcce0ac38b7f4df009fd2b50e70b",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/include/synrex/stream.hpp",
+      "sha256": "5f454250c07a131a2ab6de1da423b3c17c65a418b7c6f11456c514f7835d3fff",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/semantic_map.cpp",
+      "sha256": "65aba53dd213074904c15ab29b4a5308dd947f64a3a9a83b0beded442e99caff",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/stream.cpp",
+      "sha256": "d41e37876d963c0ac04b3da2a0388fd56248b1738436c793452b7c69b086aedf",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/stream_main.cpp",
+      "sha256": "a1a302729aacd7d3e12c9ed3986a48386b88bdc7cacff6ae796c9b19aa0a525d",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "native/sustain.cpp",
+      "sha256": "06ef7e7e05e9ad3304ab7451b9d755efe555f4e1f6a4951c54a2a660fd098810",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "tests/native/map_eviction_profile.cpp",
+      "sha256": "daade61f1abf724a3a723ce7d34ffe37bc514aec3bf1f3a90067a135df28b2c3",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "tests/native/map_index.cpp",
+      "sha256": "b042018545bdabed7468d9ca61cc1ab6bd318754f95e1550ce69d7ee94a34639",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "tools/summarize_sustained.py",
+      "sha256": "34fa8df772780bb24679027dbb26f8c6f2feff9d146016b5c2a35426cd535996",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    },
+    {
+      "path": "tools/sustained_campaign.py",
+      "sha256": "71bd78e1f7b70be4948a688669dfe07e5b875866b3b583616a65246a720cd202",
+      "origin": "Independently authored MIT source or modification to existing MIT source"
+    }
+  ],
+  "unchanged_runtime_files": {
+    "native/geometry.cpp": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
+    "native/geometry_fast.cpp": "39b7d5098ca794a316611e5922715ed545d630532cec21829f07920e1e5212ca",
+    "native/tensorrt.cpp": "5dcb800d486d6c00c6db74cd91f149c0c9044dba42925eb0cff61665d472b27b",
+    "native/kernels.cu": "952fa44918a4bd087889b298601d21918f91d9c4c31b2f387c8dd9d5944cd919",
+    "native/package.cpp": "66adae634fe4acdc628db9135b0a10fdb150a623bd628c6e0646e6947676812f",
+    "native/include/synrex/session.hpp": "37444aa148a03b8ec67f5eb2f25ba7bb2940d4e982762f1d34fc622197df3f79"
+  },
+  "frozen_binary_native_sources_identical_to_checkpoint": {
+    "status": "PASS",
+    "binary_source_commit": "3f97a490860529505b1ebfad03e2726e2081dbe2",
+    "checkpoint": "958c418d6799196605155f0223418d6f3b4f5c4d",
+    "files_compared": 18,
+    "scope": "Every native source/header byte; subsequent CMake additions were CPU test/probe targets only"
+  }
+}

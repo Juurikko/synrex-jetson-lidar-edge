@@ -1,0 +1,16 @@
+{
+  "schema": "synrex.track_b_history_audit.v1",
+  "status": "PASS",
+  "base": "c5d65c6",
+  "end": "2a786296149646514ff2b83a82d9edcdf88b0474",
+  "commits": 7,
+  "reachable_new_objects_scanned": 98,
+  "pattern_findings": {},
+  "forbidden_model_pointcloud_paths": [],
+  "scope": "New Track B reachable Git objects since accepted checkpoint. Uses the existing release-check pattern scanner; pattern based, not exhaustive. Accepted R4 history is preserved.",
+  "legacy_history_mode": {
+    "status": "NOT_RUN",
+    "attempt_result": "FAIL on single-commit precondition",
+    "reason": "Existing R0 --history requires exactly one commit and zero remotes; Track B is a continued multi-commit branch. The inherited checker was left unchanged."
+  }
+}

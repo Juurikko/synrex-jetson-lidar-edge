@@ -1,0 +1,81 @@
+{
+  "schema": "synrex.fractal_replay_corpora.v1",
+  "status": "PASS",
+  "license": "IGN/FRACTAL Etalab-2.0; existing R4 source attribution and acquisition records preserved",
+  "scope": "Original file metadata, not sustained inference measurements. Raw source LAS classes are distinct from model semantic IDs. XYZ metres are the existing dense-adapter assumption; no CRS or original GPS-time claim.",
+  "scenes": [
+    {
+      "basename": "TEST-0447_6390-002819414.laz",
+      "sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "point_count": 50096,
+      "span_metres_xyz": [
+        49.99599999998463,
+        49.997999999672174,
+        10.265999999999998
+      ],
+      "nominal_source_points_per_xy_square_metre": 20.040804832586883,
+      "source_global_one_metre_occupied_voxels": 4821,
+      "intensity_min_max": [
+        414,
+        28468
+      ],
+      "raw_source_las_class_histogram": {
+        "1": 379,
+        "2": 28781,
+        "3": 92,
+        "4": 26,
+        "5": 1420,
+        "6": 19398
+      },
+      "temporal_scope": "Finite corpus replay with deterministic virtual acquisition times; frames are benchmark-derived"
+    },
+    {
+      "basename": "TEST-0437_6398-002899556.laz",
+      "sha256": "a20166855fddc71a7136f9a7eacc0b6f4ac9d101324500331762736b1755b46f",
+      "point_count": 37913,
+      "span_metres_xyz": [
+        50.0,
+        49.997999999672174,
+        9.897000000000002
+      ],
+      "nominal_source_points_per_xy_square_metre": 15.16580663236473,
+      "source_global_one_metre_occupied_voxels": 3929,
+      "intensity_min_max": [
+        414,
+        33166
+      ],
+      "raw_source_las_class_histogram": {
+        "1": 1472,
+        "2": 13671,
+        "3": 12,
+        "4": 6,
+        "5": 21,
+        "6": 22731
+      },
+      "temporal_scope": "Finite corpus replay with deterministic virtual acquisition times; frames are benchmark-derived"
+    },
+    {
+      "basename": "TEST-0944_6564-005900112.laz",
+      "sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+      "point_count": 400654,
+      "span_metres_xyz": [
+        50.0,
+        50.0,
+        38.39300000000003
+      ],
+      "nominal_source_points_per_xy_square_metre": 160.2616,
+      "source_global_one_metre_occupied_voxels": 24458,
+      "intensity_min_max": [
+        71,
+        1980
+      ],
+      "raw_source_las_class_histogram": {
+        "2": 86608,
+        "3": 15586,
+        "4": 6606,
+        "5": 291854
+      },
+      "temporal_scope": "Finite corpus replay with deterministic virtual acquisition times; frames are benchmark-derived"
+    }
+  ]
+}

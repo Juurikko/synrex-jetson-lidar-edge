@@ -1,0 +1,14 @@
+{
+  "schema": "synrex.streaming_setup_failure.v1",
+  "status": "FAIL",
+  "experiment": "exact artifact/map A/B, initial attempt",
+  "blocker": "PermissionError: uploaded reference-map executable lacked execute permission; no map comparison executed",
+  "original_receipt_sha256": "d2aa188b2392163b2a9b8fe4adc3575fcd419abe2bfbd7495916116bf728f45f",
+  "completed_event_comparisons": 8,
+  "completed_trace_comparisons": 576,
+  "completed_map_comparisons": 0,
+  "resolution": "Set user execute bit on the task-owned reference executable; preserve original directory; rerun in a new directory",
+  "retry_status": "PASS",
+  "retry_receipt": "streaming_exact_ab.json",
+  "neural_performance_scope": "NOT_RUN in this map-only validation step"
+}

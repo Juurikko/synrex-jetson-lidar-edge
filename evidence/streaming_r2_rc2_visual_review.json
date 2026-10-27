@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "reviewer": "Codex image inspection; owner aesthetic/publication approval remains NOT_RUN",
+  "video_sha256": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+  "reviewed": [
+    "Decoded frame 0 at native size and 360x450 mobile reduction",
+    "Final decoded contact sheet and all three detailed decoded sheets",
+    "Native-sized decoded overview endpoint frame 839",
+    "Native-sized metric/stability card frame 1260",
+    "Opening proof before full render"
+  ],
+  "findings": {
+    "first_frame": "Large headline and replay disclosure over genuine visible moving building points; no fade or static title",
+    "depth": "Close roofs, vegetation and tall crane with perspective occlusion; low camera and foreground/background parallax",
+    "reveal": "Input height shading and actual frozen predictions remain aligned under one moving camera; palette and visible model mistakes retained",
+    "map": "Substantive native cell growth and changing white/cyan event outlines across active crops; repeated capture and retiming disclosed; 24458+376196 endpoint visible",
+    "metrics": "Rate and ten-minute cards visibly separated; no implication ten-minute run was 2M/s; held-out mIoU remains 48.756%",
+    "mobile": "Critical headline, subtitles, metric values and repository text readable at 360px width; licence/footer is small secondary disclosure",
+    "pacing": "Short tracked shots, eleven-second moving wipe with continuous camera, three-second overview and two five-second detail passes; no static geometry hold",
+    "closing": "Native stack, scoped MIT BYOM foundation, exact repository and public R4/unpublished R2 status visible"
+  },
+  "scope": "Automated frame/decode/camera measurements complement visual image inspection; no GUI player or human owner review claimed"
+}
