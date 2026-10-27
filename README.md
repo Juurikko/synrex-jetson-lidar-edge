@@ -4,7 +4,9 @@
 
 **Native C++ / CUDA / TensorRT classification, with interchangeable model packages.**
 Developer and project lead: **Tuomas Pietilä** ([@Juurikko](https://github.com/Juurikko));
-AI-assisted engineering with OpenAI Codex. Local R4 candidate; publication awaits owner approval.
+AI-assisted engineering with OpenAI Codex. **R4 RC2 is publicly available as an
+[RTX 4090/QGIS research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2),
+published 2026-10-27.** Jetson AGX Orin / Thor are not qualified for this BYOM release.
 
 Already-georeferenced LAZ → configurable dense voxels → user model → original-point
 predictions → metadata-preserving classified LAZ. The classification executable requires
@@ -86,4 +88,8 @@ compatibility is claimed.
 [separate future milestones](docs/byom/FUTURE_MILESTONES_R4.md) ·
 [retained historical public README and media](README_HISTORICAL.md).
 
-No public push, release upload or visibility change has been performed for this campaign.
+**Public release:** [R4 RC2 source, notes and showcase archive](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+(`showcase-r4-rc2.tar.gz`, SHA256
+`a2b6fa566b8982859e2e7b7f1a986291d0f056bb2460ccc8199a7f540dd0d82c`).
+Streaming RTX research is a separate track and is **not** an implemented capability of
+this R4 BYOM release.
