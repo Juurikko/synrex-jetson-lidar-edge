@@ -2,7 +2,9 @@
 
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
-Local technical publication draft; publishing requires Tuomas Pietilä's explicit approval.
+Public R4 RC2 [research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+published 2026-10-27. This showcase covers qualified RTX/QGIS BYOM functionality;
+streaming and physical Jetson execution are not part of this release.
 
 SynRex classifies georeferenced LiDAR using native C++, CUDA and TensorRT. One configurable
 dense-voxel adapter runs both an original analytic Conv3D integration model and a compact
