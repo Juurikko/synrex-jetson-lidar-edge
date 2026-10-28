@@ -46,7 +46,7 @@ CUDA evaluates argmax at occupied voxels. Strict `>` comparison keeps the first 
 
 The benchmark writer reads the source in order, replaces classification byte 16 of each qualified 42-byte PDRF-7 record, and re-encodes the record. All other decompressed bytes, including coordinates, flags, GPS time, RGB and Extra Bytes, remain intact. It retains the source public header, non-LASzip VLRs and padding while regenerating the compression VLR. Rebuilt compression-stream/chunk-table offsets must agree with the preserved point-data offset.
 
-The production qualification is narrow: LAS 1.4, PDRF 7, 42-byte records, 375-byte public header, point offset 1111, two VLRs, zero EVLRs. It does not establish support for arbitrary LAS formats, EVLRs, waveform packets or COPC indexes. See [validation](VALIDATION.md).
+The production qualification is narrow: LAS 1.4, PDRF 7, 42-byte records, 375-byte public header, point offset 1111, two VLRs, zero EVLRs. It does not establish support for arbitrary LAS formats, EVLRs, waveform packets or COPC indexes. See [validation](archive/history/VALIDATION.md).
 
 ## The runnable public-focused preservation utility
 

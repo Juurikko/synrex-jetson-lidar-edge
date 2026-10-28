@@ -24,4 +24,4 @@ The single initial commit identifies Tuomas Pietilä as author and committer usi
 
 **AGX_MODIFICATIONS=0**
 
-**PERSONAL_ATTRIBUTION=PASS.** Personal attribution, Git identity and owner-authorized scoped license activation are complete. See [the attribution/licensing report](PERSONAL_ATTRIBUTION_AND_LICENSING.md).
+**PERSONAL_ATTRIBUTION=PASS.** Personal attribution, Git identity and owner-authorized scoped license activation are complete. See [the attribution/licensing report](../../PERSONAL_ATTRIBUTION_AND_LICENSING.md).

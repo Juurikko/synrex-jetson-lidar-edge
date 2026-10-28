@@ -40,7 +40,7 @@ Potential beneficiaries include forest managers, flood/land-use planners, munici
 4. **Measure semantic accuracy, time, file size and usability** on documented inputs. Compare with MML's existing products and professional baselines, not only with unclassified point clouds.
 5. **Address governance first**: publish only when dataset rights, reidentification/sensitive-feature considerations, completeness, official responsibility and maintenance/versioning are satisfied.
 
-The accepted private SynRex demonstration establishes file-to-file native performance on four LAS 1.4/PDRF7 research tiles. Its largest file was 2.13M points in 10.11 s on an AGX Orin. **That single-device, one-shot result does not qualify Finland-wide processing capacity, national service costs, segmentation accuracy on Finnish MML data or operational distribution.** The published [model-free LAZ utility](BRING_YOUR_OWN_MODEL.md) can help with integrity-preserving delivery for **supported file formats**, not with creating semantic AI labels or modifying licensing conditions.
+The accepted private SynRex demonstration establishes file-to-file native performance on four LAS 1.4/PDRF7 research tiles. Its largest file was 2.13M points in 10.11 s on an AGX Orin. **That single-device, one-shot result does not qualify Finland-wide processing capacity, national service costs, segmentation accuracy on Finnish MML data or operational distribution.** The published [model-free LAZ utility](../../BRING_YOUR_OWN_MODEL.md) can help with integrity-preserving delivery for **supported file formats**, not with creating semantic AI labels or modifying licensing conditions.
 
 ## Question for public discussion
 

@@ -10,7 +10,7 @@ This repository is a **local public-release candidate**, not a published reposit
 
 ## Original source audit
 
-The original engineering source/evidence was inspected at commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. [Source review identities](archive/evidence/source_review.json) record Git blob hashes and individual dispositions without private repository links or raw paths.
+The original engineering source/evidence was inspected at commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. [Source review identities](../evidence/source_review.json) record Git blob hashes and individual dispositions without private repository links or raw paths.
 
 | Reviewed original material | Assessment | Release disposition |
 |---|---|---|
@@ -39,11 +39,11 @@ The original notices describe SynRex native engineering separately from the trai
 | Accepted R1 MP4, thumbnail and diagrams | Original procedural publication media, copied byte-for-byte from accepted R1; font notice retained. | CC BY 4.0 for personally controlled original expression, with font notices retained; no new public disclosure is performed. |
 | `media/preview.gif` | Short, scaled excerpt of the accepted R1 MP4; source hash/filter recorded. | CC BY 4.0 for the original-media excerpt; not genuine model predictions. |
 
-**MIT** is active for the confirmed original source/tests/configuration and **CC BY 4.0** for confirmed original documentation/media. Tuomas Pietilä explicitly confirmed ownership/licensing authority; notices apply only to protectable original expression. [LICENSE_SCOPE.json](LICENSE_SCOPE.json) controls scope. The retained historical review-only notice is superseded for these scopes; upstream licenses and excluded private/model-dependent code remain untouched. AI assistance is disclosed and is not itself a copyright claim. No ownership of facts, ideas, formats or third-party expression is claimed.
+**MIT** is active for the confirmed original source/tests/configuration and **CC BY 4.0** for confirmed original documentation/media. Tuomas Pietilä explicitly confirmed ownership/licensing authority; notices apply only to protectable original expression. [LICENSE_SCOPE.json](../../LICENSE_SCOPE.json) controls scope. The retained historical review-only notice is superseded for these scopes; upstream licenses and excluded private/model-dependent code remain untouched. AI assistance is disclosed and is not itself a copyright claim. No ownership of facts, ideas, formats or third-party expression is claimed.
 
 ## External dependencies and notices
 
-laz-perf 3.4.0 is fetched at a pinned public commit and compiled from the external checkout, preserving its Apache-2.0 headers. laspy, lazrs, NumPy and development tools are installed separately from pinned packages; neither their code nor binaries are committed. [Third-party notices](THIRD_PARTY_NOTICES.md) and the license inventory identify those boundaries. No dependency is relabeled as personally authored by Tuomas Pietilä.
+laz-perf 3.4.0 is fetched at a pinned public commit and compiled from the external checkout, preserving its Apache-2.0 headers. laspy, lazrs, NumPy and development tools are installed separately from pinned packages; neither their code nor binaries are committed. [Third-party notices](../../THIRD_PARTY_NOTICES.md) and the license inventory identify those boundaries. No dependency is relabeled as personally authored by Tuomas Pietilä.
 
 The DejaVu permission notice is retained for already-rendered text. No font binaries, stock footage, vendor product imagery, music or generated paid-API assets are included.
 

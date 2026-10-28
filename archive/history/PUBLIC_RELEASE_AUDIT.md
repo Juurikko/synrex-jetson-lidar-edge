@@ -10,7 +10,7 @@
 
 ## Source and asset decisions
 
-The pinned private engineering source was accessed read-only. The Product Runtime R1 launcher, native writer, native geometry/compact plan, CUDA I/O, inference service, two verification implementations, benchmark receipts, model manifest/lineage and license notices were inspected. Individual source identities/dispositions are in [source review](archive/evidence/source_review.json).
+The pinned private engineering source was accessed read-only. The Product Runtime R1 launcher, native writer, native geometry/compact plan, CUDA I/O, inference service, two verification implementations, benchmark receipts, model manifest/lineage and license notices were inspected. Individual source identities/dispositions are in [source review](../evidence/source_review.json).
 
 Original private runtime/model-dependent source is **excluded** because a blanket public license and complete derivative rights were not established. A newly written, design-informed C++ preservation utility and offline verifier are licensed under MIT after Tuomas Pietilä confirmed authority over the newly staged originals. The original source review is acknowledged; clean-room independence is not claimed. Model/data artifacts and genuine predictions are excluded entirely.
 

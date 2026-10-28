@@ -23,7 +23,7 @@ Across all four qualified files:
 
 LAZ compression metadata is expected to change: re-encoding regenerates the LASzip VLR and compressed stream/chunk table. The qualification does not demand source and output LAZ files have the same whole-file hash. Frozen *output* hashes are checked against the expected classified output, while decompressed nonclassification bytes are compared to the source.
 
-The benchmark writer contract is LAS 1.4 / PDRF 7 / 42-byte records / 375-byte header / point offset 1111 / two VLRs / zero EVLRs. Broader metadata/point-format preservation is not established. [Output digests](evidence/benchmark.json) are included without restricted files or identifying operational details.
+The benchmark writer contract is LAS 1.4 / PDRF 7 / 42-byte records / 375-byte header / point offset 1111 / two VLRs / zero EVLRs. Broader metadata/point-format preservation is not established. [Output digests](../evidence/benchmark.json) are included without restricted files or identifying operational details.
 
 ## Numerical model-conversion attribution
 
@@ -37,7 +37,7 @@ A characterized 886,928-point scene was compared against the frozen TreeAIBox/Py
 | TensorRT FP16 vs PyTorch | 89 |
 | TensorRT FP16 vs ONNX Runtime FP32 | 90 |
 
-The first characterized numerical boundary is PyTorch → ONNX/FP32, not an additional TensorRT-FP32 discrepancy. Pairwise mismatch sets overlap; 27, 89 and 90 are not additive. “Exact native parity” refers to the frozen characterized TensorRT-FP16 deployment outputs, not universal PyTorch bit parity. No quality metric was recomputed for the accepted timing runs. [Contributions and method](CONTRIBUTIONS_AND_METHOD.md) explains this evidence boundary.
+The first characterized numerical boundary is PyTorch → ONNX/FP32, not an additional TensorRT-FP32 discrepancy. Pairwise mismatch sets overlap; 27, 89 and 90 are not additive. “Exact native parity” refers to the frozen characterized TensorRT-FP16 deployment outputs, not universal PyTorch bit parity. No quality metric was recomputed for the accepted timing runs. [Contributions and method](../../CONTRIBUTIONS_AND_METHOD.md) explains this evidence boundary.
 
 ## Runnable synthetic checks in this release
 

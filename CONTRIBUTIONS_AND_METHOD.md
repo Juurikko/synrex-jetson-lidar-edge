@@ -34,7 +34,7 @@ The physical-device evidence predates the public showcase preparation. This attr
 - **NVIDIA CUDA, TensorRT and Jetson** supply the vendor compute/runtime platform. No vendor libraries, engines or product imagery are redistributed here.
 - **DejaVu** font notices remain intact for the accepted original procedural media. The scene geometry is illustrative and is not an actual model prediction or drone-integration result.
 
-The project does not claim invention of SegFormer3D, TreeAIBox research, LAZ compression or TensorRT. [Third-party notices](THIRD_PARTY_NOTICES.md) and the [rights audit](PUBLICATION_RIGHTS.md) retain these boundaries. The active MIT/CC BY 4.0 licenses cover only confirmed personally controlled original work and do not relicense upstream material.
+The project does not claim invention of SegFormer3D, TreeAIBox research, LAZ compression or TensorRT. [Third-party notices](THIRD_PARTY_NOTICES.md) and the [rights audit](archive/history/PUBLICATION_RIGHTS.md) retain these boundaries. The active MIT/CC BY 4.0 licenses cover only confirmed personally controlled original work and do not relicense upstream material.
 
 ## Public component and contribution-history boundary
 

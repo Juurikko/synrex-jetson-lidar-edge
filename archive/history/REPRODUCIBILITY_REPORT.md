@@ -4,7 +4,7 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-**Current local BYOM R0:** [physical RTX4090 qualification](docs/byom/RTX4090_QUALIFICATION.md) passes the 50,013-point original synthetic pipeline and full target suite. The [CPU checkpoint report](docs/byom/QUALIFICATION.md) and historical reports below remain preserved. They do not substitute for physical AGX qualification, which is NOT_RUN; its [plan](docs/byom/AGX_QUALIFICATION_PLAN.md) is prepared. The BYOM branch remains local and unpublished.
+**Current local BYOM R0:** [physical RTX4090 qualification](../../docs/byom/RTX4090_QUALIFICATION.md) passes the 50,013-point original synthetic pipeline and full target suite. The [CPU checkpoint report](../../docs/byom/QUALIFICATION.md) and historical reports below remain preserved. They do not substitute for physical AGX qualification, which is NOT_RUN; its [plan](../../docs/byom/AGX_QUALIFICATION_PLAN.md) is prepared. The BYOM branch remains local and unpublished.
 
 > **Superseding publication status — 2026-10-26:** [Juurikko/synrex-jetson-lidar-edge](https://github.com/Juurikko/synrex-jetson-lidar-edge) is published and its public visibility is verified. **PUBLIC_GITHUB_RELEASE=PASS · PUBLIC_VISIBILITY=VERIFIED.** Initial public commit: [`4405474`](https://github.com/Juurikko/synrex-jetson-lidar-edge/commit/4405474c73c25b8c19a5c3bf1b2d70fe30ed6d73). The original staging report below is retained as history; its statements about no creation/push, no remote, pending publication or `NOT_RUN` describe that earlier stage and are superseded for this repository's release. Licensing, personal/upstream attribution, noncommercial-reference restrictions and the limited model-free release scope remain unchanged. Evidence files and manifests retain their initial-commit contents.
 
@@ -28,7 +28,7 @@ The runnable public-focused preservation utility was built on a Linux x86-64 CPU
 | Clean local Git history/object checks | One initial commit, no remotes; strict fsck and text-pattern scan of Git objects performed after commit |
 | R0/R1 accepted publication inputs | SHA256 baseline unchanged across **210 files** |
 
-Machine-readable local evidence is in [synthetic result](evidence/synthetic_demo.json), [source review](evidence/source_review.json), [media manifest](evidence/media_manifest.json), [release checks](evidence/release_checks.json) and [provenance](evidence/provenance.json). Generated reports exclude their own recursive hashes. Post-commit history checks are rerunnable with `tools/release_checks.py --history --check-only`; the exact local commit ID is reported in the untracked external staging receipt.
+Machine-readable local evidence is in [synthetic result](../evidence/synthetic_demo.json), [source review](../evidence/source_review.json), [media manifest](../evidence/media_manifest.json), [release checks](../evidence/release_checks.json) and [provenance](../evidence/provenance.json). Generated reports exclude their own recursive hashes. Post-commit history checks are rerunnable with `tools/release_checks.py --history --check-only`; the exact local commit ID is reported in the untracked external staging receipt.
 
 ## Dependencies and deterministic inputs
 
@@ -40,7 +40,7 @@ Exact compressed output bytes can depend on codec/library versions and input hea
 
 ## Commands
 
-The [README quickstart](README.md#run-the-synthetic-integrity-demonstration) builds and runs the Release demo/tests. Run sanitizer and formatting checks as follows after installing the pinned development environment:
+The [README quickstart](../../README.md#run-the-synthetic-integrity-demonstration) builds and runs the Release demo/tests. Run sanitizer and formatting checks as follows after installing the pinned development environment:
 
 ```bash
 cmake -S . -B build-sanitize -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" \

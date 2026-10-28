@@ -1,13 +1,16 @@
 # Historical verification and editorial archive
 
 This folder organizes supporting public information outside the code-first root
-of the maintained `releases/streaming-r2-rc4` branch. **This is presentation
+of the repository. **This is presentation
 reorganization only, not a new qualified source release.**
 
 - [Full historical qualification receipts](evidence/) — original JSON/CSV content,
   preserving all successes, failures and NOT_RUN states.
 - [RC2/RC3/RC4 editorial work and owner-review notes](editorial/) — historical
   storyboards, draft LinkedIn material and media review documents.
+- [Historical reports moved from the repository root](history/) — R0/R1 staging
+  and publication reports, the historical Jetson benchmark, validation and
+  reproducibility notes, rights audit and the retained earlier README.
 - [Immutable, evidence-complete Streaming R2 RC4 source tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4)
 - [Public Streaming R2 RC4 assets, video and audit](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
 
