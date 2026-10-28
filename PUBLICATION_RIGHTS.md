@@ -10,7 +10,7 @@ This repository is a **local public-release candidate**, not a published reposit
 
 ## Original source audit
 
-The original engineering source/evidence was inspected at commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. [Source review identities](evidence/source_review.json) record Git blob hashes and individual dispositions without private repository links or raw paths.
+The original engineering source/evidence was inspected at commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. [Source review identities](archive/evidence/source_review.json) record Git blob hashes and individual dispositions without private repository links or raw paths.
 
 | Reviewed original material | Assessment | Release disposition |
 |---|---|---|

@@ -39,15 +39,15 @@ not used as evidence of new BYOM GPU execution.
 | Jetson aarch64 build/ABI | NOT_RUN | Local build is x86_64 with SM87 device code; not an aarch64 product binary |
 | Public release readiness | FAIL | Physical GPU/E2E gates incomplete; local candidate only; no owner publication approval requested or used |
 
-Receipts are [CPU qualification](../../evidence/byom_cpu_qualification.json),
-[sanitizers](../../evidence/byom_sanitizer_qualification.json) and
-[GPU build with CPU tests](../../evidence/byom_gpu_build_cpu_qualification.json).
+Receipts are [CPU qualification](../../archive/evidence/byom_cpu_qualification.json),
+[sanitizers](../../archive/evidence/byom_sanitizer_qualification.json) and
+[GPU build with CPU tests](../../archive/evidence/byom_gpu_build_cpu_qualification.json).
 They record commands, exit codes, sanitized log tails, log hashes and JUnit-derived counts.
 Full local logs/JUnit files reside under each ignored build directory's `qualification/`.
-[Dependency identities](../../evidence/byom_dependencies.json) include compiler/SDK wheel hashes,
+[Dependency identities](../../archive/evidence/byom_dependencies.json) include compiler/SDK wheel hashes,
 upstream revisions and per-file external source identities. They do not redistribute vendor SDKs.
-[Source assessment](../../evidence/byom_source_assessment.json) lists excluded private native
-files by hash and records its pristine Git state. [Per-file provenance](../../evidence/byom_provenance.json)
+[Source assessment](../../archive/evidence/byom_source_assessment.json) lists excluded private native
+files by hash and records its pristine Git state. [Per-file provenance](../../archive/evidence/byom_provenance.json)
 covers the public candidate; its own generated file and the source-assessment output are excluded
 from recursive self-hashing. Original benchmark/media artifacts remain untouched.
 
