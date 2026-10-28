@@ -98,4 +98,4 @@ The strict out-of-order fixture remains a negative protocol test. The swapped pa
 unassemblable tail yield 12 late points and 16 dropped points, with 48 of 64 incoming points
 assembled. The original expectation of four late points was wrong; the assembler was not
 relaxed. Its original FAIL and corrected PASS are retained in
-[the regression receipt](../../evidence/sustained_out_of_order_regression.json).
+[the regression receipt](../../archive/evidence/sustained_out_of_order_regression.json).

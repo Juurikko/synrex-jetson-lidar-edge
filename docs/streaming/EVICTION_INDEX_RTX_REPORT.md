@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
 This continuation freezes the accepted geometry/churn checkpoint `958c418` before changing the
-map. The [freeze manifest](../../evidence/eviction_baseline_freeze.json) preserves the complete
+map. The [freeze manifest](../../archive/evidence/eviction_baseline_freeze.json) preserves the complete
 source identity and all historical PASS/FAIL receipts. The original R4 source, weights, model
 packages, predictions, release tags and public main remain unchanged. No Track B push or release
 is authorized or performed; AGX and Thor are not accessed.
@@ -15,9 +15,9 @@ observation updates with genuine spatial churn at the full 65,536-cell capacity*
 The previous scan-based 2M warmup queue FAIL remains preserved. Repeated 100k and 1M churn
 qualification also passes; the initial 100k objective and 500k stretch objective are exceeded.
 
-[Final PASS/FAIL/NOT_RUN gates](../../evidence/eviction_final_gates.json),
-[all 36 trial receipts](../../evidence/eviction_rtx_trials.json) and
-[complete per-trial metrics CSV](../../evidence/eviction_trial_table.csv) contain 34 accepted
+[Final PASS/FAIL/NOT_RUN gates](../../archive/evidence/eviction_final_gates.json),
+[all 36 trial receipts](../../archive/evidence/eviction_rtx_trials.json) and
+[complete per-trial metrics CSV](../../archive/evidence/eviction_trial_table.csv) contain 34 accepted
 sustained PASSs and two expected cancellation FAILs. This is bounded offline-emulated replay of
 this small frozen model and named licensed scenes, not a general live-sensor or larger-model
 throughput guarantee. Stable 3M scene A/B and 2.5M scene C performance remains qualified.
@@ -34,7 +34,7 @@ lookup and snapshot traversal remain deterministic. No stale priority queue is i
 The exact qualified native source is `1397b033b4dc5a286928054dc75af885b3912ca2`; its archive SHA256
 is `01bd7ce98f406f7f72c162c7b35af6b81f67f2263bdd47f1c5b5b8c92a1a1984`. Later auxiliary test and
 controller commits do not modify native inference or the qualified map implementation. The
-[provenance record](../../evidence/eviction_source_provenance.json) hashes changed source and
+[provenance record](../../archive/evidence/eviction_source_provenance.json) hashes changed source and
 unchanged geometry, CUDA, TensorRT, package and session-contract files. The frozen before binary
 is the accepted `3f97a49` GPU build (all its native source bytes match checkpoint `958c418`), with
 SHA256 `a52d815dc923931845a85d1e080ce8d61c8ad6c9e95de95b226d263742a45a97`.
@@ -57,8 +57,8 @@ Index relinking and victim lookup are O(1); the intrusive index adds 40 payload 
 2.5MiB at capacity 65,536. The reference selector has the same enlarged cell layout, so the
 original frozen binary is retained for authoritative before-performance comparisons.
 
-See the [reference](../../evidence/eviction_rtx_cpu_reference.json) and
-[indexed](../../evidence/eviction_rtx_cpu_indexed.json) detailed CPU receipts. Per-observation clocks
+See the [reference](../../archive/evidence/eviction_rtx_cpu_reference.json) and
+[indexed](../../archive/evidence/eviction_rtx_cpu_indexed.json) detailed CPU receipts. Per-observation clocks
 are disabled in sustained trials; coarse native stage timing and all output validation remain on.
 
 
@@ -98,13 +98,13 @@ timestamps, checks exact reference deltas/snapshots, traverses all live index li
 894,525,440 to 744,542,208 bytes; allocator/sanitizer retention is distinct from index storage.
 The earlier fixed-timestamp memory test mostly exercised late rejection; its original receipt
 is preserved, with the gap and corrected gate explicitly recorded in the
-[test-correction receipt](../../evidence/eviction_test_correction.json).
+[test-correction receipt](../../archive/evidence/eviction_test_correction.json).
 
 Both frozen synthetic Conv3D and trained FRACTAL U-Net run through the same native executable.
 Prepared tensor bytes agree with the offline path and maximum logit error is zero. All source
 classes and IDs match. Owned device and pinned allocations return to zero after session teardown.
 Native execution without Python on PATH, explicit packet loss and out-of-order rejection pass.
-These short diagnostic tests are [regression evidence](../../evidence/eviction_gpu_regressions.json),
+These short diagnostic tests are [regression evidence](../../archive/evidence/eviction_gpu_regressions.json),
 not sustainable throughput measurements. Larger neural models and datasets are unqualified.
 
 ## Matched frozen/indexed sustained comparison
@@ -130,8 +130,8 @@ The independent snapshot digests are respectively
 
 ## Sustained high-churn rates collected locally
 
-The [churn trial JSON](../../evidence/eviction_churn_trials.json) and
-[per-trial CSV](../../evidence/eviction_churn_table.csv) preserve all 21 matched/sweep trials:
+The [churn trial JSON](../../archive/evidence/eviction_churn_trials.json) and
+[per-trial CSV](../../archive/evidence/eviction_churn_table.csv) preserve all 21 matched/sweep trials:
 20 sustained PASSs and one deliberately cancelled warmup FAIL. All accepted runs have complete
 source-point coverage, zero dropped/duplicate/corrupt/delayed points, fresh model execution and
 a PASS independent map oracle. Every high-churn map reaches its exact configured cap. The
@@ -195,8 +195,8 @@ this frozen small model and named scenes, not a promise of unlimited-duration or
 performance. Scene C's original 3M FAIL remains frozen; this campaign reruns its accepted 2.5M
 rate and does not claim a new scene-C 3M result.
 
-The temporary [Tailscale identity-check blocker](../../evidence/eviction_access_blocker.json)
-was [resolved by owner authentication](../../evidence/eviction_access_resolution.json). All completed
+The temporary [Tailscale identity-check blocker](../../archive/evidence/eviction_access_blocker.json)
+was [resolved by owner authentication](../../archive/evidence/eviction_access_resolution.json). All completed
 stable receipts have now been retrieved with verified SSH. No host-key or access-policy setting
 was changed. Historical NOT_RUN entries in the initial blocker describe that temporary state.
 
@@ -330,7 +330,7 @@ initial fill. A failed or cancelled trial is never advertised as sustainable fro
 | churn65536-p16384-2000000-t2 | PASS | 1,999,697 | 13.11/17.30/17.83 | 1/1 | 506.4 / 524 | 19.8 |
 | post-fill-cancellation | FAIL / measured | 97,209 | 23.59/41.94/44.04 | 1/1 | 502.7 / 524 | 1.3 |
 
-[Remote final sealing](../../evidence/eviction_remote_final.json) compares all 325 archived source
+[Remote final sealing](../../archive/evidence/eviction_remote_final.json) compares all 325 archived source
 files byte for byte with the actual qualified tree, hashes every package file and binary, and
 verifies model/binary preservation across all five campaigns. The trained U-Net engine remains
 `2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd`; the synthetic engine remains

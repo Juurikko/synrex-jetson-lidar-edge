@@ -4,7 +4,7 @@
 
 This continuation preserves the accepted 2M source at local tag
 `streaming-r0-2m-frozen-95e80bb` and records its source/archive/receipt hashes in
-[the freeze manifest](../../evidence/geometry_2m_freeze.json). All prior PASS and FAIL receipts,
+[the freeze manifest](../../archive/evidence/geometry_2m_freeze.json). All prior PASS and FAIL receipts,
 including smaller-window queue failures, remain unchanged. Nothing is pushed or published.
 The original independently evaluated small FRACTAL U-Net, its weights, TensorRT engine,
 quality evidence and accepted R4 artifacts remain frozen. These measurements apply to this
@@ -23,8 +23,8 @@ True spatial churn exposes a separate limit: a 4,096-cell map passes 50k points/
 seconds after eviction starts. Full-capacity 65,536-cell churn FAILs at 2M, 50k, 25k, 10k and
 5k; stop phases and losses remain in the receipts. No latency, queue or memory gate was relaxed.
 
-The [31-trial JSON](../../evidence/geometry_rtx_trials.json) contains 24 PASS and seven FAIL
-trials; the [per-trial CSV](../../evidence/geometry_trial_table.csv) contains rates, latency,
+The [31-trial JSON](../../archive/evidence/geometry_rtx_trials.json) contains 24 PASS and seven FAIL
+trials; the [per-trial CSV](../../archive/evidence/geometry_trial_table.csv) contains rates, latency,
 coverage, loss, queue depths, ages, memory, GPU utilization/power, map operations and output
 hashes for every trial. Campaign completion status means the controller completed and preserved
 its trials; it does not turn individual FAILs into PASS. Original 2M, point-only 1M and prior
@@ -60,7 +60,7 @@ worker-total advantage in one trial is not repeatable evidence of better sustain
 it was not selected for the rate sweep. The CPU microbenchmark separately records 655,360 tree
 lookups and 2,120 member-capacity growths for direct, versus zero of each for flat; sorting costs
 outweigh those savings on this input. Reference counters are uninstrumented zeros, not proof of
-zero allocation/tree work. See the [CPU qualification](../../evidence/geometry_cpu_qualification.json).
+zero allocation/tree work. See the [CPU qualification](../../archive/evidence/geometry_cpu_qualification.json).
 
 | Measured service region, active seconds | Reference 2M t1 | Direct 2M t1 | Direct 3M scene A t1 |
 |---|---:|---:|---:|
@@ -183,7 +183,7 @@ The direct strategy stages bounded membership records and uses one tree lookup p
 then the original voxel/source-index member sort. The flat strategy sorts all records by block,
 voxel and source index, then reserves each block's exact member capacity. Its eliminated tree
 lookups and member-vector growth must be weighed against its global sort cost. The initial
-prototype was slightly slower than the reference; its [negative CPU receipt](../../evidence/geometry_prototype_cpu.json)
+prototype was slightly slower than the reference; its [negative CPU receipt](../../archive/evidence/geometry_prototype_cpu.json)
 is preserved. Avoiding temporary error-message construction on successful checks improved the
 optional strategies without removing validation or changing failure conditions.
 
@@ -193,7 +193,7 @@ sparse empty regions, arbitrary grids and voxel sizes, nonzero-overlap fallback,
 and coordinate-range rejection. There are 398 successful mode comparisons and eight matching
 unsafe-input rejections. Origins, ordered memberships and complete float32 feature tensors are
 compared byte for byte. The unchanged stream schema limits XYZ to ±1e9: the initial 1e12 GPU
-fixture FAILed at serialization before inference. Its [FAIL is retained](../../evidence/geometry_initial_gpu_fixture_failure.json);
+fixture FAILed at serialization before inference. Its [FAIL is retained](../../archive/evidence/geometry_initial_gpu_fixture_failure.json);
 stream/GPU fixtures use 1e8, while larger offsets remain in CPU geometry tests.
 
 The full-window CPU oracle compares 12,000 deterministic 16,384-point windows from **each**
@@ -226,7 +226,7 @@ classification.
 
 A separate CPU-only full-capacity service probe first fills the map, then measures new-cell
 insertions/removals and existing-cell updates independently. Dummy classes are explicit;
-[its rates](../../evidence/geometry_cpu_eviction_service.json) are map-only active service rates,
+[its rates](../../archive/evidence/geometry_cpu_eviction_service.json) are map-only active service rates,
 not sustained neural classification. Moving-map CPU fixtures also check late observations,
 class changes, age reporting, repeated observations and coordinate mismatch rejection.
 
@@ -253,7 +253,7 @@ The first-eviction timestamp is observed after the first evicting frame, so the 
 is a conservative full-capacity exposure including drain. At 2,500 points/s, over 76 measured
 seconds occur after that timestamp; this is not merely a fast fill-and-stop benchmark.
 
-The CPU-only [RTX-host eviction probe](../../evidence/geometry_cpu_eviction_rtx.json) isolates
+The CPU-only [RTX-host eviction probe](../../archive/evidence/geometry_cpu_eviction_rtx.json) isolates
 new-cell replacement from existing-cell updates with the same production map, oracle outside
 the timer. At capacities 1,024 / 4,096 / 16,384 / 65,536 it measures approximately 336k / 80.7k /
 12.4k / 2.96k evicting updates per active second. Existing-cell service remains about 9.11M/s at
@@ -274,11 +274,11 @@ is included in this qualified source.
 
 ## Evidence and remaining boundaries
 
-[Final gates](../../evidence/geometry_final_gates.json) separate accepted scopes, rejected rates
-and NOT_RUN targets. The [remote source/model seal](../../evidence/geometry_remote_final.json)
+[Final gates](../../archive/evidence/geometry_final_gates.json) separate accepted scopes, rejected rates
+and NOT_RUN targets. The [remote source/model seal](../../archive/evidence/geometry_remote_final.json)
 compares every archived source file with the actual qualified tree, records both binary hashes
 and frozen package-file hashes, and confirms the RTX is idle after regression tests. Both models
-pass reference/direct/flat real inference; [exact trace comparisons](../../evidence/geometry_gpu_exact.json)
+pass reference/direct/flat real inference; [exact trace comparisons](../../archive/evidence/geometry_gpu_exact.json)
 check 48 classified events and 1,684 input/logit trace files byte for byte, including source
 metadata and classes. No CPU label approximation substitutes for those model executions.
 Full-window CPU tensor parity extends input/preprocessing correctness to every stationary

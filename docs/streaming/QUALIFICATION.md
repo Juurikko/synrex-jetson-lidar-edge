@@ -9,9 +9,9 @@ hardware qualifications remain gated. The executed source is
 The archive SHA256 was identical before/after transfer, and its embedded Git identity was
 verified. Later report-only commits do not change this executed runtime.
 
-[Exact gates and source hashes](../../evidence/streaming_r0_qualification.json),
-[full sanitized RTX campaign](../../evidence/streaming_r0_rtx_campaign.json),
-[baseline identity/resource contract](../../evidence/streaming_r0_baseline.json),
+[Exact gates and source hashes](../../archive/evidence/streaming_r0_qualification.json),
+[full sanitized RTX campaign](../../archive/evidence/streaming_r0_rtx_campaign.json),
+[baseline identity/resource contract](../../archive/evidence/streaming_r0_baseline.json),
 [protocol](PROTOCOL.md) and [restartable build/qualification procedure](QUICKSTART.md)
 are committed. Raw tensors, licensed point fixtures, predictions and logs stay in ignored
 qualification workspaces. No model/data binaries were added to Git.

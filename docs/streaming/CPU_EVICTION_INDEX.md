@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
 The accepted source `958c418d6799196605155f0223418d6f3b4f5c4d` is frozen at local tag
-`streaming-r0-geometry-frozen-958c418`. The [freeze receipt](../../evidence/eviction_baseline_freeze.json)
+`streaming-r0-geometry-frozen-958c418`. The [freeze receipt](../../archive/evidence/eviction_baseline_freeze.json)
 hashes its archive, accepted geometry/churn reports, all earlier PASS and FAIL receipts and
 qualified source identities. Those files are never overwritten by this continuation.
 
@@ -89,7 +89,7 @@ every value 1–64 plus 257, 1,024, 4,096, 16,384 and 65,536. The independent ha
 forces collisions at capacity 257; production lookup is ordered and has no hash-collision case.
 Tests cover negative and adjacent floating-point coordinate boundaries, large offsets, coincident
 points, equal timestamps, class changes, delayed input and all seven semantic channels.
-[Explicit policy expectations](../../evidence/eviction_temporal_cpu.json) separately assert
+[Explicit policy expectations](../../archive/evidence/eviction_temporal_cpu.json) separately assert
 that a new cell with an older global timestamp is accepted, equal-time observations refresh
 recency, late existing observations do not, and eviction follows the exact expected key order.
 These tests cover resolutions 0.001, 0.125, 1, 32.5 and 1,000 metres, full-width ages and no TTL.
@@ -97,11 +97,11 @@ They pass both release and ASan/UBSan builds.
 A separate 2,097,152-accepted-observation refresh phase advances timestamps and checks RSS,
 zero late rejection and exactly 65,536 index entries. The initial fixed-timestamp memory test
 mostly exercised late rejection; its receipt is preserved and the strengthened CPU/sanitizer
-runs are recorded in [the correction receipt](../../evidence/eviction_test_correction.json).
+runs are recorded in [the correction receipt](../../archive/evidence/eviction_test_correction.json).
 
-[CPU parity](../../evidence/eviction_cpu_accepted_refresh.json),
-[reference stage profile](../../evidence/eviction_cpu_profile_reference.json) and
-[indexed stage profile](../../evidence/eviction_cpu_profile_indexed.json) are model-free receipts.
+[CPU parity](../../archive/evidence/eviction_cpu_accepted_refresh.json),
+[reference stage profile](../../archive/evidence/eviction_cpu_profile_reference.json) and
+[indexed stage profile](../../archive/evidence/eviction_cpu_profile_indexed.json) are model-free receipts.
 Frozen/optimized neural comparisons and sustained hardware conclusions are recorded separately
 in the qualification report; no model-free number is advertised as freshly classified points/s.
 

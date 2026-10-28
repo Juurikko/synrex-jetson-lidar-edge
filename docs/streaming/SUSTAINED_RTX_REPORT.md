@@ -48,8 +48,8 @@ passed: the scene-A trials each issued 31,227 actual successful enqueues includi
 scene C issued 35,746. Those equal the observed inference-block totals. Successfully reconstructed
 backend point counts equal service fresh-classification counts, with one package load/context.
 
-[All 79 trial receipts](../../evidence/sustained_rtx_trials.json) and the
-[78 point-stream trial rows](../../evidence/sustained_trial_table.csv) retain every PASS/FAIL,
+[All 79 trial receipts](../../archive/evidence/sustained_rtx_trials.json) and the
+[78 point-stream trial rows](../../archive/evidence/sustained_trial_table.csv) retain every PASS/FAIL,
 latency quantile, incoming/fresh/map rate, coverage/drop count, queue bound, memory result,
 stage sum, semantic histogram, source/model/binary identity and canonical raw-trial hash.
 The remaining trial is the explicitly separated model-only benchmark.
@@ -89,7 +89,7 @@ from incoming points/s. ³ 16,384-point 2M trials, dynamic per-window R4 block o
 has a larger height span, much denser points and lower intensity values. Its source distribution
 and model semantic histogram differ substantially from A/B. All seven model IDs occurred in
 each measured 2M scene trial; this is channel coverage, not a new semantic-accuracy assessment.
-[Corpus hashes, raw source-class histograms and density definitions](../../evidence/streaming_scene_corpora.json)
+[Corpus hashes, raw source-class histograms and density definitions](../../archive/evidence/streaming_scene_corpora.json)
 remain separate from predicted semantic IDs. Raw source classes are never silently remapped.
 
 Two 30s scene-C 1M trials with 250 mm sinusoidal X motion, alternating 25% rank-X occlusion,
@@ -138,7 +138,7 @@ latencies and must not be added to stage sums to claim wall-clock time.
 | Output queue wait | 0.1065 | Cumulative waiting across windows |
 
 The source-to-output latency is measured directly (p99 17.30 ms in this trial).
-[The 163-window host/CUDA timeline](../../evidence/streaming_host_cuda_timeline.json) records
+[The 163-window host/CUDA timeline](../../archive/evidence/streaming_host_cuda_timeline.json) records
 source, worker and map-sink overlap. GPU utilization averaged 18.6% over the process; low
 utilization alone does not establish a saturated-device ceiling. Aggregate stage measurements
 identify CPU geometry and per-block host/model overhead as higher-value targets than CUDA
@@ -244,8 +244,8 @@ python3 tools/summarize_sustained.py \
   --campaign windows="$NEW_CAMPAIGN/receipt.json" --out "$NEW_SUMMARY"
 ```
 
-See [the protocol](SUSTAINED_PROTOCOL.md), [the exact temporal regression receipt](../../evidence/sustained_out_of_order_regression.json)
-and [the optimization A/B receipt](../../evidence/streaming_optimization_ab.json).
+See [the protocol](SUSTAINED_PROTOCOL.md), [the exact temporal regression receipt](../../archive/evidence/sustained_out_of_order_regression.json)
+and [the optimization A/B receipt](../../archive/evidence/streaming_optimization_ab.json).
 
 ## Exact source and final checks
 
@@ -291,8 +291,8 @@ The original reference-map setup FAIL (uploaded executable lacked execute permis
 its successful retry are retained. The first R4 relocation invocation had four FAIL/one PASS
 because the controller used nonexistent `CUDA_ROOT/lib64`. The unchanged binaries passed
 all five with existing `CUDA_ROOT/lib`; no reinstall or source workaround occurred. Original
-logs/hashes and exact gates are in [the final gate receipt](../../evidence/streaming_final_gates.json)
-and [the preserved setup receipt](../../evidence/streaming_setup_failure.json).
+logs/hashes and exact gates are in [the final gate receipt](../../archive/evidence/streaming_final_gates.json)
+and [the preserved setup receipt](../../archive/evidence/streaming_setup_failure.json).
 The earlier JSON final-gate FAIL incorrectly labeled its phase as “none”; its original receipt
 is retained, while the consolidated record identifies the final gate. The corrected runtime's
 short-duration negative test explicitly reports FAIL / final_gate.
@@ -317,7 +317,7 @@ mode requires exactly one repository commit and no remotes, so its single-commit
 FAILs for this continued branch. Its history gate is explicitly NOT_RUN. A separate read-only
 scan using the same patterns covers all 98 newly reachable objects across the seven commits
 through `2a78629`: PASS, no pattern findings or model/point-cloud binary paths. See
-[the scoped history receipt](../../evidence/streaming_history_audit.json). The inherited checker
+[the scoped history receipt](../../archive/evidence/streaming_history_audit.json). The inherited checker
 and accepted R4 audit remain unchanged.
 
 All raw campaigns, complete map outputs, tensors and initial failures remain in separate
