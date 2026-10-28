@@ -13,6 +13,14 @@ This separate RTX 4090 research prerelease adds persistent streaming inference, 
 per-point classifications, bounded semantic-map updates and independently verified
 optional GIS export. Its benchmark timing boundary differs from R4 file-to-file processing.
 
+**Browse Streaming R2 code (maintained source view):**
+[C++/CUDA/TensorRT native implementation](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/releases/streaming-r2-rc4/native) ·
+[public build/replay instructions](https://github.com/Juurikko/synrex-jetson-lidar-edge/blob/releases/streaming-r2-rc4/docs/publication/QUICKSTART_RC4.md) ·
+[archived detailed verification receipts](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/releases/streaming-r2-rc4/archive/evidence).
+The release tag retains its original evidence-complete snapshot and checksums;
+the maintained release branch corrects historical candidate wording and groups
+editorial drafts and audit files under `archive/` for easier code browsing.
+
 Already-georeferenced LAZ → configurable dense voxels → user model → original-point
 predictions → metadata-preserving classified LAZ. The classification executable requires
 no Python or PyTorch. Python supports training, independent verification and the optional
