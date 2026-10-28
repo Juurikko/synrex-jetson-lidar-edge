@@ -22,9 +22,9 @@ Dense scene C and full spatial churn at both 4,096 and 65,536 cells pass two rep
 queue or memory limit was relaxed. Accepted in-process R0 rates remain separately preserved:
 about 3M/s on A/B, 2.5M/s on C and 2M/s at full 65,536-cell churn.
 
-[Every transport trial](../../evidence/streaming_r1_transport_trials.csv) records rate, coverage,
+[Every transport trial](../../archive/evidence/streaming_r1_transport_trials.csv) records rate, coverage,
 loss, latency, queues, memory, GPU utilization/power and hashes. The
-[summary](../../evidence/streaming_r1_transport_summary.json) requires at least two complete
+[summary](../../archive/evidence/streaming_r1_transport_summary.json) requires at least two complete
 sustained PASS repetitions and no matching failure for a qualified binary/configuration.
 The original nine-trial transport campaign has five PASS and four FAIL results; the optimized
 21-trial campaign has 18 PASS and three FAIL results. Short model probes are separate.
@@ -56,8 +56,8 @@ reference comparisons; prepared tensors are byte identical and traced logit erro
 
 Sixteen sustained matched trials compare the frozen accepted binary, current direct mode and
 two radix repetitions. Point/delta digests, seven-class histograms and complete snapshot hashes
-match in all four configurations. [The digest receipt](../../evidence/streaming_r1_geometry_digest_parity.json)
-and [per-trial CSV](../../evidence/streaming_r1_geometry_trials.csv) preserve the exact identities.
+match in all four configurations. [The digest receipt](../../archive/evidence/streaming_r1_geometry_digest_parity.json)
+and [per-trial CSV](../../archive/evidence/streaming_r1_geometry_trials.csv) preserve the exact identities.
 
 | Identical in-process workload | Direct geometry active s | Radix geometry active s, mean | Direct worker active s | Radix worker active s, mean |
 | --- | ---: | ---: | ---: | ---: |
@@ -72,10 +72,10 @@ no higher general-purpose rate is inferred.
 
 The first unqualified wire prototype failed subscriber delivery despite freshly classifying
 all 524,288 points; that receipt remains in
-[the initial probe](../../evidence/streaming_r1_initial_transport.json). Wire v2 adds per-event
+[the initial probe](../../archive/evidence/streaming_r1_initial_transport.json). Wire v2 adds per-event
 model identity. Subsequent optimization comparisons use identical v2 inputs/models/configuration.
-[Short real-model parity](../../evidence/streaming_r1_transport_smoke_parity.json) and
-[sustained parity](../../evidence/streaming_r1_sustained_digest_parity.json) require exact canonical
+[Short real-model parity](../../archive/evidence/streaming_r1_transport_smoke_parity.json) and
+[sustained parity](../../archive/evidence/streaming_r1_sustained_digest_parity.json) require exact canonical
 SHA256 input/output equality. Host replay/arrival/publication clocks are excluded; measurement
 clock, source records, model identity, predictions and every ordered delta remain included.
 Independent subscribers verify every final full snapshot, and optimized repeated snapshots
@@ -94,7 +94,7 @@ The sealed CPU allocation probe decodes identical two-million-point invented fix
 baseline `7b32215` and optimized `f39fa29` libraries: ordinary C++ allocation requests fall from
 52,458,496 to 6,297,344, and active decode/destroy time from 0.578s to 0.173s on the CPU host.
 This is a codec diagnostic, not neural or sustainable throughput. Exact fixture bytes and
-[probe/library/compiler identities](../../evidence/streaming_r1_wire_allocation_provenance.json)
+[probe/library/compiler identities](../../archive/evidence/streaming_r1_wire_allocation_provenance.json)
 are preserved. Earlier unsealed working-tree pilot timings are retained as diagnostics, with
 that identity limitation explicitly recorded.
 
@@ -147,7 +147,7 @@ checks and publishes its own complete bundle atomically. File encoding stays out
 
 ## Long run, fault and export closure
 
-[The ten-minute full-churn trial](../../evidence/streaming_r1_long_stability.json) passes at
+[The ten-minute full-churn trial](../../archive/evidence/streaming_r1_long_stability.json) passes at
 999,981 freshly classified points and map observation updates/s over 600.026 measured seconds.
 All 600,014,848 measured source points are independently validated, with zero classification or
 delivery losses and zero reused labels. Source-to-validated-output p50/p95/p99 are
@@ -156,45 +156,45 @@ measured insertions/evictions and 491,954,598 existing-cell updates. Receiver pe
 456.97 MiB and measured RSS variation only 36 KiB. Sampled device memory peaks at 524 MiB;
 whole-trial mean GPU utilization/power are 10.80% / 9.33 W. Queues retain their two-frame limits.
 
-[Fault receipts](../../evidence/streaming_r1_transport_faults.json) preserve native FAIL for
+[Fault receipts](../../archive/evidence/streaming_r1_transport_faults.json) preserve native FAIL for
 duplicate/missing sequences, sensor-clock discontinuity, truncated frame payload and subscriber
 stall. Clean reconnect passes. During subscriber stall all 3,014,656 points still receive fresh
 model classifications, while all failed point deliveries are counted and the overall trial
-remains FAIL. [Requested cancellation](../../evidence/streaming_r1_transport_cancellation.json)
+remains FAIL. [Requested cancellation](../../archive/evidence/streaming_r1_transport_cancellation.json)
 fires during measurement after map fill, retains a coherent validated prefix, explicitly drops
 16,384 queued points and returns zero owned CUDA/pinned bytes at exit. It is a fault test, not
 a sustainable-rate result. CPU tests also cover checksum/version/budget rejection, one-byte
 fragmentation, real loopback reconnect, optional attributes, timed rigid rotation/translation,
 missing poses, separate sensor identities and over a million bounded sequence observations.
 
-[Reference/decoded native consumer A/B](../../evidence/streaming_r1_consumer_ab.json) both pass
+[Reference/decoded native consumer A/B](../../archive/evidence/streaming_r1_consumer_ab.json) both pass
 60 measured seconds at 1M, with exact input/output and complete snapshot SHA256 equality. The
-[final GPU regression](../../evidence/streaming_r1_final_gpu_regressions.json) passes both frozen
+[final GPU regression](../../archive/evidence/streaming_r1_final_gpu_regressions.json) passes both frozen
 models through the same binary without rebuilding: exact source classes/IDs and prepared tensor
 bytes, zero traced logit error, native execution with Python absent from PATH, packet-loss and
-out-of-order failure expectations. [Five physical R4 preservation tests](../../evidence/streaming_r1_r4_gpu_preservation.json)
+out-of-order failure expectations. [Five physical R4 preservation tests](../../archive/evidence/streaming_r1_r4_gpu_preservation.json)
 also pass; frozen predictions/models/releases are never replaced.
 
-[Async export under load](../../evidence/streaming_r1_async_export_trial.json) passes 60 seconds
+[Async export under load](../../archive/evidence/streaming_r1_async_export_trial.json) passes 60 seconds
 on dense scene C at 999,786 fresh points/s, p99 36.70 ms and complete source coverage. A separate
 worker publishes all 400,654 original source records, collecting first fresh observations after
 warmup with exact record/frame/measurement-time provenance. Receiver/subscriber peak RSS are
 382.02 / 312.43 MiB; sampled combined RSS peaks at 816.88 MiB. No inference-side file writer
-is required. [Independent file qualification](../../evidence/streaming_r1_file_export_qualification.json)
+is required. [Independent file qualification](../../archive/evidence/streaming_r1_file_export_qualification.json)
 verifies all preserved records, semantic/model/source/taxonomy bindings and exact reproduction
 of the classified LAZ digest. Standalone preservation encoding takes 0.362s; complete optional
 offline COPC/validation/project creation takes 5.175s. These are file-job wall times, not
 sustained export rates or fresh neural classification throughput. QGIS 3.44.14 saves/reopens
 the real COPC layer, with EPSG:2154 retained from the source and no viewing CRS assignment.
 
-The [initial export startup FAIL](../../evidence/streaming_r1_export_startup_failure.json)
+The [initial export startup FAIL](../../archive/evidence/streaming_r1_export_startup_failure.json)
 was a controller-relative taxonomy-path error, corrected with an explicit path. The
-[Windows-mounted filesystem FAIL](../../evidence/streaming_r1_copc_drvfs_failure.json) rejects
+[Windows-mounted filesystem FAIL](../../archive/evidence/streaming_r1_copc_drvfs_failure.json) rejects
 unsupported atomic no-replace publication; no complete bundle is published there. Native Linux
 storage passes synchronized no-replace publication and an existing-bundle replacement rejection.
 Partial products remain invalid. Native LAZ source/model/coordinate semantics were unchanged.
 
-[Model-only TensorRT measurement](../../evidence/streaming_r1_model_only.json) executes 185,536
+[Model-only TensorRT measurement](../../archive/evidence/streaming_r1_model_only.json) executes 185,536
 real enqueue calls in 30.005 seconds: 6,184 prepared-block inferences/s, with 32 enqueues per
 synchronization. Batch-average event latency p50/p95/p99 is 0.135/0.238/0.242 ms. It emits **zero
 classified source points**. Its 18.23M point-equivalent upper bound uses only the prepared block's
@@ -208,7 +208,7 @@ millisecond-scale windows. Actual clocks remain dynamic and unmodified.
 Native implementation commits are `e955b07`, `d4f7b87`, `7b32215` and **`f39fa29`**. Later
 commits add independently checked evidence, offline export durability and qualification tooling;
 all final native production files remain byte identical to `f39fa29`. The
-[remote seal](../../evidence/streaming_r1_remote_seal.json) verifies all archived files for three
+[remote seal](../../archive/evidence/streaming_r1_remote_seal.json) verifies all archived files for three
 qualified variants, exact executable hashes, both complete frozen model packages and all three
 licensed source hashes. Final GPU state is idle: 0% utilization, 130 MiB and no compute jobs.
 The trained engine remains `2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd`;
@@ -219,7 +219,7 @@ arithmetic remain unchanged from accepted R0. RTX hardware is SM89, driver 610.8
 runtime 13020, TensorRT 10.16.1, AMD Ryzen 7 7700X under WSL2. Model/data terms remain separate
 from independently licensable MIT source.
 
-[Final gates](../../evidence/streaming_r1_final_gates.json) retain exact PASS/FAIL/NOT_RUN statuses.
+[Final gates](../../archive/evidence/streaming_r1_final_gates.json) retain exact PASS/FAIL/NOT_RUN statuses.
 Protocol, live loopback, accepted fresh coverage, map output, source-bound async export, geometry,
 GPU numerics, sustained RTX and ten-minute stability pass. Orin/SM87 and Thor/SM110 physical
 readiness and public release readiness remain NOT_RUN. No public push or release is authorized.

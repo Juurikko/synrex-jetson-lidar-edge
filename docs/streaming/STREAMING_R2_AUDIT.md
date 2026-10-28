@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
 R2 is a release/showcase campaign, with no native performance optimization or retraining.
-The [pre-change freeze](../../evidence/streaming_r2_baseline_freeze.json) protects **252**
+The [pre-change freeze](../../archive/evidence/streaming_r2_baseline_freeze.json) protects **252**
 native/evidence/media/streaming-documentation files, including every accepted historical
 PASS and FAIL. Frozen refs and SHA256s are checked again before packaging.
 
@@ -43,12 +43,12 @@ and exact exported-Git-blob comparisons.
 | COPC source-index reconstruction | **PASS**, original classified bytes and seven semantic IDs exact |
 | Actual QGIS provider/map rendering | **PASS**, all 400,654 source indices and semantic IDs |
 
-[Reconstruction receipt](../../evidence/streaming_r2_reconstruction.json) ·
-[GPU regressions](../../evidence/streaming_r2_gpu_regressions.json) ·
-[byte-exact traces](../../evidence/streaming_r2_trace_audit.json) ·
-[TCP](../../evidence/streaming_r2_transport.json) ·
-[faults](../../evidence/streaming_r2_transport_faults.json) ·
-[export](../../evidence/streaming_r2_export.json).
+[Reconstruction receipt](../../archive/evidence/streaming_r2_reconstruction.json) ·
+[GPU regressions](../../archive/evidence/streaming_r2_gpu_regressions.json) ·
+[byte-exact traces](../../archive/evidence/streaming_r2_trace_audit.json) ·
+[TCP](../../archive/evidence/streaming_r2_transport.json) ·
+[faults](../../archive/evidence/streaming_r2_transport_faults.json) ·
+[export](../../archive/evidence/streaming_r2_export.json).
 
 The long/sustained measurements were **preserved and independently audited**, not rerun
 as another optimization campaign. Their original source/binary/model identities remain
@@ -65,7 +65,7 @@ local filename. SHA256 remains
 `a2b6fa566b8982859e2e7b7f1a986291d0f056bb2460ccc8199a7f540dd0d82c`.
 The unchanged archive verifier checked **482 manifest files**, exported source blobs,
 native data/semantic pairs and COPC source-index restoration. GitHub's release metadata
-agrees with that digest. [Public-foundation receipt](../../evidence/streaming_r2_public_foundation.json).
+agrees with that digest. [Public-foundation receipt](../../archive/evidence/streaming_r2_public_foundation.json).
 
 Current-source and new-object scans check secrets, private paths/endpoints, forbidden
 data/model binaries and licensing. One non-connectable device display label exists in

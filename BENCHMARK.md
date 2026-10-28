@@ -4,7 +4,7 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-These figures are transcribed from the accepted physical-device evidence recorded on 24 October 2026, at source commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. No target benchmark was rerun while preparing this repository. The [machine-readable record](evidence/benchmark.json) includes the full recorded precision and frozen output digests; the table presents time rounded to six decimals.
+These figures are transcribed from the accepted physical-device evidence recorded on 24 October 2026, at source commit `69eca500738b0412d1a2a0b6ba0edeac20012aec`. No target benchmark was rerun while preparing this repository. The [machine-readable record](archive/evidence/benchmark.json) includes the full recorded precision and frozen output digests; the table presents time rounded to six decimals.
 
 | Scene | Points | Full product seconds | Points/s, rounded | Independent verification |
 |---|---:|---:|---:|---|

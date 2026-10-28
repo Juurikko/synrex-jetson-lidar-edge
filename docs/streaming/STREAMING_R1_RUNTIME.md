@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
 R1 continues accepted `fe21303` without rewriting R4 or R0 evidence. The
-[baseline freeze](../../evidence/streaming_r1_baseline_freeze.json) includes every historical
+[baseline freeze](../../archive/evidence/streaming_r1_baseline_freeze.json) includes every historical
 receipt and accepted streaming report. Track B remains local and unpublished. All new native
 code is independently authored against the public MIT APIs; third-party SDKs, trained model
 and IGN/FRACTAL Etalab data retain their separate notices. No private source is imported.

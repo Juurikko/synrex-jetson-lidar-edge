@@ -37,11 +37,11 @@ binding and model hashes are independently checked before rendering.
 
 ## Exact provenance
 
-The [visual receipt](../../evidence/streaming_r2_visual_provenance.json) binds scene C,
+The [visual receipt](../../archive/evidence/streaming_r2_visual_provenance.json) binds scene C,
 model manifest, engine, input chunks, recorded events, native receipt, source-order labels
-and snapshot arrays. The [media receipt](../../evidence/streaming_r2_media_qa.json) additionally
+and snapshot arrays. The [media receipt](../../archive/evidence/streaming_r2_media_qa.json) additionally
 binds the second scene, renderer, font, QGIS export, video and every presentation image.
-[Independent decoded review](../../evidence/streaming_r2_decoded_review.json) binds chapter
+[Independent decoded review](../../archive/evidence/streaming_r2_decoded_review.json) binds chapter
 frames extracted from the final encoded video, rather than trusting pre-encode images.
 
 Native map deltas are checked per accepted observation against an independent ordered
@@ -63,9 +63,9 @@ presentation; authoritative integer semantics remain in the separately hashed da
 The QGIS shot is from the original R1 asynchronous first-observation export, not from
 the media replay's differently bounded final window. Both are actual frozen-model outputs
 on the same source, but numerical equality between those **different contexts is not
-asserted**. [Independent COPC audit](../../evidence/streaming_r2_copc_parity.json) restores
+asserted**. [Independent COPC audit](../../archive/evidence/streaming_r2_copc_parity.json) restores
 source indices and checks all original classified point bytes and semantic IDs. The
-[real QGIS provider](../../evidence/streaming_r2_qgis_render.json) independently reads all
+[real QGIS provider](../../archive/evidence/streaming_r2_qgis_render.json) independently reads all
 400,654 source indices/classes and embedded EPSG:2154. No CRS fallback is assigned.
 
 ## QA result and retained failures
