@@ -16,6 +16,13 @@ The source-equivalence manifest describes every frozen tracked file.
 | 39.845888ms p99 | Replay source to validated subscriber in that separate endurance run; no sensor/Jetson latency claim |
 | 48.756% held-out seven-class mIoU | Frozen 62,103-parameter U-Net; [independent matrix](../../evidence/unet_r2_independent_metrics.json) |
 
+Replay source: each workload loops one finite licensed FRACTAL tile in 16,384-point
+frames. Scene A has 50,096 records (about 40 repetitions per second at 2M/s); scene C has
+400,654. Full-churn runs, including the ten-minute run, loop scene A and shift each frame
+by 64 m in x. Every pass runs fresh inference, but the rates describe pipeline throughput
+on repeated input, not distinct points. Accuracy at streaming-window context was not
+separately evaluated.
+
 The small U-Net has visible accuracy limitations. These are scene/model-specific
 engineering results, not survey-grade accuracy or state-of-the-art claims. The
 historical JSON diagnostic **274.477963ms p99 FAIL** and harder **2M dense/churn

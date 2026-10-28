@@ -3,7 +3,7 @@
 > [Quickstart](docs/publication/QUICKSTART_RC4.md) ·
 > [Reproducibility / rights audit](docs/publication/PUBLICATION_AUDIT.md)  
 > Qualified RTX 4090 *software replay*; no physical UAV, sensor, AGX Orin or Thor measurement.
-> This maintained branch corrects the publication status of the frozen release snapshot.
+> Despite the repository name, nothing in the current releases is measured on Jetson hardware.
 
 # SynRex Native LiDAR Streaming
 
@@ -16,18 +16,18 @@ engineering with OpenAI Codex assistance.
 **Streaming R2 RC4 was publicly released on 2026-10-27 (UTC)** as a
 [research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4).
 The [R4 RC2 BYOM foundation](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
-remains a separately preserved release. Streaming R2 has been published to GitHub;
-**no LinkedIn post was performed as part of the GitHub release workflow.**
+(file-to-file classification, with its own README at that tag) remains a separately
+preserved release.
 
 ### Start here
 
-This **maintained browsing branch** groups large qualification receipts and historical
-editorial drafts under [archive/](archive/). Linux checkouts retain the original
+Large qualification receipts, historical reports and editorial drafts are grouped
+under [archive/](archive/). Linux checkouts retain the original
 `evidence/` runtime path through a relative symbolic link; browse GitHub receipts via
 [archive/evidence/](archive/evidence/). For the **exact independently qualified public
 snapshot**, use the immutable [`streaming-r2-rc4` tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4)
-and matching release assets; the maintained branch's post-release layout is not a new
-benchmark or reconstruction qualification.
+and matching release assets; this post-release layout is not a new benchmark or
+reconstruction qualification.
 
 
 - **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM foundation](src/)
@@ -75,6 +75,16 @@ changed-voxel deltas and file-encoding rates are separate quantities.
 | Ten-minute 65,536-cell full-churn replay | **600,014,848** fresh points / 600.026 s; **999,981/s** |
 | Ten-minute coverage / drops / p99 replay-to-validated-output latency | **100% / zero / 39.85 ms** |
 | Dense/churn TCP trials at 2M/s | **FAIL**: bounded output-delivery queue; failures retained |
+
+**What the replay source is.** Each workload replays one finite licensed FRACTAL tile in a
+loop, in 16,384-point frames. Scene A
+([`TEST-0447_6390-002819414.laz`](docs/streaming/SUSTAINED_RTX_REPORT.md)) has 50,096
+records, so at 2M points/s the same records repeat about 40 times per second; dense scene C
+has 400,654 records. Full-churn runs, including the ten-minute run, loop scene A and shift
+each successive frame by 64 m in x, so the map keeps receiving new cells while the point
+attributes repeat. Rates are therefore pipeline throughput on repeated input, not a count
+of distinct points. Accuracy at streaming-window context has not been evaluated separately;
+the mIoU below comes from whole-tile processing.
 
 Every counted classification comes from fresh neural execution. Map state never supplies
 cached point labels. The original gates remain 250 ms p99 validated latency, 50 ms maximum
