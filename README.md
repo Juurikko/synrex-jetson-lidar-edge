@@ -21,10 +21,19 @@ remains a separately preserved release. Streaming R2 has been published to GitHu
 
 ### Start here
 
+This **maintained browsing branch** groups large qualification receipts and historical
+editorial drafts under [archive/](archive/). Linux checkouts retain the original
+`evidence/` runtime path through a relative symbolic link; browse GitHub receipts via
+[archive/evidence/](archive/evidence/). For the **exact independently qualified public
+snapshot**, use the immutable [`streaming-r2-rc4` tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4)
+and matching release assets; the maintained branch's post-release layout is not a new
+benchmark or reconstruction qualification.
+
+
 - **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM foundation](src/)
 - **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
-- **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](evidence/streaming_r1_transport_trials.csv)
-- **Full audit trail:** [immutable release tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4/evidence) · [separate public audit download](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
+- **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](archive/evidence/streaming_r1_transport_trials.csv)
+- **Full audit trail:** [archived verification receipts](archive/evidence/) · [separate public audit download](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
 
 
 ![Genuine frozen-model predictions from a recorded native replay](media/streaming-r2/thumbnail.png)
