@@ -48,8 +48,8 @@ approximately 1.5M on dense C/full churn; the ten-minute full-churn run is appro
 Separate held-out model quality remains **48.756% seven-class mIoU**. Physical sensor,
 Orin and Thor remain **NOT_RUN**; no AGX/Thor workload was accessed.
 
-[Release notes](STREAMING_R2_RELEASE.md) · [reproduction](STREAMING_R2_REPRODUCIBILITY.md) ·
-[media QA/provenance](STREAMING_R2_MEDIA.md) · [rights](STREAMING_R2_RIGHTS.md) ·
+[Release notes](../../docs/streaming/STREAMING_R2_RELEASE.md) · [reproduction](../../docs/streaming/STREAMING_R2_REPRODUCIBILITY.md) ·
+[media QA/provenance](../../docs/streaming/STREAMING_R2_MEDIA.md) · [rights](../../docs/streaming/STREAMING_R2_RIGHTS.md) ·
 [LinkedIn post and first-comment drafts](STREAMING_R2_LINKEDIN.md).
 
 Owner review should cover the film, source/model/data redistribution scopes, wording and
