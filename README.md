@@ -1,9 +1,9 @@
-> Streaming R2 RC4 source and the approved 37-second illustration are documented in
-> the [public quickstart](docs/publication/QUICKSTART_RC4.md),
-> [release notes](docs/publication/RELEASE_NOTES.md) and
-> [source/rights audit](docs/publication/PUBLICATION_AUDIT.md).
-> R4 remains the separate published BYOM foundation. Earlier candidate status text
-> and receipts below are historical context; current public scope is in those documents.
+> **PUBLIC RESEARCH PRERELEASE — Streaming R2 RC4**  
+> [Release, verified assets and 37-second video](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4) ·
+> [Quickstart](docs/publication/QUICKSTART_RC4.md) ·
+> [Reproducibility / rights audit](docs/publication/PUBLICATION_AUDIT.md)  
+> Qualified RTX 4090 *software replay*; no physical UAV, sensor, AGX Orin or Thor measurement.
+> This maintained branch corrects the publication status of the frozen release snapshot.
 
 # SynRex Native LiDAR Streaming
 
@@ -13,10 +13,19 @@
 Developer and project lead: **Tuomas Pietilä** ([@Juurikko](https://github.com/Juurikko));
 engineering with OpenAI Codex assistance.
 
-**Streaming R2 RC1 is a local review candidate, not a published streaming release.**
-The [R4 RC2 BYOM foundation is already published](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2).
-This new documentation corrects the former staging statement; accepted R4 tags and
-artifacts remain frozen. No R2 push, release upload or social post has been performed.
+**Streaming R2 RC4 was publicly released on 2026-10-27 (UTC)** as a
+[research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4).
+The [R4 RC2 BYOM foundation](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+remains a separately preserved release. Streaming R2 has been published to GitHub;
+**no LinkedIn post was performed as part of the GitHub release workflow.**
+
+### Start here
+
+- **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM foundation](src/)
+- **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
+- **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](evidence/streaming_r1_transport_trials.csv)
+- **Full audit trail:** [immutable release tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4/evidence) · [separate public audit download](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
+
 
 ![Genuine frozen-model predictions from a recorded native replay](media/streaming-r2/thumbnail.png)
 
