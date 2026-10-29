@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "method": "Independent CSV filtering, raw endurance JSON and seven-class confusion-matrix arithmetic; no new benchmark/inference",
+  "accepted_scene_A_points_s": [
+    1999600.511865241,
+    1999582.6961111436
+  ],
+  "accepted_dense_points_s": [
+    1499721.8561374028,
+    1499724.8837095045
+  ],
+  "accepted_full_churn_trials": 4,
+  "endurance": {
+    "points": 600014848,
+    "seconds": 600.026055098,
+    "points_s": 999981.3223144148,
+    "coverage": 1,
+    "drops": 0,
+    "p99_ms": 39.845888
+  },
+  "model": {
+    "parameters": 62103,
+    "heldout_miou": 0.48755974311318834,
+    "checkpoint_sha256": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4"
+  },
+  "preserved_historical_diagnostic": {
+    "status": "FAIL",
+    "ms": 274.477963,
+    "accepted_latency_evidence": false
+  },
+  "preserved_harder_2M_dense_churn_failures": 3,
+  "async_export_in_headline": false,
+  "hardware": "RTX 4090 recorded software replay; sensor/flight/Jetson qualification NOT_RUN"
+}

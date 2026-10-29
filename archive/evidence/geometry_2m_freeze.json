@@ -1,0 +1,24 @@
+{
+  "schema": "synrex.streaming_2m_freeze.v1",
+  "status": "PASS",
+  "source_commit": "95e80bbeeb987149618a2ad953d6552095aea4b2",
+  "local_tag": "streaming-r0-2m-frozen-95e80bb",
+  "archive_sha256": "face4f2aedd2eeffcb9c49191ea0c6c6fc1775a73ab341e74ab4e852e6935f84",
+  "preserved_receipts_sha256": {
+    "docs/streaming/SUSTAINED_RTX_REPORT.md": "7cf9f6d746f43d21070c71735b6e111d11c4a17e3b125e9cd12485a343d122d5",
+    "evidence/streaming_exact_ab.json": "9dc64c2ed863050953a3ba3277bf79b7511715905568bcf8a192111c3433cec6",
+    "evidence/streaming_final_gates.json": "a2babba850aa2665666abc8e3f46104a1ec61e6ca43191c3fe84bedd5ef85172",
+    "evidence/streaming_history_audit.json": "7b6c1e3d6ddc386b92ddcdc740d4c35f6e0f092ced13f6f5abe8257ab161dddb",
+    "evidence/streaming_host_cuda_timeline.json": "c3778392b10f980e319d36103191314fbe69b0dd5b1d557c26b3108c64cbac3e",
+    "evidence/streaming_optimization_ab.json": "e772dac523fb5dfbc340591b7cdbd3fec566c0278ecbc3f364c5a1cb54eb3fee",
+    "evidence/streaming_r0_baseline.json": "d2c3eb8ca96585c25157480332bf85326476afd2d36c97a980c2aed6bb80e7e7",
+    "evidence/streaming_r0_qualification.json": "4b56534963211bad29c17675467f1823dc1dfbbf6a3cbc4c5ffb77b27ea9f060",
+    "evidence/streaming_r0_rtx_campaign.json": "c2a75cdb9f877dd0701f45cde90f45add72228f98bddd678cfccb41243e6fe53",
+    "evidence/streaming_scene_corpora.json": "bafbbeb5c14b3bed66b481a5cef306380a32e3988d8f0636f46a328112a5d286",
+    "evidence/streaming_setup_failure.json": "548a6e1287539810d4186067ab49bea3d93dde9a725caea547463e78eb0c9ea9",
+    "evidence/sustained_out_of_order_regression.json": "a810f50e19f31b4afe40929e0603f4ed54621626e1af2e165ea9e76c5d8cca9b",
+    "evidence/sustained_rtx_trials.json": "32b7d266c47df23810713a3923240e585097134caea1eeaaeedb14a2a6c77e4d",
+    "evidence/sustained_trial_table.csv": "31345d843741709aa5b226d1ad631451d80f1475c5935608fa0f5e807e68f88b"
+  },
+  "scope": "Read-only freeze before zero-overlap geometry work; historical PASS/FAIL remain unchanged; no public tag/push/release"
+}

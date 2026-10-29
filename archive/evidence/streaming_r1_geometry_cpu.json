@@ -1,0 +1,67 @@
+{
+  "cases": 203,
+  "cpu_microbenchmark": [
+    {
+      "assignment_seconds": 0.0,
+      "blocks": 160,
+      "boundary_fallback_points": 0,
+      "grouping_seconds": 0.0,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.0,
+      "mode": "reference",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 0,
+      "wall_seconds": 0.101469297
+    },
+    {
+      "assignment_seconds": 0.020818184000000003,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.006199888000000001,
+      "member_capacity_growths": 2120,
+      "member_sort_seconds": 0.03518056000000001,
+      "minimum_seconds": 0.0013639230000000002,
+      "mode": "direct",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 655360,
+      "wall_seconds": 0.063576652
+    },
+    {
+      "assignment_seconds": 0.020857001,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.0007946349999999999,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.001362872,
+      "mode": "flat",
+      "points": 655360,
+      "record_sort_seconds": 0.04731336900000001,
+      "tree_lookups": 0,
+      "wall_seconds": 0.070339778
+    },
+    {
+      "assignment_seconds": 0.020521169999999995,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.005804383999999999,
+      "member_capacity_growths": 2120,
+      "member_sort_seconds": 0.001953674,
+      "minimum_seconds": 0.0013728519999999997,
+      "mode": "radix",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 655360,
+      "wall_seconds": 0.02966241
+    }
+  ],
+  "matching_rejections": 12,
+  "points": 38786,
+  "schema": "synrex.geometry_parity.v1",
+  "scope": "CPU-only membership/index/order/tensor byte comparisons; no neural throughput claim",
+  "status": "PASS",
+  "successful_mode_comparisons": 597
+}

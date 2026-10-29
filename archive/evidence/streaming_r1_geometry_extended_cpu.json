@@ -1,0 +1,67 @@
+{
+  "cases": 205,
+  "cpu_microbenchmark": [
+    {
+      "assignment_seconds": 0.0,
+      "blocks": 160,
+      "boundary_fallback_points": 0,
+      "grouping_seconds": 0.0,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.0,
+      "mode": "reference",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 0,
+      "wall_seconds": 0.102397229
+    },
+    {
+      "assignment_seconds": 0.021158609000000002,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.0064892199999999995,
+      "member_capacity_growths": 2120,
+      "member_sort_seconds": 0.035561691,
+      "minimum_seconds": 0.0013751299999999996,
+      "mode": "direct",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 655360,
+      "wall_seconds": 0.064599907
+    },
+    {
+      "assignment_seconds": 0.020838055,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.0008013130000000001,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.001364866,
+      "mode": "flat",
+      "points": 655360,
+      "record_sort_seconds": 0.047435157000000006,
+      "tree_lookups": 0,
+      "wall_seconds": 0.070452074
+    },
+    {
+      "assignment_seconds": 0.020928489000000005,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.006154044,
+      "member_capacity_growths": 2120,
+      "member_sort_seconds": 0.002079908,
+      "minimum_seconds": 0.001385448,
+      "mode": "radix",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 655360,
+      "wall_seconds": 0.030560765
+    }
+  ],
+  "matching_rejections": 12,
+  "points": 71554,
+  "schema": "synrex.geometry_parity.v1",
+  "scope": "CPU-only membership/index/order/tensor byte comparisons; no neural throughput claim",
+  "status": "PASS",
+  "successful_mode_comparisons": 603
+}

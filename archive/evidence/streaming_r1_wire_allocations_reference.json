@@ -1,0 +1,9 @@
+{
+  "cpp_new_requests": 52458496,
+  "decode_and_destroy_seconds": 0.578429326,
+  "decoded_fixture_points": 2097152,
+  "fixture_sha256": "f38ac88ce84aa794693ff7b530d6b910a98ece6d293b963a3f12807bf97bb8c0",
+  "schema": "synrex.streaming_r1.wire_allocation_probe.v1",
+  "scope": "MODEL_FREE_TEST_ONLY. Ordinary scalar/array C++ operator new requests inside decode/destroy; excludes aligned new, direct malloc, CUDA, and fixture setup. No neural throughput claim.",
+  "status": "PASS"
+}

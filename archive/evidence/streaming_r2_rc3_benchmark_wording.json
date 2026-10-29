@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "video_sha256": "acce2565328a8763b4ce8c44a697ff891be407144a65b1bf5e596bf89298e40a",
+  "accepted_measurements": {
+    "stable_A_external_TCP_two_60s_target_fresh_pts_s": 2000000,
+    "dense_C_and_full_churn_two_60s_target_fresh_pts_s": 1500000,
+    "ten_minute_fresh_points": 600014848,
+    "ten_minute_measured_seconds": 600.026055098,
+    "ten_minute_fresh_pts_s": 999981.3223144148,
+    "ten_minute_p99_ms": 39.845888,
+    "ten_minute_coverage": 1.0,
+    "ten_minute_drops": 0,
+    "independent_model_seven_class_miou": 0.48755974311318834
+  },
+  "benchmark_receipt_sha256": "a27a515b418658a47abbe1397f3ee3759833b1ba0e13c2b7ae8f56de0d643036",
+  "model_freeze_receipt_sha256": "90c0831a6930bb5b677c9d8a18f37a43b43c2b3eaa69abb215a9e2b13889ac1b",
+  "model_parameters": 62103,
+  "first_frame": "Up to 2M headline with qualified scene-A sustained 60s, RTX 4090, recorded replay and scene-specific small-model scope",
+  "ten_minute": "Explicit separate ten-minute full-churn ~1M/s run, never 2M/s",
+  "accuracy": "48.756% held-out mIoU; bounded proof of engineering, model errors retained",
+  "diagnostic_json_p99": {
+    "status": "FAIL",
+    "ms": 274.477963,
+    "accepted_latency_evidence": false
+  },
+  "physical_sensor_orin_thor_airborne_claims": "NONE",
+  "public_R2_availability_claim": "NONE",
+  "publication": "NOT_RUN"
+}

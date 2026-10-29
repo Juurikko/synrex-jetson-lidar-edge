@@ -1,0 +1,90 @@
+{
+  "schema": "synrex.streaming_r1.final_gates.v1",
+  "status": "PASS",
+  "scope": "Authorized R1 native software-loopback engineering and bounded RTX qualification. Individual failed trials remain FAIL; no physical LiDAR, Orin/Thor, larger-model or public release qualification.",
+  "qualified_native_source_commit": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "gates": {
+    "STREAM_PROTOCOL": {
+      "status": "PASS",
+      "evidence": "streaming_r1_wire_v2_cpu.json; streaming_r1_transport_faults.json"
+    },
+    "LIVE_TRANSPORT_E2E": {
+      "status": "PASS",
+      "evidence": "streaming_r1_transport_sustained.json"
+    },
+    "FRESH_CLASSIFICATION_COVERAGE": {
+      "status": "PASS",
+      "evidence": "streaming_r1_transport_summary.json; actual enqueue/reconstructed point reconciliation"
+    },
+    "MAP_DELTA_OUTPUT": {
+      "status": "PASS",
+      "evidence": "streaming_r1_sustained_digest_parity.json; per-observation independent oracle and exact final snapshots"
+    },
+    "ASYNC_FILE_EXPORT": {
+      "status": "PASS",
+      "evidence": "streaming_r1_async_export_trial.json; streaming_r1_file_export_qualification.json; native Linux atomic no-replace publication"
+    },
+    "GEOMETRY_PARITY": {
+      "status": "PASS",
+      "evidence": "streaming_r1_geometry_digest_parity.json; streaming_r1_geometry_extended_cpu.json"
+    },
+    "GPU_NUMERICAL_PARITY": {
+      "status": "PASS",
+      "evidence": "streaming_r1_final_gpu_regressions.json; streaming_r1_r4_gpu_preservation.json"
+    },
+    "SUSTAINED_RTX_THROUGHPUT": {
+      "status": "PASS",
+      "evidence": "streaming_r1_transport_trials.csv; two 60s repeats per accepted workload"
+    },
+    "LONG_DURATION_STABILITY": {
+      "status": "PASS",
+      "evidence": "streaming_r1_long_stability.json; 600.026s, 600014848 measured fresh source points"
+    },
+    "ORIN_READINESS": {
+      "status": "NOT_RUN",
+      "reason": "Native ARM64/target engine and physical inference not performed; continuation requirements documented; occupied AGX/Thor untouched."
+    },
+    "THOR_READINESS": {
+      "status": "NOT_RUN",
+      "reason": "Native ARM64/target engine and physical inference not performed; continuation requirements documented; occupied AGX/Thor untouched."
+    },
+    "PUBLIC_RELEASE_READINESS": {
+      "status": "NOT_RUN",
+      "reason": "Owner prohibits public push/publication during Track B; no release/PR created."
+    }
+  },
+  "accepted_rates": {
+    "in_process_preserved": {
+      "stable_A_B": 3000000,
+      "dense_C": 2500000,
+      "full_churn_65536": 2000000
+    },
+    "software_TCP": {
+      "stable_A": 2000000,
+      "dense_C": 1500000,
+      "full_churn_4096": 1500000,
+      "full_churn_65536": 1500000
+    },
+    "long_duration_full_churn_65536": {
+      "requested_points_s": 1000000,
+      "delivered_fresh_points_s": 999981.3223144148,
+      "measured_seconds": 600.026055098,
+      "coverage": 1.0,
+      "classification_drops": 0,
+      "failed_point_deliveries": 0,
+      "p99_validated_latency_ms": 39.845888
+    }
+  },
+  "native_model_only": {
+    "inferences_per_second": 6183.593831271897,
+    "emitted_fresh_source_points": 0,
+    "scope": "Prepared-block actual TensorRT only; not full classification throughput"
+  },
+  "remaining_failures": {
+    "optimized_2M_dense_C": "FAIL: warmup bounded output-delivery queue",
+    "optimized_2M_churn_4096": "FAIL: measured bounded output-delivery queue",
+    "optimized_2M_churn_65536": "FAIL: warmup bounded output-delivery queue",
+    "unsupported_DrvFS_atomic_publication": "FAIL: no product published; native Linux storage independently passes"
+  },
+  "preservation": "All historical R4/R0 hashes and public refs verified unchanged; frozen packages match every qualified trial before/after; exact final native production files equal f39fa29."
+}

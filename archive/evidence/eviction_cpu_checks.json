@@ -1,0 +1,26 @@
+{
+  "schema": "synrex.eviction_cpu_checks.v1",
+  "status": "PASS",
+  "source_commit": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "release_ctest": {
+    "status": "PASS",
+    "tests": 5
+  },
+  "sanitizer_ctest": {
+    "status": "PASS",
+    "tests": 5,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "wall_seconds": 110.42,
+    "last_test_log_sha256": "cfa1edc8be0b341a6ea7e09ddb312b12398c7bd1ce84bef1d469b78e0e3c291a"
+  },
+  "python_cpu": {
+    "status": "PASS",
+    "passed": 87,
+    "physical_gpu_skipped_on_cpu_host": 5
+  },
+  "differential_receipt": "eviction_cpu_parity.json",
+  "scope": "CPU model-free map correctness and existing parser/native regressions; real GPU qualification separate"
+}

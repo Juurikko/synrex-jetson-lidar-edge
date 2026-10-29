@@ -1,0 +1,34 @@
+{
+  "schema": "synrex.streaming_r1.allocation_probe_provenance.v1",
+  "status": "PASS",
+  "same_probe_source_sha256": "254efefa8ae2f5c5ef177bb9fc3fa9a5308f90e9ca2d3b439e574d43b40918a6",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Werror"
+  ],
+  "baseline_commit": "7b3221502a30f2f1ca44723b896bd674f0c9597b",
+  "optimized_native_commit": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "baseline_archive_sha256": "ed70bce817655c7c3f8187e31aef4019ae65e807d6a3eddc799c925e040f560c",
+  "binaries_sha256": {
+    "r1-wire-allocations-reference": "f8b1df30bad158129fe02c5dc977036c16d4b0c43c43ef83c5c6b10e0840a5ca",
+    "r1-wire-allocations-conditional": "b508a754cfbecb28baece001238e92fbe803de7a460569e61fba4bd97a37211e"
+  },
+  "baseline_libraries_sha256": {
+    "libsynrex_stream.a": "ff1f2739fb11680c68c73eed4ad7c2f391934f2d6bbda38f6a2a97b1357c7ecf",
+    "libsynrex_core.a": "7f9600b274db7a70d2e40d62397ae7de2acb9692b1a99c0bddf685a1fa6fbdbe",
+    "liblazperf_review.a": "3d7be1d6c27d5209f269217a3cbfe3690b42c0851f7b184907cca6f2d3472f7b"
+  },
+  "optimized_libraries_sha256": {
+    "libsynrex_stream.a": "bd553076bacdb3e6f357eb70725f9d913f979bd9b700283848f9f97d56ef1933",
+    "libsynrex_core.a": "7f9600b274db7a70d2e40d62397ae7de2acb9692b1a99c0bddf685a1fa6fbdbe",
+    "liblazperf_review.a": "3d7be1d6c27d5209f269217a3cbfe3690b42c0851f7b184907cca6f2d3472f7b"
+  },
+  "scope": "CPU decode-only invented fixture, same exact payload digest; ordinary C++ new requests exclude malloc/aligned new/CUDA. No neural or sustained throughput claim.",
+  "fixture_byte_identity": "PASS",
+  "allocation_reduction_fraction": 0.8799556891604364
+}

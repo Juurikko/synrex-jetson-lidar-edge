@@ -1,0 +1,22 @@
+{
+  "schema": "synrex.streaming_r1.export_startup_failure.v1",
+  "status": "FAIL",
+  "native_source_commit": "f39fa29",
+  "reason": "Auxiliary controller was copied outside its source/tools tree; its relative default taxonomy resolved to a missing file. Native subscriber failed closed before any inference input. Subsequent controller accepts an explicit taxonomy path and always emits a failure receipt.",
+  "native_subscriber": {
+    "error": "missing/oversized JSON",
+    "mode": "subscribe",
+    "peak_rss_bytes": 231763968,
+    "resources_at_exit": {
+      "live_pinned_host_bytes": 0,
+      "live_tracked_device_bytes": 0,
+      "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+      "status": "PASS"
+    },
+    "schema": "synrex.streaming_r1.live.v1",
+    "status": "FAIL"
+  },
+  "gpu_source_classification": "NOT_RUN: startup failure before producer launch",
+  "original_subscriber_receipt_sha256": "e8ba047d5f0fd1388a14874eec90f8cbc99299ec2b3848d5490c33ce301e2502",
+  "historical_failure_preserved": true
+}

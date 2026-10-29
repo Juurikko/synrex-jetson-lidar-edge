@@ -1,0 +1,53 @@
+{
+  "cases": 199,
+  "cpu_microbenchmark": [
+    {
+      "assignment_seconds": 0.0,
+      "blocks": 160,
+      "boundary_fallback_points": 0,
+      "grouping_seconds": 0.0,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.0,
+      "mode": "reference",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 0,
+      "wall_seconds": 0.102014275
+    },
+    {
+      "assignment_seconds": 0.043009433999999985,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.012723534,
+      "member_capacity_growths": 2120,
+      "member_sort_seconds": 0.03434303899999999,
+      "minimum_seconds": 0.020489787000000002,
+      "mode": "direct",
+      "points": 655360,
+      "record_sort_seconds": 0.0,
+      "tree_lookups": 655360,
+      "wall_seconds": 0.110581195
+    },
+    {
+      "assignment_seconds": 0.04295661700000001,
+      "blocks": 160,
+      "boundary_fallback_points": 120,
+      "grouping_seconds": 0.0008378069999999999,
+      "member_capacity_growths": 0,
+      "member_sort_seconds": 0.0,
+      "minimum_seconds": 0.020636069,
+      "mode": "flat",
+      "points": 655360,
+      "record_sort_seconds": 0.047511550000000013,
+      "tree_lookups": 0,
+      "wall_seconds": 0.111955508
+    }
+  ],
+  "points": 38786,
+  "schema": "synrex.geometry_parity.v1",
+  "scope": "CPU-only membership/index/order/tensor byte comparisons; no neural throughput claim",
+  "status": "PASS",
+  "optimization_benefit": "FAIL",
+  "note": "Initial optional strategy prototype is slightly slower in this CPU microbenchmark. Retained before reducing normal-path validation allocations; no GPU qualification claim."
+}

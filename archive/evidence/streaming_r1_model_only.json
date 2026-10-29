@@ -1,0 +1,986 @@
+{
+  "batch_average_inference_latency": {
+    "count": 5798,
+    "maximum_seconds": 0.000259328,
+    "mean_seconds": 0.00015925557692307693,
+    "p50_seconds_upper_bound": 0.000135168,
+    "p95_seconds_upper_bound": 0.000237568,
+    "p99_seconds_upper_bound": 0.000241664,
+    "relative_bin_width_maximum": 0.03125
+  },
+  "batch_enqueues_per_sync": 32,
+  "freshly_classified_emitted_source_points": 0,
+  "initialization_wall_seconds": 1.052180648,
+  "measurement": {
+    "cuda_seconds": 29.547735390901533,
+    "enqueue_calls": 185536,
+    "inferences_per_wall_second": 6183.593831271897,
+    "wall_seconds": 30.004558039
+  },
+  "schema": "synrex.model_only_sustained.v1",
+  "scope": "Actual TensorRT enqueueV3 repeatedly executes the last CUDA-prepared block. Batched timing includes stream scheduling; excludes geometry, H2D, scatter, queues and output. Point-equivalent rate is not fully classified source throughput.",
+  "session": {
+    "artifacts": {
+      "engine": {
+        "path": "model.engine",
+        "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+      },
+      "license": {
+        "path": "MODEL_LICENSE.txt",
+        "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+      }
+    },
+    "backend": "CUDA/TensorRT",
+    "classified_source_points": 16384,
+    "completed_windows": 1,
+    "contract": {
+      "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+      "features": [
+        {
+          "kind": "occupancy",
+          "offset": 0.0,
+          "scale": 1.0
+        },
+        {
+          "kind": "count",
+          "offset": 0.0,
+          "scale": 0.0625
+        },
+        {
+          "kind": "local_z",
+          "offset": 0.0,
+          "scale": 0.03125
+        },
+        {
+          "kind": "mean_intensity",
+          "offset": 0.0,
+          "scale": 1.5259021896696422e-05
+        }
+      ],
+      "geometry": {
+        "block_size_xyz": [
+          32.0,
+          32.0,
+          32.0
+        ],
+        "dimensions_xyz": [
+          32,
+          32,
+          32
+        ],
+        "overlap_policy": "first_wins",
+        "overlap_xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "voxel_size_xyz": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "input": {
+        "dtype": "float16",
+        "layout": "NCZYX",
+        "name": "features",
+        "shape": [
+          1,
+          4,
+          32,
+          32,
+          32
+        ]
+      },
+      "las_classes": [
+        1,
+        2,
+        200,
+        6,
+        9,
+        17,
+        201
+      ],
+      "licensing": {
+        "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+        "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+        "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+        "spdx": "MIT",
+        "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+      },
+      "limits": {
+        "max_blocks": 10000,
+        "max_memberships": 4000000,
+        "max_points": 1000000,
+        "max_tensor_bytes": 16777216
+      },
+      "output": {
+        "dtype": "float16",
+        "layout": "NCZYX",
+        "name": "scores",
+        "shape": [
+          1,
+          7,
+          32,
+          32,
+          32
+        ]
+      }
+    },
+    "cuda_streams": 1,
+    "engine_deserializations": 1,
+    "execution_contexts": 1,
+    "geometry_mode": "radix",
+    "initialization_seconds": 1.051486378,
+    "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+    "max_window_points": 16384,
+    "package_verifications": 1,
+    "pinned_host_bytes": 0,
+    "pinned_staging": false,
+    "schema": "synrex.persistent_session.v1",
+    "successful_enqueue_calls": 221412,
+    "target": {
+      "architecture": "x86_64",
+      "cuda_runtime": 13020,
+      "gpu_name": "NVIDIA GeForce RTX 4090",
+      "sm": 89,
+      "tensorrt": "101601"
+    },
+    "tracked_peak_requested_cuda_bytes": 5250235
+  },
+  "source_point_equivalents_per_second": 18229234.614589553,
+  "source_points_represented_per_inference": 2948,
+  "status": "PASS",
+  "warmup": {
+    "cuda_seconds": 4.918347513437273,
+    "enqueue_calls": 35872,
+    "inferences_per_wall_second": 7171.64436163317,
+    "wall_seconds": 5.001921204
+  },
+  "command": [
+    "synrex-sustain",
+    "--model",
+    "<model>",
+    "--source",
+    "<source>",
+    "--receipt",
+    "r1-model-only.json",
+    "--rate",
+    "1000000",
+    "--seconds",
+    "30",
+    "--warmup",
+    "5",
+    "--mode",
+    "model-only",
+    "--points",
+    "16384",
+    "--jitter-us",
+    "0",
+    "--overlap-replay",
+    "0",
+    "--cancel-after",
+    "0",
+    "--geometry",
+    "radix"
+  ],
+  "binary_sha256": "bbdc335b2f5f6b1f1698bfa69c160ac10a77e89261ff0434ffab6659882262c1",
+  "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+  "preflight": {
+    "sample": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.92
+    },
+    "windows_desktop_processes": [
+      "ShellExperienceHost.exe",
+      "dwm",
+      "explorer.exe",
+      "ChatGPT.exe",
+      "SystemSettings.exe",
+      "ShellHost.exe",
+      "SearchHost.exe",
+      "TextInputHost.exe"
+    ],
+    "reported_linux_compute_processes": 0
+  },
+  "device_samples": [
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.92,
+      "sm_clock_mhz": 210,
+      "memory_clock_mhz": 405,
+      "wall_seconds": 0.13830165890976787
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.92,
+      "sm_clock_mhz": 210,
+      "memory_clock_mhz": 405,
+      "wall_seconds": 0.6005262720864266
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 1,
+      "used_mib": 142,
+      "free_mib": 23997,
+      "power_watts": 4.45,
+      "sm_clock_mhz": 210,
+      "memory_clock_mhz": 405,
+      "wall_seconds": 1.4312808020040393
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 28,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 10.01,
+      "sm_clock_mhz": 2565,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 1.8444984040688723
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 69,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 62.05,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 2.3071634019725025
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 68,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 105.94,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 2.7430356200784445
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 69,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 126.23,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 3.200122289126739
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.03,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 3.6485041349660605
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 65,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 126.16,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 4.112712983042002
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 70,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.49,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 4.714512607082725
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 128.31,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 5.188517099944875
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 69,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.96,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 5.77180993091315
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 128.95,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 6.4672888370696455
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 61,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 128.16,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 6.869888059096411
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 43,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 120.08,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 7.25544707197696
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 111.57,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 7.643936956068501
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 44,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 107.32,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 8.067607023986056
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 41,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 108.95,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 8.461888171033934
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.35,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 8.850734908133745
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 45,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 108.82,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 9.238160866079852
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 59,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.83,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 9.63365197693929
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 41,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 111.58,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 10.024485347094014
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 42,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 111.29,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 10.407553449971601
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 106.74,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 10.7942133420147
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 111.23,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 11.255007073981687
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 118.9,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 11.815572639927268
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 123.26,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 12.407043484970927
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.42,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 12.890828680014238
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 46,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 124.85,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 13.353930281009525
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 122.91,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 13.980298798065633
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 130.17,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 14.706576491938904
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 67,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 130.39,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 15.1438021089416
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 128.38,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 15.61929306993261
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 68,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 128.2,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 16.075715359998867
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 59,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.61,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 16.536526122130454
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 122.19,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 17.158666545059532
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 123.55,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 17.623007321963087
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 40,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 122.2,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 18.024410715093836
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 45,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 117.69,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 18.409032119903713
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 113.26,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 19.095341640990227
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 127.19,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 19.605910788988695
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 61,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 125.83,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 20.119842493906617
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 51,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 120.76,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 20.51094123790972
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 115.39,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 20.89907561405562
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 40,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 108.15,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 21.316286222077906
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 44,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 108.74,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 21.699392260983586
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 119.8,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 22.43840987002477
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 74,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 130.14,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 22.883941064123064
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 62,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 126.54,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 23.35537603008561
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 126.71,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 23.98033687309362
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 131.13,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 24.627391214948148
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 131.75,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 25.249572922941297
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 70,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 130.9,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 25.70849053701386
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 129.7,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 26.17872572201304
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 42,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 123.52,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 26.564228595001623
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 115.0,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 26.948925679083914
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 54,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.85,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 27.382604690035805
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 112.6,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 27.786189917940646
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 46,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 113.27,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 28.16903314809315
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 43,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.03,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 28.556772638112307
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 107.46,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 28.962501558009535
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 45,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.12,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 29.34943048004061
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 45,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.76,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 29.78532446594909
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 40,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 110.29,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 30.170530691044405
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 49,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 109.87,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 30.59185771900229
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 58,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 113.32,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 31.01250697602518
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 114.09,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 31.39848831598647
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 39,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 112.84,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 31.79211935400963
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 49,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 116.09,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 32.47534741112031
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 71,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 126.26,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 32.94047186500393
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 73,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 129.93,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 33.54323226213455
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 71,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 131.89,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 34.012234672904015
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 66,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 130.16,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 34.498936193063855
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 129.87,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 35.28305771597661
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 72,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 132.97,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 35.86710922396742
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 65,
+      "used_mib": 524,
+      "free_mib": 23615,
+      "power_watts": 131.62,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 36.44989363499917
+    },
+    {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 3,
+      "used_mib": 516,
+      "free_mib": 23623,
+      "power_watts": 118.21,
+      "sm_clock_mhz": 2715,
+      "memory_clock_mhz": 10251,
+      "wall_seconds": 36.9850437019486
+    }
+  ],
+  "clock_policy": "Existing dynamic device clocks; no clock, power or persistence settings changed",
+  "exit_code": 0,
+  "experiment_wall_seconds": 37.760398890124634,
+  "hardware_stop": null,
+  "log_sha256": "28a312b51fe538b1f13c912878bacd9f65e2b86c15e801a9e1b0cd81d3bb5e9f"
+}

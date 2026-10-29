@@ -1,0 +1,12 @@
+{
+  "schema": "synrex.streaming_r2.new_history.v1",
+  "status": "PASS",
+  "base": "14bcb4f2c512d735291f796ac905584564e74ddf",
+  "through_source_commit": "e33679c459593ebf39bc86f1813ccf511613aa67",
+  "new_objects": 48,
+  "new_blobs": 38,
+  "new_blob_bytes": 2450871,
+  "secret_findings": 0,
+  "forbidden_model_data_binaries": 0,
+  "scope": "R1 baseline history preserved and previously sealed; every newly reachable R2 object scanned."
+}

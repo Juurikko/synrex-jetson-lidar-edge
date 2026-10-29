@@ -1,0 +1,56 @@
+{
+  "schema": "synrex.streaming_r1.geometry_digest_parity.v1",
+  "status": "PASS",
+  "trial_count": 16,
+  "receipt_sha256": "d5c67a3bd122440e71e9772ef2dc1c27f20a3c2a689c2631daa80d5f26c91f9e",
+  "cases": [
+    {
+      "status": "PASS",
+      "receipts": [
+        "scene0-2000000-64000-frozen.json",
+        "scene0-2000000-64000-direct.json",
+        "scene0-2000000-64000-radix1.json",
+        "scene0-2000000-64000-radix2.json"
+      ],
+      "point_digest": 18027405341156455054,
+      "map_delta_digest": 13277215613825298356,
+      "snapshot_sha256": "8b3375c4659e8c06afff572d9e5a4d71eded98ea2e054bef22704836bf90c4e4"
+    },
+    {
+      "status": "PASS",
+      "receipts": [
+        "scene0-3000000-0-frozen.json",
+        "scene0-3000000-0-direct.json",
+        "scene0-3000000-0-radix1.json",
+        "scene0-3000000-0-radix2.json"
+      ],
+      "point_digest": 5734143738114846132,
+      "map_delta_digest": 14536392043598104934,
+      "snapshot_sha256": "1f2ba948b4036ebcc769fed318ff0c3ebddd6ede9ce73480e4458d7984adf865"
+    },
+    {
+      "status": "PASS",
+      "receipts": [
+        "scene1-3000000-0-frozen.json",
+        "scene1-3000000-0-direct.json",
+        "scene1-3000000-0-radix1.json",
+        "scene1-3000000-0-radix2.json"
+      ],
+      "point_digest": 5925907318535458343,
+      "map_delta_digest": 12258057313759868343,
+      "snapshot_sha256": "7e44da0da6ca1c5fa685d8b1f1419913da32ba3fd086ef41cd5a30e9bb67efe8"
+    },
+    {
+      "status": "PASS",
+      "receipts": [
+        "scene2-2500000-0-frozen.json",
+        "scene2-2500000-0-direct.json",
+        "scene2-2500000-0-radix1.json",
+        "scene2-2500000-0-radix2.json"
+      ],
+      "point_digest": 12084144368190203820,
+      "map_delta_digest": 14417276435405290087,
+      "snapshot_sha256": "df7155f73a4f91bf2fecf148e6a25a41dde14ea545e32766471b5129e483979d"
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "schema": "synrex.streaming_final_gates.v1",
+  "status": "PASS",
+  "scope": "Bounded offline-emulated RTX4090 streaming, 2M incoming points/s, fresh trained U-Net, points plus map, 16384 points/window, two slots per queue, 65536-cell map; no universal/live-sensor performance claim",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "sm": 89,
+    "device_memory_total_mib": 24564,
+    "driver": "610.88",
+    "cpu": "AMD Ryzen 7 7700X 8-Core Processor",
+    "logical_cpus": 16,
+    "environment": "Linux x86_64 under Microsoft WSL2",
+    "cuda_compiler": "13.2.86",
+    "cuda_runtime": 13020,
+    "tensorrt": "10.16.1",
+    "clock_power_policy": "Existing dynamic clocks and power settings unchanged",
+    "unrelated_reported_compute_workloads": 0,
+    "post_tests_gpu_utilization_percent": 0,
+    "post_tests_device_used_mib": 130
+  },
+  "gates": {
+    "BOUNDED_RTX_2M_POINTS_PLUS_MAP": "PASS",
+    "FRESH_NEURAL_ENQUEUE_POINT_RECONCILIATION": "PASS",
+    "COMPLETE_SOURCE_COVERAGE": "PASS",
+    "LATENCY_QUEUE_SCHEDULE_MEMORY_GATES": "PASS",
+    "DISTINCT_REAL_SCENES": "PASS",
+    "OFFLINE_IDENTICAL_BOUNDARY_EQUIVALENCE": "PASS",
+    "MAP_JSON_OPTIMIZATION_EXACT_AB": "PASS",
+    "PINNED_OUTPUT_CLEANUP_EQUIVALENCE": "PASS",
+    "PINNED_THROUGHPUT_GAIN": "FAIL",
+    "POINT_ONLY_1M_BASELINE_PRESERVATION": "PASS",
+    "OUT_OF_ORDER_REGRESSION_RESOLUTION": "PASS",
+    "CPU_TESTS": "PASS",
+    "ASAN_UBSAN_CPU_CTEST": "PASS",
+    "FINAL_NATIVE_STREAMING_REGRESSIONS": "PASS",
+    "R4_GPU_NUMERICAL_PRESERVATION_RELOCATION_REGRESSIONS": "PASS",
+    "FROZEN_R4_MODELS_TAG_ARTIFACT_PRESERVATION": "PASS",
+    "FULL_65536_CELL_CONTINUOUS_EVICTION_SUSTAINED": "NOT_RUN",
+    "ASYNC_STREAMING_LAZ_COPC_EXPORT": "NOT_RUN",
+    "LIVE_SENSOR_TRANSPORT_QUALIFICATION": "NOT_RUN",
+    "UNIVERSAL_2M_OR_HIGHER_CEILING": "NOT_RUN",
+    "AGX_SM87_PHYSICAL": "NOT_RUN",
+    "THOR_SM110_PHYSICAL": "NOT_RUN",
+    "TRACK_B_NEW_HISTORY_PATTERN_SCAN": "PASS",
+    "LEGACY_SINGLE_COMMIT_HISTORY_MODE": "NOT_RUN"
+  },
+  "frozen_identity": {
+    "R4_source": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+    "R4_final_audit": "c3451b6db942560829a360de3562624fcdc4282d",
+    "R4_tag": "byom-unet-fractal-r4-rc2",
+    "R4_tag_object": "0598b83f8c190c86a5071eb0cf5592eb7788ba1b",
+    "accepted_streaming_checkpoint": "c5d65c6",
+    "public_main_not_modified": true,
+    "local_main_identity": "147ece0aef29c92e1ae959ddd2353fdca9a0fbfd",
+    "synthetic_engine_sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+    "trained_engine_sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+    "frozen_training_checkpoint_identity_from_accepted_R4": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4",
+    "final_package_hashes_before_after": {
+      "synthetic": {
+        "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+        "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+        "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+      },
+      "unet": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      }
+    },
+    "final_packages_unchanged": true,
+    "R4_geometry_sha256_unchanged": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
+    "R4_cuda_kernels_sha256_unchanged": "952fa44918a4bd087889b298601d21918f91d9c4c31b2f387c8dd9d5944cd919"
+  },
+  "commits": {
+    "7c93cc6": "7c93cc610f5eaf39ec5db7ff5d536530833dedf6",
+    "3f933ff": "3f933ff224ff7f8ca6b6f6fd1e965ddc9a14259c",
+    "707375b": "707375b198b2bc3f27524a57bd7fecd207466f4f",
+    "8e3d97a": "8e3d97a936264e3019ed42b62ab35148e09dae33",
+    "9409b8f": "9409b8f19443883322957cdb1175af5c4c2625a5",
+    "6a4e6d1": "6a4e6d103de9e0e93f844d1d299ec8af29a2dbf9"
+  },
+  "source_archives": {
+    "9409b8f": {
+      "sha256": "08df2da0b42aebd0beb1cc760249fbcf8e43d36de81dbb0d54f95356cdd2a37a",
+      "embedded_git_commit_verified": true
+    },
+    "6a4e6d1": {
+      "sha256": "7fa9d3f641c0aab91204d7cd8e307e4d617fe3452a6cf2ffdc9f609c6c85ed8a",
+      "embedded_git_commit_verified": true
+    }
+  },
+  "final_streaming_regressions": {
+    "status": "PASS",
+    "source_commit": "6a4e6d103de9e0e93f844d1d299ec8af29a2dbf9",
+    "commands": [
+      {
+        "name": "equivalence",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "3753caa4eee5612905df3226c2cd20bd3a306525fb387aec9b5b308c643a3dd1"
+      },
+      {
+        "name": "replay-synthetic",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "559c3ca7618fe53949ab61635fb0c1d1442958db2e4cc50b2153cbcd56044421"
+      },
+      {
+        "name": "replay-unet",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "b2738353ec242136f6bad27cc2eece77234af2267d12b5c20d569a8b9dd8539c"
+      },
+      {
+        "name": "native-no-python",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "5c7d0bc1e55837396a7778975ab7a38a42e3f283ab57621cb40eef9109a29cd0"
+      },
+      {
+        "name": "fixture-256",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "127726d796af784d1f12741e68a65a95d4d08fa7f4cdc8348e9efe3690fe7686"
+      },
+      {
+        "name": "paced-256-100000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "802f2595b3f3cd23602c2c8cac730e9069f86ac7b95155c84d26b0da1f8551df"
+      },
+      {
+        "name": "paced-256-1000000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "5a183eb35b769feecc06b191f04134830c4ab0f05bb5eb44e399b58975dd6183"
+      },
+      {
+        "name": "paced-256-10000000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "a92206de54554fe21362e81de8c05063c86e3b9d65224fb19a76163a7d7f73d1"
+      },
+      {
+        "name": "fixture-4096",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "6d1458f3aebc0751b3cf6a6171e800af0ffe53f9140659c763efb43fc331278d"
+      },
+      {
+        "name": "paced-4096-100000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "8ee98906274707d5036fa79b61d598261b51768ef4e673220d76948cef30ca4e"
+      },
+      {
+        "name": "paced-4096-1000000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "7c2da57290620f59a65ac9e986eb052f0291cf6ac70fad128db1b527673a27e9"
+      },
+      {
+        "name": "paced-4096-10000000",
+        "status": "PASS",
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "log_sha256": "a25bb7141057e221964193618fde1e1cd21f87475c01d26a360c57d78bb9d704"
+      },
+      {
+        "name": "packet-loss",
+        "status": "PASS",
+        "exit_code": 1,
+        "expected_exit_code": 1,
+        "log_sha256": "a4280b96b31a9a7d47ef63fb245d8f4863e18090336ea72b5816ac3c2fe42f23"
+      },
+      {
+        "name": "out-of-order",
+        "status": "PASS",
+        "exit_code": 1,
+        "expected_exit_code": 1,
+        "log_sha256": "f5a3056bc76da8adad8cd78125dd31a41641b42c754f94dfe924d975d32bc404"
+      }
+    ],
+    "binary_bytes_unchanged": true,
+    "binaries_sha256": {
+      "synrex-stream": "afd74d71243b5a5692839e22eb665c12158c582f320a7b9ffddf746db1724f81",
+      "synrex-stream-gpu-tests": "6bca5eca42f161ea8a00ab261fe5cf6e4c71067413f15b7f0e643691fa62b526"
+    },
+    "raw_receipt_sha256": "9f86913b39321c97ee7bbd61b1674455c383636e0265fc25c7cf555483183941"
+  },
+  "cpu_tests": {
+    "status": "PASS",
+    "pytest_passed": 87,
+    "pytest_gpu_skipped_local": 5,
+    "cpu_ctest_passed": 2,
+    "asan_ubsan_ctest_passed": 2,
+    "gpu_skips_executed_on_RTX": 5
+  },
+  "r4_gpu_regression_retry": {
+    "initial_status": "FAIL",
+    "initial_result": "4 failed, 1 passed, 31 deselected; relocated executable could not resolve libcudart.so.13",
+    "initial_log_sha256": "89d8d390234a72e497329353b2241aac81dadebd2df681eac787286c1d720bd9",
+    "blocker": "Controller environment used nonexistent CUDA_ROOT/lib64; build-tree RUNPATH resolved CUDA_ROOT/lib, but relocated binaries lacked it",
+    "resolution": "Rerun unchanged source/binaries with existing CUDA_ROOT/lib and TRT library directory; no dependency installation",
+    "retry_status": "PASS",
+    "retry_result": "5 passed, 31 deselected",
+    "retry_log_sha256": "44029fe3ea30e3556047cad3ba8849a2d2a386f87d24586c8dc84f494a70a596"
+  },
+  "owned_resources_after_destruction": {
+    "default": {
+      "synthetic": {
+        "live_pinned_host_bytes": 0,
+        "live_tracked_device_bytes": 0,
+        "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+        "status": "PASS"
+      },
+      "unet": {
+        "live_pinned_host_bytes": 0,
+        "live_tracked_device_bytes": 0,
+        "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+        "status": "PASS"
+      }
+    },
+    "pinned": {
+      "synthetic": {
+        "live_pinned_host_bytes": 0,
+        "live_tracked_device_bytes": 0,
+        "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+        "status": "PASS"
+      },
+      "unet": {
+        "live_pinned_host_bytes": 0,
+        "live_tracked_device_bytes": 0,
+        "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+        "status": "PASS"
+      }
+    }
+  },
+  "exact_ab_receipt": "streaming_exact_ab.json",
+  "setup_failure_preserved": "streaming_setup_failure.json",
+  "trial_receipts": "sustained_rtx_trials.json",
+  "timeline": "streaming_host_cuda_timeline.json",
+  "no_public_push_or_release": true,
+  "AGX_Thor_untouched": true,
+  "source_tree_content_verification": {
+    "window": {
+      "status": "PASS",
+      "files_byte_compared": 275,
+      "owner_modes": "Excluded; extraction normalizes archive ownership/modes"
+    },
+    "final": {
+      "status": "PASS",
+      "files_byte_compared": 275,
+      "owner_modes": "Excluded; extraction normalizes archive ownership/modes"
+    }
+  },
+  "controller_source_sha256": {
+    "sustained_campaign.py": "ff2fbd52be9845dc3ab1b094fa67ca794de540c63eff6b5b9bb7749922431a40",
+    "window_campaign.py": "aa1fd10be07fd9b64834043f5960fa7fe560382708ae292a26df11720c172646",
+    "confirm_streaming.py": "d076b1e688ed23506f9be721e22f6283d30713b5f1c55e2bc9e074c08c8fe37d",
+    "verify_stream_ab.py": "62dac77f7c342ec7b343d14fff10622071ab6f9cc30ba6528e869f8c94e7b477",
+    "summarize_sustained.py": "b00e12eb5b502fe02b3ceff4256dee01b18a5e7886c02ef20d1223f9fb85589d"
+  },
+  "history_audit": "streaming_history_audit.json"
+}

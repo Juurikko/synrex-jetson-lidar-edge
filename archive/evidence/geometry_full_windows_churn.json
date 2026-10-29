@@ -1,0 +1,16 @@
+{
+  "blocks_compared": 45180,
+  "feature_values_byte_compared": 5921832960,
+  "frame_points": 256,
+  "frames": 25000,
+  "memberships_compared": 6400000,
+  "model_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+  "points_compared": 6400000,
+  "schema": "synrex.full_window_geometry_oracle.v1",
+  "scope": "CPU-only exact membership/source-index/voxel-index/order and full float32 feature-tensor byte comparisons. GPU kernels/engine unchanged and separately traced; no CPU neural throughput claim.",
+  "source_basename": "TEST-0447_6390-002819414.laz",
+  "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+  "status": "PASS",
+  "translation_x_metres_per_frame": 64.0,
+  "wall_seconds": 2.719418562
+}

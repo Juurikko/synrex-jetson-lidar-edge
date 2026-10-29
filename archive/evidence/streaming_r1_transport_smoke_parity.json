@@ -1,0 +1,27 @@
+{
+  "schema": "synrex.streaming_r1.smoke_parity.v1",
+  "status": "PASS",
+  "scope": "Short real-model correctness only; no sustained claim",
+  "baseline": "7b32215",
+  "optimized": "f39fa29",
+  "cases": [
+    {
+      "status": "PASS",
+      "model_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+      "points": 524288,
+      "input_sha256": "0dc208927e07b6fd929327eb24fbd3517811c46d614dc847265b1973ceffe278",
+      "output_sha256": "b7aa2d777d80e24e5d80fc95019d1058e4daa65d923f418ef016296b82d44366",
+      "baseline_p99_ms": 50.331648,
+      "optimized_p99_ms": 38.797312
+    },
+    {
+      "status": "PASS",
+      "model_manifest_sha256": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+      "points": 131072,
+      "input_sha256": "b77bdd2242a336745334b8e8ad6be40d76e3dc96d8bf0b75849ddd74ac186a63",
+      "output_sha256": "e1bd4f4d03a51b72016f856613c3796f04b6b96ebb56c62e99c57f839171de89",
+      "baseline_p99_ms": 205.52089600000002,
+      "optimized_p99_ms": 192.937984
+    }
+  ]
+}

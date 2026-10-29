@@ -1,0 +1,275 @@
+{
+  "schema": "synrex.eviction_index_final_gates.v1",
+  "status": "PASS",
+  "qualified_native_source_commit": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "qualified_source_archive_sha256": "01bd7ce98f406f7f72c162c7b35af6b81f67f2263bdd47f1c5b5b8c92a1a1984",
+  "scope": "Bounded offline-emulated real TensorRT replay qualification for the frozen small trained FRACTAL U-Net. Native fault receipts remain FAIL; a passing fault harness never advertises them as sustained rates.",
+  "accepted_trial_count": 34,
+  "native_fail_trial_count": 2,
+  "gates": {
+    "frozen_checkpoint_and_historical_evidence": {
+      "status": "PASS",
+      "manifest": "eviction_baseline_freeze.json"
+    },
+    "native_geometry_cuda_tensorrt_package_contract_unchanged": {
+      "status": "PASS",
+      "receipt": "eviction_source_provenance.json"
+    },
+    "cpu_reference_index_oracle_parity": {
+      "status": "PASS",
+      "capacities": 69,
+      "range": [
+        1,
+        65536
+      ],
+      "receipt": "eviction_cpu_accepted_refresh.json"
+    },
+    "explicit_temporal_policy_and_generic_resolution": {
+      "status": "PASS",
+      "resolutions": [
+        0.001,
+        0.125,
+        1.0,
+        32.5,
+        1000.0
+      ],
+      "receipt": "eviction_temporal_cpu.json"
+    },
+    "bounded_index_millions_accepted_refreshes": {
+      "status": "PASS",
+      "accepted_observations": 2097152,
+      "index_entries": 65536,
+      "release_rss_growth_bytes": 0,
+      "receipts": [
+        "eviction_cpu_accepted_refresh.json",
+        "eviction_asan_accepted_refresh.json"
+      ]
+    },
+    "initial_accepted_refresh_memory_test": {
+      "status": "FAIL",
+      "reason": "Fixed timestamps mostly exercised late rejection; retained and corrected",
+      "receipt": "eviction_test_correction.json"
+    },
+    "address_undefined_sanitizers": {
+      "status": "PASS",
+      "initial_ctest_count": 5,
+      "corrected_index_target": "PASS",
+      "additional_temporal_target": "PASS"
+    },
+    "python_cpu_regressions": {
+      "status": "PASS",
+      "passed": 87,
+      "physical_gpu_skipped_on_cpu_host": 5
+    },
+    "both_frozen_models_real_tensorrt": {
+      "status": "PASS",
+      "receipt": "eviction_gpu_regressions.json",
+      "max_absolute_logit_error": 0.0,
+      "no_python_production_execution": "PASS",
+      "owned_device_pinned_cleanup": "PASS"
+    },
+    "packet_loss_out_of_order_visible_rejection": {
+      "status": "PASS",
+      "receipt": "eviction_gpu_regressions.json"
+    },
+    "original_gates_all_accepted_trials": {
+      "status": "PASS",
+      "trials": 34,
+      "p99_source_output_limit_ms": 250,
+      "scheduling_lag_limit_ms": 50,
+      "queue_capacity_frames_each": 2,
+      "oldest_pending_limit_ms": 500,
+      "host_rss_limit_bytes": 1073741824,
+      "measured_rss_range_limit_bytes": 67108864,
+      "gpu_device_used_limit_mib": 4096,
+      "dropped_points": 0,
+      "coverage": 1.0,
+      "reused_labels": 0
+    },
+    "aging_and_expiration_policy_preserved": {
+      "status": "PASS",
+      "reason": "Age reporting retained; no TTL expiration exists in the frozen policy"
+    },
+    "new_ttl_expiration_feature": {
+      "status": "NOT_RUN",
+      "reason": "Not introduced: would change accepted policy"
+    },
+    "async_laz_copc_throughput": {
+      "status": "NOT_RUN"
+    },
+    "live_sensor_transport_larger_models_other_datasets": {
+      "status": "NOT_RUN"
+    },
+    "new_index_dense_scene_C_3m": {
+      "status": "NOT_RUN",
+      "reason": "Original 3M FAIL retained; only accepted 2.5M scene C preservation rate rerun"
+    },
+    "orin_sm87_thor_sm110": {
+      "status": "NOT_RUN",
+      "reason": "No hardware access or inferred performance"
+    },
+    "legacy_single_commit_history_check": {
+      "status": "NOT_RUN",
+      "reason": "Continued authorized multi-commit Track B; inherited checker unchanged"
+    },
+    "scoped_new_object_history_audit": {
+      "status": "PASS",
+      "receipt": "eviction_history_audit.json",
+      "audited_end": "f6f167cf62338b34e7b9e85e6ce9127a62507c8d",
+      "new_objects_scanned": 82
+    },
+    "matched_frozen_indexed_exact_output_parity": {
+      "status": "PASS",
+      "cases": 2,
+      "receipt": "eviction_remote_final.json"
+    },
+    "stable_frozen_indexed_exact_output_parity": {
+      "status": "PASS",
+      "cases": 4,
+      "receipt": "eviction_remote_final.json"
+    },
+    "full_capacity_churn_100000_p256": {
+      "status": "PASS",
+      "repetitions": 2,
+      "measured_seconds_each": 120,
+      "fresh_classified_points_s": [
+        99998.89677050462,
+        99998.99654423601
+      ],
+      "p99_source_output_ms": [
+        4.325375999999999,
+        4.325375999999999
+      ],
+      "complete_coverage": 1.0,
+      "drops": 0,
+      "minimum_measured_full_capacity_exposure_seconds": 120.001204159
+    },
+    "full_capacity_churn_1000000_p4096": {
+      "status": "PASS",
+      "repetitions": 2,
+      "measured_seconds_each": 60,
+      "fresh_classified_points_s": [
+        999940.7362049368,
+        999942.9985883251
+      ],
+      "p99_source_output_ms": [
+        10.48576,
+        10.747904
+      ],
+      "complete_coverage": 1.0,
+      "drops": 0,
+      "minimum_measured_full_capacity_exposure_seconds": 60.005724411
+    },
+    "full_capacity_churn_2000000_p16384": {
+      "status": "PASS",
+      "repetitions": 2,
+      "measured_seconds_each": 60,
+      "fresh_classified_points_s": [
+        1999706.2989025535,
+        1999696.6440156205
+      ],
+      "p99_source_output_ms": [
+        17.825792,
+        17.825792
+      ],
+      "complete_coverage": 1.0,
+      "drops": 0,
+      "minimum_measured_full_capacity_exposure_seconds": 60.015213267
+    },
+    "post_fill_cancellation_coherent_prefix": {
+      "status": "PASS",
+      "native_trial_status": "FAIL",
+      "native_reason": "requested_cancellation",
+      "phase": "measured",
+      "explicitly_dropped_points": 4096,
+      "delivered_measured_coverage": 0.9722222222222222,
+      "map_removals_measured": 27466,
+      "map_oracle_status": "PASS",
+      "sustainable_rate_claim": "NOT_RUN: cancelled prefix only"
+    },
+    "historical_pre_index_2m_full_map": {
+      "status": "FAIL",
+      "reason": "Original bounded-input-queue warmup failure preserved in geometry_rtx_trials.json; indexed revisit independently passes"
+    },
+    "r4_real_gpu_preservation": {
+      "status": "PASS",
+      "tests": 5,
+      "receipt": "eviction_remote_final.json"
+    },
+    "remote_archive_models_and_binaries_final_seal": {
+      "status": "PASS",
+      "archived_files": 325,
+      "receipt": "eviction_remote_final.json"
+    },
+    "endpoint_reauthentication": {
+      "status": "PASS",
+      "initial_condition_status": "NOT_RUN",
+      "receipt": "eviction_access_resolution.json",
+      "policies_modified": false
+    },
+    "stable_scene_rates_preserved": {
+      "status": "PASS",
+      "cases": [
+        "A 2M",
+        "A 3M",
+        "B 3M",
+        "C 2.5M"
+      ],
+      "indexed_repetitions_each": 2,
+      "measured_seconds_each": 60,
+      "exact_frozen_digests": "PASS"
+    },
+    "full_capacity_3m_churn": {
+      "status": "NOT_RUN",
+      "reason": "Bounded campaign closed after repeated 2M/16384-point qualification"
+    },
+    "source_license_hygiene_review": {
+      "status": "PASS",
+      "receipt": "eviction_source_review.json"
+    }
+  },
+  "metrics": {
+    "max_accepted_host_peak_rss_bytes": 531144704,
+    "max_accepted_gpu_device_used_mib": 524,
+    "max_accepted_scheduling_lag_seconds": 0.004045406
+  },
+  "receipts_sha256": {
+    "evidence/eviction_access_blocker.json": "0f368d5eee48e383d812f056fd0454ac7b2c848543fa7035aca594aaa5aaee3e",
+    "evidence/eviction_access_resolution.json": "2bfef6fa20b61d244b3d815d1c1a521d071f6e84912653696c834c6e9d1b0026",
+    "evidence/eviction_asan_accepted_refresh.json": "6bc1ebcc7e4826cc5cb291857f58e5ccf939af75fb36ec34a0d1c28d22b490eb",
+    "evidence/eviction_baseline_freeze.json": "ed3be00922d8a3cf44b2cbca61e32ad2a8efc1a02030e60cab9148b74d04c0f3",
+    "evidence/eviction_churn_table.csv": "2ba0a07042971142c3913195a1fe29e7b62d9d498799e8305d55bf94be0057e4",
+    "evidence/eviction_churn_trials.json": "755ec049e918ea0ea9e373d00cbb73b98add40241b5c5916ac7dc9736e03c611",
+    "evidence/eviction_cpu_accepted_refresh.json": "9a847bbdfa115a40501e1a764a2b0eee9e228465949544b29b0dd7b19b81a465",
+    "evidence/eviction_cpu_checks.json": "c4e80febe9e623583d4e089d6278ee2ef73b9e5927c180c0faf6237de1753439",
+    "evidence/eviction_cpu_parity.json": "025057f82b7c25a2b3e1d0405d84484eb45ca6de6f825325f564a2bcb7fe6159",
+    "evidence/eviction_cpu_profile_indexed.json": "566155f0496e9fb04575d2465e7bedd7568928cdfd7fccb3e1c1a720ebe876a7",
+    "evidence/eviction_cpu_profile_reference.json": "b1c5ac13cab7cbf21d25b9ae7451cbd86684e128760417cc577d8a15d3430a1b",
+    "evidence/eviction_gpu_regressions.json": "573c724c019408b13ae20522b4ef0f670f1eff3b4991ce1251aaad6d5f870439",
+    "evidence/eviction_remote_final.json": "bf6524c13a67460af2e016a7925c761b4c0dac8c2e3683f37f6ad1686ba1f913",
+    "evidence/eviction_rtx_cpu_indexed.json": "628e51c371f91d0c1ad6a7104358066028a05de729e5ffe0b9d55c1ccca0cb47",
+    "evidence/eviction_rtx_cpu_reference.json": "b27746b49fa7643f55791673679d44e7d8157d0bcd91d7a2804481be671a723a",
+    "evidence/eviction_rtx_trials.json": "0a25d326342f7f6011f74b24bac0a91b6cfdc40f181d3de7bc049ae372c7ba3f",
+    "evidence/eviction_source_provenance.json": "7c66661202431b339199f0b42fc7c4253e9d2cd2ac42a5d21410b9ba59edcf57",
+    "evidence/eviction_temporal_asan.json": "5efa8e663c4677b6ca1537391ed1379a42ad628b4aefd1f9ae0d2327aa09624c",
+    "evidence/eviction_temporal_cpu.json": "5efa8e663c4677b6ca1537391ed1379a42ad628b4aefd1f9ae0d2327aa09624c",
+    "evidence/eviction_test_correction.json": "3685440218aca747cbc3bce4390d22ce1b6328c9dc5b1957ecd56dd8392a9842",
+    "evidence/eviction_trial_table.csv": "b22284509198f5480b9fa6d020f4903370de6e8780800a1294d9277102606545",
+    "evidence/eviction_source_review.json": "b2a925b5690aca5ef29b0548fcab09d46a67b14e4ed0ea9abca30c83716d5642",
+    "evidence/eviction_auxiliary_provenance.json": "2ea89b2621fd8a286dbf8d45ff46aefea1c2f40c301ebdcac17b22b2f2753a2a",
+    "evidence/eviction_history_audit.json": "71272ce23fa07d89d303049a118c524db64516b0abaff73b8beb175bdada4e0a"
+  },
+  "publication": "Local commits only. No pushes, PRs, public-main/tag changes or release. AGX/Thor untouched.",
+  "remaining_engineering_blockers": [],
+  "hardware": {
+    "gpu": "RTX 4090 SM89",
+    "driver": "610.88",
+    "cuda_toolkit": "13.2.86",
+    "cuda_runtime": 13020,
+    "tensorrt": "10.16.1",
+    "cpu": "AMD Ryzen 7 7700X, WSL2",
+    "clocks": "Unchanged dynamic clocks, sampled per trial; not locked",
+    "competing_compute_workloads": "None observed; checked before/during each trial; GPU idle with no compute processes after all experiments",
+    "licensing": "Frozen small FRACTAL U-Net package; genuine IGN/FRACTAL licensed replay corpora; no model or LiDAR binaries in Git"
+  }
+}

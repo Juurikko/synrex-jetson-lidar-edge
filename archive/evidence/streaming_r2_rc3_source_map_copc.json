@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "scenes": [
+    {
+      "scene": "urban",
+      "copc_sha256": "18fcb489998129b57cc8547088ca8c4888ec820ab2800908f418532fd358f842",
+      "sidecar_sha256": "2a50ae163116513c063813feed0c62acb614bd72a5e658b0924fca6f37578c93",
+      "points": 83641,
+      "max_xyz_error_m": 3.552713678800501e-15,
+      "copc_to_own_semantic_sidecar_parity": "PASS",
+      "copc_to_video_prediction_differences": 0,
+      "prediction_scope": "Same frozen R4 prediction sidecar in COPC and film.",
+      "project_crs": "EPSG:2154",
+      "header_crs": "None",
+      "explicit_viewing_crs_assignment": true,
+      "qgis_project_sha256": "7f2ddddcd7dfa67ef3bab008103ddcff34a877aaedbd5785096bd33691bacc61"
+    },
+    {
+      "scene": "tower",
+      "copc_sha256": "cefd5d5294d181b3ba02a4ce55f59c74d6489736205e405a55a3a85cc4cd56b0",
+      "sidecar_sha256": "152160510dd1d504bf032f623457a8953cebc6c3a0656e39a5dc6b915eb07fe7",
+      "points": 85222,
+      "max_xyz_error_m": 8.881784197001252e-16,
+      "copc_to_own_semantic_sidecar_parity": "PASS",
+      "copc_to_video_prediction_differences": 0,
+      "prediction_scope": "Same frozen R4 prediction sidecar in COPC and film.",
+      "project_crs": "EPSG:2154",
+      "header_crs": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993_v1\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]",
+      "explicit_viewing_crs_assignment": false,
+      "qgis_project_sha256": "7f2ddddcd7dfa67ef3bab008103ddcff34a877aaedbd5785096bd33691bacc61"
+    },
+    {
+      "scene": "forest",
+      "copc_sha256": "06902c4c5c00a25bd4aa0fd31e89934a5064e86f51b1f2ddb8f57f7a5399e148",
+      "sidecar_sha256": "c16264729a368eeb31f3bed81384f1dfd3469e77904b6e1727553b559ef3ae07",
+      "points": 400654,
+      "max_xyz_error_m": 0.0,
+      "copc_to_own_semantic_sidecar_parity": "PASS",
+      "copc_to_video_prediction_differences": 9939,
+      "prediction_scope": "Forest COPC is a separate preserved native export; video uses independently reverified short JSON recording predictions. They are not interchangeable prediction arrays.",
+      "project_crs": "EPSG:2154",
+      "header_crs": "PROJCS[\"RGF93 / RGF93 / Lambert-93\",GEOGCS[\"RGF93\",DATUM[\"Reseau_Geodesique_Francais_1993_v1\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6171\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4171\"]],PROJECTION[\"Lambert_Conformal_Conic_2SP\"],PARAMETER[\"standard_parallel_1\",49],PARAMETER[\"standard_parallel_2\",44],PARAMETER[\"latitude_of_origin\",46.5],PARAMETER[\"central_meridian\",3],PARAMETER[\"false_easting\",700000],PARAMETER[\"false_northing\",6600000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"EPSG\",\"2154\"]]",
+      "explicit_viewing_crs_assignment": false,
+      "qgis_project_sha256": "7e9e757ccb4797787c4a56590c5df1a34dd760cc41bac26fd255eb8218009159"
+    }
+  ],
+  "map_events_reverified": 400654,
+  "new_cells": 24458,
+  "semantic_changes": 6510,
+  "qgis_scene_correctness": "PASS: independent COPC source-ID/XYZ/predicted-label parity and preserved project CRS; new QGIS GUI playback NOT_RUN",
+  "new_qgis_gui": "NOT_RUN"
+}

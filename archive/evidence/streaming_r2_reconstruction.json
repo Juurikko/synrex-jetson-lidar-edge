@@ -1,0 +1,45 @@
+{
+  "schema": "synrex.streaming_r2.reconstruction.v1",
+  "status": "PASS",
+  "reconstructed_source": "14bcb4f2c512d735291f796ac905584564e74ddf",
+  "native_source": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "public_dependencies_fresh_cloned": {
+    "laz-perf": "b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce",
+    "nlohmann/json": "9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03"
+  },
+  "cpu_pytest": {
+    "pass": 90,
+    "physical_gpu_skipped": 5
+  },
+  "cpu_ctest": {
+    "pass": 7
+  },
+  "asan_ubsan_ctest": {
+    "pass": 7,
+    "seconds": 125.21
+  },
+  "new_adversarial_cpu_tests": {
+    "pass": 6,
+    "seconds": 2.9
+  },
+  "fresh_gpu_ctest": {
+    "pass": 7,
+    "seconds": 17.16
+  },
+  "fresh_r4_physical_gpu_pytest": {
+    "pass": 5,
+    "deselected": 31,
+    "seconds": 46.81
+  },
+  "log_hashes": {
+    "r2-clean-configure.log": "8ddf108590fe1128faf99c48686f8c5711ecd1458e21bd457821cf7c6ae64721",
+    "r2-clean-build.log": "ad54fdea71064a8facba9a7c2c5741567eaee5e57fdf16feb025419771734fe1",
+    "r2-clean-ctest.log": "4bc770a7f65ec6807b593200a3bfcb7618889798601a7df1091423e8febf9d51",
+    "r2-clean-pytest.log": "c13a4dde2fb80109c5deeae84a6a673c3e81a8f910b7100114a674fdc1b5a81f",
+    "r2-sanitize-configure.log": "c96acd938cca0a83e793a98a803243a3f63f2e7d22bba95af6874796e5593683",
+    "r2-sanitize-build.log": "911c096020b83b139826a8c8939ae6c826d58083efdeb16bb3f4fad7c894755c",
+    "r2-sanitize-ctest.log": "d1ce22f197a36de4e07c96d43c58794d7dbeaf3d8c1144ac3b49eb48faf994fc",
+    "r2-adversarial-tests.log": "c084cc10fe7c37b5e82a5bd60fd204f9a91ee2293280e6330d9f8f2b276374a1"
+  },
+  "python_environment": "Existing public verification venv reused for initial reconstruction; isolated media venv installed only public pinned wheels. Final candidate clone rerun recorded separately."
+}

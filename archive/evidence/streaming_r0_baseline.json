@@ -1,0 +1,35 @@
+{
+  "schema": "synrex.streaming.baseline.v1",
+  "status": "PASS",
+  "accepted_source": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+  "accepted_tag": "byom-unet-fractal-r4-rc2",
+  "final_r4_audit": "c3451b6db942560829a360de3562624fcdc4282d",
+  "track": "B STREAMING R0; isolated local branch; no publication authorization",
+  "baseline_review": {
+    "runtime": "native/tensorrt.cpp infer() reuses context only across blocks/cycles of one file invocation",
+    "geometry": "native/geometry.cpp; bounded source-index memberships, deterministic reduction order, model-specified first/last-wins",
+    "accepted_rtx_evidence": ["rtx4090_dense_gpu.json", "unet_r2_neural_qualification.json", "unet_r3_performance_analysis.json", "unet_r4_qualification.json"],
+    "historical_complete_file_points_per_second": 237991.41762428806,
+    "historical_cached_processing_points_per_second_excluding_io": 69830373.62179343,
+    "historical_rates_are_streaming_results": false
+  },
+  "frozen_artifacts": {
+    "synthetic_engine_sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+    "unet_engine_sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+    "unet_weights_sha256": "788b65c42bb5d50d9509a56d38368f51890c4a93300d53578e290d193456c7c4",
+    "unet_fp16_onnx_sha256": "4a043dfacefa9e45f2e80e604b565f7ae90fb35ff81831af8f26cfd3d59ae047",
+    "safe_model_las_projection": [1, 2, 200, 6, 9, 17, 201]
+  },
+  "budgets": {
+    "line_bytes": 1048576, "chunk_points": 4096, "window_points": 65536,
+    "chunks_per_window": 1024, "assembling_windows": 1,
+    "input_queue_default": 2, "output_queue_default": 2, "queue_maximum_each": 8,
+    "device_adapter_bytes_maximum": 536870912, "device_headroom_bytes_minimum": 67108864,
+    "vendor_engine_context_bytes": "additional; tracked requested allocation peak reported separately",
+    "assembly_timeout_nanoseconds": 2000000000,
+    "semantic_map_default_cells": 10000, "semantic_map_maximum_cells": 1000000
+  },
+  "provenance": "New independent implementation against public R4 interfaces and existing CUDA/TensorRT public API usage. No private engineering code, weights or datasets imported into source.",
+  "gpu_at_baseline_review": "NOT_RUN; subsequent physical receipts required",
+  "AGX": "NOT_RUN", "THOR": "NOT_RUN"
+}

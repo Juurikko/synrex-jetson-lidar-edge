@@ -1,0 +1,206 @@
+{
+  "schema": "synrex.geometry_churn_gates.v1",
+  "status": "PASS",
+  "scope": "Bounded optional zero-overlap CPU geometry qualification and independent spatial-churn limit; not general 3M under full-map eviction. Individual failed trials remain FAIL.",
+  "qualified_native_source_commit": "3f97a490860529505b1ebfad03e2726e2081dbe2",
+  "qualified_source_archive_sha256": "56e14e26298ca2ac3f1ec26a46863f0ef2bb350d83406d721451eac62f1c5c25",
+  "source_commits_before_evidence_seal": [
+    "de46b1f8d816eee8284a2ec593d1a852dd05d35c Freeze accepted bounded 2M source and historical receipts before geometry optimization",
+    "d028f7f292d36255a07f91acbbeb331551545d4a Add optional zero-overlap geometry strategies and preserve initial CPU parity and negative timing evidence",
+    "f0f6c6992d751f42de824d5aa3f1fb2421d661ab Reduce fast-path validation allocations and add independently checked spatial map churn",
+    "3f97a490860529505b1ebfad03e2726e2081dbe2 Keep GPU precision fixture within the frozen stream coordinate budget",
+    "1da74714ca1fd90b3332eec44001a31c5d0ad3ec Add independent CPU-only full-capacity eviction service profile",
+    "632bad3716e116b6239422c3f4f0d886987ee213 Add full-window offline geometry and feature-byte oracle for sustained replays"
+  ],
+  "gates": {
+    "frozen_2m_and_prior_receipts": {
+      "status": "PASS",
+      "files": 14,
+      "manifest": "geometry_2m_freeze.json"
+    },
+    "unchanged_authoritative_geometry_and_cuda": {
+      "status": "PASS",
+      "geometry_sha256": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
+      "cuda_sha256": "952fa44918a4bd087889b298601d21918f91d9c4c31b2f387c8dd9d5944cd919"
+    },
+    "cpu_geometry_membership_index_feature_parity": {
+      "status": "PASS",
+      "cases": 203,
+      "mode_comparisons": 398,
+      "matching_rejections": 8
+    },
+    "full_window_cpu_reference_parity": {
+      "status": "PASS",
+      "points": 597024000,
+      "receipts": [
+        "geometry_full_windows_sceneA.json",
+        "geometry_full_windows_sceneB.json",
+        "geometry_full_windows_sceneC.json",
+        "geometry_full_windows_churn.json",
+        "geometry_full_windows_churn32.json"
+      ]
+    },
+    "both_frozen_models_real_tensorrt_exact_parity": {
+      "status": "PASS",
+      "events": 48,
+      "trace_files": 1684,
+      "receipt": "geometry_gpu_exact.json",
+      "repeated_checker_status": "PASS"
+    },
+    "identical_stream_output_map_digests": {
+      "status": "PASS",
+      "trials": 6,
+      "point_digest": 11966976976787136549,
+      "delta_digest": 1921173779110773649,
+      "snapshot_sha256": "6e922f057ee53ac929976c20e89bef9cc27fc561093cb4c2128aa1598e2d9b66"
+    },
+    "original_cpu_ctest": {
+      "status": "PASS",
+      "tests": 4
+    },
+    "address_undefined_sanitizers": {
+      "status": "PASS",
+      "tests": 4
+    },
+    "python_cpu_regressions": {
+      "status": "PASS",
+      "passed": 87,
+      "physical_gpu_skipped_on_cpu_host": 5
+    },
+    "r4_physical_gpu_preservation_regressions": {
+      "status": "PASS",
+      "passed": 5,
+      "receipt": "geometry_remote_final.json"
+    },
+    "accepted_trials_original_gates": {
+      "status": "PASS",
+      "trials": 24,
+      "all_coverage": 1.0,
+      "drops": 0,
+      "duplicates_or_corrupt": 0,
+      "delayed_over_budget": 0,
+      "reused_labels": 0,
+      "latency_p99_limit_ms": 250,
+      "schedule_lag_limit_ms": 50,
+      "per_queue_frames": 2,
+      "max_rss_bytes": 1073741824,
+      "max_measured_rss_range_bytes": 67108864,
+      "gpu_device_used_limit_mib": 4096,
+      "receipt": "geometry_rtx_trials.json"
+    },
+    "direct_3m_scene_A_B": {
+      "status": "PASS",
+      "repetitions_each": 2,
+      "measured_seconds_each": 60,
+      "scope": "Under-capacity stationary licensed scene replay with fresh inference and map observation updates"
+    },
+    "direct_3m_scene_C": {
+      "status": "FAIL",
+      "reason": "bounded_input_queue_full during measured interval; two repeated 2.5M PASSs"
+    },
+    "reference_3m_scene_A": {
+      "status": "FAIL",
+      "reason": "bounded_input_queue_full during measured interval"
+    },
+    "churn_4096_cells_50k": {
+      "status": "PASS",
+      "repetitions": 2,
+      "measured_seconds_each": 60,
+      "window_points": 256
+    },
+    "churn_65536_cells_2500": {
+      "status": "PASS",
+      "repetitions": 2,
+      "measured_seconds_each": 120,
+      "window_points": 32,
+      "min_full_capacity_churn_seconds": 76.163625754
+    },
+    "churn_65536_cells_2m": {
+      "status": "FAIL",
+      "reason": "bounded_input_queue_full during warmup",
+      "window_points": 16384
+    },
+    "churn_65536_cells_50000_25000_10000_5000": {
+      "status": "FAIL",
+      "reason": "Explicitly preserved queue failures; warmup/measured phases and losses in per-trial receipts"
+    },
+    "initial_prototype_speed_improvement": {
+      "status": "FAIL",
+      "reason": "Prototype initially slightly slower; preserved receipt and source, independently improved afterward"
+    },
+    "initial_gpu_1e12_fixture": {
+      "status": "FAIL",
+      "reason": "Existing stream XYZ bound rejects fixture before inference; corrected to 1e8 without changing schema"
+    },
+    "scoped_history_audit": {
+      "status": "PASS",
+      "receipt": "geometry_history_audit.json",
+      "audited_end": "fc97fcc1816503e73483460474fda33dc60d9834",
+      "new_objects_scanned": 92
+    },
+    "large_models_other_datasets_live_transport": {
+      "status": "NOT_RUN"
+    },
+    "asynchronous_laz_copc_throughput": {
+      "status": "NOT_RUN"
+    },
+    "orin_sm87_thor_sm110": {
+      "status": "NOT_RUN",
+      "reason": "No access or inferred performance; existing gated plans retained"
+    },
+    "nsight_systems_full_trace": {
+      "status": "NOT_RUN",
+      "reason": "Existing host/CUDA event service timing used; no fabricated full system timeline"
+    },
+    "legacy_r0_single_commit_history_mode": {
+      "status": "NOT_RUN",
+      "reason": "Continued multi-commit Track B branch; checker and history preserved"
+    },
+    "source_license_hygiene_review": {
+      "status": "PASS",
+      "receipt": "geometry_source_review.json",
+      "scope": "Existing source checker in check-only mode; no frozen provenance or release receipts overwritten"
+    },
+    "frozen_model_package_before_after": {
+      "status": "PASS",
+      "files": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      }
+    }
+  },
+  "hardware": {
+    "gpu": "RTX 4090 SM89",
+    "driver": "610.88",
+    "cuda_runtime": 13020,
+    "tensorrt": "10.16.1",
+    "cpu": "AMD Ryzen 7 7700X, WSL2",
+    "competing_compute_workloads": "none observed; guard checked each trial",
+    "clock_policy": "unchanged dynamic clocks, no power/clock changes",
+    "model": "Frozen trained small FRACTAL U-Net; not larger models",
+    "source_data_license": "FRACTAL/IGN licensed public test scenes, Etalab 2.0"
+  },
+  "receipts_sha256": {
+    "evidence/geometry_2m_freeze.json": "bafe01ff7345fe803e0309e97c9fe6c2129bc15505086a5741fb072b1e312cb0",
+    "evidence/geometry_cpu_eviction_rtx.json": "e2d54ff7ac1c9bc71433dff9471ef4cb268010118fa43d3e539f7cae3bb21d47",
+    "evidence/geometry_cpu_eviction_service.json": "d91e6a68e2daf8eba08fb91856156d248e1ed9bc6a97ee3d99cb060aaa4242a2",
+    "evidence/geometry_cpu_map_churn.json": "b03b2b1ae6808d6179d4afb3a346214442b1b8aa681d039838bca78dad2700dd",
+    "evidence/geometry_cpu_qualification.json": "180a81de8cb9c2cfd1222b2c4e00112c8ede80948eeed57cd310ac5e26c870ce",
+    "evidence/geometry_diagnostic_link_failure.json": "8fbec425616972faaa9dc7b5bab2a16b9e99e15f313dda2b9bcee2d789b0b6e4",
+    "evidence/geometry_full_windows_churn.json": "d352f19b30d59ffae8899721293de4aabb39233bbfe1192c1e733f561b84964b",
+    "evidence/geometry_full_windows_churn32.json": "fe771debc124941bfa61cc7b578aa70fca03e6b9a4c7a32692075d86f30e4c91",
+    "evidence/geometry_full_windows_sceneA.json": "c1c9740aea779a185d23f5f2be07609e5c09297bbf1be139f40882378aa043b9",
+    "evidence/geometry_full_windows_sceneB.json": "e84047e8475d72ecdcb10db1fd34f5a8a16c3b7c105cae141a0c583a8471cf15",
+    "evidence/geometry_full_windows_sceneC.json": "aca7757cbcef01809666f3a9cbf6d03aa6a4b8e67a708e2b555acf4a064d121e",
+    "evidence/geometry_gpu_exact.json": "725aba1b64a283468e24502f25cbd69bf1aad12ee90fa900074bcdb7de9da4be",
+    "evidence/geometry_initial_gpu_fixture_failure.json": "070eb4a248e66b3deafd55a78fe5e968735a6ab0035e0297e5b6ec47c3bc6801",
+    "evidence/geometry_prototype_cpu.json": "b175345ea35ecfb963d2ca5c0c0d1aa34f136fa4e2a4751842dc9277e0a7ae1c",
+    "evidence/geometry_remote_final.json": "680302a42270a7baf66f2a82e58730669d6a1ce8a3485d700459ceec4fa90c1a",
+    "evidence/geometry_rtx_trials.json": "dfa20be657db0bbd2c42ed80a563df7a6188ad52c7a2f0a6a303d860ef24e2ca",
+    "evidence/geometry_trial_table.csv": "a893e4cca9c0c94a01034449728f06745c8966be81990b394ad386676828a823",
+    "evidence/geometry_source_review.json": "135cc72511d7e612e234d0bcb360fb3b700f68bfaadfaed1c9a14af8cfd2b041",
+    "evidence/geometry_history_audit.json": "33dbe1991d987b237a1586c6d03f23984b73e0c07207999c4d03f4f36133bec4"
+  },
+  "publication": "Local commits only; no pushes, PRs, release or public-main changes; AGX/Thor untouched"
+}

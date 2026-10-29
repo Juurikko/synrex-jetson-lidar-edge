@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "qgis_version": "3.44.14-Solothurn",
+  "files": [
+    {
+      "source": "TEST-0944_6564-005900112.laz",
+      "source_indices": 400654,
+      "coverage": 1.0,
+      "crs": "EPSG:2154",
+      "image": "TEST-0944_6564-005900112-qgis-map.png",
+      "image_sha256": "1dd8cfb24f56a3c96903de74eb4f38a06577865b8bd37f44fc745a35ac7ebd0a"
+    }
+  ],
+  "kind": "Actual QGIS map image export; not a desktop screenshot or 3D view"
+}

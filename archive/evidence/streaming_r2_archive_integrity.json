@@ -1,0 +1,7 @@
+{
+  "schema": "synrex.streaming_r2.archive_bytes.v1",
+  "status": "PASS",
+  "file_payloads_exact": 649,
+  "unsafe_paths_or_links": 0,
+  "archive_sha256": "a73aa7ce4b4bfd27377bf2d691e213bba70881ca5fefe817c3f460214b650805"
+}

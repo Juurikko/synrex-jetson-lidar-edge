@@ -1,0 +1,38 @@
+{
+  "schema": "synrex.streaming_r1.history_and_preservation_seal.v1",
+  "status": "PASS",
+  "base_commit": "fe21303a2b2ba6a177821166d95457f930bfd727",
+  "audited_end_commit": "71ca052f72a2f175a846d8e5b1a70c380e7dc274",
+  "new_commits": [
+    "71ca052f72a2f175a846d8e5b1a70c380e7dc274 Qualify native loopback through sustained 2M stable, 1.5M full churn, ten-minute stability and atomic geospatial exports",
+    "f39fa296332217eb77bd73dd7e1e3515be3f367e Profile and remove success-path wire allocation and redundant consumer state while preserving independent validation",
+    "7b3221502a30f2f1ca44723b896bd674f0c9597b Bind and validate binary outputs, remove redundant serialization, and add atomic asynchronous source-preserving exports",
+    "d4f7b878af12334bc3d788e54ddca56bc549676a Add guarded external-process transport and matched geometry qualification campaign",
+    "e955b07a5d6315801e47189c6903fc35f0ce7d1e Implement bounded native binary loopback transport and optional stable member radix ordering"
+  ],
+  "objects_by_type": {
+    "commit": 5,
+    "tree": 39,
+    "blob": 94
+  },
+  "pattern_findings": [],
+  "forbidden_artifact_suffixes": [],
+  "frozen_historical_files_unchanged": 161,
+  "native_production_matches_f39fa29": "PASS",
+  "check_only_tree_review": {
+    "status": "PASS",
+    "secret_path_scan": {
+      "status": "PASS",
+      "pattern_findings": {},
+      "scope": "review tree; pattern-based, not exhaustive"
+    },
+    "relative_markdown_links": {
+      "status": "PASS",
+      "broken": []
+    },
+    "license_inventory": "PASS_OWNER_CONFIRMED_ORIGINAL_SCOPES_UPSTREAM_EXCLUDED",
+    "log_sha256": "75a927c2db00ba1fd37575f70a8937b74622c7a0081c6ec6c80cdcd199072f85"
+  },
+  "legacy_single_initial_commit_history_gate": "NOT_RUN: incompatible with owner-authorized multi-commit Track B; existing checker preserved unchanged",
+  "scope": "Pattern and extension scan of new objects plus frozen-reference checks; not an exhaustive security/legal audit. Audit seal commit follows this endpoint. No public push or release."
+}

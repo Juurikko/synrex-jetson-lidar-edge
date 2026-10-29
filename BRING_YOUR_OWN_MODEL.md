@@ -87,7 +87,7 @@ This is a **file-delivery integration**, not a validated field service, automati
 - **Confused benchmark attribution:** The public utility is **not** the frozen private product writer. No publicly reproducible Jetson model benchmark is claimed.
 - **Publishing restricted imagery/data:** Follow dataset licenses, sensitive-feature restrictions, model-weight rights and applicable institutional agreements.
 
-See [architecture](ARCHITECTURE.md), [verification evidence](VALIDATION.md), [performance protocol](BENCHMARK.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
+See [architecture](ARCHITECTURE.md), [verification evidence](archive/history/VALIDATION.md), [performance protocol](archive/history/BENCHMARK.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ---
 

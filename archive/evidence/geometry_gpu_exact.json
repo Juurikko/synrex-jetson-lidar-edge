@@ -1,0 +1,46 @@
+{
+  "schema": "synrex.geometry_gpu_exact.v1",
+  "status": "PASS",
+  "comparisons": [
+    {
+      "mode": "direct",
+      "model": "synthetic",
+      "status": "PASS",
+      "events": 11,
+      "trace_files": 684,
+      "trace_bytes": 1313280,
+      "reference_receipt_sha256": "bc5f49e5c77be34648e234de1e31d122285c95287c66b30ab0aa8ed19895ff2c",
+      "variant_receipt_sha256": "e7c9269ff315349041552f21e14412bf257ba622013f67beb9adf27410de72fb"
+    },
+    {
+      "mode": "direct",
+      "model": "unet",
+      "status": "PASS",
+      "events": 13,
+      "trace_files": 158,
+      "trace_bytes": 56950784,
+      "reference_receipt_sha256": "b10ff7b45b21bc32bc7079d3e6f45f5a048ad1b99979286600291df67c639a43",
+      "variant_receipt_sha256": "e1f3b8c0760faeac102f9f3e6511ba8b9b9c190f6e532b645e615b11b7b4308d"
+    },
+    {
+      "mode": "flat",
+      "model": "synthetic",
+      "status": "PASS",
+      "events": 11,
+      "trace_files": 684,
+      "trace_bytes": 1313280,
+      "reference_receipt_sha256": "bc5f49e5c77be34648e234de1e31d122285c95287c66b30ab0aa8ed19895ff2c",
+      "variant_receipt_sha256": "14e50d5156e596cf6a5d8a93109ad6beb32110f794904cc4e68b003fd1571b08"
+    },
+    {
+      "mode": "flat",
+      "model": "unet",
+      "status": "PASS",
+      "events": 13,
+      "trace_files": 158,
+      "trace_bytes": 56950784,
+      "reference_receipt_sha256": "b10ff7b45b21bc32bc7079d3e6f45f5a048ad1b99979286600291df67c639a43",
+      "variant_receipt_sha256": "c225a57e881ad353eace68224723f08fb652f8f114269bfd8d21fc7ae8358281"
+    }
+  ]
+}

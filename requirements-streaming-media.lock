@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Tuomas Pietilä
+numpy==2.5.4
+laspy==2.7.0
+lazrs==0.8.2
+Pillow==11.3.0
+pyproj==3.7.2
+certifi==2026.10.23
+imageio-ffmpeg==0.6.0

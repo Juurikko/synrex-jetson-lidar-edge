@@ -1,0 +1,41 @@
+{
+  "schema": "synrex.streaming_r1.r4_gpu_preservation.v1",
+  "status": "PASS",
+  "qualified_native_source_commit": "f39fa29",
+  "selected_physical_tests": 5,
+  "deselected_cpu_or_other_tests": 31,
+  "wall_seconds": 46.06,
+  "gpu_preflight": {
+    "sample": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.91
+    },
+    "windows_desktop_processes": [
+      "ShellExperienceHost.exe",
+      "dwm",
+      "explorer.exe",
+      "ChatGPT.exe",
+      "SystemSettings.exe",
+      "ShellHost.exe",
+      "SearchHost.exe",
+      "TextInputHost.exe"
+    ],
+    "reported_linux_compute_processes": 0
+  },
+  "pytest_log_sha256": "a19c44d85ebaa7daf0aeda1369eaf84fa7e750d7d6e2a508d2cbf932d950d187",
+  "command": [
+    "SYNREX_RUN_GPU=1",
+    "SYNREX_TEST_NATIVE=<qualified_native>",
+    "<existing_venv_python>",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_byom.py",
+    "-k",
+    "real_cuda_tensorrt_to_classified_laz or semantic_sidecar_retains_channels"
+  ],
+  "frozen_models_modified": false
+}

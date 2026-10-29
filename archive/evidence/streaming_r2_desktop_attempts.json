@@ -1,0 +1,16 @@
+{
+  "schema": "synrex.streaming_r2.desktop_attempts.v1",
+  "status": "FAIL",
+  "attempts": [
+    {
+      "status": "FAIL",
+      "reason": "Isolated QGIS startup did not reach code worker in bounded wait; UNC profile path. Only owned process stopped; inputs unchanged."
+    },
+    {
+      "status": "FAIL",
+      "reason": "QGIS desktop startup did not reach worker in bounded wait; no main window. Only isolated owned process stopped."
+    }
+  ],
+  "independent_qgis_map_export": "PASS; streaming_r2_qgis_render.json",
+  "scope": "Only owned isolated startup processes stopped. No new desktop or QGIS 3D qualification claimed."
+}

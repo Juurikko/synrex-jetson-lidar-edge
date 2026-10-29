@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "renderer_sha256": "64a1dd6f2a2e4dfe96c433fd8b9c61e99fae9894faf20db9b05304dd25e77b34",
+  "camera_proof_sha256": "b4d8670bd786f3a27ce06f7e259e1fcace9da997bfe1025769964a029aeff4e0",
+  "ending_proof_sha256": "65f6b26c1726ac3f17ef02b6b900d9a89351569b9021fb54bfb7cf3c3ad48d36",
+  "inspected": [
+    "proof-contact-sheet.jpg",
+    "decoded-proof-contact-sheet.jpg"
+  ],
+  "decoded_camera_seconds": [
+    0,
+    0.5,
+    1,
+    1.9
+  ],
+  "decoded_ending_seconds": [
+    0,
+    1,
+    2,
+    3.9
+  ],
+  "pitch_range": [
+    36.00395313919704,
+    39.133252749107676
+  ],
+  "findings": "Decoded moving opening and hero reveal rooftop planes, building walls, ground and courtyard depth together. Oblique cameras remain 30–45 degrees down. Parallax on actual source points is independently projected. Ending contains only authentic classified point geometry and typography. Map crop revised after initial proof to occupy the stage; final proof stills show canopy and ground without cube walls.",
+  "limitations": "Agent visual judgement on decoded frames/contact sheets and exact projection metadata, not human owner approval or display-device playback. Map overlays annotate bounded cell centres on real source predictions, not a detailed map reconstruction.",
+  "additional_inspected": [
+    "proof-13.png",
+    "proof-16.png"
+  ],
+  "revision": "Full decoded initial film review found crane/subtitle overlap at 13–17s. Focal changed from 850 to 720px; corrected proof inspected before full rerender. No camera angle or geometry/predictions changed. Refreshed camera and ending proof decodes inspected."
+}

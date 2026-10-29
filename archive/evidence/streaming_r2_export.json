@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+  "points": 400654,
+  "classification_records_changed": 315645,
+  "point_order_and_nonclassification_bytes_exact": true,
+  "public_header_non_laszip_vlrs_and_padding_exact": true,
+  "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+  "output_sha256": "29577846f3a4e18079d64da11ca635cd3b7aeec135098caaa23b9bdc561a7e59",
+  "canonical_nonclassification_sha256": "e32b3d838dd783cc373fbc36db0f6b024afcb2757c82813bec0275f9dd3f6436",
+  "classification_sha256": "8255245241797add58e486e88f970cf63d64180ab31cde296f83188520f2fc4f",
+  "semantic_schema": "synrex.point_semantics.v1",
+  "semantic_sidecar_sha256": "3dfbc4c5ca4ad002c7aaee5e7aea3ac77945c410a309295ae6aaa98b0b9f0157",
+  "semantic_model_binding": true,
+  "full_model_channel_ids_preserved": true,
+  "scope": "Fresh native asynchronous subscriber export; independent laz-rs preservation and semantic binding validation; short correctness trial, not sustained throughput."
+}

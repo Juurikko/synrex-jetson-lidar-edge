@@ -1,0 +1,3751 @@
+{
+  "schema": "synrex.streaming_r1.campaign.v1",
+  "trials": [
+    {
+      "schema": "synrex.streaming_r1.transport_trial.v1",
+      "status": "PASS",
+      "source_commit": "f39fa29",
+      "rate": 1000000,
+      "seconds": 60,
+      "warmup_seconds": 5,
+      "cells": 65536,
+      "churn_mm": 0,
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 3.93
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 34.93,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 339677184,
+            "subscribe": 238051328,
+            "send": 207278080
+          },
+          "combined_rss_bytes": 785006592,
+          "wall_seconds": 1.5635829670354724
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 52.0,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 358248448,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 817164288,
+          "wall_seconds": 1.9598416271619499
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.29,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360210432,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819126272,
+          "wall_seconds": 2.3529826540034264
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.12,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360210432,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819126272,
+          "wall_seconds": 2.7459226481150836
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.78,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360251392,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819167232,
+          "wall_seconds": 3.1389584080316126
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.5,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360259584,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819175424,
+          "wall_seconds": 3.5341623569838703
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.34,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360263680,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819179520,
+          "wall_seconds": 3.926613938063383
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.97,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360271872,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819187712,
+          "wall_seconds": 4.320408202940598
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.87,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360280064,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819195904,
+          "wall_seconds": 4.708504453068599
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.87,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819200000,
+          "wall_seconds": 5.099186341045424
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.92,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 243167232,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 822493184,
+          "wall_seconds": 5.487449794076383
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.96,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819200000,
+          "wall_seconds": 5.877234616084024
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.02,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 240115712,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819441664,
+          "wall_seconds": 6.270664276089519
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.08,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819200000,
+          "wall_seconds": 6.663233189145103
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.18,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 239874048,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 819200000,
+          "wall_seconds": 7.057146175066009
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 5,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.52,
+          "sm_clock_mhz": 735,
+          "memory_clock_mhz": 810,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 258650112,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 837976064,
+          "wall_seconds": 7.497995879035443
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 40.47,
+          "sm_clock_mhz": 735,
+          "memory_clock_mhz": 810,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856518656,
+          "wall_seconds": 7.905539927072823
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 24.29,
+          "sm_clock_mhz": 645,
+          "memory_clock_mhz": 810,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856518656,
+          "wall_seconds": 8.322995867114514
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 14.37,
+          "sm_clock_mhz": 510,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856518656,
+          "wall_seconds": 8.723738797008991
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 11.48,
+          "sm_clock_mhz": 435,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856518656,
+          "wall_seconds": 9.120888612000272
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.29,
+          "sm_clock_mhz": 360,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360284160,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856518656,
+          "wall_seconds": 9.514069729950279
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.25,
+          "sm_clock_mhz": 360,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360288256,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856522752,
+          "wall_seconds": 9.906180503079668
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.18,
+          "sm_clock_mhz": 315,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360292352,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856526848,
+          "wall_seconds": 10.304098075954244
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.1,
+          "sm_clock_mhz": 270,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360292352,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856526848,
+          "wall_seconds": 10.70670743403025
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.14,
+          "sm_clock_mhz": 255,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360296448,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856530944,
+          "wall_seconds": 11.10339144594036
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.05,
+          "sm_clock_mhz": 225,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360296448,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856530944,
+          "wall_seconds": 11.494071362074465
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.07,
+          "sm_clock_mhz": 225,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360296448,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856530944,
+          "wall_seconds": 11.887999725993723
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.06,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360300544,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856535040,
+          "wall_seconds": 12.283371241064742
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360300544,
+            "subscribe": 277192704,
+            "send": 217833472
+          },
+          "combined_rss_bytes": 855326720,
+          "wall_seconds": 12.683116663014516
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360300544,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856535040,
+          "wall_seconds": 13.081961712101474
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.07,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360304640,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856539136,
+          "wall_seconds": 13.482268298976123
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360304640,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856539136,
+          "wall_seconds": 13.89116242295131
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.94,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360304640,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856539136,
+          "wall_seconds": 14.289866253035143
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.92,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360308736,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856543232,
+          "wall_seconds": 14.686984728090465
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.84,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360308736,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856543232,
+          "wall_seconds": 15.08334976201877
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.8,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360308736,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856543232,
+          "wall_seconds": 15.476866137934849
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360312832,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856547328,
+          "wall_seconds": 15.88287818711251
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360312832,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856547328,
+          "wall_seconds": 16.278704853961244
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360312832,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856547328,
+          "wall_seconds": 16.675366074079648
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.06,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 17.072419069940224
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 217473024
+          },
+          "combined_rss_bytes": 854982656,
+          "wall_seconds": 17.466541602974758
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.05,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 17.854723602999
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 18.257444583112374
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 18.655843493994325
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.1,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 19.053257643943653
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 19.44363600295037
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.06,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 19.838583664037287
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 20.231361076934263
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 20.63372527807951
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.08,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 21.02985051413998
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 21.427716612117365
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 21.82279256801121
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.9,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 22.21389588410966
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.96,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360316928,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856551424,
+          "wall_seconds": 22.609213531017303
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217473024
+          },
+          "combined_rss_bytes": 854986752,
+          "wall_seconds": 23.004138038959354
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 23.39588677114807
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 23.796215374022722
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.87,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 24.192041071131825
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.97,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 24.58816703595221
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.84,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 24.985924346139655
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.87,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 25.38244483899325
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.85,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 25.779299488058314
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.92,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 26.175644092960283
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 26.57839255593717
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 26.975260130129755
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 27.36872833711095
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 27.762912098085508
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 28.16098380694166
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.06,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 28.561015918152407
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 28.96158532309346
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 29.35406255093403
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 29.743333401158452
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.9,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 30.13627560902387
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 30.53500899905339
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 30.92780645005405
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.04,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 31.322909177979454
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 31.717234096024185
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 32.11074717110023
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 14,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 32.50516538415104
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.87,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 32.90307561215013
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 14,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 33.29996214504354
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 33.69653790304437
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.03,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 34.09209252614528
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 34.486032960005105
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.94,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 34.877190514001995
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 35.27404279005714
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 35.66614822810516
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 36.05495726899244
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 36.45099553512409
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.89,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 36.84555999096483
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.82,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 37.244080051081255
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217223168
+          },
+          "combined_rss_bytes": 854736896,
+          "wall_seconds": 37.63458812399767
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 38.02146723214537
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.1,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 38.415415299125016
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.99,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 38.812410356942564
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 39.20600525010377
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.96,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 39.599802318029106
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217616384
+          },
+          "combined_rss_bytes": 855130112,
+          "wall_seconds": 39.994694004999474
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.04,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 40.39357293397188
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.86,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 40.787091525038704
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.9,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 41.18130746111274
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 41.58063450595364
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.86,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 41.973763917107135
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.82,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218091520
+          },
+          "combined_rss_bytes": 855605248,
+          "wall_seconds": 42.37065459205769
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217473024
+          },
+          "combined_rss_bytes": 854986752,
+          "wall_seconds": 42.7633611401543
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.81,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 43.16394962114282
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 43.56864327611402
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.82,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 43.966745777986944
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.83,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 44.36304067308083
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.84,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 44.75875103799626
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.79,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 45.15732705895789
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.8,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 45.553949784021825
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.77,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218406912
+          },
+          "combined_rss_bytes": 855920640,
+          "wall_seconds": 45.95922549813986
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 46.39013212104328
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 46.78751420695335
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 47.18977246596478
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.03,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 47.58635706198402
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.04,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 47.99122484703548
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 48.3888765189331
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.94,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 48.78288428997621
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 49.17816639714874
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 49.57108113216236
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.14,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 49.96902603004128
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217305088
+          },
+          "combined_rss_bytes": 854818816,
+          "wall_seconds": 50.36487993202172
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 50.76506095100194
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.08,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 51.165011695120484
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.13,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217473024
+          },
+          "combined_rss_bytes": 854986752,
+          "wall_seconds": 51.56137723196298
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.1,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 51.961736568948254
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 52.35913766711019
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 52.75673751300201
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 53.1577649731189
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.84,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 53.555126381106675
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.77,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 53.95560635603033
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.8,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 54.3491962919943
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.88,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 54.746819003950804
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.9,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 55.14176497794688
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.91,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 55.541434539016336
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.89,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 55.93461032700725
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 56.33165244804695
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.97,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 56.71892871404998
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.03,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 57.11820062599145
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.93,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218189824
+          },
+          "combined_rss_bytes": 855703552,
+          "wall_seconds": 57.50990313314833
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.92,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 57.91206213901751
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 58.30750606395304
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.0,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 58.70766253909096
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.08,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 59.10337669402361
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.05,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 59.50541410106234
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.98,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218435584
+          },
+          "combined_rss_bytes": 855949312,
+          "wall_seconds": 59.90207345597446
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 60.29121563513763
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.01,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218075136
+          },
+          "combined_rss_bytes": 855588864,
+          "wall_seconds": 60.688481624936685
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.13,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 61.07568152504973
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.12,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 61.46974311606027
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.09,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217419776
+          },
+          "combined_rss_bytes": 854933504,
+          "wall_seconds": 61.86661906703375
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.04,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 217833472
+          },
+          "combined_rss_bytes": 855347200,
+          "wall_seconds": 62.26082465099171
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 10,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.92,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 62.65101478807628
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.95,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 63.042948929127306
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 11,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 8.96,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 63.43510124110617
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 63.82895615696907
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 14,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.12,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 64.22288221493363
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.02,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 64.61876037693582
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.07,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 65.01920763100497
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.04,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 65.41662680311128
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.19,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 219041792
+          },
+          "combined_rss_bytes": 856555520,
+          "wall_seconds": 65.81106740003452
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.23,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 218259456
+          },
+          "combined_rss_bytes": 855773184,
+          "wall_seconds": 66.20969094894826
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 12,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.16,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 360321024,
+            "subscribe": 277192704,
+            "send": 216936448
+          },
+          "combined_rss_bytes": 854450176,
+          "wall_seconds": 66.60133684496395
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 13,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 9.05,
+          "sm_clock_mhz": 210,
+          "memory_clock_mhz": 405,
+          "process_rss_bytes": {
+            "receive": 0,
+            "subscribe": 0,
+            "send": 0
+          },
+          "combined_rss_bytes": 0,
+          "wall_seconds": 67.46325663593598
+        }
+      ],
+      "hardware_stop": null,
+      "controller_error": null,
+      "requested_cancel_seconds": 0,
+      "native": {
+        "receive": {
+          "cpu_transport_validation_seconds": 1.4494748450000001,
+          "cpu_wire_decode_seconds": 4.147616041000006,
+          "error": "",
+          "failure_phase": "none",
+          "fresh_execution_count_match": true,
+          "freshly_classified_measured_points": 60014592,
+          "freshly_classified_points_per_second": 999786.0357710589,
+          "inference": {
+            "count": 3663,
+            "maximum_seconds": 0.007412515,
+            "mean_seconds": 0.0042397148102648104,
+            "p50_seconds_upper_bound": 0.004063232,
+            "p95_seconds_upper_bound": 0.005767168,
+            "p99_seconds_upper_bound": 0.006422528,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "initialization_seconds": 0.920894369,
+          "input_queue_wait": {
+            "count": 3663,
+            "maximum_seconds": 0.00012721,
+            "mean_seconds": 4.320485694785695e-05,
+            "p50_seconds_upper_bound": 4.096e-05,
+            "p95_seconds_upper_bound": 6.0416e-05,
+            "p99_seconds_upper_bound": 6.7584e-05,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "input_sha256": "96a13fb4f829ece904d51462ace6a5f4f525476cf42b1db94767998d572c88a0",
+          "map": {
+            "delta_events": 65028096,
+            "eviction_scanned_cells": 0,
+            "existing_updates": 65003638,
+            "insertions": 24458,
+            "late_rejections": 0,
+            "observations": 65028096,
+            "peak_cells": 24458,
+            "removals": 0
+          },
+          "map_profile": {
+            "active_cells": 24458,
+            "cell_payload_bytes": 64,
+            "detailed_timers_enabled": false,
+            "effective_policy": "indexed",
+            "expiration_enabled": false,
+            "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+            "index_entries": 24458,
+            "intrusive_index_bytes_per_cell": 40,
+            "node_allocator_overhead_included": false,
+            "ordered_key_bytes": 24,
+            "requested_policy": "indexed",
+            "revision_overflow_fallback": false,
+            "stage_seconds": {
+              "coordinate_key": 0.0,
+              "delta_construction": 0.0,
+              "existing_update": 0.0,
+              "expiration": 0.0,
+              "full_snapshot": 0.0,
+              "index_maintenance": 0.0,
+              "insertion": 0.0,
+              "lookup": 0.0,
+              "removal": 0.0,
+              "victim_selection": 0.0
+            },
+            "validation_seconds": 1.3640502740000038
+          },
+          "map_seconds": 8.364457323000007,
+          "map_snapshot_sha256": "f261cce08850b66cf0a347023f1bcd2c65973b2f298fad27e83e9cf7be210de0",
+          "map_updates": 65028096,
+          "map_updates_per_second": 999786.0357710589,
+          "measured_map_operations": {
+            "delta_events": 60014592,
+            "eviction_scanned_cells": 0,
+            "existing_updates": 60014592,
+            "insertions": 0,
+            "late_rejections": 0,
+            "observations": 60014592,
+            "peak_cells": 24458,
+            "removals": 0
+          },
+          "measured_map_updates": 60014592,
+          "measured_rss_range_bytes": 36864,
+          "measured_seconds": 60.027435724,
+          "measured_stage_seconds": {
+            "acceptance_to_inference_complete_seconds": 23.772069776000016,
+            "cpu_geometry_seconds": 2.1720241360000077,
+            "cpu_point_conversion_seconds": 0.756084156999999,
+            "cuda_preparation_seconds": 0.43579324844386486,
+            "cuda_scatter_seconds": 0.1933920007748521,
+            "d2h_seconds": 0.8945011204183124,
+            "geometry_assignment_seconds": 1.5958096949999943,
+            "geometry_grouping_seconds": 0.23790729500000016,
+            "geometry_member_sort_seconds": 0.18387982000000033,
+            "geometry_minimum_seconds": 0.15209156500000018,
+            "geometry_record_sort_seconds": 0.0,
+            "h2d_and_zero_seconds": 3.091793566865381,
+            "input_queue_wait_seconds": 0.15825945600000002,
+            "output_queue_wait_seconds": 0.11010900000000005,
+            "tensorrt_seconds": 5.026335629418473,
+            "window_seconds": 15.530075495000029
+          },
+          "mode": "receive",
+          "model_executions": 17881,
+          "output_delivery": {
+            "complete_point_records_sent": 65028096,
+            "delivered_messages": 3971,
+            "error": "",
+            "failed_messages": 0,
+            "failed_point_deliveries": 0,
+            "queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 0
+            }
+          },
+          "output_encoding_seconds": 6.584092660999989,
+          "output_points": 65028096,
+          "output_sha256": "79e75b4ca960d6bb08c99245d9e317990c10eefc88c991cdca527fa161e1af38",
+          "peak_rss_bytes": 400576512,
+          "receive_to_publication": {
+            "count": 60014592,
+            "maximum_seconds": 0.015837742,
+            "mean_seconds": 0.01113194166994267,
+            "p50_seconds_upper_bound": 0.011010048,
+            "p95_seconds_upper_bound": 0.012845056,
+            "p99_seconds_upper_bound": 0.013631488,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "received_frames": 3969,
+          "received_points": 65028096,
+          "receiver_time_definition": "first successful envelope recv syscall; includes payload receive/decode; not physical packet/sensor arrival",
+          "reconnects": 0,
+          "resources_after_service_before_destruction": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 5250235,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "schema": "synrex.streaming_r1.live.v1",
+          "service": {
+            "cancelled": false,
+            "completed_windows": 3969,
+            "dropped_points": 0,
+            "emitted_points": 65028096,
+            "freshly_classified_points": 65028096,
+            "geometry_only_ingested_points": 0,
+            "inferred_classes_reused_points": 0,
+            "input_queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 0
+            },
+            "output_queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 0
+            },
+            "rejected_frames": 0,
+            "session": {
+              "artifacts": {
+                "engine": {
+                  "path": "model.engine",
+                  "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+                },
+                "license": {
+                  "path": "MODEL_LICENSE.txt",
+                  "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+                }
+              },
+              "backend": "CUDA/TensorRT",
+              "classified_source_points": 65028096,
+              "completed_windows": 3969,
+              "contract": {
+                "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+                "features": [
+                  {
+                    "kind": "occupancy",
+                    "offset": 0.0,
+                    "scale": 1.0
+                  },
+                  {
+                    "kind": "count",
+                    "offset": 0.0,
+                    "scale": 0.0625
+                  },
+                  {
+                    "kind": "local_z",
+                    "offset": 0.0,
+                    "scale": 0.03125
+                  },
+                  {
+                    "kind": "mean_intensity",
+                    "offset": 0.0,
+                    "scale": 1.5259021896696422e-05
+                  }
+                ],
+                "geometry": {
+                  "block_size_xyz": [
+                    32.0,
+                    32.0,
+                    32.0
+                  ],
+                  "dimensions_xyz": [
+                    32,
+                    32,
+                    32
+                  ],
+                  "overlap_policy": "first_wins",
+                  "overlap_xyz": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "voxel_size_xyz": [
+                    1.0,
+                    1.0,
+                    1.0
+                  ]
+                },
+                "input": {
+                  "dtype": "float16",
+                  "layout": "NCZYX",
+                  "name": "features",
+                  "shape": [
+                    1,
+                    4,
+                    32,
+                    32,
+                    32
+                  ]
+                },
+                "las_classes": [
+                  1,
+                  2,
+                  200,
+                  6,
+                  9,
+                  17,
+                  201
+                ],
+                "licensing": {
+                  "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+                  "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+                  "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+                  "spdx": "MIT",
+                  "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+                },
+                "limits": {
+                  "max_blocks": 10000,
+                  "max_memberships": 4000000,
+                  "max_points": 1000000,
+                  "max_tensor_bytes": 16777216
+                },
+                "output": {
+                  "dtype": "float16",
+                  "layout": "NCZYX",
+                  "name": "scores",
+                  "shape": [
+                    1,
+                    7,
+                    32,
+                    32,
+                    32
+                  ]
+                }
+              },
+              "cuda_streams": 1,
+              "engine_deserializations": 1,
+              "execution_contexts": 1,
+              "geometry_mode": "radix",
+              "initialization_seconds": 0.920874249,
+              "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+              "max_window_points": 16384,
+              "package_verifications": 1,
+              "pinned_host_bytes": 0,
+              "pinned_staging": false,
+              "schema": "synrex.persistent_session.v1",
+              "successful_enqueue_calls": 17881,
+              "target": {
+                "architecture": "x86_64",
+                "cuda_runtime": 13020,
+                "gpu_name": "NVIDIA GeForce RTX 4090",
+                "sm": 89,
+                "tensorrt": "101601"
+              },
+              "tracked_peak_requested_cuda_bytes": 5250235
+            },
+            "status": "PASS",
+            "submitted_points": 65028096
+          },
+          "socket_receive_wall_seconds": 59.451690679999956,
+          "source_to_publication": {
+            "count": 60014592,
+            "maximum_seconds": 0.032682367,
+            "mean_seconds": 0.02804048411056511,
+            "p50_seconds_upper_bound": 0.028311552,
+            "p95_seconds_upper_bound": 0.029884416,
+            "p99_seconds_upper_bound": 0.030932992,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "status": "PASS",
+          "stop_reason": "",
+          "timeline_first_windows": [
+            {
+              "acceptance_to_inference_complete_seconds": 0.008821112,
+              "completed_inference_blocks": 3,
+              "cpu_geometry_seconds": 0.000715351,
+              "cpu_point_conversion_seconds": 0.00032691,
+              "cuda_preparation_seconds": 0.0015665919799357651,
+              "cuda_scatter_seconds": 1.9103999715298415e-05,
+              "d2h_seconds": 0.000211776003241539,
+              "freshly_classified_points": 16384,
+              "geometry_assignment_seconds": 0.00044501,
+              "geometry_boundary_fallback_points": 0,
+              "geometry_direct_points": 16384,
+              "geometry_grouping_seconds": 0.000148491,
+              "geometry_member_sort_seconds": 8.201e-05,
+              "geometry_minimum_seconds": 3.793e-05,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 0.0006160640059970319,
+              "inference_complete_steady_ns": 1145388860534412,
+              "input_queue_wait_seconds": 6.4023e-05,
+              "occupied_voxels": 5056,
+              "output_queue_wait_seconds": 5.3934e-05,
+              "tensorrt_seconds": 0.0007823359817266465,
+              "timeline_blocks": [
+                {
+                  "cuda_event_h2d_zero_seconds": 0.0004043520092964172,
+                  "cuda_event_preparation_seconds": 0.0015512319803237915,
+                  "cuda_event_scatter_seconds": 1.027199998497963e-05,
+                  "cuda_event_tensorrt_seconds": 0.00048025599122047426,
+                  "host_after_stream_sync_offset_seconds": 0.004356998,
+                  "host_submission_begin_offset_seconds": 0.001755278
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                  "cuda_event_preparation_seconds": 5.119999870657921e-06,
+                  "cuda_event_scatter_seconds": 4.383999854326248e-06,
+                  "cuda_event_tensorrt_seconds": 0.0001443839967250824,
+                  "host_after_stream_sync_offset_seconds": 0.004595238,
+                  "host_submission_begin_offset_seconds": 0.004359768
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 5.8111999183893203e-05,
+                  "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                  "cuda_event_scatter_seconds": 4.447999875992536e-06,
+                  "cuda_event_tensorrt_seconds": 0.0001576959937810898,
+                  "host_after_stream_sync_offset_seconds": 0.004869858,
+                  "host_submission_begin_offset_seconds": 0.004597158
+                }
+              ],
+              "window_seconds": 0.005335478,
+              "window_started_steady_ns": 1145388855192594
+            },
+            {
+              "acceptance_to_inference_complete_seconds": 0.006015984,
+              "completed_inference_blocks": 4,
+              "cpu_geometry_seconds": 0.00051209,
+              "cpu_point_conversion_seconds": 0.00016834,
+              "cuda_preparation_seconds": 3.2576000783592464e-05,
+              "cuda_scatter_seconds": 1.9680000375956297e-05,
+              "d2h_seconds": 0.0002311680018901825,
+              "freshly_classified_points": 16384,
+              "geometry_assignment_seconds": 0.00037731,
+              "geometry_boundary_fallback_points": 1,
+              "geometry_direct_points": 16383,
+              "geometry_grouping_seconds": 5.846e-05,
+              "geometry_member_sort_seconds": 4.055e-05,
+              "geometry_minimum_seconds": 3.523e-05,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 0.00043312000809237356,
+              "inference_complete_steady_ns": 1145388873568959,
+              "input_queue_wait_seconds": 2.7214e-05,
+              "occupied_voxels": 5471,
+              "output_queue_wait_seconds": 2.5817e-05,
+              "tensorrt_seconds": 0.0008712000101804734,
+              "timeline_blocks": [
+                {
+                  "cuda_event_h2d_zero_seconds": 0.00021190400421619416,
+                  "cuda_event_preparation_seconds": 9.216000325977802e-06,
+                  "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                  "cuda_event_tensorrt_seconds": 0.00019046400487422944,
+                  "host_after_stream_sync_offset_seconds": 0.00144083,
+                  "host_submission_begin_offset_seconds": 0.00089353
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                  "cuda_event_preparation_seconds": 7.168000098317862e-06,
+                  "cuda_event_scatter_seconds": 5.088000092655421e-06,
+                  "cuda_event_tensorrt_seconds": 0.00024988800287246705,
+                  "host_after_stream_sync_offset_seconds": 0.00185454,
+                  "host_submission_begin_offset_seconds": 0.0014435
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 7.664000242948532e-05,
+                  "cuda_event_preparation_seconds": 1.0048000141978264e-05,
+                  "cuda_event_scatter_seconds": 4.736000206321478e-06,
+                  "cuda_event_tensorrt_seconds": 0.00022259199619293214,
+                  "host_after_stream_sync_offset_seconds": 0.00223468,
+                  "host_submission_begin_offset_seconds": 0.00185688
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 6.144000217318535e-06,
+                  "cuda_event_preparation_seconds": 6.144000217318535e-06,
+                  "cuda_event_scatter_seconds": 4.736000206321478e-06,
+                  "cuda_event_tensorrt_seconds": 0.00020825600624084473,
+                  "host_after_stream_sync_offset_seconds": 0.0025551,
+                  "host_submission_begin_offset_seconds": 0.00223687
+                }
+              ],
+              "window_seconds": 0.00303221,
+              "window_started_steady_ns": 1145388870529509
+            }
+          ],
+          "unaccepted_decoded_points": 0,
+          "warmup_frames": 306,
+          "wire_frame_messages": 3969,
+          "exit_code": 0,
+          "log_sha256": "99ca5ff651329fd4dc4d81df780cab225e2d24ed03d1611bd8abefdb37245dfd",
+          "command": [
+            "<native>",
+            "receive",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "60",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "0",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--geometry",
+            "radix"
+          ]
+        },
+        "subscribe": {
+          "async_laz_export": {
+            "bindings": {
+              "coordinate_frame": "replay_world",
+              "crs": "LOCAL:replay_world",
+              "las_classes": [
+                1,
+                2,
+                200,
+                6,
+                9,
+                17,
+                201
+              ],
+              "model_manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+              "sensor_id": "replay",
+              "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+              "stream_id": "r1",
+              "taxonomy": "synrex.fractal7.v1",
+              "taxonomy_sha256": "464ad0232773d5f285624fd142dfbcb24c72f3b8972b15523c35e9ad006ec98f"
+            },
+            "changed_las_classifications": 316323,
+            "copc": "NOT_RUN: optional verified offline QGIS export",
+            "coverage": 1.0,
+            "files": {
+              "classified.laz": "caa02d82f96db8e556f88e57d35c8ab4a684eae2b253bef24130c23d62afb393",
+              "labels.u8": "fe20885e576ff61b0bc1e69fa16af6971f76ab6bdf68a251aaa766d528dcaced",
+              "provenance.json": "7c5ce30ed5784c94b3e69cd526d3e99991476275e904890ca4bbee28e6883362",
+              "semantics.json": "c16264729a368eeb31f3bed81384f1dfd3469e77904b6e1727553b559ef3ae07"
+            },
+            "points": 400654,
+            "schema": "synrex.streaming_export_bundle.v1",
+            "status": "PASS"
+          },
+          "coverage": 1.0,
+          "cpu_stage_seconds": {
+            "canonical_output_hash_and_export_observe": 3.3236351300000084,
+            "decode_and_sequence": 8.065725746000009,
+            "expected_source_and_class_validation": 6.211549558999996,
+            "independent_map_oracle": 3.474367773999996
+          },
+          "frames": 3969,
+          "input_sha256": "96a13fb4f829ece904d51462ace6a5f4f525476cf42b1db94767998d572c88a0",
+          "map_oracle": "PASS",
+          "map_updates": 65028096,
+          "mode": "subscribe",
+          "model_executions": 17881,
+          "output_sha256": "79e75b4ca960d6bb08c99245d9e317990c10eefc88c991cdca527fa161e1af38",
+          "peak_rss_bytes": 327606272,
+          "points": 65028096,
+          "receive_to_subscriber": {
+            "count": 60014592,
+            "maximum_seconds": 0.024958608,
+            "mean_seconds": 0.01873815676221676,
+            "p50_seconds_upper_bound": 0.018874368,
+            "p95_seconds_upper_bound": 0.02097152,
+            "p99_seconds_upper_bound": 0.022544384,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "receiver": {
+            "cpu_transport_validation_seconds": 1.4494748450000001,
+            "cpu_wire_decode_seconds": 4.147616041000006,
+            "error": "",
+            "fresh_execution_count_match": true,
+            "freshly_classified_measured_points": 60014592,
+            "freshly_classified_points_per_second": 999786.0357710589,
+            "inference": {
+              "count": 3663,
+              "maximum_seconds": 0.007412515,
+              "mean_seconds": 0.0042397148102648104,
+              "p50_seconds_upper_bound": 0.004063232,
+              "p95_seconds_upper_bound": 0.005767168,
+              "p99_seconds_upper_bound": 0.006422528,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "initialization_seconds": 0.920894369,
+            "input_queue_wait": {
+              "count": 3663,
+              "maximum_seconds": 0.00012721,
+              "mean_seconds": 4.320485694785695e-05,
+              "p50_seconds_upper_bound": 4.096e-05,
+              "p95_seconds_upper_bound": 6.0416e-05,
+              "p99_seconds_upper_bound": 6.7584e-05,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "input_sha256": "96a13fb4f829ece904d51462ace6a5f4f525476cf42b1db94767998d572c88a0",
+            "map": {
+              "delta_events": 65028096,
+              "eviction_scanned_cells": 0,
+              "existing_updates": 65003638,
+              "insertions": 24458,
+              "late_rejections": 0,
+              "observations": 65028096,
+              "peak_cells": 24458,
+              "removals": 0
+            },
+            "map_profile": {
+              "active_cells": 24458,
+              "cell_payload_bytes": 64,
+              "detailed_timers_enabled": false,
+              "effective_policy": "indexed",
+              "expiration_enabled": false,
+              "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+              "index_entries": 24458,
+              "intrusive_index_bytes_per_cell": 40,
+              "node_allocator_overhead_included": false,
+              "ordered_key_bytes": 24,
+              "requested_policy": "indexed",
+              "revision_overflow_fallback": false,
+              "stage_seconds": {
+                "coordinate_key": 0.0,
+                "delta_construction": 0.0,
+                "existing_update": 0.0,
+                "expiration": 0.0,
+                "full_snapshot": 0.0,
+                "index_maintenance": 0.0,
+                "insertion": 0.0,
+                "lookup": 0.0,
+                "removal": 0.0,
+                "victim_selection": 0.0
+              },
+              "validation_seconds": 1.3640502740000038
+            },
+            "map_seconds": 8.364457323000007,
+            "map_snapshot_sha256": "f261cce08850b66cf0a347023f1bcd2c65973b2f298fad27e83e9cf7be210de0",
+            "map_updates": 65028096,
+            "map_updates_per_second": 999786.0357710589,
+            "measured_map_operations": {
+              "delta_events": 60014592,
+              "eviction_scanned_cells": 0,
+              "existing_updates": 60014592,
+              "insertions": 0,
+              "late_rejections": 0,
+              "observations": 60014592,
+              "peak_cells": 24458,
+              "removals": 0
+            },
+            "measured_map_updates": 60014592,
+            "measured_rss_range_bytes": 36864,
+            "measured_seconds": 60.027435724,
+            "measured_stage_seconds": {
+              "acceptance_to_inference_complete_seconds": 23.772069776000016,
+              "cpu_geometry_seconds": 2.1720241360000077,
+              "cpu_point_conversion_seconds": 0.756084156999999,
+              "cuda_preparation_seconds": 0.43579324844386486,
+              "cuda_scatter_seconds": 0.1933920007748521,
+              "d2h_seconds": 0.8945011204183124,
+              "geometry_assignment_seconds": 1.5958096949999943,
+              "geometry_grouping_seconds": 0.23790729500000016,
+              "geometry_member_sort_seconds": 0.18387982000000033,
+              "geometry_minimum_seconds": 0.15209156500000018,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 3.091793566865381,
+              "input_queue_wait_seconds": 0.15825945600000002,
+              "output_queue_wait_seconds": 0.11010900000000005,
+              "tensorrt_seconds": 5.026335629418473,
+              "window_seconds": 15.530075495000029
+            },
+            "mode": "receive",
+            "model_executions": 17881,
+            "output_encoding_seconds": 6.584092660999989,
+            "output_points": 65028096,
+            "output_sha256": "79e75b4ca960d6bb08c99245d9e317990c10eefc88c991cdca527fa161e1af38",
+            "peak_rss_bytes": 359813120,
+            "receive_to_publication": {
+              "count": 60014592,
+              "maximum_seconds": 0.015837742,
+              "mean_seconds": 0.01113194166994267,
+              "p50_seconds_upper_bound": 0.011010048,
+              "p95_seconds_upper_bound": 0.012845056,
+              "p99_seconds_upper_bound": 0.013631488,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "received_frames": 3969,
+            "received_points": 65028096,
+            "receiver_time_definition": "first successful envelope recv syscall; includes payload receive/decode; not physical packet/sensor arrival",
+            "reconnects": 0,
+            "schema": "synrex.streaming_r1.live.v1",
+            "service": {
+              "cancelled": false,
+              "completed_windows": 3969,
+              "dropped_points": 0,
+              "emitted_points": 65028096,
+              "freshly_classified_points": 65028096,
+              "geometry_only_ingested_points": 0,
+              "inferred_classes_reused_points": 0,
+              "input_queue": {
+                "capacity_frames": 2,
+                "depth_frames": 0,
+                "high_water_frames": 1,
+                "oldest_queue_wait_seconds": 0.0,
+                "producer_waits": 0,
+                "rejected_pushes": 0
+              },
+              "output_queue": {
+                "capacity_frames": 2,
+                "depth_frames": 0,
+                "high_water_frames": 1,
+                "oldest_queue_wait_seconds": 0.0,
+                "producer_waits": 0,
+                "rejected_pushes": 0
+              },
+              "rejected_frames": 0,
+              "session": {
+                "artifacts": {
+                  "engine": {
+                    "path": "model.engine",
+                    "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+                  },
+                  "license": {
+                    "path": "MODEL_LICENSE.txt",
+                    "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+                  }
+                },
+                "backend": "CUDA/TensorRT",
+                "classified_source_points": 65028096,
+                "completed_windows": 3969,
+                "contract": {
+                  "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+                  "features": [
+                    {
+                      "kind": "occupancy",
+                      "offset": 0.0,
+                      "scale": 1.0
+                    },
+                    {
+                      "kind": "count",
+                      "offset": 0.0,
+                      "scale": 0.0625
+                    },
+                    {
+                      "kind": "local_z",
+                      "offset": 0.0,
+                      "scale": 0.03125
+                    },
+                    {
+                      "kind": "mean_intensity",
+                      "offset": 0.0,
+                      "scale": 1.5259021896696422e-05
+                    }
+                  ],
+                  "geometry": {
+                    "block_size_xyz": [
+                      32.0,
+                      32.0,
+                      32.0
+                    ],
+                    "dimensions_xyz": [
+                      32,
+                      32,
+                      32
+                    ],
+                    "overlap_policy": "first_wins",
+                    "overlap_xyz": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "voxel_size_xyz": [
+                      1.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "input": {
+                    "dtype": "float16",
+                    "layout": "NCZYX",
+                    "name": "features",
+                    "shape": [
+                      1,
+                      4,
+                      32,
+                      32,
+                      32
+                    ]
+                  },
+                  "las_classes": [
+                    1,
+                    2,
+                    200,
+                    6,
+                    9,
+                    17,
+                    201
+                  ],
+                  "licensing": {
+                    "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+                    "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+                    "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+                    "spdx": "MIT",
+                    "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+                  },
+                  "limits": {
+                    "max_blocks": 10000,
+                    "max_memberships": 4000000,
+                    "max_points": 1000000,
+                    "max_tensor_bytes": 16777216
+                  },
+                  "output": {
+                    "dtype": "float16",
+                    "layout": "NCZYX",
+                    "name": "scores",
+                    "shape": [
+                      1,
+                      7,
+                      32,
+                      32,
+                      32
+                    ]
+                  }
+                },
+                "cuda_streams": 1,
+                "engine_deserializations": 1,
+                "execution_contexts": 1,
+                "geometry_mode": "radix",
+                "initialization_seconds": 0.920874249,
+                "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+                "max_window_points": 16384,
+                "package_verifications": 1,
+                "pinned_host_bytes": 0,
+                "pinned_staging": false,
+                "schema": "synrex.persistent_session.v1",
+                "successful_enqueue_calls": 17881,
+                "target": {
+                  "architecture": "x86_64",
+                  "cuda_runtime": 13020,
+                  "gpu_name": "NVIDIA GeForce RTX 4090",
+                  "sm": 89,
+                  "tensorrt": "101601"
+                },
+                "tracked_peak_requested_cuda_bytes": 5250235
+              },
+              "status": "PASS",
+              "submitted_points": 65028096
+            },
+            "socket_receive_wall_seconds": 59.451690679999956,
+            "source_to_publication": {
+              "count": 60014592,
+              "maximum_seconds": 0.032682367,
+              "mean_seconds": 0.02804048411056511,
+              "p50_seconds_upper_bound": 0.028311552,
+              "p95_seconds_upper_bound": 0.029884416,
+              "p99_seconds_upper_bound": 0.030932992,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "status": "PASS",
+            "timeline_first_windows": [
+              {
+                "acceptance_to_inference_complete_seconds": 0.008821112,
+                "completed_inference_blocks": 3,
+                "cpu_geometry_seconds": 0.000715351,
+                "cpu_point_conversion_seconds": 0.00032691,
+                "cuda_preparation_seconds": 0.0015665919799357651,
+                "cuda_scatter_seconds": 1.9103999715298415e-05,
+                "d2h_seconds": 0.000211776003241539,
+                "freshly_classified_points": 16384,
+                "geometry_assignment_seconds": 0.00044501,
+                "geometry_boundary_fallback_points": 0,
+                "geometry_direct_points": 16384,
+                "geometry_grouping_seconds": 0.000148491,
+                "geometry_member_sort_seconds": 8.201e-05,
+                "geometry_minimum_seconds": 3.793e-05,
+                "geometry_record_sort_seconds": 0.0,
+                "h2d_and_zero_seconds": 0.0006160640059970319,
+                "inference_complete_steady_ns": 1145388860534412,
+                "input_queue_wait_seconds": 6.4023e-05,
+                "occupied_voxels": 5056,
+                "output_queue_wait_seconds": 5.3934e-05,
+                "tensorrt_seconds": 0.0007823359817266465,
+                "timeline_blocks": [
+                  {
+                    "cuda_event_h2d_zero_seconds": 0.0004043520092964172,
+                    "cuda_event_preparation_seconds": 0.0015512319803237915,
+                    "cuda_event_scatter_seconds": 1.027199998497963e-05,
+                    "cuda_event_tensorrt_seconds": 0.00048025599122047426,
+                    "host_after_stream_sync_offset_seconds": 0.004356998,
+                    "host_submission_begin_offset_seconds": 0.001755278
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                    "cuda_event_preparation_seconds": 5.119999870657921e-06,
+                    "cuda_event_scatter_seconds": 4.383999854326248e-06,
+                    "cuda_event_tensorrt_seconds": 0.0001443839967250824,
+                    "host_after_stream_sync_offset_seconds": 0.004595238,
+                    "host_submission_begin_offset_seconds": 0.004359768
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 5.8111999183893203e-05,
+                    "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                    "cuda_event_scatter_seconds": 4.447999875992536e-06,
+                    "cuda_event_tensorrt_seconds": 0.0001576959937810898,
+                    "host_after_stream_sync_offset_seconds": 0.004869858,
+                    "host_submission_begin_offset_seconds": 0.004597158
+                  }
+                ],
+                "window_seconds": 0.005335478,
+                "window_started_steady_ns": 1145388855192594
+              },
+              {
+                "acceptance_to_inference_complete_seconds": 0.006015984,
+                "completed_inference_blocks": 4,
+                "cpu_geometry_seconds": 0.00051209,
+                "cpu_point_conversion_seconds": 0.00016834,
+                "cuda_preparation_seconds": 3.2576000783592464e-05,
+                "cuda_scatter_seconds": 1.9680000375956297e-05,
+                "d2h_seconds": 0.0002311680018901825,
+                "freshly_classified_points": 16384,
+                "geometry_assignment_seconds": 0.00037731,
+                "geometry_boundary_fallback_points": 1,
+                "geometry_direct_points": 16383,
+                "geometry_grouping_seconds": 5.846e-05,
+                "geometry_member_sort_seconds": 4.055e-05,
+                "geometry_minimum_seconds": 3.523e-05,
+                "geometry_record_sort_seconds": 0.0,
+                "h2d_and_zero_seconds": 0.00043312000809237356,
+                "inference_complete_steady_ns": 1145388873568959,
+                "input_queue_wait_seconds": 2.7214e-05,
+                "occupied_voxels": 5471,
+                "output_queue_wait_seconds": 2.5817e-05,
+                "tensorrt_seconds": 0.0008712000101804734,
+                "timeline_blocks": [
+                  {
+                    "cuda_event_h2d_zero_seconds": 0.00021190400421619416,
+                    "cuda_event_preparation_seconds": 9.216000325977802e-06,
+                    "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                    "cuda_event_tensorrt_seconds": 0.00019046400487422944,
+                    "host_after_stream_sync_offset_seconds": 0.00144083,
+                    "host_submission_begin_offset_seconds": 0.00089353
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                    "cuda_event_preparation_seconds": 7.168000098317862e-06,
+                    "cuda_event_scatter_seconds": 5.088000092655421e-06,
+                    "cuda_event_tensorrt_seconds": 0.00024988800287246705,
+                    "host_after_stream_sync_offset_seconds": 0.00185454,
+                    "host_submission_begin_offset_seconds": 0.0014435
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 7.664000242948532e-05,
+                    "cuda_event_preparation_seconds": 1.0048000141978264e-05,
+                    "cuda_event_scatter_seconds": 4.736000206321478e-06,
+                    "cuda_event_tensorrt_seconds": 0.00022259199619293214,
+                    "host_after_stream_sync_offset_seconds": 0.00223468,
+                    "host_submission_begin_offset_seconds": 0.00185688
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 6.144000217318535e-06,
+                    "cuda_event_preparation_seconds": 6.144000217318535e-06,
+                    "cuda_event_scatter_seconds": 4.736000206321478e-06,
+                    "cuda_event_tensorrt_seconds": 0.00020825600624084473,
+                    "host_after_stream_sync_offset_seconds": 0.0025551,
+                    "host_submission_begin_offset_seconds": 0.00223687
+                  }
+                ],
+                "window_seconds": 0.00303221,
+                "window_started_steady_ns": 1145388870529509
+              }
+            ],
+            "unaccepted_decoded_points": 0,
+            "warmup_frames": 306,
+            "wire_frame_messages": 3969
+          },
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "reused_semantic_labels": 0,
+          "schema": "synrex.streaming_r1.live.v1",
+          "source_to_subscriber": {
+            "count": 60014592,
+            "maximum_seconds": 0.041837846,
+            "mean_seconds": 0.027455199202839203,
+            "p50_seconds_upper_bound": 0.027787264,
+            "p95_seconds_upper_bound": 0.035651584,
+            "p99_seconds_upper_bound": 0.03670016,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "status": "PASS",
+          "validated_prefix": {
+            "frames": 3969,
+            "map_updates": 65028096,
+            "points": 65028096,
+            "source_to_subscriber": {
+              "count": 60014592,
+              "maximum_seconds": 0.041837846,
+              "mean_seconds": 0.027455199202839203,
+              "p50_seconds_upper_bound": 0.027787264,
+              "p95_seconds_upper_bound": 0.035651584,
+              "p99_seconds_upper_bound": 0.03670016,
+              "relative_bin_width_maximum": 0.03125
+            }
+          },
+          "validation_mode": "decoded",
+          "exit_code": 0,
+          "log_sha256": "8f26475386aabf45eac391e236c6ae6d443e8edb28114c30c7a2869eef04dfd0",
+          "command": [
+            "<native>",
+            "subscribe",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "60",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "0",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--stall-ms",
+            "0",
+            "--export-bundle",
+            "<export-bundle>",
+            "--taxonomy",
+            "<taxonomy>",
+            "--export-after-frame",
+            "306"
+          ]
+        },
+        "send": {
+          "encode_seconds": 7.773378708999994,
+          "frames": 3969,
+          "incoming_points": 65028096,
+          "input_sha256": "96a13fb4f829ece904d51462ace6a5f4f525476cf42b1db94767998d572c88a0",
+          "mode": "send",
+          "note": "External native TCP replay; not physical sensor latency or physical motion.",
+          "peak_rss_bytes": 218968064,
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "schedule_lag_max_seconds": 0.003419922,
+          "schema": "synrex.streaming_r1.live.v1",
+          "socket_send_seconds": 2.411829553,
+          "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+          "status": "PASS",
+          "warmup_frames": 306,
+          "exit_code": 0,
+          "log_sha256": "0aea25116e28e4baf3dfa4d2dd8ab47057d2592748e0ab021a5dfffdb8eeb755",
+          "command": [
+            "<native>",
+            "send",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "60",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "0",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--reconnect",
+            "0"
+          ]
+        }
+      },
+      "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+      "binary_sha256": "85d09ceccffdceee7ce780746b3b495bbfa613a8e9e3b555cdcb779d50f204f2",
+      "model_before": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      },
+      "model_after": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      },
+      "sustained_claim": true
+    }
+  ],
+  "scope": "Controller completion does not override individual native FAILs"
+}

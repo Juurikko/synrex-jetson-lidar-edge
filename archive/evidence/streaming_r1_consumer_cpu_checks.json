@@ -1,0 +1,55 @@
+{
+  "schema": "synrex.streaming_r1.consumer_cpu_qualification.v1",
+  "status": "PASS",
+  "source_commit": "f39fa29",
+  "ctest": {
+    "status": "PASS",
+    "tests": 7
+  },
+  "python": {
+    "status": "PASS",
+    "passed": 89,
+    "gpu_skipped": 5
+  },
+  "wire_asan_ubsan": {
+    "bounded_queue_cancel": "PASS",
+    "bounded_state_observations": 1048576,
+    "canonical_output_bytes": "PASS",
+    "coordinate_transform": "PASS",
+    "fragmentation_eof_deadline": "PASS",
+    "loopback_reconnections": 2,
+    "malformed_envelopes_rejected": 4,
+    "neural_inference": "NOT_RUN: CPU protocol test",
+    "point_and_delta_bytes": "PASS",
+    "sequence_gap_duplicate_clock": "PASS",
+    "slow_socket_deadline": "PASS",
+    "status": "PASS",
+    "truncations_rejected": 6286
+  },
+  "consumer_differential_asan_ubsan": {
+    "bounded_map_size": 65536,
+    "capacity": 65536,
+    "decoded_once_sequence_seconds": 5.802319772999999,
+    "exact_encoded_point_delta_class_source_bytes": "PASS",
+    "fixture_points": 2097152,
+    "full_snapshot_parity": "PASS",
+    "oracle_without_redundant_tree_seconds": 2.1820152359999994,
+    "reference_decode_and_sequence_seconds": 7.1350969939999995,
+    "reference_oracle_plus_occupancy_tree_seconds": 7.713959925000004,
+    "schema": "synrex.streaming_r1.consumer_cpu_profile.v1",
+    "scope": "MODEL_FREE_TEST_ONLY; actual licensed geometry/intensity, invented fixture classes. CPU validation service cost only; no neural throughput claim.",
+    "source_basename": "TEST-0944_6564-005900112.laz",
+    "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+    "status": "PASS"
+  },
+  "export_asan_ubsan": "PASS: two tests",
+  "logs_sha256": {
+    "r1-conditional-ctest.log": "b1c19387a6daa3764a563ecf5908f34e20c60b22bf299d2fdc1bded649b92ce5",
+    "r1-conditional-pytest.log": "ba8aa0cd9e6eb439d2df5f790caffafd04cbeeb4399523b7a4b9fc0bc1709057",
+    "r1-consumer-wire-asan.json": "e89cf22309c13476dcd455d1bfcb1a39ec5fabf62c7e50db25ad8280c70608c6",
+    "r1-consumer-profile-asan.json": "e898fb181ff857a32971705cd6d37790afa8e685b5fc5efd458a3e2605b40abc",
+    "r1-consumer-export-asan.log": "6265b7dc32dba77c83bc2122ef5ee39d73e7b7299ea1aff306427621bf34c360",
+    "r1-decoded-review2.log": "4e021b677af3cde3514002c854ce54861b98023877cd9a27a33d58dcc4db8b47"
+  },
+  "notes": "Pre-conditional pilot profiles are diagnostic working-tree variants without a sealed standalone binary identity. GPU qualification uses exact archived commits/binary hashes. CPU class fixtures are explicitly model-free."
+}

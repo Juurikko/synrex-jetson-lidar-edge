@@ -85,7 +85,7 @@ presentation is CC-BY4.0. The provenance assessment discloses earlier private
 source exposure and makes no clean-room or independent legal-clearance claim.
 
 Reproduce with the [frozen quickstart](UNET_R2_QUICKSTART.md),
-[clean reconstruction evidence](../../evidence/unet_r3_clean_reconstruction.json),
+[clean reconstruction evidence](../../archive/evidence/unet_r3_clean_reconstruction.json),
 [full R2 qualification](UNET_R2_RELEASE.md),
 [licence/weight lineage](UNET_PROVENANCE.md) and the local release receipts.
 RC2 at `f8d3ab81804e0c427684ac08f1b055e75206b861` and audit commit `e3fcb82`
