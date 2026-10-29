@@ -7,11 +7,13 @@
 > pipeline was measured on a physical Jetson AGX Orin ([historical benchmark](archive/history/BENCHMARK.md));
 > its non-commercial model is not distributed, and the streaming runtime is not yet ported to Jetson.
 
-# SynRex Native LiDAR Streaming
+# SynRex Native LiDAR: bring your own model, file or stream
 
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
-**Native C++17 / CUDA / TensorRT inference, original-point outputs and a bounded semantic map.**
+**A native C++17 / CUDA / TensorRT runtime that runs your point-cloud segmentation model
+on LAZ files or point streams over TCP, returns a label for every original point, and keeps a
+bounded semantic map. No Python or PyTorch at inference time.**
 Developer and project lead: **Tuomas Pietilä** ([@Juurikko](https://github.com/Juurikko));
 engineering with OpenAI Codex assistance.
 
@@ -20,6 +22,47 @@ engineering with OpenAI Codex assistance.
 The [R4 RC2 BYOM foundation](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
 (file-to-file classification, with its own README at that tag) remains a separately
 preserved release.
+
+## Bring your own model
+
+Package your trained network once; the same native binary then runs it on files or
+streams. Switching models means pointing `--model` at another package. Nothing is recompiled.
+
+| You supply | The runtime supplies |
+|---|---|
+| An ONNX model (or a TensorRT engine built from it) with one dense voxel input and one per-voxel class-score output | LAZ decoding, block/voxel geometry and CUDA feature tensors |
+| A short JSON spec: voxel size and grid, input features, class-to-LAS mapping, resource limits | TensorRT FP16/FP32 execution, kept resident across windows when streaming |
+| A licence file for your weights | A label for every original source point, written to classified LAZ that keeps all other point bytes, or streamed with map updates |
+
+```bash
+build-gpu/synrex-native pack --spec my_model.json --onnx my_model.onnx \
+  --license MY_MODEL_LICENSE.txt --out my_model.srxmodel
+build-gpu/synrex-native build-engine --model my_model.srxmodel --out my_model.engine
+build-gpu/synrex-native pack --spec my_model.json --engine my_model.engine \
+  --license MY_MODEL_LICENSE.txt --out my_model-engine.srxmodel
+build-gpu/synrex-native classify --model my_model-engine.srxmodel \
+  --input INPUT.laz --out CLASSIFIED.laz
+```
+
+Two reference models use this interface unchanged: an analytic Conv3D integration
+fixture and a trained seven-class FRACTAL 3D U-Net. Their packages are in the
+[R4 release](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+archive; its TensorRT engines are RTX 4090 builds, so rebuild the engine for any other GPU.
+
+**Current interface:** `DENSE_VOXEL_SEGMENTATION_V1`, a static batch-one dense voxel
+tensor with 1–32 input features (occupancy, point count, mean intensity, local x/y/z)
+and 2–256 output classes. Sparse-convolution and point-transformer models need a
+separate adapter and are not yet supported. Dynamic shapes and TensorRT plugins are not
+supported either.
+
+**Already have a classifier in another framework?** If it produces one LAS class code
+per original point, `synrex-laz-labels` writes those labels into the LAZ without
+touching any other point bytes, and an independent verifier checks the result.
+
+[Adapter contract](docs/byom/ADAPTER.md) ·
+[step-by-step quickstart](docs/byom/QUICKSTART.md) ·
+[trained U-Net example](docs/byom/UNET_R2_QUICKSTART.md) ·
+[label-writer guide](BRING_YOUR_OWN_MODEL.md)
 
 ### Start here
 
@@ -32,7 +75,7 @@ and matching release assets; this post-release layout is not a new benchmark or
 reconstruction qualification.
 
 
-- **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM foundation](src/)
+- **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM adapter contract](docs/byom/ADAPTER.md)
 - **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
 - **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](archive/evidence/streaming_r1_transport_trials.csv)
 - **Full audit trail:** [archived verification receipts](archive/evidence/) · [separate public audit download](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
