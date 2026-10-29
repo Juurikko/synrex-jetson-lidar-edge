@@ -1,0 +1,44 @@
+{
+  "schema": "synrex.streaming_r1.file_export_qualification.v1",
+  "status": "FAIL",
+  "native_source_commit": "f39fa29",
+  "resource_preflight": {
+    "sample": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "utilization_percent": 0,
+      "used_mib": 130,
+      "free_mib": 24009,
+      "power_watts": 3.91
+    },
+    "windows_desktop_processes": [
+      "ShellExperienceHost.exe",
+      "dwm",
+      "explorer.exe",
+      "ChatGPT.exe",
+      "SystemSettings.exe",
+      "ShellHost.exe",
+      "SearchHost.exe",
+      "TextInputHost.exe"
+    ],
+    "reported_linux_compute_processes": 0
+  },
+  "independent_r4_laz_verification": {
+    "status": "PASS",
+    "decoder": "laz-rs, explicitly selected through laspy.LazBackend.Lazrs",
+    "points": 400654,
+    "classification_records_changed": 316323,
+    "point_order_and_nonclassification_bytes_exact": true,
+    "public_header_non_laszip_vlrs_and_padding_exact": true,
+    "source_sha256": "50106aa5d6465707523bf9252ac8ade9e683266b61a94f5eadde6eaeb2276274",
+    "output_sha256": "caa02d82f96db8e556f88e57d35c8ab4a684eae2b253bef24130c23d62afb393",
+    "canonical_nonclassification_sha256": "e32b3d838dd783cc373fbc36db0f6b024afcb2757c82813bec0275f9dd3f6436",
+    "classification_sha256": "fe20885e576ff61b0bc1e69fa16af6971f76ab6bdf68a251aaa766d528dcaced",
+    "semantic_schema": "synrex.point_semantics.v1",
+    "semantic_sidecar_sha256": "c16264729a368eeb31f3bed81384f1dfd3469e77904b6e1727553b559ef3ae07",
+    "semantic_model_binding": true,
+    "full_model_channel_ids_preserved": true
+  },
+  "verification_wall_seconds": 0.5265413029119372,
+  "error_type": "OSError",
+  "error": "[Errno 22] atomic no-replace publication failed"
+}

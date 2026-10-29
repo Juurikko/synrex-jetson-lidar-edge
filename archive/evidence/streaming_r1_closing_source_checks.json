@@ -1,0 +1,39 @@
+{
+  "schema": "synrex.streaming_r1.closing_source_checks.v1",
+  "status": "PASS",
+  "native_production_source": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "native_production_diff_from_qualified_commit": "",
+  "cpu_pytest": {
+    "status": "PASS",
+    "passed": 90,
+    "physical_gpu_skipped_on_cpu_host": 5
+  },
+  "physical_r4_gpu_tests": {
+    "status": "PASS",
+    "passed": 5
+  },
+  "final_wire_asan_ubsan": {
+    "bounded_queue_cancel": "PASS",
+    "bounded_state_observations": 1048576,
+    "canonical_output_bytes": "PASS",
+    "coordinate_transform": "PASS",
+    "fragmentation_eof_deadline": "PASS",
+    "loopback_reconnections": 2,
+    "malformed_envelopes_rejected": 4,
+    "neural_inference": "NOT_RUN: CPU protocol test",
+    "point_and_delta_bytes": "PASS",
+    "sequence_gap_duplicate_clock": "PASS",
+    "slow_socket_deadline": "PASS",
+    "status": "PASS",
+    "truncations_rejected": 6286
+  },
+  "source_pattern_scan": {},
+  "review_log_sha256": "28897939e0d8273c349937dabf3fda8083ef6a0a41073d3d2eb404b24afba9f1",
+  "logs_sha256": {
+    "r1-final-cpu-all.log": "d1d29fb14efbf66a04982ec56ba565f7f15ee1ae5a10591ba1e7f9ed18707183",
+    "r1-last-wire-sanitize.json": "e89cf22309c13476dcd455d1bfcb1a39ec5fabf62c7e50db25ad8280c70608c6",
+    "r1-last-export-python.log": "09fe4441627f625ef92c265990f13e7b462b863c5c79a8b5dc18c887f0020ca0",
+    "r1-final-release-review.log": "28897939e0d8273c349937dabf3fda8083ef6a0a41073d3d2eb404b24afba9f1"
+  },
+  "scope": "Check-only hygiene/licensing/link review; frozen receipts not rewritten. Pattern scan is scoped, not an exhaustive security/legal audit."
+}

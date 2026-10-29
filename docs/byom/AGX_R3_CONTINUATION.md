@@ -3,7 +3,7 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
 Physical BYOM qualification is **NOT_RUN**. The read-only
-[admission receipt](../../evidence/unet_r3_agx_admission.json) observes the actual
+[admission receipt](../../archive/evidence/unet_r3_agx_admission.json) observes the actual
 `synrex-spatial-autopilot-r0.service` active with PID1249253, a live
 `point-lio:validate-benchmark` worker, no owner PAUSE, and **both** supervisor/GPU
 flocks held by that supervisor. The older service names being inactive do not

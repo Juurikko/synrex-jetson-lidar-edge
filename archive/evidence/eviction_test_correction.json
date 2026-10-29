@@ -1,0 +1,20 @@
+{
+  "schema": "synrex.eviction_test_correction.v1",
+  "status": "PASS",
+  "initial_accepted_refresh_gate": {
+    "status": "FAIL",
+    "receipt": "eviction_cpu_parity.json",
+    "reason": "Original memory phase replayed fixed timestamps; most observations were late rejections rather than accepted refreshes. Its memory bound PASS remains limited to that exercised stream."
+  },
+  "corrected_gate": {
+    "status": "PASS",
+    "accepted_observations": 2097152,
+    "late_rejections": 0,
+    "receipts": [
+      "eviction_cpu_accepted_refresh.json",
+      "eviction_asan_accepted_refresh.json"
+    ],
+    "change": "Advance all source timestamps each frame, assert the accepted counter advances for every observation, compare reference deltas and full snapshots, preserve bounded RSS and index count"
+  },
+  "production_implementation_changed": false
+}

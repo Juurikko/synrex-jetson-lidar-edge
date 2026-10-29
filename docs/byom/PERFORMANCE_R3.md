@@ -2,8 +2,8 @@
 
 <!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
 
-Derived from the accepted [untraced receipts](../../evidence/unet_r2_release_benchmarks.json),
-without new GPU benchmarking. The [derived values](../../evidence/unet_r3_performance_analysis.json)
+Derived from the accepted [untraced receipts](../../archive/evidence/unet_r2_release_benchmarks.json),
+without new GPU benchmarking. The [derived values](../../archive/evidence/unet_r3_performance_analysis.json)
 are reproducible with `tools/analyze_unet_performance.py`. Cold means a fresh process,
 not a reboot or guaranteed cold disk cache. Each scene has three cold runs, three
 persistent warmups and ten measured persistent cycles. All repeated output labels
@@ -44,7 +44,7 @@ and vendor allocations outside callbacks. Device-wide sampled maximum is518–52
 including the130MiB desktop baseline. Sampling around60–80ms may miss a transient
 resident peak. Neither figure is an exact total resident GPU memory high-water mark.
 
-The earlier [SegFormer3D AGX receipt](../../evidence/benchmark.json) records
+The earlier [SegFormer3D AGX receipt](../../archive/evidence/benchmark.json) records
 **210,318 points/s** for its2,126,455-point largest scene and **158,229 points/s**
 aggregated over4,790,076 points/30.272974s. The dense U-Net RTX largest scene is
 400,654 points at404,722 complete-process points/s; its aggregate is237,991.

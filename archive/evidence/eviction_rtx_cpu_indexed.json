@@ -1,0 +1,191 @@
+{
+  "cases": [
+    {
+      "capacity": 1024,
+      "evicting_update_seconds": 0.0005113,
+      "existing_update_seconds": 0.00034652,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 2002738.1185214159,
+      "model_free_existing_updates_per_active_second": 2955096.3869329332,
+      "operations": {
+        "delta_events": 3072,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 1024,
+        "insertions": 2048,
+        "late_rejections": 0,
+        "observations": 3072,
+        "peak_cells": 1024,
+        "removals": 1024
+      },
+      "profile": {
+        "active_cells": 1024,
+        "cell_payload_bytes": 64,
+        "detailed_timers_enabled": true,
+        "effective_policy": "indexed",
+        "expiration_enabled": false,
+        "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+        "index_entries": 1024,
+        "intrusive_index_bytes_per_cell": 40,
+        "node_allocator_overhead_included": false,
+        "ordered_key_bytes": 24,
+        "requested_policy": "indexed",
+        "revision_overflow_fallback": false,
+        "stage_seconds": {
+          "coordinate_key": 0.00020994099999999276,
+          "delta_construction": 0.00016597000000000126,
+          "existing_update": 1.9079999999999922e-05,
+          "expiration": 0.0,
+          "full_snapshot": 0.001396121,
+          "index_maintenance": 7.53000000000063e-05,
+          "insertion": 0.00012110000000000385,
+          "lookup": 9.487000000000041e-05,
+          "removal": 4.272999999999982e-05,
+          "victim_selection": 3.333000000000022e-05
+        },
+        "validation_seconds": 9.608e-05
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 4096,
+      "evicting_update_seconds": 0.00040338099999999997,
+      "existing_update_seconds": 0.00025223,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 2538542.9655834064,
+      "model_free_existing_updates_per_active_second": 4059786.702612695,
+      "operations": {
+        "delta_events": 6144,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 1024,
+        "insertions": 5120,
+        "late_rejections": 0,
+        "observations": 6144,
+        "peak_cells": 4096,
+        "removals": 1024
+      },
+      "profile": {
+        "active_cells": 4096,
+        "cell_payload_bytes": 64,
+        "detailed_timers_enabled": true,
+        "effective_policy": "indexed",
+        "expiration_enabled": false,
+        "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+        "index_entries": 4096,
+        "intrusive_index_bytes_per_cell": 40,
+        "node_allocator_overhead_included": false,
+        "ordered_key_bytes": 24,
+        "requested_policy": "indexed",
+        "revision_overflow_fallback": false,
+        "stage_seconds": {
+          "coordinate_key": 0.00024589000000002756,
+          "delta_construction": 0.0001411200000000035,
+          "existing_update": 1.696999999999991e-05,
+          "expiration": 0.0,
+          "full_snapshot": 0.004710222,
+          "index_maintenance": 0.00011933000000000601,
+          "insertion": 0.00020445100000001965,
+          "lookup": 0.000151510000000008,
+          "removal": 3.218000000000021e-05,
+          "victim_selection": 2.3239999999999967e-05
+        },
+        "validation_seconds": 0.00011208000000000001
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 16384,
+      "evicting_update_seconds": 0.00042409,
+      "existing_update_seconds": 0.00026701100000000005,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 2414581.81046476,
+      "model_free_existing_updates_per_active_second": 3835047.994277389,
+      "operations": {
+        "delta_events": 18432,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 1024,
+        "insertions": 17408,
+        "late_rejections": 0,
+        "observations": 18432,
+        "peak_cells": 16384,
+        "removals": 1024
+      },
+      "profile": {
+        "active_cells": 16384,
+        "cell_payload_bytes": 64,
+        "detailed_timers_enabled": true,
+        "effective_policy": "indexed",
+        "expiration_enabled": false,
+        "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+        "index_entries": 16384,
+        "intrusive_index_bytes_per_cell": 40,
+        "node_allocator_overhead_included": false,
+        "ordered_key_bytes": 24,
+        "requested_policy": "indexed",
+        "revision_overflow_fallback": false,
+        "stage_seconds": {
+          "coordinate_key": 0.0007633809999997862,
+          "delta_construction": 0.00042637999999988184,
+          "existing_update": 1.7089999999999906e-05,
+          "expiration": 0.0,
+          "full_snapshot": 0.019126038,
+          "index_maintenance": 0.00033487999999990147,
+          "insertion": 0.0007209099999999107,
+          "lookup": 0.0004984999999998979,
+          "removal": 3.5220000000000174e-05,
+          "victim_selection": 3.2800000000000126e-05
+        },
+        "validation_seconds": 0.00033391000000000014
+      },
+      "status": "PASS"
+    },
+    {
+      "capacity": 65536,
+      "evicting_update_seconds": 0.00042473999999999995,
+      "existing_update_seconds": 0.000258331,
+      "measured_insertions_and_removals": 1024,
+      "model_free_evicting_updates_per_active_second": 2410886.660074399,
+      "model_free_existing_updates_per_active_second": 3963906.770770833,
+      "operations": {
+        "delta_events": 67584,
+        "eviction_scanned_cells": 0,
+        "existing_updates": 1024,
+        "insertions": 66560,
+        "late_rejections": 0,
+        "observations": 67584,
+        "peak_cells": 65536,
+        "removals": 1024
+      },
+      "profile": {
+        "active_cells": 65536,
+        "cell_payload_bytes": 64,
+        "detailed_timers_enabled": true,
+        "effective_policy": "indexed",
+        "expiration_enabled": false,
+        "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+        "index_entries": 65536,
+        "intrusive_index_bytes_per_cell": 40,
+        "node_allocator_overhead_included": false,
+        "ordered_key_bytes": 24,
+        "requested_policy": "indexed",
+        "revision_overflow_fallback": false,
+        "stage_seconds": {
+          "coordinate_key": 0.0027126100000025915,
+          "delta_construction": 0.0016253300000021386,
+          "existing_update": 1.700999999999989e-05,
+          "expiration": 0.0,
+          "full_snapshot": 0.077554713,
+          "index_maintenance": 0.0011366910000005371,
+          "insertion": 0.002867281000002731,
+          "lookup": 0.002029452000001393,
+          "removal": 4.0799999999999955e-05,
+          "victim_selection": 2.3009999999999954e-05
+        },
+        "validation_seconds": 0.0012209700000000007
+      },
+      "status": "PASS"
+    }
+  ],
+  "schema": "synrex.cpu_eviction_service.v1",
+  "scope": "CPU map-only operation service probe; actual changing coordinates and verified LRU removal/aging; dummy classes, no neural classification claim; short probes do not establish sustained stream rates",
+  "status": "PASS"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "synrex.geometry_diagnostic_link.v1",
+  "status": "FAIL",
+  "scope": "CPU-only auxiliary eviction probe, not a neural trial",
+  "error": "Unversioned -lcrypto linker name absent on RTX host",
+  "probe_execution": "NOT_RUN in first attempt",
+  "resolution": "Link existing /lib/x86_64-linux-gnu/libcrypto.so.3 as in the qualified CMake configuration; no dependency installation or runtime/source workaround"
+}

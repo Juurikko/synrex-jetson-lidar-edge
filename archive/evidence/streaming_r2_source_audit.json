@@ -1,0 +1,18 @@
+{
+  "schema": "synrex.streaming_r2.source_audit.v1",
+  "status": "PASS",
+  "files_scanned": 444,
+  "protected_files_unchanged": 252,
+  "accepted_refs_unchanged": true,
+  "secrets": 0,
+  "new_private_paths_or_endpoints": 0,
+  "forbidden_model_data_binaries": 0,
+  "legacy_public_device_labels": [
+    {
+      "path": "evidence/rtx4090_full_suite.json",
+      "sha256": "496165fa688d8b6c4090ba136d379ec53c976f38ccec0a57aa57b11eedb45f66",
+      "treatment": "Already-public non-connectable device display label; unchanged"
+    }
+  ],
+  "scope": "Current source; historical object audit recorded separately"
+}

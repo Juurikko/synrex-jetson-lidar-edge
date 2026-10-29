@@ -1,0 +1,3291 @@
+{
+  "schema": "synrex.streaming.campaign.v1",
+  "status": "PASS",
+  "source_commit": "a20051f2490adb92a6cc36f390906639b875ea20",
+  "binaries_sha256": {
+    "synrex-stream": "8c9f22529e98ae6a85e9bec992254343564ca5483d609aa05b5a5ed2e9df2b01",
+    "synrex-stream-gpu-tests": "006c58220332f69331296fddc09a69c9c2c8acf4c86ef1ee141bb056654d4d6c"
+  },
+  "model_package_hashes_before": {
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    },
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    }
+  },
+  "commands": [
+    {
+      "name": "equivalence",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 1.4596066370140761,
+      "log_sha256": "b40d6f97287222ec8a41ae937ea9d8ffdebd4d436cbd7147d2f68c8ccb1647a8",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 3.92
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 3.92
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 154,
+          "free_mib": 23985,
+          "power_watts": 5.31
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 8,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 11.74
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 16.33
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 37.72
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 2,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 46.67
+        }
+      ]
+    },
+    {
+      "name": "replay-synthetic",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.3629481620155275,
+      "log_sha256": "f6a389e0665327c158eb66c93ad6a60a6631821251dd3ed7eb65c0864a1ca785",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 53.51
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 53.58
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 520,
+          "free_mib": 23619,
+          "power_watts": 54.09
+        }
+      ]
+    },
+    {
+      "name": "replay-unet",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 1.3216949680354446,
+      "log_sha256": "b22c54987112131d9e86581eea5d35b8fd911d5a706da1eb7a4e82e6d6642732",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.33
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 54.35
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 2,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.44
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.59
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.89
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.77
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.87
+        }
+      ]
+    },
+    {
+      "name": "native-no-python",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 1.3192553620319813,
+      "log_sha256": "30de875541b6ef3df44cd782dbc48c77d9f3590212a7d2a82286cbd175d5b39f",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 53.74
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 53.78
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.09
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.23
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.17
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.9
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.56
+        }
+      ]
+    },
+    {
+      "name": "fixture-256",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.05758925201371312,
+      "log_sha256": "127726d796af784d1f12741e68a65a95d4d08fa7f4cdc8348e9efe3690fe7686"
+    },
+    {
+      "name": "paced-256-100000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.37191382399760187,
+      "log_sha256": "79e10bd32d037ef213304cdea146f33bc86b4668a87e5d57387343b943ebfaeb",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 53.17
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 53.17
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.15
+        }
+      ]
+    },
+    {
+      "name": "paced-256-1000000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.36001155083067715,
+      "log_sha256": "6097d5a3b5fb89d0e51601a91166862e9bbcfac7790ed3262e471497c494091c",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.42
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 54.42
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 6,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 55.32
+        }
+      ]
+    },
+    {
+      "name": "paced-256-10000000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.3547941839788109,
+      "log_sha256": "5badb607c6b086fb539ce865e3d4bc2411b7345dee59183fa075e46e43f23262",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.86
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 54.86
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 2,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 55.43
+        }
+      ]
+    },
+    {
+      "name": "fixture-4096",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.2522954070009291,
+      "log_sha256": "6d1458f3aebc0751b3cf6a6171e800af0ffe53f9140659c763efb43fc331278d"
+    },
+    {
+      "name": "paced-4096-100000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.8752648311201483,
+      "log_sha256": "2176b26682520d5b2d33c9de9e6953b802eccf4cdce47514b214a4e6df0bbc9e",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.59
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.56
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 6,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.85
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.18
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.86
+        }
+      ]
+    },
+    {
+      "name": "paced-4096-1000000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.8021663390100002,
+      "log_sha256": "27cf8b1d9946586eebc894dba73e9392fda397657b4250052e7ec1f1c6116c7f",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 53.88
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 53.8
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 5,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 53.85
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.24
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.29
+        }
+      ]
+    },
+    {
+      "name": "paced-4096-10000000",
+      "status": "PASS",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.808763155946508,
+      "log_sha256": "b4408d868fa956ef155e4a2a433893ee634b58e063c49913baf3f2e3205965e3",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.26
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 54.26
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 5,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.27
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.29
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.26
+        }
+      ]
+    },
+    {
+      "name": "packet-loss",
+      "status": "PASS",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "wall_seconds": 0.8253682639915496,
+      "log_sha256": "c5570f3639d42233e33165108e547fc00a520fb989c650f3f8c4a6ff6ced57a0",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.19
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 132,
+          "free_mib": 24007,
+          "power_watts": 54.28
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.01
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.2
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.23
+        }
+      ]
+    },
+    {
+      "name": "out-of-order",
+      "status": "PASS",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "wall_seconds": 0.8325275250244886,
+      "log_sha256": "b7042424c06abc9a69f3a8b03e93fe0770da0a1b87363bf87c96704a9f010238",
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.5
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.47
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 1,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.58
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 5,
+          "used_mib": 528,
+          "free_mib": 23611,
+          "power_watts": 54.52
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 54.43
+        }
+      ]
+    }
+  ],
+  "AGX": "NOT_RUN",
+  "THOR": "NOT_RUN",
+  "SUSTAINED_B5": "NOT_RUN",
+  "equivalence": {
+    "AGX": "NOT_RUN",
+    "THOR": "NOT_RUN",
+    "binary_sha256_before_after": "006c58220332f69331296fddc09a69c9c2c8acf4c86ef1ee141bb056654d4d6c",
+    "schema": "synrex.streaming_gpu_qualification.v1",
+    "status": "PASS",
+    "synthetic": {
+      "coverage": "Every input point, including same-voxel duplicates; exact source-order semantics and LAS projection",
+      "diagnostic_stream_window_seconds": 0.040017685,
+      "dropped_points": 0,
+      "freshly_classified_points": 3108,
+      "incoming_points": 3108,
+      "licensed_sources": [],
+      "schema": "synrex.streaming_equivalence.v1",
+      "scope": "Actual TensorRT streaming windows versus legacy R4 native offline inference; diagnostic tensor I/O enabled",
+      "semantic_histogram": [
+        585,
+        1944,
+        579
+      ],
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 4,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              8.0,
+              6.0,
+              4.0
+            ],
+            "dimensions_xyz": [
+              8,
+              6,
+              4
+            ],
+            "overlap_policy": "last_wins",
+            "overlap_xyz": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float32",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          "las_classes": [
+            2,
+            5,
+            6
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; AI-assisted with OpenAI Codex",
+            "notice": "Synthetic engineering fixture; class mapping is explicit test semantics, not validated survey accuracy",
+            "source": "examples/export_reference.py in this repository",
+            "spdx": "MIT",
+            "weights": "Original analytic constants; no trained or third-party weights"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float32",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              3,
+              4,
+              6,
+              8
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.350466767,
+        "manifest_sha256": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 3939115
+      },
+      "source_timestamp_scope": "Offline-emulated UNIX frame times, not original LAS GPS-time/return decoding",
+      "status": "PASS",
+      "sustainable_live_rate": "NOT_RUN",
+      "temporal_context_halo_frames": 0,
+      "windows": [
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.025812266,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 20736,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 36,
+            "cpu_geometry_seconds": 0.00020773,
+            "cuda_preparation_seconds": 0.0002941120024770498,
+            "cuda_scatter_seconds": 0.00014467200054787098,
+            "d2h_seconds": 0.0002486400008201599,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 0.0002230080012232065,
+            "tensorrt_seconds": 0.0001718399985693395,
+            "window_seconds": 0.013616705
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.022058457,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 20736,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 36,
+            "cpu_geometry_seconds": 0.00015658,
+            "cuda_preparation_seconds": 0.00015865599829703565,
+            "cuda_scatter_seconds": 0.00014492799947038288,
+            "d2h_seconds": 0.0001366720050573349,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 0.0002815040042623878,
+            "tensorrt_seconds": 0.00016463999822735782,
+            "window_seconds": 0.008324683
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.021858052,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 20736,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 36,
+            "cpu_geometry_seconds": 0.00015906,
+            "cuda_preparation_seconds": 0.00015859199827536935,
+            "cuda_scatter_seconds": 0.00014387200027704238,
+            "d2h_seconds": 0.00011561600118875504,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 0.000276447999291122,
+            "tensorrt_seconds": 0.00016982399718835944,
+            "window_seconds": 0.008447443
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.023064688,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 20736,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 36,
+            "cpu_geometry_seconds": 0.00015155,
+            "cuda_preparation_seconds": 0.00015785599872469898,
+            "cuda_scatter_seconds": 0.00014060800056904548,
+            "d2h_seconds": 0.00014707200229167937,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 0.0002919680024497211,
+            "tensorrt_seconds": 0.0001713599967770278,
+            "window_seconds": 0.009628854
+          }
+        }
+      ]
+    },
+    "unet": {
+      "coverage": "Every input point, including same-voxel duplicates; exact source-order semantics and LAS projection",
+      "diagnostic_stream_window_seconds": 0.034297248,
+      "dropped_points": 0,
+      "freshly_classified_points": 91117,
+      "incoming_points": 91117,
+      "licensed_sources": [
+        {
+          "basename": "TEST-0447_6390-002819414.laz",
+          "sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2"
+        },
+        {
+          "basename": "TEST-0437_6398-002899556.laz",
+          "sha256": "a20166855fddc71a7136f9a7eacc0b6f4ac9d101324500331762736b1755b46f"
+        }
+      ],
+      "schema": "synrex.streaming_equivalence.v1",
+      "scope": "Actual TensorRT streaming windows versus legacy R4 native offline inference; diagnostic tensor I/O enabled",
+      "semantic_histogram": [
+        9798,
+        46028,
+        3917,
+        29370,
+        92,
+        1089,
+        823
+      ],
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 6,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.004092447,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_scope": "Offline-emulated UNIX frame times, not original LAS GPS-time/return decoding",
+      "status": "PASS",
+      "sustainable_live_rate": "NOT_RUN",
+      "temporal_context_halo_frames": 0,
+      "windows": [
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.018228337,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 229376,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 1,
+            "cpu_geometry_seconds": 8.788e-05,
+            "cuda_preparation_seconds": 0.001607967972755432,
+            "cuda_scatter_seconds": 1.0239999741315842e-05,
+            "d2h_seconds": 0.00015615999698638915,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 2.9695999808609485e-05,
+            "tensorrt_seconds": 0.000527072012424469,
+            "window_seconds": 0.004167537
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.015366975,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 229376,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 1,
+            "cpu_geometry_seconds": 9e-05,
+            "cuda_preparation_seconds": 4.300799965858459e-05,
+            "cuda_scatter_seconds": 5.119999870657921e-06,
+            "d2h_seconds": 0.00016118399798870087,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 8.240000065416097e-05,
+            "tensorrt_seconds": 0.0001361919939517975,
+            "window_seconds": 0.00193137
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.014891044,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 229376,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 1,
+            "cpu_geometry_seconds": 9.029e-05,
+            "cuda_preparation_seconds": 4.614400118589401e-05,
+            "cuda_scatter_seconds": 4.0959999896585945e-06,
+            "d2h_seconds": 0.0001422400027513504,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 6.710400152951478e-05,
+            "tensorrt_seconds": 0.00012588800489902495,
+            "window_seconds": 0.001782551
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.015784141,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 229376,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 777,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 1,
+            "cpu_geometry_seconds": 9.059e-05,
+            "cuda_preparation_seconds": 4.105599969625473e-05,
+            "cuda_scatter_seconds": 4.0959999896585945e-06,
+            "d2h_seconds": 0.00016201600432395934,
+            "freshly_classified_points": 777,
+            "h2d_and_zero_seconds": 7.068799901753663e-05,
+            "tensorrt_seconds": 0.00012995199859142304,
+            "window_seconds": 0.001800341
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.183663356,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 917504,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 50096,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 4,
+            "cpu_geometry_seconds": 0.006574453,
+            "cuda_preparation_seconds": 9.1584000736475e-05,
+            "cuda_scatter_seconds": 1.9455999601632356e-05,
+            "d2h_seconds": 0.00019596800208091737,
+            "freshly_classified_points": 50096,
+            "h2d_and_zero_seconds": 0.0005243199989199638,
+            "tensorrt_seconds": 0.0006211200058460236,
+            "window_seconds": 0.013501495
+          }
+        },
+        {
+          "diagnostic_reference_and_trace_wall_seconds": 0.16167212,
+          "numeric": {
+            "absolute_tolerance": 0.001,
+            "inputs_byte_identical": true,
+            "logit_values_compared": 917504,
+            "max_absolute_logit_error": 0.0,
+            "max_relative_logit_error": 0.0,
+            "relative_tolerance": 0.001,
+            "status": "PASS"
+          },
+          "points": 37913,
+          "status": "PASS",
+          "timings": {
+            "completed_inference_blocks": 4,
+            "cpu_geometry_seconds": 0.004920742,
+            "cuda_preparation_seconds": 5.3247999399900436e-05,
+            "cuda_scatter_seconds": 1.8751999828964474e-05,
+            "d2h_seconds": 0.0001305599957704544,
+            "freshly_classified_points": 37913,
+            "h2d_and_zero_seconds": 0.00044553600624203685,
+            "tensorrt_seconds": 0.0005498879998922348,
+            "window_seconds": 0.011113954
+          }
+        }
+      ]
+    }
+  },
+  "replays": {
+    "paced-256-100000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.006006265,
+        "p95": 0.007370155,
+        "p99": 0.007370155
+      },
+      "assembly": {
+        "assembled_points": 3072,
+        "dropped_points": 0,
+        "incoming_points": 3072,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.006117791,
+      "cpu_parse_assembly_seconds": 0.020377716,
+      "dropped_points": 0,
+      "emitted_points": 3072,
+      "events_sha256": "52c8c07e05674aafb05ae235c1e8acc94095c990b1edaa77f6928ff321b01a1d",
+      "freshly_classified_points": 3072,
+      "freshly_classified_points_per_second": 10999.639779700274,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 342831104,
+      "incoming_points_per_second": 10999.639779700274,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "f5c3fea2dc02ea1197baca65220aef5c1720361d6c9eb8b026c9692f0de97bde",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 2179,
+      "map_updates": 3072,
+      "map_updates_per_second": 10999.639779700274,
+      "max_replay_schedule_lag_seconds": 7.8942e-05,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 2,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 63986.40822045384,
+      "replay_incoming_points_per_second": 63986.40822045384,
+      "replay_map_updates_per_second": 63986.40822045384,
+      "replay_seconds_excluding_initialization": 0.048010196,
+      "requested_incoming_points_per_second": 100000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.231052357,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 3072,
+      "wall_seconds_including_initialization_and_output": 0.279281873
+    },
+    "paced-256-10000000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.003765142,
+        "p95": 0.00692344,
+        "p99": 0.00692344
+      },
+      "assembly": {
+        "assembled_points": 3072,
+        "dropped_points": 0,
+        "incoming_points": 3072,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.004871301,
+      "cpu_parse_assembly_seconds": 0.020030526,
+      "dropped_points": 0,
+      "emitted_points": 3072,
+      "events_sha256": "4e775afd7d288fdeacb924a0b064094ede84a6d0699fd180ed7e3b6b4c5b1c4b",
+      "freshly_classified_points": 3072,
+      "freshly_classified_points_per_second": 11768.131088123577,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 342835200,
+      "incoming_points_per_second": 11768.131088123577,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "f5c3fea2dc02ea1197baca65220aef5c1720361d6c9eb8b026c9692f0de97bde",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 2179,
+      "map_updates": 3072,
+      "map_updates_per_second": 11768.131088123577,
+      "max_replay_schedule_lag_seconds": 0.028957883,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 2,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 69487.55529231313,
+      "replay_incoming_points_per_second": 69487.55529231313,
+      "replay_map_updates_per_second": 69487.55529231313,
+      "replay_seconds_excluding_initialization": 0.044209355,
+      "requested_incoming_points_per_second": 10000000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.216637534,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 3072,
+      "wall_seconds_including_initialization_and_output": 0.261043999
+    },
+    "paced-4096-100000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.0717406,
+        "p95": 0.078762764,
+        "p99": 0.078762764
+      },
+      "assembly": {
+        "assembled_points": 49152,
+        "dropped_points": 0,
+        "incoming_points": 49152,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.073128633,
+      "cpu_parse_assembly_seconds": 0.32147250800000027,
+      "dropped_points": 0,
+      "emitted_points": 49152,
+      "events_sha256": "ed4fcd770d1aaafc0d64624f13016ae362072fa54de9d91aa9789d0935999250",
+      "freshly_classified_points": 49152,
+      "freshly_classified_points_per_second": 64115.126389890895,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 350961664,
+      "incoming_points_per_second": 64115.126389890895,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "5a77d8acfce1aa0de775d13c4e1b5ada6a74c1be09df34cf7ab6591cdce2e733",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 4096,
+      "map_updates": 49152,
+      "map_updates_per_second": 64115.126389890895,
+      "max_replay_schedule_lag_seconds": 0.00111559,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 89675.23803847867,
+      "replay_incoming_points_per_second": 89675.23803847867,
+      "replay_map_updates_per_second": 89675.23803847867,
+      "replay_seconds_excluding_initialization": 0.548111174,
+      "requested_incoming_points_per_second": 100000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.21835223,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 49152,
+      "wall_seconds_including_initialization_and_output": 0.766620964
+    },
+    "no-python-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.012970802,
+        "p95": 0.724517995,
+        "p99": 0.724517995
+      },
+      "assembly": {
+        "assembled_points": 91117,
+        "dropped_points": 0,
+        "incoming_points": 91117,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 6,
+      "cpu_map_update_seconds": 0.139521715,
+      "cpu_parse_assembly_seconds": 0.6371903219999998,
+      "dropped_points": 0,
+      "emitted_points": 91117,
+      "events_sha256": "e7faa53b4d2767117851bb197c4c37dbac5f6d1a0d14c6dd2c2960a348a0c325",
+      "freshly_classified_points": 91117,
+      "freshly_classified_points_per_second": 75388.76112652752,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 442916864,
+      "incoming_points_per_second": 75388.76112652752,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "9b33b448486f7618ed8c91dcb759041997aa0010adffe34ae6d80bc374fe90b5",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 10942,
+      "map_updates": 13506,
+      "map_updates_per_second": 11174.650260378203,
+      "max_replay_schedule_lag_seconds": 0.0,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Unpaced replay wall rates including initialization/output; not sustainable live sensor rates",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 91906.03027250506,
+      "replay_incoming_points_per_second": 91906.03027250506,
+      "replay_map_updates_per_second": 13622.95559402146,
+      "replay_seconds_excluding_initialization": 0.991414815,
+      "requested_incoming_points_per_second": null,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 6,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.217107355,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 91117,
+      "wall_seconds_including_initialization_and_output": 1.20862843
+    },
+    "paced-4096-10000000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.065290716,
+        "p95": 0.073295858,
+        "p99": 0.073295858
+      },
+      "assembly": {
+        "assembled_points": 49152,
+        "dropped_points": 0,
+        "incoming_points": 49152,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.072695155,
+      "cpu_parse_assembly_seconds": 0.31998963200000013,
+      "dropped_points": 0,
+      "emitted_points": 49152,
+      "events_sha256": "cf5d8945b6cccddc9df47a9f13361130c930c772d4bda77fa95b848f6f0f357a",
+      "freshly_classified_points": 49152,
+      "freshly_classified_points_per_second": 71705.99931061754,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 350449664,
+      "incoming_points_per_second": 71705.99931061754,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "5a77d8acfce1aa0de775d13c4e1b5ada6a74c1be09df34cf7ab6591cdce2e733",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 4096,
+      "map_updates": 49152,
+      "map_updates_per_second": 71705.99931061754,
+      "max_replay_schedule_lag_seconds": 0.400839981,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 107513.98560044926,
+      "replay_incoming_points_per_second": 107513.98560044926,
+      "replay_map_updates_per_second": 107513.98560044926,
+      "replay_seconds_excluding_initialization": 0.45716843,
+      "requested_incoming_points_per_second": 10000000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.228109048,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 49152,
+      "wall_seconds_including_initialization_and_output": 0.685465658
+    },
+    "unet-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.014330297,
+        "p95": 0.71085055,
+        "p99": 0.71085055
+      },
+      "assembly": {
+        "assembled_points": 91117,
+        "dropped_points": 0,
+        "incoming_points": 91117,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 6,
+      "cpu_map_update_seconds": 0.142599433,
+      "cpu_parse_assembly_seconds": 0.6348131839999999,
+      "dropped_points": 0,
+      "emitted_points": 91117,
+      "events_sha256": "ad31ddfc55920815e73a32d387f0e0033601c6a927b75fe7b071e5e42bf2c488",
+      "freshly_classified_points": 91117,
+      "freshly_classified_points_per_second": 75390.40980851464,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 442806272,
+      "incoming_points_per_second": 75390.40980851464,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "9b33b448486f7618ed8c91dcb759041997aa0010adffe34ae6d80bc374fe90b5",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 10942,
+      "map_updates": 13506,
+      "map_updates_per_second": 11174.894639571086,
+      "max_replay_schedule_lag_seconds": 0.0,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Unpaced replay wall rates including initialization/output; not sustainable live sensor rates",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 92189.37959062794,
+      "replay_incoming_points_per_second": 92189.37959062794,
+      "replay_map_updates_per_second": 13664.955614770251,
+      "replay_seconds_excluding_initialization": 0.988367645,
+      "requested_incoming_points_per_second": null,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 6,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.220082924,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 91117,
+      "wall_seconds_including_initialization_and_output": 1.208601999
+    },
+    "paced-4096-1000000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.064781973,
+        "p95": 0.073600749,
+        "p99": 0.073600749
+      },
+      "assembly": {
+        "assembled_points": 49152,
+        "dropped_points": 0,
+        "incoming_points": 49152,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.073003985,
+      "cpu_parse_assembly_seconds": 0.318979336,
+      "dropped_points": 0,
+      "emitted_points": 49152,
+      "events_sha256": "34c61ec4e0caee47365a68ca945fe64982a9b01c2755ad2bf54fb33111ae38f5",
+      "freshly_classified_points": 49152,
+      "freshly_classified_points_per_second": 71926.24241290418,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 350699520,
+      "incoming_points_per_second": 71926.24241290418,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "5a77d8acfce1aa0de775d13c4e1b5ada6a74c1be09df34cf7ab6591cdce2e733",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 4096,
+      "map_updates": 49152,
+      "map_updates_per_second": 71926.24241290418,
+      "max_replay_schedule_lag_seconds": 0.356944047,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 109101.89579904162,
+      "replay_incoming_points_per_second": 109101.89579904162,
+      "replay_map_updates_per_second": 109101.89579904162,
+      "replay_seconds_excluding_initialization": 0.450514628,
+      "requested_incoming_points_per_second": 1000000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.232714727,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 49152,
+      "wall_seconds_including_initialization_and_output": 0.683366715
+    },
+    "synthetic-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.01185734,
+        "p95": 0.013939851,
+        "p99": 0.013939851
+      },
+      "assembly": {
+        "assembled_points": 3108,
+        "dropped_points": 0,
+        "incoming_points": 3108,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 4,
+      "cpu_map_update_seconds": 0.004873173000000001,
+      "cpu_parse_assembly_seconds": 0.021550527000000003,
+      "dropped_points": 0,
+      "emitted_points": 3108,
+      "events_sha256": "0ca1c694fa962af47c1a3cf419d766be96b35725046118f21a72a2c46ad348c4",
+      "freshly_classified_points": 3108,
+      "freshly_classified_points_per_second": 11529.273089607146,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 341262336,
+      "incoming_points_per_second": 11529.273089607146,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "c28d25cf20bafe90a633bbe39f5569b43f301cbe79189c325a7cbeceef7fd4c7",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 2192,
+      "map_updates": 3108,
+      "map_updates_per_second": 11529.273089607146,
+      "max_replay_schedule_lag_seconds": 0.0,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Unpaced replay wall rates including initialization/output; not sustainable live sensor rates",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 70260.40341136412,
+      "replay_incoming_points_per_second": 70260.40341136412,
+      "replay_map_updates_per_second": 70260.40341136412,
+      "replay_seconds_excluding_initialization": 0.044235442,
+      "requested_incoming_points_per_second": null,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 4,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              8.0,
+              6.0,
+              4.0
+            ],
+            "dimensions_xyz": [
+              8,
+              6,
+              4
+            ],
+            "overlap_policy": "last_wins",
+            "overlap_xyz": [
+              0.25,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float32",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          "las_classes": [
+            2,
+            5,
+            6
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; AI-assisted with OpenAI Codex",
+            "notice": "Synthetic engineering fixture; class mapping is explicit test semantics, not validated survey accuracy",
+            "source": "examples/export_reference.py in this repository",
+            "spdx": "MIT",
+            "weights": "Original analytic constants; no trained or third-party weights"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float32",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              3,
+              4,
+              6,
+              8
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.225177579,
+        "manifest_sha256": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 3939115
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 3108,
+      "wall_seconds_including_initialization_and_output": 0.269574671
+    },
+    "out-of-order-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.066016979,
+        "p95": 0.072459181,
+        "p99": 0.072459181
+      },
+      "assembly": {
+        "assembled_points": 45056,
+        "dropped_points": 4096,
+        "incoming_points": 49152,
+        "late_points": 3584,
+        "missing_sequences": 1,
+        "partial_frames": 1,
+        "rejected_chunks": 14
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 11,
+      "cpu_map_update_seconds": 0.066595613,
+      "cpu_parse_assembly_seconds": 0.31813664099999955,
+      "dropped_points": 0,
+      "emitted_points": 45056,
+      "events_sha256": "a42b3124f16b1de64ae862eb298c5d9f7ad5c32996765c4920d32aed4c83f0bf",
+      "freshly_classified_points": 45056,
+      "freshly_classified_points_per_second": 65974.22025129707,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 350584832,
+      "incoming_points_per_second": 71971.87663777861,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "fb1a4cfeb2ad82ab8fa7f556e1cd68002895ffd29d843994644fc532a0ff03f9",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 4096,
+      "map_updates": 45056,
+      "map_updates_per_second": 65974.22025129707,
+      "max_replay_schedule_lag_seconds": 0.0,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Unpaced replay wall rates including initialization/output; not sustainable live sensor rates",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 98878.6360338241,
+      "replay_incoming_points_per_second": 107867.60294598994,
+      "replay_map_updates_per_second": 98878.6360338241,
+      "replay_seconds_excluding_initialization": 0.455669716,
+      "requested_incoming_points_per_second": null,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 11,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.227044086,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "FAIL",
+      "submitted_points": 45056,
+      "wall_seconds_including_initialization_and_output": 0.682933422
+    },
+    "packet-loss-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.065236148,
+        "p95": 0.07285461,
+        "p99": 0.07285461
+      },
+      "assembly": {
+        "assembled_points": 45056,
+        "dropped_points": 3840,
+        "incoming_points": 48896,
+        "late_points": 3072,
+        "missing_sequences": 1,
+        "partial_frames": 1,
+        "rejected_chunks": 12
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 11,
+      "cpu_map_update_seconds": 0.066883546,
+      "cpu_parse_assembly_seconds": 0.3172331720000002,
+      "dropped_points": 0,
+      "emitted_points": 45056,
+      "events_sha256": "9bb363dd657ca9149740230c13a651a592e7318aeb5a3e655a15d416b7f7877e",
+      "freshly_classified_points": 45056,
+      "freshly_classified_points_per_second": 66418.18419500766,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 350834688,
+      "incoming_points_per_second": 72078.82489344581,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "a3807fa26db150e1c13e6cd1bc796572f3d27bda8707ef030071936c818efab0",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 4096,
+      "map_updates": 45056,
+      "map_updates_per_second": 66418.18419500766,
+      "max_replay_schedule_lag_seconds": 0.0,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Unpaced replay wall rates including initialization/output; not sustainable live sensor rates",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 100001.46730668582,
+      "replay_incoming_points_per_second": 108524.31963396017,
+      "replay_map_updates_per_second": 100001.46730668582,
+      "replay_seconds_excluding_initialization": 0.450553389,
+      "requested_incoming_points_per_second": null,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 11,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.227568161,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "FAIL",
+      "submitted_points": 45056,
+      "wall_seconds_including_initialization_and_output": 0.67836844
+    },
+    "paced-256-1000000-receipt": {
+      "acceptance_to_output_seconds": {
+        "p50": 0.003732631,
+        "p95": 0.006820803,
+        "p99": 0.006820803
+      },
+      "assembly": {
+        "assembled_points": 3072,
+        "dropped_points": 0,
+        "incoming_points": 3072,
+        "late_points": 0,
+        "missing_sequences": 0,
+        "partial_frames": 0,
+        "rejected_chunks": 0
+      },
+      "backpressure_policy": "block",
+      "cancelled": false,
+      "completed_windows": 12,
+      "cpu_map_update_seconds": 0.004933122999999999,
+      "cpu_parse_assembly_seconds": 0.02039459,
+      "dropped_points": 0,
+      "emitted_points": 3072,
+      "events_sha256": "7e52593a116557c583b321f99b42242fcf71ccfd5e1cf3e2167fe402ce9e6982",
+      "freshly_classified_points": 3072,
+      "freshly_classified_points_per_second": 11423.65177853466,
+      "geometry_only_ingested_points": 0,
+      "host_peak_rss_bytes": 342835200,
+      "incoming_points_per_second": 11423.65177853466,
+      "inferred_classes_reused_points": 0,
+      "input_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "input_sha256": "f5c3fea2dc02ea1197baca65220aef5c1720361d6c9eb8b026c9692f0de97bde",
+      "latency_scope": "Nearest-rank percentiles of latest at most 4096 complete frames; monotonic first-chunk acceptance through sink writes",
+      "map_resident_voxels": 2179,
+      "map_updates": 3072,
+      "map_updates_per_second": 11423.65177853466,
+      "max_replay_schedule_lag_seconds": 0.026326534,
+      "output_queue": {
+        "capacity_frames": 2,
+        "high_water_frames": 1,
+        "producer_waits": 0,
+        "rejected_pushes": 0
+      },
+      "rate_scope": "Short point-count-paced offline replay; schedule lag explicit; not full B5 sustainable sensor qualification",
+      "rejected_frames": 0,
+      "replay_freshly_classified_points_per_second": 67161.08183210535,
+      "replay_incoming_points_per_second": 67161.08183210535,
+      "replay_map_updates_per_second": 67161.08183210535,
+      "replay_seconds_excluding_initialization": 0.045740776,
+      "requested_incoming_points_per_second": 1000000,
+      "schema": "synrex.streaming_replay.v1",
+      "session": {
+        "artifacts": {
+          "engine": {
+            "path": "model.engine",
+            "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+          },
+          "license": {
+            "path": "MODEL_LICENSE.txt",
+            "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+          }
+        },
+        "backend": "CUDA/TensorRT",
+        "completed_windows": 12,
+        "contract": {
+          "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+          "features": [
+            {
+              "kind": "occupancy",
+              "offset": 0.0,
+              "scale": 1.0
+            },
+            {
+              "kind": "count",
+              "offset": 0.0,
+              "scale": 0.0625
+            },
+            {
+              "kind": "local_z",
+              "offset": 0.0,
+              "scale": 0.03125
+            },
+            {
+              "kind": "mean_intensity",
+              "offset": 0.0,
+              "scale": 1.5259021896696422e-05
+            }
+          ],
+          "geometry": {
+            "block_size_xyz": [
+              32.0,
+              32.0,
+              32.0
+            ],
+            "dimensions_xyz": [
+              32,
+              32,
+              32
+            ],
+            "overlap_policy": "first_wins",
+            "overlap_xyz": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "voxel_size_xyz": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "input": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "features",
+            "shape": [
+              1,
+              4,
+              32,
+              32,
+              32
+            ]
+          },
+          "las_classes": [
+            1,
+            2,
+            200,
+            6,
+            9,
+            17,
+            201
+          ],
+          "licensing": {
+            "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+            "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+            "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+            "spdx": "MIT",
+            "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+          },
+          "limits": {
+            "max_blocks": 10000,
+            "max_memberships": 4000000,
+            "max_points": 1000000,
+            "max_tensor_bytes": 16777216
+          },
+          "output": {
+            "dtype": "float16",
+            "layout": "NCZYX",
+            "name": "scores",
+            "shape": [
+              1,
+              7,
+              32,
+              32,
+              32
+            ]
+          }
+        },
+        "cuda_streams": 1,
+        "engine_deserializations": 1,
+        "execution_contexts": 1,
+        "initialization_seconds": 0.222981444,
+        "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+        "max_window_points": 65536,
+        "package_verifications": 1,
+        "schema": "synrex.persistent_session.v1",
+        "target": {
+          "architecture": "x86_64",
+          "cuda_runtime": 13020,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "sm": 89,
+          "tensorrt": "101601"
+        },
+        "tracked_peak_requested_cuda_bytes": 8199355
+      },
+      "source_timestamp_to_wall_age": "NOT_RUN: offline historical UNIX timestamps; no wall-clock replay pacing",
+      "status": "PASS",
+      "submitted_points": 3072,
+      "wall_seconds_including_initialization_and_output": 0.26891576
+    }
+  },
+  "model_packages_unchanged": true,
+  "binary_bytes_unchanged": true,
+  "source_transfer": {
+    "status": "PASS",
+    "git_archive_sha256": "18133e5ec5913bf4cc84482baedb8dd4a12fa3ec072da1b0505b1146f5957595",
+    "local_remote_archive_sha256_match": true,
+    "git_get_tar_commit_id": "a20051f2490adb92a6cc36f390906639b875ea20",
+    "public_git_push": false
+  }
+}

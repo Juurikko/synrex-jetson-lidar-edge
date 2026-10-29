@@ -1,0 +1,30 @@
+{
+  "schema": "synrex.streaming_r2.decoded_review.v1",
+  "status": "PASS",
+  "video_sha256": "4840f129c253c903ec4141932a5536d68cb27fd83ac6db0f7223078c7c786725",
+  "selected_frame_indices": [
+    48,
+    168,
+    360,
+    576,
+    792,
+    936,
+    1104,
+    1224
+  ],
+  "selected_frames_sha256": {
+    "frame-01.png": "4c283fc4cce26bbbb7e2f6a3aec32a7923608ddaa68708b80a568063be84d055",
+    "frame-02.png": "b5c1880ee37b482a9514ea14ccc5363be5a14e5aa0ebc703ffd987ea3cd2203c",
+    "frame-03.png": "79e5cf68ca4b16f7b544230b077e4e8669a54f3bc0b5435bd9d249d262e77df6",
+    "frame-04.png": "99264747fd5c885e0f182ae8ec37a39ca0dca559c0498565d78cd601df9e9b76",
+    "frame-05.png": "80806e39b215f08c5f7dafc2a50e6fdffa6ab6f714aa32933b3d38d06ab67898",
+    "frame-06.png": "1dbeb50b4596ac05553daae96b883a5123c544d9593324ae0462f16cf8ade5ab",
+    "frame-07.png": "b7c9b9f7814fe205b07dcdf6f116fe8ab26265474047cac22aa1aa7613a729aa",
+    "frame-08.png": "c16b03168afd6316b6ae9b8d9a71919ffe9ba84f9fee1c7e99ecf61a35f5bc8b"
+  },
+  "full_decode_frames": 1296,
+  "width": 1080,
+  "height": 1350,
+  "seconds": 54,
+  "checks": "Final two-scene video: all chapters independently decoded for visual inspection; original media QA also decodes all frames."
+}

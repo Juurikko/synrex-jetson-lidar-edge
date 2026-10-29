@@ -1,0 +1,22 @@
+{
+  "initial_map_proof": {
+    "status": "FAIL",
+    "finding": "Too small crop, excessive empty margins",
+    "correction": "Closer coupled camera and 1000px focal for map context"
+  },
+  "initial_full_film": {
+    "status": "FAIL",
+    "finding": "Crane intersects subtitle at 13–17s",
+    "correction": "720px tower focal, fresh proof inspected and full rerender"
+  },
+  "initial_preview_encode": {
+    "status": "FAIL",
+    "finding": "540x675 has odd height incompatible with yuv420p",
+    "correction": "432x540 even dimensions, exact portrait ratio"
+  },
+  "model_manifest_hash_check": {
+    "status": "FAIL",
+    "finding": "Attempted to hash .srxmodel directory as a file",
+    "correction": "Hash each model payload file separately"
+  }
+}

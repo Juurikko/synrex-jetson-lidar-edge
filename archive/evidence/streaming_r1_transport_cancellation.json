@@ -1,0 +1,1335 @@
+{
+  "schema": "synrex.streaming_r1.campaign.v1",
+  "trials": [
+    {
+      "schema": "synrex.streaming_r1.transport_trial.v1",
+      "status": "FAIL",
+      "source_commit": "f39fa29",
+      "rate": 1000000,
+      "seconds": 30,
+      "warmup_seconds": 5,
+      "cells": 65536,
+      "churn_mm": 64000,
+      "resource_preflight": {
+        "sample": {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 0,
+          "used_mib": 130,
+          "free_mib": 24009,
+          "power_watts": 3.91
+        },
+        "windows_desktop_processes": [
+          "ShellExperienceHost.exe",
+          "dwm",
+          "explorer.exe",
+          "ChatGPT.exe",
+          "SystemSettings.exe",
+          "ShellHost.exe",
+          "SearchHost.exe",
+          "TextInputHost.exe"
+        ],
+        "reported_linux_compute_processes": 0
+      },
+      "device_samples": [
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 26,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 13.48,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10501,
+          "process_rss_bytes": {
+            "receive": 339734528,
+            "subscribe": 204922880,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 749555712,
+          "wall_seconds": 1.0558370540384203
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 31.86,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 361771008,
+            "subscribe": 206848000,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 773517312,
+          "wall_seconds": 1.4555586278438568
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 49.33,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 358301696,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 771772416,
+          "wall_seconds": 1.8460005188826472
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.43,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 357556224,
+            "subscribe": 210796544,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 773251072,
+          "wall_seconds": 2.2336592350620776
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.51,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 357556224,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 771026944,
+          "wall_seconds": 2.6234991310629994
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.56,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 358043648,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 771514368,
+          "wall_seconds": 3.0253681710455567
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.43,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 365408256,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 778878976,
+          "wall_seconds": 3.423812113935128
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.5,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363548672,
+            "subscribe": 211922944,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 780369920,
+          "wall_seconds": 3.8210368410218507
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.7,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363556864,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777027584,
+          "wall_seconds": 4.213030706858262
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.87,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363556864,
+            "subscribe": 210186240,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 778641408,
+          "wall_seconds": 4.60753487306647
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.81,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363556864,
+            "subscribe": 208781312,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777236480,
+          "wall_seconds": 4.99739166488871
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.72,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 365428736,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 778899456,
+          "wall_seconds": 5.3885136200115085
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.9,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 208760832,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777220096,
+          "wall_seconds": 5.785727256909013
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.99,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777031680,
+          "wall_seconds": 6.177632594015449
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 4,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 54.03,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777031680,
+          "wall_seconds": 6.566967984894291
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.76,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777031680,
+          "wall_seconds": 6.961786017054692
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 3,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 53.52,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 208572416,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 777031680,
+          "wall_seconds": 7.355658074840903
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 6,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 47.03,
+          "sm_clock_mhz": 2565,
+          "memory_clock_mhz": 10251,
+          "process_rss_bytes": {
+            "receive": 363560960,
+            "subscribe": 212275200,
+            "send": 204898304
+          },
+          "combined_rss_bytes": 780734464,
+          "wall_seconds": 7.757625357946381
+        },
+        {
+          "gpu": "NVIDIA GeForce RTX 4090",
+          "utilization_percent": 8,
+          "used_mib": 524,
+          "free_mib": 23615,
+          "power_watts": 30.76,
+          "sm_clock_mhz": 660,
+          "memory_clock_mhz": 810,
+          "process_rss_bytes": {
+            "receive": 440922112,
+            "subscribe": 208572416,
+            "send": 0
+          },
+          "combined_rss_bytes": 649494528,
+          "wall_seconds": 8.154607500880957
+        }
+      ],
+      "hardware_stop": null,
+      "controller_error": null,
+      "requested_cancel_seconds": 7,
+      "native": {
+        "receive": {
+          "cpu_transport_validation_seconds": 0.16057919800000015,
+          "cpu_wire_decode_seconds": 0.4544917329999997,
+          "error": "receiver cancelled",
+          "failure_phase": "measured",
+          "fresh_execution_count_match": false,
+          "freshly_classified_measured_points": 1916928,
+          "freshly_classified_points_per_second": 994019.9912105108,
+          "inference": {
+            "count": 117,
+            "maximum_seconds": 0.00447012,
+            "mean_seconds": 0.0028514178717948717,
+            "p50_seconds_upper_bound": 0.002752512,
+            "p95_seconds_upper_bound": 0.003997696,
+            "p99_seconds_upper_bound": 0.004128768,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "initialization_seconds": 0.813871899,
+          "input_queue_wait": {
+            "count": 117,
+            "maximum_seconds": 5.4185e-05,
+            "mean_seconds": 3.855653846153846e-05,
+            "p50_seconds_upper_bound": 3.8912e-05,
+            "p95_seconds_upper_bound": 4.5056e-05,
+            "p99_seconds_upper_bound": 5.2224e-05,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "input_sha256": "3c2351c9aeb9f9e05cc3caa1b9069b87d5091174b01f2563e0814e3e8f865aa0",
+          "map": {
+            "delta_events": 6930432,
+            "eviction_scanned_cells": 0,
+            "existing_updates": 5682146,
+            "insertions": 1248286,
+            "late_rejections": 0,
+            "observations": 6930432,
+            "peak_cells": 65536,
+            "removals": 1182750
+          },
+          "map_profile": {
+            "active_cells": 65536,
+            "cell_payload_bytes": 64,
+            "detailed_timers_enabled": false,
+            "effective_policy": "indexed",
+            "expiration_enabled": false,
+            "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+            "index_entries": 65536,
+            "intrusive_index_bytes_per_cell": 40,
+            "node_allocator_overhead_included": false,
+            "ordered_key_bytes": 24,
+            "requested_policy": "indexed",
+            "revision_overflow_fallback": false,
+            "stage_seconds": {
+              "coordinate_key": 0.0,
+              "delta_construction": 0.0,
+              "existing_update": 0.0,
+              "expiration": 0.0,
+              "full_snapshot": 0.0,
+              "index_maintenance": 0.0,
+              "insertion": 0.0,
+              "lookup": 0.0,
+              "removal": 0.0,
+              "victim_selection": 0.0
+            },
+            "validation_seconds": 0.143035264
+          },
+          "map_seconds": 1.0011666520000002,
+          "map_snapshot_sha256": "b68acbae3d8eba138260c891cf7a78c2d800a7b8ff3bd2c07157ffdc760e43f5",
+          "map_updates": 6930432,
+          "map_updates_per_second": 994019.9912105108,
+          "measured_map_operations": {
+            "delta_events": 1916928,
+            "eviction_scanned_cells": 0,
+            "existing_updates": 1571567,
+            "insertions": 345361,
+            "late_rejections": 0,
+            "observations": 1916928,
+            "peak_cells": 65536,
+            "removals": 345361
+          },
+          "measured_map_updates": 1916928,
+          "measured_rss_range_bytes": 0,
+          "measured_seconds": 1.928460209,
+          "measured_stage_seconds": {
+            "acceptance_to_inference_complete_seconds": 0.604791732,
+            "cpu_geometry_seconds": 0.06267255499999999,
+            "cpu_point_conversion_seconds": 0.021883923999999996,
+            "cuda_preparation_seconds": 0.009423520014155652,
+            "cuda_scatter_seconds": 0.0036224959669634705,
+            "d2h_seconds": 0.023540288068354134,
+            "geometry_assignment_seconds": 0.045862311999999995,
+            "geometry_grouping_seconds": 0.0068002509999999985,
+            "geometry_member_sort_seconds": 0.005539670999999999,
+            "geometry_minimum_seconds": 0.004394641000000001,
+            "geometry_record_sort_seconds": 0.0,
+            "h2d_and_zero_seconds": 0.04646150399465112,
+            "input_queue_wait_seconds": 0.004511116000000003,
+            "output_queue_wait_seconds": 0.003437418000000002,
+            "tensorrt_seconds": 0.1014971202537417,
+            "window_seconds": 0.33361589299999983
+          },
+          "mode": "receive",
+          "model_executions": 1664,
+          "output_delivery": {
+            "complete_point_records_sent": 6930432,
+            "delivered_messages": 425,
+            "error": "",
+            "failed_messages": 0,
+            "failed_point_deliveries": 0,
+            "queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 0
+            }
+          },
+          "output_encoding_seconds": 0.8925162760000009,
+          "output_points": 6930432,
+          "output_sha256": "f8a526cd4d66d968761c3cb242c57ba081ac017fc3473405706bbf3d1f138b58",
+          "peak_rss_bytes": 479629312,
+          "receive_to_publication": {
+            "count": 1916928,
+            "maximum_seconds": 0.013090011,
+            "mean_seconds": 0.009908213982905983,
+            "p50_seconds_upper_bound": 0.009961472,
+            "p95_seconds_upper_bound": 0.011534336,
+            "p99_seconds_upper_bound": 0.011534336,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "received_frames": 424,
+          "received_points": 6946816,
+          "receiver_time_definition": "first successful envelope recv syscall; includes payload receive/decode; not physical packet/sensor arrival",
+          "reconnects": 0,
+          "resources_after_service_before_destruction": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 5250235,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "schema": "synrex.streaming_r1.live.v1",
+          "service": {
+            "cancelled": true,
+            "completed_windows": 424,
+            "dropped_points": 16384,
+            "emitted_points": 6930432,
+            "freshly_classified_points": 6946816,
+            "geometry_only_ingested_points": 0,
+            "inferred_classes_reused_points": 0,
+            "input_queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 0
+            },
+            "output_queue": {
+              "capacity_frames": 2,
+              "depth_frames": 0,
+              "high_water_frames": 1,
+              "oldest_queue_wait_seconds": 0.0,
+              "producer_waits": 0,
+              "rejected_pushes": 1
+            },
+            "rejected_frames": 0,
+            "session": {
+              "artifacts": {
+                "engine": {
+                  "path": "model.engine",
+                  "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+                },
+                "license": {
+                  "path": "MODEL_LICENSE.txt",
+                  "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+                }
+              },
+              "backend": "CUDA/TensorRT",
+              "classified_source_points": 6946816,
+              "completed_windows": 424,
+              "contract": {
+                "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+                "features": [
+                  {
+                    "kind": "occupancy",
+                    "offset": 0.0,
+                    "scale": 1.0
+                  },
+                  {
+                    "kind": "count",
+                    "offset": 0.0,
+                    "scale": 0.0625
+                  },
+                  {
+                    "kind": "local_z",
+                    "offset": 0.0,
+                    "scale": 0.03125
+                  },
+                  {
+                    "kind": "mean_intensity",
+                    "offset": 0.0,
+                    "scale": 1.5259021896696422e-05
+                  }
+                ],
+                "geometry": {
+                  "block_size_xyz": [
+                    32.0,
+                    32.0,
+                    32.0
+                  ],
+                  "dimensions_xyz": [
+                    32,
+                    32,
+                    32
+                  ],
+                  "overlap_policy": "first_wins",
+                  "overlap_xyz": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "voxel_size_xyz": [
+                    1.0,
+                    1.0,
+                    1.0
+                  ]
+                },
+                "input": {
+                  "dtype": "float16",
+                  "layout": "NCZYX",
+                  "name": "features",
+                  "shape": [
+                    1,
+                    4,
+                    32,
+                    32,
+                    32
+                  ]
+                },
+                "las_classes": [
+                  1,
+                  2,
+                  200,
+                  6,
+                  9,
+                  17,
+                  201
+                ],
+                "licensing": {
+                  "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+                  "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+                  "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+                  "spdx": "MIT",
+                  "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+                },
+                "limits": {
+                  "max_blocks": 10000,
+                  "max_memberships": 4000000,
+                  "max_points": 1000000,
+                  "max_tensor_bytes": 16777216
+                },
+                "output": {
+                  "dtype": "float16",
+                  "layout": "NCZYX",
+                  "name": "scores",
+                  "shape": [
+                    1,
+                    7,
+                    32,
+                    32,
+                    32
+                  ]
+                }
+              },
+              "cuda_streams": 1,
+              "engine_deserializations": 1,
+              "execution_contexts": 1,
+              "geometry_mode": "radix",
+              "initialization_seconds": 0.813855789,
+              "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+              "max_window_points": 16384,
+              "package_verifications": 1,
+              "pinned_host_bytes": 0,
+              "pinned_staging": false,
+              "schema": "synrex.persistent_session.v1",
+              "successful_enqueue_calls": 1668,
+              "target": {
+                "architecture": "x86_64",
+                "cuda_runtime": 13020,
+                "gpu_name": "NVIDIA GeForce RTX 4090",
+                "sm": 89,
+                "tensorrt": "101601"
+              },
+              "tracked_peak_requested_cuda_bytes": 5250235
+            },
+            "status": "FAIL",
+            "submitted_points": 6946816
+          },
+          "socket_receive_wall_seconds": 6.425573603000007,
+          "source_to_publication": {
+            "count": 1916928,
+            "maximum_seconds": 0.029931581,
+            "mean_seconds": 0.02679784004273504,
+            "p50_seconds_upper_bound": 0.026738688,
+            "p95_seconds_upper_bound": 0.028311552,
+            "p99_seconds_upper_bound": 0.02883584,
+            "relative_bin_width_maximum": 0.03125
+          },
+          "status": "FAIL",
+          "stop_reason": "receiver cancelled",
+          "timeline_first_windows": [
+            {
+              "acceptance_to_inference_complete_seconds": 0.008583162,
+              "completed_inference_blocks": 4,
+              "cpu_geometry_seconds": 0.0008381,
+              "cpu_point_conversion_seconds": 0.00034563,
+              "cuda_preparation_seconds": 0.0017477119779214262,
+              "cuda_scatter_seconds": 2.4799999315291643e-05,
+              "d2h_seconds": 0.00014803199470043182,
+              "freshly_classified_points": 16384,
+              "geometry_assignment_seconds": 0.00055647,
+              "geometry_boundary_fallback_points": 0,
+              "geometry_direct_points": 16384,
+              "geometry_grouping_seconds": 0.00016253,
+              "geometry_member_sort_seconds": 7.504e-05,
+              "geometry_minimum_seconds": 4.158e-05,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 0.0006380159901455046,
+              "inference_complete_steady_ns": 1145650154727639,
+              "input_queue_wait_seconds": 5.5073e-05,
+              "occupied_voxels": 3048,
+              "output_queue_wait_seconds": 5.4584e-05,
+              "tensorrt_seconds": 0.0008970239907503128,
+              "timeline_blocks": [
+                {
+                  "cuda_event_h2d_zero_seconds": 0.00037785598635673524,
+                  "cuda_event_preparation_seconds": 0.0017192959785461426,
+                  "cuda_event_scatter_seconds": 1.0239999741315842e-05,
+                  "cuda_event_tensorrt_seconds": 0.0004526079893112183,
+                  "host_after_stream_sync_offset_seconds": 0.004309618,
+                  "host_submission_begin_offset_seconds": 0.001664428
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 6.553599983453751e-05,
+                  "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                  "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                  "cuda_event_tensorrt_seconds": 0.00014643199741840363,
+                  "host_after_stream_sync_offset_seconds": 0.004596598,
+                  "host_submission_begin_offset_seconds": 0.004312938
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 8.191999979317189e-06,
+                  "cuda_event_preparation_seconds": 8.191999979317189e-06,
+                  "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                  "cuda_event_tensorrt_seconds": 0.0001505279988050461,
+                  "host_after_stream_sync_offset_seconds": 0.004810328,
+                  "host_submission_begin_offset_seconds": 0.004598088
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 6.067200005054474e-05,
+                  "cuda_event_preparation_seconds": 9.983999654650688e-06,
+                  "cuda_event_scatter_seconds": 4.31999983265996e-06,
+                  "cuda_event_tensorrt_seconds": 0.00014745600521564483,
+                  "host_after_stream_sync_offset_seconds": 0.005070308,
+                  "host_submission_begin_offset_seconds": 0.004811498
+                }
+              ],
+              "window_seconds": 0.005459129,
+              "window_started_steady_ns": 1145650149261950
+            },
+            {
+              "acceptance_to_inference_complete_seconds": 0.004460041,
+              "completed_inference_blocks": 4,
+              "cpu_geometry_seconds": 0.00056114,
+              "cpu_point_conversion_seconds": 0.0001996,
+              "cuda_preparation_seconds": 4.5056000351905825e-05,
+              "cuda_scatter_seconds": 1.8431999720633032e-05,
+              "d2h_seconds": 0.00012665599584579467,
+              "freshly_classified_points": 16384,
+              "geometry_assignment_seconds": 0.00042304,
+              "geometry_boundary_fallback_points": 2,
+              "geometry_direct_points": 16382,
+              "geometry_grouping_seconds": 5.149e-05,
+              "geometry_member_sort_seconds": 4.482e-05,
+              "geometry_minimum_seconds": 4.121e-05,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 0.000260672006290406,
+              "inference_complete_steady_ns": 1145650166982590,
+              "input_queue_wait_seconds": 3.37e-05,
+              "occupied_voxels": 2888,
+              "output_queue_wait_seconds": 3.2126e-05,
+              "tensorrt_seconds": 0.0005304320082068443,
+              "timeline_blocks": [
+                {
+                  "cuda_event_h2d_zero_seconds": 4.300799965858459e-05,
+                  "cuda_event_preparation_seconds": 1.1264000087976456e-05,
+                  "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                  "cuda_event_tensorrt_seconds": 0.00012492799758911133,
+                  "host_after_stream_sync_offset_seconds": 0.00117449,
+                  "host_submission_begin_offset_seconds": 0.0009079
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 2.8672000393271447e-05,
+                  "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                  "cuda_event_scatter_seconds": 4.0959999896585945e-06,
+                  "cuda_event_tensorrt_seconds": 0.00011468800157308579,
+                  "host_after_stream_sync_offset_seconds": 0.00137155,
+                  "host_submission_begin_offset_seconds": 0.00117671
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 4.403200000524521e-05,
+                  "cuda_event_preparation_seconds": 1.228800043463707e-05,
+                  "cuda_event_scatter_seconds": 4.0959999896585945e-06,
+                  "cuda_event_tensorrt_seconds": 0.00014131200313568116,
+                  "host_after_stream_sync_offset_seconds": 0.00163169,
+                  "host_submission_begin_offset_seconds": 0.00137311
+                },
+                {
+                  "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                  "cuda_event_preparation_seconds": 1.1264000087976456e-05,
+                  "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                  "cuda_event_tensorrt_seconds": 0.00014950400590896606,
+                  "host_after_stream_sync_offset_seconds": 0.00186463,
+                  "host_submission_begin_offset_seconds": 0.00163388
+                }
+              ],
+              "window_seconds": 0.00219442,
+              "window_started_steady_ns": 1145650164781830
+            }
+          ],
+          "unaccepted_decoded_points": 0,
+          "warmup_frames": 306,
+          "wire_frame_messages": 424,
+          "exit_code": 1,
+          "log_sha256": "bb33833adc2f08e5c2fbf42ec52cbf90e5d9931fe26c542d20b4ad07bac700d7",
+          "command": [
+            "<native>",
+            "receive",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "30",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "64000",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--geometry",
+            "radix"
+          ]
+        },
+        "subscribe": {
+          "error": "subscriber complete output coverage",
+          "mode": "subscribe",
+          "peak_rss_bytes": 378720256,
+          "receiver": {
+            "cpu_transport_validation_seconds": 0.16057919800000015,
+            "cpu_wire_decode_seconds": 0.4544917329999997,
+            "error": "receiver cancelled",
+            "fresh_execution_count_match": false,
+            "freshly_classified_measured_points": 1916928,
+            "freshly_classified_points_per_second": 994019.9912105108,
+            "inference": {
+              "count": 117,
+              "maximum_seconds": 0.00447012,
+              "mean_seconds": 0.0028514178717948717,
+              "p50_seconds_upper_bound": 0.002752512,
+              "p95_seconds_upper_bound": 0.003997696,
+              "p99_seconds_upper_bound": 0.004128768,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "initialization_seconds": 0.813871899,
+            "input_queue_wait": {
+              "count": 117,
+              "maximum_seconds": 5.4185e-05,
+              "mean_seconds": 3.855653846153846e-05,
+              "p50_seconds_upper_bound": 3.8912e-05,
+              "p95_seconds_upper_bound": 4.5056e-05,
+              "p99_seconds_upper_bound": 5.2224e-05,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "input_sha256": "3c2351c9aeb9f9e05cc3caa1b9069b87d5091174b01f2563e0814e3e8f865aa0",
+            "map": {
+              "delta_events": 6930432,
+              "eviction_scanned_cells": 0,
+              "existing_updates": 5682146,
+              "insertions": 1248286,
+              "late_rejections": 0,
+              "observations": 6930432,
+              "peak_cells": 65536,
+              "removals": 1182750
+            },
+            "map_profile": {
+              "active_cells": 65536,
+              "cell_payload_bytes": 64,
+              "detailed_timers_enabled": false,
+              "effective_policy": "indexed",
+              "expiration_enabled": false,
+              "expiration_reason": "No TTL or expiry exists in the frozen map policy",
+              "index_entries": 65536,
+              "intrusive_index_bytes_per_cell": 40,
+              "node_allocator_overhead_included": false,
+              "ordered_key_bytes": 24,
+              "requested_policy": "indexed",
+              "revision_overflow_fallback": false,
+              "stage_seconds": {
+                "coordinate_key": 0.0,
+                "delta_construction": 0.0,
+                "existing_update": 0.0,
+                "expiration": 0.0,
+                "full_snapshot": 0.0,
+                "index_maintenance": 0.0,
+                "insertion": 0.0,
+                "lookup": 0.0,
+                "removal": 0.0,
+                "victim_selection": 0.0
+              },
+              "validation_seconds": 0.143035264
+            },
+            "map_seconds": 1.0011666520000002,
+            "map_snapshot_sha256": "b68acbae3d8eba138260c891cf7a78c2d800a7b8ff3bd2c07157ffdc760e43f5",
+            "map_updates": 6930432,
+            "map_updates_per_second": 994019.9912105108,
+            "measured_map_operations": {
+              "delta_events": 1916928,
+              "eviction_scanned_cells": 0,
+              "existing_updates": 1571567,
+              "insertions": 345361,
+              "late_rejections": 0,
+              "observations": 1916928,
+              "peak_cells": 65536,
+              "removals": 345361
+            },
+            "measured_map_updates": 1916928,
+            "measured_rss_range_bytes": 0,
+            "measured_seconds": 1.928460209,
+            "measured_stage_seconds": {
+              "acceptance_to_inference_complete_seconds": 0.604791732,
+              "cpu_geometry_seconds": 0.06267255499999999,
+              "cpu_point_conversion_seconds": 0.021883923999999996,
+              "cuda_preparation_seconds": 0.009423520014155652,
+              "cuda_scatter_seconds": 0.0036224959669634705,
+              "d2h_seconds": 0.023540288068354134,
+              "geometry_assignment_seconds": 0.045862311999999995,
+              "geometry_grouping_seconds": 0.0068002509999999985,
+              "geometry_member_sort_seconds": 0.005539670999999999,
+              "geometry_minimum_seconds": 0.004394641000000001,
+              "geometry_record_sort_seconds": 0.0,
+              "h2d_and_zero_seconds": 0.04646150399465112,
+              "input_queue_wait_seconds": 0.004511116000000003,
+              "output_queue_wait_seconds": 0.003437418000000002,
+              "tensorrt_seconds": 0.1014971202537417,
+              "window_seconds": 0.33361589299999983
+            },
+            "mode": "receive",
+            "model_executions": 1664,
+            "output_encoding_seconds": 0.8925162760000009,
+            "output_points": 6930432,
+            "output_sha256": "f8a526cd4d66d968761c3cb242c57ba081ac017fc3473405706bbf3d1f138b58",
+            "peak_rss_bytes": 364871680,
+            "receive_to_publication": {
+              "count": 1916928,
+              "maximum_seconds": 0.013090011,
+              "mean_seconds": 0.009908213982905983,
+              "p50_seconds_upper_bound": 0.009961472,
+              "p95_seconds_upper_bound": 0.011534336,
+              "p99_seconds_upper_bound": 0.011534336,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "received_frames": 424,
+            "received_points": 6946816,
+            "receiver_time_definition": "first successful envelope recv syscall; includes payload receive/decode; not physical packet/sensor arrival",
+            "reconnects": 0,
+            "schema": "synrex.streaming_r1.live.v1",
+            "service": {
+              "cancelled": true,
+              "completed_windows": 424,
+              "dropped_points": 16384,
+              "emitted_points": 6930432,
+              "freshly_classified_points": 6946816,
+              "geometry_only_ingested_points": 0,
+              "inferred_classes_reused_points": 0,
+              "input_queue": {
+                "capacity_frames": 2,
+                "depth_frames": 0,
+                "high_water_frames": 1,
+                "oldest_queue_wait_seconds": 0.0,
+                "producer_waits": 0,
+                "rejected_pushes": 0
+              },
+              "output_queue": {
+                "capacity_frames": 2,
+                "depth_frames": 0,
+                "high_water_frames": 1,
+                "oldest_queue_wait_seconds": 0.0,
+                "producer_waits": 0,
+                "rejected_pushes": 1
+              },
+              "rejected_frames": 0,
+              "session": {
+                "artifacts": {
+                  "engine": {
+                    "path": "model.engine",
+                    "sha256": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd"
+                  },
+                  "license": {
+                    "path": "MODEL_LICENSE.txt",
+                    "sha256": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e"
+                  }
+                },
+                "backend": "CUDA/TensorRT",
+                "classified_source_points": 6946816,
+                "completed_windows": 424,
+                "contract": {
+                  "adapter": "DENSE_VOXEL_SEGMENTATION_V1",
+                  "features": [
+                    {
+                      "kind": "occupancy",
+                      "offset": 0.0,
+                      "scale": 1.0
+                    },
+                    {
+                      "kind": "count",
+                      "offset": 0.0,
+                      "scale": 0.0625
+                    },
+                    {
+                      "kind": "local_z",
+                      "offset": 0.0,
+                      "scale": 0.03125
+                    },
+                    {
+                      "kind": "mean_intensity",
+                      "offset": 0.0,
+                      "scale": 1.5259021896696422e-05
+                    }
+                  ],
+                  "geometry": {
+                    "block_size_xyz": [
+                      32.0,
+                      32.0,
+                      32.0
+                    ],
+                    "dimensions_xyz": [
+                      32,
+                      32,
+                      32
+                    ],
+                    "overlap_policy": "first_wins",
+                    "overlap_xyz": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "voxel_size_xyz": [
+                      1.0,
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "input": {
+                    "dtype": "float16",
+                    "layout": "NCZYX",
+                    "name": "features",
+                    "shape": [
+                      1,
+                      4,
+                      32,
+                      32,
+                      32
+                    ]
+                  },
+                  "las_classes": [
+                    1,
+                    2,
+                    200,
+                    6,
+                    9,
+                    17,
+                    201
+                  ],
+                  "licensing": {
+                    "author": "Tuomas Pietil\u00e4; architecture copyright Adrian Wolny",
+                    "notice": "MIT source/weights with IGN Etalab-2.0 attribution. LAS200=aggregate vegetation, LAS201=permanent aboveground structure are documented user-defined codes. Full model semantics in synrex.point_semantics.v1 sidecar.",
+                    "source": "tools/train_unet.py and pinned MIT pytorch-3dunet",
+                    "spdx": "MIT",
+                    "weights": "Trained from scratch on an explicitly recorded FRACTAL pilot; no pretrained checkpoint"
+                  },
+                  "limits": {
+                    "max_blocks": 10000,
+                    "max_memberships": 4000000,
+                    "max_points": 1000000,
+                    "max_tensor_bytes": 16777216
+                  },
+                  "output": {
+                    "dtype": "float16",
+                    "layout": "NCZYX",
+                    "name": "scores",
+                    "shape": [
+                      1,
+                      7,
+                      32,
+                      32,
+                      32
+                    ]
+                  }
+                },
+                "cuda_streams": 1,
+                "engine_deserializations": 1,
+                "execution_contexts": 1,
+                "geometry_mode": "radix",
+                "initialization_seconds": 0.813855789,
+                "manifest_sha256": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325",
+                "max_window_points": 16384,
+                "package_verifications": 1,
+                "pinned_host_bytes": 0,
+                "pinned_staging": false,
+                "schema": "synrex.persistent_session.v1",
+                "successful_enqueue_calls": 1668,
+                "target": {
+                  "architecture": "x86_64",
+                  "cuda_runtime": 13020,
+                  "gpu_name": "NVIDIA GeForce RTX 4090",
+                  "sm": 89,
+                  "tensorrt": "101601"
+                },
+                "tracked_peak_requested_cuda_bytes": 5250235
+              },
+              "status": "FAIL",
+              "submitted_points": 6946816
+            },
+            "socket_receive_wall_seconds": 6.425573603000007,
+            "source_to_publication": {
+              "count": 1916928,
+              "maximum_seconds": 0.029931581,
+              "mean_seconds": 0.02679784004273504,
+              "p50_seconds_upper_bound": 0.026738688,
+              "p95_seconds_upper_bound": 0.028311552,
+              "p99_seconds_upper_bound": 0.02883584,
+              "relative_bin_width_maximum": 0.03125
+            },
+            "status": "FAIL",
+            "timeline_first_windows": [
+              {
+                "acceptance_to_inference_complete_seconds": 0.008583162,
+                "completed_inference_blocks": 4,
+                "cpu_geometry_seconds": 0.0008381,
+                "cpu_point_conversion_seconds": 0.00034563,
+                "cuda_preparation_seconds": 0.0017477119779214262,
+                "cuda_scatter_seconds": 2.4799999315291643e-05,
+                "d2h_seconds": 0.00014803199470043182,
+                "freshly_classified_points": 16384,
+                "geometry_assignment_seconds": 0.00055647,
+                "geometry_boundary_fallback_points": 0,
+                "geometry_direct_points": 16384,
+                "geometry_grouping_seconds": 0.00016253,
+                "geometry_member_sort_seconds": 7.504e-05,
+                "geometry_minimum_seconds": 4.158e-05,
+                "geometry_record_sort_seconds": 0.0,
+                "h2d_and_zero_seconds": 0.0006380159901455046,
+                "inference_complete_steady_ns": 1145650154727639,
+                "input_queue_wait_seconds": 5.5073e-05,
+                "occupied_voxels": 3048,
+                "output_queue_wait_seconds": 5.4584e-05,
+                "tensorrt_seconds": 0.0008970239907503128,
+                "timeline_blocks": [
+                  {
+                    "cuda_event_h2d_zero_seconds": 0.00037785598635673524,
+                    "cuda_event_preparation_seconds": 0.0017192959785461426,
+                    "cuda_event_scatter_seconds": 1.0239999741315842e-05,
+                    "cuda_event_tensorrt_seconds": 0.0004526079893112183,
+                    "host_after_stream_sync_offset_seconds": 0.004309618,
+                    "host_submission_begin_offset_seconds": 0.001664428
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 6.553599983453751e-05,
+                    "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                    "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                    "cuda_event_tensorrt_seconds": 0.00014643199741840363,
+                    "host_after_stream_sync_offset_seconds": 0.004596598,
+                    "host_submission_begin_offset_seconds": 0.004312938
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 8.191999979317189e-06,
+                    "cuda_event_preparation_seconds": 8.191999979317189e-06,
+                    "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                    "cuda_event_tensorrt_seconds": 0.0001505279988050461,
+                    "host_after_stream_sync_offset_seconds": 0.004810328,
+                    "host_submission_begin_offset_seconds": 0.004598088
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 6.067200005054474e-05,
+                    "cuda_event_preparation_seconds": 9.983999654650688e-06,
+                    "cuda_event_scatter_seconds": 4.31999983265996e-06,
+                    "cuda_event_tensorrt_seconds": 0.00014745600521564483,
+                    "host_after_stream_sync_offset_seconds": 0.005070308,
+                    "host_submission_begin_offset_seconds": 0.004811498
+                  }
+                ],
+                "window_seconds": 0.005459129,
+                "window_started_steady_ns": 1145650149261950
+              },
+              {
+                "acceptance_to_inference_complete_seconds": 0.004460041,
+                "completed_inference_blocks": 4,
+                "cpu_geometry_seconds": 0.00056114,
+                "cpu_point_conversion_seconds": 0.0001996,
+                "cuda_preparation_seconds": 4.5056000351905825e-05,
+                "cuda_scatter_seconds": 1.8431999720633032e-05,
+                "d2h_seconds": 0.00012665599584579467,
+                "freshly_classified_points": 16384,
+                "geometry_assignment_seconds": 0.00042304,
+                "geometry_boundary_fallback_points": 2,
+                "geometry_direct_points": 16382,
+                "geometry_grouping_seconds": 5.149e-05,
+                "geometry_member_sort_seconds": 4.482e-05,
+                "geometry_minimum_seconds": 4.121e-05,
+                "geometry_record_sort_seconds": 0.0,
+                "h2d_and_zero_seconds": 0.000260672006290406,
+                "inference_complete_steady_ns": 1145650166982590,
+                "input_queue_wait_seconds": 3.37e-05,
+                "occupied_voxels": 2888,
+                "output_queue_wait_seconds": 3.2126e-05,
+                "tensorrt_seconds": 0.0005304320082068443,
+                "timeline_blocks": [
+                  {
+                    "cuda_event_h2d_zero_seconds": 4.300799965858459e-05,
+                    "cuda_event_preparation_seconds": 1.1264000087976456e-05,
+                    "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                    "cuda_event_tensorrt_seconds": 0.00012492799758911133,
+                    "host_after_stream_sync_offset_seconds": 0.00117449,
+                    "host_submission_begin_offset_seconds": 0.0009079
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 2.8672000393271447e-05,
+                    "cuda_event_preparation_seconds": 1.0239999741315842e-05,
+                    "cuda_event_scatter_seconds": 4.0959999896585945e-06,
+                    "cuda_event_tensorrt_seconds": 0.00011468800157308579,
+                    "host_after_stream_sync_offset_seconds": 0.00137155,
+                    "host_submission_begin_offset_seconds": 0.00117671
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 4.403200000524521e-05,
+                    "cuda_event_preparation_seconds": 1.228800043463707e-05,
+                    "cuda_event_scatter_seconds": 4.0959999896585945e-06,
+                    "cuda_event_tensorrt_seconds": 0.00014131200313568116,
+                    "host_after_stream_sync_offset_seconds": 0.00163169,
+                    "host_submission_begin_offset_seconds": 0.00137311
+                  },
+                  {
+                    "cuda_event_h2d_zero_seconds": 7.168000098317862e-06,
+                    "cuda_event_preparation_seconds": 1.1264000087976456e-05,
+                    "cuda_event_scatter_seconds": 5.119999870657921e-06,
+                    "cuda_event_tensorrt_seconds": 0.00014950400590896606,
+                    "host_after_stream_sync_offset_seconds": 0.00186463,
+                    "host_submission_begin_offset_seconds": 0.00163388
+                  }
+                ],
+                "window_seconds": 0.00219442,
+                "window_started_steady_ns": 1145650164781830
+              }
+            ],
+            "unaccepted_decoded_points": 0,
+            "warmup_frames": 306,
+            "wire_frame_messages": 424
+          },
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "schema": "synrex.streaming_r1.live.v1",
+          "status": "FAIL",
+          "validated_prefix": {
+            "frames": 423,
+            "map_updates": 6930432,
+            "points": 6930432,
+            "source_to_subscriber": {
+              "count": 1916928,
+              "maximum_seconds": 0.039362482,
+              "mean_seconds": 0.028266069803418805,
+              "p50_seconds_upper_bound": 0.028311552,
+              "p95_seconds_upper_bound": 0.03670016,
+              "p99_seconds_upper_bound": 0.037748736,
+              "relative_bin_width_maximum": 0.03125
+            }
+          },
+          "exit_code": 1,
+          "log_sha256": "98fea13f5c93db20333dc21b13d53b5c32287bfe30cce5db252ed1021567909b",
+          "command": [
+            "<native>",
+            "subscribe",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "30",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "64000",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--stall-ms",
+            "0"
+          ]
+        },
+        "send": {
+          "error": "socket send failure",
+          "mode": "send",
+          "peak_rss_bytes": 205660160,
+          "resources_at_exit": {
+            "live_pinned_host_bytes": 0,
+            "live_tracked_device_bytes": 0,
+            "scope": "Requested owned allocations only; driver context and untracked vendor caches excluded",
+            "status": "PASS"
+          },
+          "schema": "synrex.streaming_r1.live.v1",
+          "status": "FAIL",
+          "exit_code": 1,
+          "log_sha256": "638a4b332ae17062236800df8c50eeb9e52a8bee01e3c41b9eee0e3fe1b312e3",
+          "command": [
+            "<native>",
+            "send",
+            "--model",
+            "<model>",
+            "--source",
+            "<source>",
+            "--rate",
+            "1000000",
+            "--seconds",
+            "30",
+            "--warmup",
+            "5",
+            "--points",
+            "16384",
+            "--map-cells",
+            "65536",
+            "--churn-mm",
+            "64000",
+            "--validation-mode",
+            "decoded",
+            "--receipt",
+            "<receipt>",
+            "--reconnect",
+            "0"
+          ]
+        }
+      },
+      "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+      "binary_sha256": "85d09ceccffdceee7ce780746b3b495bbfa613a8e9e3b555cdcb779d50f204f2",
+      "model_before": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      },
+      "model_after": {
+        "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+        "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+        "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+      },
+      "sustained_claim": false
+    }
+  ],
+  "scope": "Controller completion does not override individual native FAILs"
+}

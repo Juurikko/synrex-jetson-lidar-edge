@@ -1,0 +1,22 @@
+{
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "render_device": "CPU only, Numba point projection and libx264 encoding",
+  "gpu_workload_control": "NOT_RUN",
+  "training": "NOT_RUN",
+  "new_neural_execution": "NOT_RUN",
+  "new_benchmarks": "NOT_RUN",
+  "commands": [
+    "python3 -m venv .venv",
+    ".venv/bin/pip install -r requirements-streaming-media-rc2.lock",
+    ".venv/bin/python tools/streaming_r2_rc3.py --stage proof",
+    "Decoded camera and ending proof at multiple timestamps with bundled FFmpeg; inspected using image viewer",
+    "Adjusted map crop after initial stills; adjusted crane focal after initial full-film decode",
+    ".venv/bin/python tools/streaming_r2_rc3.py --stage render",
+    ".venv/bin/python tools/streaming_r2_rc3_qa.py",
+    "Manual agent editorial review of decoded contact sheets/full-size frames/mobile reduction",
+    "Local source and evidence commits followed by tools/streaming_r2_rc3_package.py"
+  ],
+  "dependency_lock_sha256": "dd91773f212be3cbfaa1251d3018927355776f5d87fc607b419050a3f89a6678",
+  "publication": "NOT_RUN"
+}

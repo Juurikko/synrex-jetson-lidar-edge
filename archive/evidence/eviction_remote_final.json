@@ -1,0 +1,189 @@
+{
+  "schema": "synrex.eviction_remote_final.v1",
+  "status": "PASS",
+  "qualified_native_source_commit": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "archive_sha256": "01bd7ce98f406f7f72c162c7b35af6b81f67f2263bdd47f1c5b5b8c92a1a1984",
+  "archived_source_files": 325,
+  "source_mismatches": [],
+  "native_sha256": "e7a619ef494b4d200169b224113e5c761506d22f2df7f00c852032deb6028af9",
+  "sustain_sha256": "e4ea957c8b1f9fa7a8ea28b1bc1701ff29429eb2c0034efe6d1a160bbe887d7f",
+  "frozen_sustain_sha256": "a52d815dc923931845a85d1e080ce8d61c8ad6c9e95de95b226d263742a45a97",
+  "controller_files_sha256": {
+    "eviction_campaign.py": "5ad169a4aebed35cea18162f75788362595b4f48c5eb115e84c43104c9c65bc3",
+    "eviction_campaign_next.py": "cb73a0113654605b4397bb1e0ea54a413f727f5df2957c2f0583f0cc15623d55",
+    "eviction_campaign_final.py": "6efbd62632caef75d68fe4d5ba21968d8b3fbbdd4679c8387251a9ec7e276d49"
+  },
+  "models_final": {
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    },
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    }
+  },
+  "campaigns": {
+    "matched": {
+      "status": "PASS",
+      "model_unchanged": true,
+      "raw_receipt_sha256": "0d7b5c96c0b3b6550cbeb931813934fdbbe9ee1b43ce0e1469b354c2b1fd5d85",
+      "parity": [
+        {
+          "label": "original4096",
+          "status": "PASS",
+          "trials": [
+            "original4096-frozen",
+            "original4096-indexed-t1",
+            "original4096-indexed-t2"
+          ]
+        },
+        {
+          "label": "original65536",
+          "status": "PASS",
+          "trials": [
+            "original65536-frozen",
+            "original65536-indexed-t1",
+            "original65536-indexed-t2"
+          ]
+        }
+      ]
+    },
+    "sweep": {
+      "status": "PASS",
+      "model_unchanged": true,
+      "raw_receipt_sha256": "fb54b37ba7d1ba04089fec20d98406426309525948d5449588122d6149e99515",
+      "parity": [
+        {
+          "label": "churn65536-p256-50000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p256-50000-t1",
+            "churn65536-p256-50000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p256-100000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p256-100000-t1",
+            "churn65536-p256-100000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p4096-100000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p4096-100000-t1",
+            "churn65536-p4096-100000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p4096-250000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p4096-250000-t1",
+            "churn65536-p4096-250000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p4096-500000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p4096-500000-t1",
+            "churn65536-p4096-500000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p4096-750000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p4096-750000-t1",
+            "churn65536-p4096-750000-t2"
+          ]
+        },
+        {
+          "label": "churn65536-p4096-1000000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p4096-1000000-t1",
+            "churn65536-p4096-1000000-t2"
+          ]
+        }
+      ]
+    },
+    "stable": {
+      "status": "PASS",
+      "model_unchanged": true,
+      "raw_receipt_sha256": "a072b97d97b4135e5401ba4c64d24dda5171bb9bbee86fbef9caabc3e262022d",
+      "parity": [
+        {
+          "label": "stable-scene0-2000000",
+          "status": "PASS",
+          "trials": [
+            "stable-scene0-2000000-frozen",
+            "stable-scene0-2000000-indexed-t1",
+            "stable-scene0-2000000-indexed-t2"
+          ]
+        },
+        {
+          "label": "stable-scene0-3000000",
+          "status": "PASS",
+          "trials": [
+            "stable-scene0-3000000-frozen",
+            "stable-scene0-3000000-indexed-t1",
+            "stable-scene0-3000000-indexed-t2"
+          ]
+        },
+        {
+          "label": "stable-scene1-3000000",
+          "status": "PASS",
+          "trials": [
+            "stable-scene1-3000000-frozen",
+            "stable-scene1-3000000-indexed-t1",
+            "stable-scene1-3000000-indexed-t2"
+          ]
+        },
+        {
+          "label": "stable-scene2-2500000",
+          "status": "PASS",
+          "trials": [
+            "stable-scene2-2500000-frozen",
+            "stable-scene2-2500000-indexed-t1",
+            "stable-scene2-2500000-indexed-t2"
+          ]
+        }
+      ]
+    },
+    "full-window": {
+      "status": "PASS",
+      "model_unchanged": true,
+      "raw_receipt_sha256": "70e55593aef14a6012fa249d23e7a62ea445311f48bb6eb8d64c1486d576f594",
+      "parity": [
+        {
+          "label": "churn65536-p16384-2000000",
+          "status": "PASS",
+          "trials": [
+            "churn65536-p16384-2000000-t1",
+            "churn65536-p16384-2000000-t2"
+          ]
+        }
+      ]
+    },
+    "faults": {
+      "status": "PASS",
+      "model_unchanged": true,
+      "raw_receipt_sha256": "3b8c8b7412774b5272ab95806bb610697b91893aae740a0f7d82dd35e0ea6107",
+      "parity": []
+    }
+  },
+  "r4_gpu_regression": {
+    "status": "PASS",
+    "passed": 5,
+    "log_sha256": "443774c4616479aa2446e8d36893b1fc6458bc0e16f34cf8d1713367bc40a233"
+  },
+  "gpu_after_all_trials": "NVIDIA GeForce RTX 4090, 610.88, 24564 MiB, 130 MiB, 0 %, 3.91 W",
+  "compute_processes_after_all_trials": ""
+}

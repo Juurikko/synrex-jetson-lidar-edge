@@ -1,0 +1,62 @@
+{
+  "schema": "synrex.streaming_r1.final_source_manifest.v1",
+  "status": "PASS",
+  "qualified_native_source_commit": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "qualified_source_archive_sha256": "3a0037ab47913ffc4ba983fe551b50770ecde7fe431d684a7547f4c9ff152c60",
+  "native_sources_sha256": {
+    "native/export.cpp": "8c15fc1ae494456d1d74642b877ac101a07dec81fbbf2e57b1fa6e00f73eedd6",
+    "native/geometry.cpp": "0bbeb3eb0e6dd021d12c4953dfbafb561f3db0d0101fd4280aef67cc50f07968",
+    "native/geometry_fast.cpp": "c19a933d6624af90b21e33408bf3965ef055a758f00b1b0d7d9e9b51dc9e0f05",
+    "native/gpu.hpp": "177be471c90f15eb8110d743dfdf05ed867ea5dfeb136d29e6dd069485715c23",
+    "native/include/synrex/benchmark.hpp": "2e0b7a4dc6a180d719f95bbb240872befe696d23d20ce9fb2b7c57876b38f3e4",
+    "native/include/synrex/export.hpp": "e435228d5d02e28029adc5846416ed83b258623e90c638ca50c05f1d52fd52ce",
+    "native/include/synrex/map_oracle.hpp": "26d45a6721f316aa129a07e517e6735aa8c9e92de5df499a6ccabbc864820c95",
+    "native/include/synrex/runtime.hpp": "b5c4e9e1f6a1fa622a7cc4b892783a6c6212ca89233cd836bb07eda4f05e7194",
+    "native/include/synrex/service.hpp": "c8391c4b1dd920bd5dc1c860a3e45a5db26a907528a69c123625f8737bfd8efc",
+    "native/include/synrex/session.hpp": "37444aa148a03b8ec67f5eb2f25ba7bb2940d4e982762f1d34fc622197df3f79",
+    "native/include/synrex/stream.hpp": "f057b85991c02ae4bfa666ed635987b7da023e7b1f62d20e55881da144972978",
+    "native/include/synrex/transport.hpp": "a10e8a27e184af5974684c5c4342bc05adb15493372eb017a81e88f14f1d6717",
+    "native/kernels.cu": "952fa44918a4bd087889b298601d21918f91d9c4c31b2f387c8dd9d5944cd919",
+    "native/live.cpp": "8b0a0d3fc2d4eccb942bc7b2dd6c2ff152b4bf6c0d1ea05a2931fe4e87403892",
+    "native/main.cpp": "e549613eda0fd6552cf7b03fcaee3ed3526324133f3f34145884ce5760829e05",
+    "native/no_gpu.cpp": "bdf44e85c9f44dcc8361088d2931c2dc7caffca55ae0c303c83400158da2f361",
+    "native/package.cpp": "66adae634fe4acdc628db9135b0a10fdb150a623bd628c6e0646e6947676812f",
+    "native/semantic_map.cpp": "65aba53dd213074904c15ab29b4a5308dd947f64a3a9a83b0beded442e99caff",
+    "native/service.cpp": "00e449c0f97e352309f2ae5b6a782bf0e74c375e7a379c697a169ee1abdd0a8a",
+    "native/stream.cpp": "d41e37876d963c0ac04b3da2a0388fd56248b1738436c793452b7c69b086aedf",
+    "native/stream_main.cpp": "a1a302729aacd7d3e12c9ed3986a48386b88bdc7cacff6ae796c9b19aa0a525d",
+    "native/sustain.cpp": "06ef7e7e05e9ad3304ab7451b9d755efe555f4e1f6a4951c54a2a660fd098810",
+    "native/tensorrt.cpp": "5dcb800d486d6c00c6db74cd91f149c0c9044dba42925eb0cff61665d472b27b",
+    "native/transport.cpp": "ae9086e5dfc7733f663c6e79c0f50626548e57b6dc5309189b2e51c04766b86a"
+  },
+  "qualified_binaries_sha256": {
+    "synrex-live": "85d09ceccffdceee7ce780746b3b495bbfa613a8e9e3b555cdcb779d50f204f2",
+    "synrex-sustain": "bbdc335b2f5f6b1f1698bfa69c160ac10a77e89261ff0434ffab6659882262c1",
+    "synrex-stream": "bf79f49afddce5144397468797182c9865f016361c9aec562aa38ff333c40bec",
+    "synrex-native": "5b77bebe8434669e44a4a6f165193579ee446dcd5164f671475a1d83b189b756",
+    "synrex-stream-gpu-tests": "74e61e1b77396b336f64bb4d4a126a46ba687031396b2931dd2cca8647809be9",
+    "synrex-laz-labels": "3b01069e41f58572ec64ef67cd89f8393d7a0073e344c321d2212414edb13855"
+  },
+  "frozen_refs": {
+    "r4": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+    "r0": "fe21303a2b2ba6a177821166d95457f930bfd727",
+    "main": "147ece0aef29c92e1ae959ddd2353fdca9a0fbfd"
+  },
+  "frozen_historical_file_count": 161,
+  "frozen_historical_files_unchanged": "PASS",
+  "models_final": {
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    },
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    }
+  },
+  "auxiliary_offline_export_source_sha256": "b3bd45a21f5ce2069d7c78a5efb01ffc534dcf4bc2a6bb82705e49fc57f9f9fe",
+  "licensing": "MIT independently authored source; original docs CC BY 4.0; retained third-party SDK/model/IGN Etalab notices and factual metadata boundaries. No private source imported.",
+  "publication": "Local commits only; public main and accepted release tags unchanged; no public push/release; no AGX/Thor access."
+}

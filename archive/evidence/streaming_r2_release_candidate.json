@@ -1,0 +1,114 @@
+{
+  "schema": "synrex.streaming_r2.release_candidate.v1",
+  "version": "streaming-r2-rc1",
+  "status": "PASS",
+  "status_scope": "Engineering owner-review candidate prepared; no public publication authorized or performed. Optional/diagnostic FAILs are explicit below.",
+  "source_commit": "e33679c459593ebf39bc86f1813ccf511613aa67",
+  "qualified_native_source": "f39fa296332217eb77bd73dd7e1e3515be3f367e",
+  "accepted_r1_evidence_seal": "14bcb4f2c512d735291f796ac905584564e74ddf",
+  "public_foundation": "byom-unet-fractal-r4-rc2",
+  "assets": {
+    "streaming-r2-rc1.tar.gz": {
+      "sha256": "a73aa7ce4b4bfd27377bf2d691e213bba70881ca5fefe817c3f460214b650805",
+      "bytes": 173366802
+    },
+    "streaming-r2-rc1-source.tar.gz": {
+      "sha256": "a101b5166db7ed8ce59ee0b2f338277538dd9af5b35a22e86308e8bae89e8a0a",
+      "bytes": 27478882
+    }
+  },
+  "source_bundle_sha256": "fa9de52aab58a02f4b50454ea155e2fb64a0ab9ceaaec409bebea84c278043a6",
+  "release_manifest_sha256": "713680368f906ed5e7838d372f12dad8e2e577cd7ee0e505fe1d3bec3f5b7d25",
+  "video": {
+    "name": "media/synrex-streaming-r2-review.mp4",
+    "sha256": "4840f129c253c903ec4141932a5536d68cb27fd83ac6db0f7223078c7c786725",
+    "bytes": 20719463,
+    "seconds": 54,
+    "width": 1080,
+    "height": 1350,
+    "fps": 24,
+    "decoded_frames": 1296
+  },
+  "gates": {
+    "SOURCE_RECONSTRUCTION": {
+      "status": "PASS",
+      "scope": "Fresh package bundle clone, 444 source blobs, 7 native and 96 Python CPU PASS; sanitizer and fresh RTX evidence separately bound."
+    },
+    "RUNTIME_CORRECTNESS": {
+      "status": "PASS",
+      "scope": "Unchanged accepted native source; both actual models; 31 exact tensor/logit windows; TCP, independent map and async export regressions."
+    },
+    "VISUAL_PROVENANCE": {
+      "status": "PASS",
+      "scope": "Two genuine licensed scenes; actual native predictions; independently reconstructed real deltas; hashes bound."
+    },
+    "VIDEO_QA": {
+      "status": "PASS",
+      "scope": "54 s, 1080x1350, 24 fps; all 1296 frames decoded and chapter frames independently inspected."
+    },
+    "LICENSING": {
+      "status": "PASS",
+      "scope": "Scoped original MIT source, retained model/architecture notices, IGN Etalab information, CC BY original presentation; public dependency binaries excluded."
+    },
+    "RELEASE_INTEGRITY": {
+      "status": "PASS",
+      "scope": "649 actual compressed archive file payloads hashed; bundle/source/model identities verified; 252 protected historical files unchanged."
+    },
+    "PUBLICATION_READINESS": {
+      "status": "PASS",
+      "scope": "Complete LOCAL owner-review candidate; publication approval and action are separate NOT_RUN gates."
+    },
+    "QGIS_NEW_DESKTOP_STARTUP": {
+      "status": "FAIL",
+      "scope": "Two bounded isolated startup failures preserved; actual QGIS standalone map export PASS; verified historical desktop screenshots included."
+    },
+    "MEDIA_JSON_LATENCY_250MS": {
+      "status": "FAIL",
+      "p99_ms": 274.477963,
+      "scope": "Diagnostic JSON file recording only; no rate claim, accepted TCP measurements unchanged."
+    },
+    "QGIS_NEW_3D": {
+      "status": "NOT_RUN",
+      "scope": "Genuine actual-data scripted 3D renderer used instead."
+    },
+    "PHYSICAL_SENSOR": {
+      "status": "NOT_RUN"
+    },
+    "ORIN": {
+      "status": "NOT_RUN"
+    },
+    "THOR": {
+      "status": "NOT_RUN"
+    },
+    "OWNER_PUBLICATION_APPROVAL": {
+      "status": "NOT_RUN"
+    },
+    "PUBLIC_PUSH_RELEASE_SOCIAL": {
+      "status": "NOT_RUN"
+    }
+  },
+  "accepted_measurements_preserved": {
+    "stable_A_external_TCP_two_60s_target_fresh_pts_s": 2000000,
+    "dense_C_and_full_churn_two_60s_target_fresh_pts_s": 1500000,
+    "ten_minute_fresh_points": 600014848,
+    "ten_minute_measured_seconds": 600.026055098,
+    "ten_minute_fresh_pts_s": 999981.3223144148,
+    "ten_minute_p99_ms": 39.845888,
+    "ten_minute_coverage": 1.0,
+    "ten_minute_drops": 0,
+    "independent_model_seven_class_miou": 0.48755974311318834
+  },
+  "preservation": {
+    "protected_historical_files": 252,
+    "accepted_native_files_unchanged": true,
+    "models_unchanged": true,
+    "R4_tag_and_public_main_unchanged": true,
+    "AGX_Thor_access": "NOT_RUN"
+  },
+  "remaining_scope_limits": [
+    "No physical vendor sensor/UDP adapter, authenticated remote transport, late-join resume or implicit SLAM/georeferencing.",
+    "No new general-purpose throughput, larger-model or target-device performance claim.",
+    "Map retains accepted observations with bounded revision eviction; no TTL/calibrated confidence.",
+    "Review video remains labelled candidate/unpublished; final public end card must match actual publication status."
+  ]
+}

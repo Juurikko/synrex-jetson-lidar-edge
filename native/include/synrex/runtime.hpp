@@ -59,6 +59,19 @@ std::uint64_t validate_laz(const fs::path &input);
 std::uint64_t apply_labels(const fs::path &input, const fs::path &labels, const fs::path &output);
 std::vector<Point> decode(const fs::path &input, const Contract &contract);
 Plan geometry(const std::vector<Point> &points, const Contract &contract);
+enum class GeometryMode { reference, direct, flat, radix };
+const char *geometry_name(GeometryMode mode);
+GeometryMode geometry_mode(const std::string &name);
+struct GeometryProfile {
+    double reference_seconds{}, minimum_seconds{}, assignment_seconds{}, grouping_seconds{},
+           record_sort_seconds{}, member_sort_seconds{};
+    std::uint64_t direct_points{}, boundary_fallback_points{}, tree_lookups{},
+                  record_capacity_growths{}, member_capacity_growths{};
+    bool reference_fallback{};
+};
+Plan geometry(const std::vector<Point> &points, const Contract &contract, GeometryMode mode,
+              GeometryProfile *profile = nullptr);
+
 std::vector<float> reference_tensor(const std::vector<Point> &points, const Block &block,
                                     const Contract &contract);
 Json describe_plan(const std::vector<Point> &points, const Plan &plan, const Contract &contract);

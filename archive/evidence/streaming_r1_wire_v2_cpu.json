@@ -1,0 +1,15 @@
+{
+  "bounded_queue_cancel": "PASS",
+  "bounded_state_observations": 1048576,
+  "canonical_output_bytes": "PASS",
+  "coordinate_transform": "PASS",
+  "fragmentation_eof_deadline": "PASS",
+  "loopback_reconnections": 2,
+  "malformed_envelopes_rejected": 3,
+  "neural_inference": "NOT_RUN: CPU protocol test",
+  "point_and_delta_bytes": "PASS",
+  "sequence_gap_duplicate_clock": "PASS",
+  "slow_socket_deadline": "PASS",
+  "status": "PASS",
+  "truncations_rejected": 6286
+}

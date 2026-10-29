@@ -1,115 +1,156 @@
-# SynRex Native LiDAR BYOM
+> **PUBLIC RESEARCH PRERELEASE — Streaming R2 RC4**  
+> [Release, verified assets and 37-second video](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4) ·
+> [Quickstart](docs/publication/QUICKSTART_RC4.md) ·
+> [Reproducibility / rights audit](docs/publication/PUBLICATION_AUDIT.md)  
+> Qualified RTX 4090 *software replay*; no physical UAV, sensor, AGX Orin or Thor measurement.
+> The current releases are measured on RTX 4090. An earlier, separate SegFormer 3D file
+> pipeline was measured on a physical Jetson AGX Orin ([historical benchmark](archive/history/BENCHMARK.md));
+> its non-commercial model is not distributed, and the streaming runtime is not yet ported to Jetson.
 
-<!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. Original expression only; upstream material and facts excluded. -->
+# SynRex Native LiDAR Streaming
 
-**Native C++ / CUDA / TensorRT classification, with interchangeable model packages.**
+<!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. -->
+
+**Native C++17 / CUDA / TensorRT inference, original-point outputs and a bounded semantic map.**
 Developer and project lead: **Tuomas Pietilä** ([@Juurikko](https://github.com/Juurikko));
-AI-assisted engineering with OpenAI Codex. **R4 RC2 is publicly available as an
-[RTX 4090/QGIS research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2),
-published 2026-10-27.** Jetson AGX Orin / Thor are not qualified for this BYOM release.
+engineering with OpenAI Codex assistance.
 
-**Also published:** [Streaming R2 RC4 — native TCP replay and semantic mapping](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4).
-This separate RTX 4090 research prerelease adds persistent streaming inference, fresh
-per-point classifications, bounded semantic-map updates and independently verified
-optional GIS export. Its benchmark timing boundary differs from R4 file-to-file processing.
+**Streaming R2 RC4 was publicly released on 2026-10-27 (UTC)** as a
+[research prerelease](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4).
+The [R4 RC2 BYOM foundation](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
+(file-to-file classification, with its own README at that tag) remains a separately
+preserved release.
 
-**Browse Streaming R2 code (maintained source view):**
-[C++/CUDA/TensorRT native implementation](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/releases/streaming-r2-rc4/native) ·
-[public build/replay instructions](https://github.com/Juurikko/synrex-jetson-lidar-edge/blob/releases/streaming-r2-rc4/docs/publication/QUICKSTART_RC4.md) ·
-[archived detailed verification receipts](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/releases/streaming-r2-rc4/archive/evidence).
-The release tag retains its original evidence-complete snapshot and checksums;
-the maintained release branch corrects historical candidate wording and groups
-editorial drafts and audit files under `archive/` for easier code browsing.
+### Start here
 
-Already-georeferenced LAZ → configurable dense voxels → user model → original-point
-predictions → metadata-preserving classified LAZ. The classification executable requires
-no Python or PyTorch. Python supports training, independent verification and the optional
-QGIS export workflow.
+Large qualification receipts, historical reports and editorial drafts are grouped
+under [archive/](archive/). Linux checkouts retain the original
+`evidence/` runtime path through a relative symbolic link; browse GitHub receipts via
+[archive/evidence/](archive/evidence/). For the **exact independently qualified public
+snapshot**, use the immutable [`streaming-r2-rc4` tag](https://github.com/Juurikko/synrex-jetson-lidar-edge/tree/streaming-r2-rc4)
+and matching release assets; this post-release layout is not a new benchmark or
+reconstruction qualification.
+
+
+- **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM foundation](src/)
+- **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
+- **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](archive/evidence/streaming_r1_transport_trials.csv)
+- **Full audit trail:** [archived verification receipts](archive/evidence/) · [separate public audit download](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4)
+
+
+![Genuine frozen-model predictions from a recorded native replay](media/streaming-r2/thumbnail.png)
+
+IGN/FRACTAL LiDAR, source updated 2025-04-05, retrieved 2026-10-26, Etalab 2.0.
+Colours are actual native model predictions, including mistakes. Camera placement is
+illustrative. The source/model/event hashes and visual decimation are documented in the
+[media provenance report](docs/streaming/STREAMING_R2_MEDIA.md).
 
 ```mermaid
 flowchart LR
-  A[Source LAZ] --> B[Native decode and geometry]
-  B --> C[CUDA features]
-  C --> D[TensorRT model package]
-  D --> E[CUDA classification and source-index reconstruction]
-  E --> F[Classified LAZ and seven-class semantic sidecar]
-  F --> G[Optional verified COPC and QGIS project]
+  A[External replay sender] -->|Versioned loopback TCP| B[Bounded native receiver]
+  B --> C[Persistent CUDA / TensorRT model]
+  C --> D[Fresh classifications for every original source point]
+  D --> E[Bounded semantic map / deltas]
+  D --> F[Independent subscriber]
+  F --> G[Optional asynchronous atomic LAZ export]
+  G --> H[Offline verified COPC / QGIS]
 ```
 
-Two genuine models use the **same executable and DENSE_VOXEL_SEGMENTATION_V1 adapter**:
+The native inference process uses no Python or PyTorch. A model package is verified and
+loaded once; the CUDA stream, TensorRT context and buffers persist across windows.
+The analytic Conv3D fixture and frozen seven-class FRACTAL U-Net run through the same
+binary and `DENSE_VOXEL_SEGMENTATION_V1` adapter. Python supports reproducibility,
+independent validation, media rendering and optional offline COPC export.
 
-| Model | Purpose | Qualification |
-|---|---|---|
-| Original analytic Conv3D | Reproducible, deterministic nonconstant integration reference | Real TensorRT/CUDA, 50,013-point LAZ and independent preservation checks |
-| Compact trained 3D U-Net | Seven-class airborne LiDAR segmentation | Frozen 256-tile FRACTAL test; 24,902,618 points; real native FP16 predictions |
+## Qualified RTX 4090 replay results
 
-The U-Net has 62,103 parameters and MIT-attributed pytorch-3dunet architecture. Its four
-inputs are occupancy, point count, local height and intensity. Source classifications,
-reference labels and aerial imagery are excluded from inference inputs. This runtime
-supports its explicit dense-voxel contract; sparse transformers require a separate adapter.
+These are **bounded, scene- and model-specific software replay measurements** with the
+small, frozen 62,103-parameter U-Net. They are not physical sensor, larger-model, Orin or
+Thor results. Incoming pacing targets, fresh neural classifications, map observations,
+changed-voxel deltas and file-encoding rates are separate quantities.
 
-| Accepted RTX 4090 measurement | Result |
-|---|---:|
-| Seven-class native FP16 point mIoU | **48.756%** |
-| Macro-F1 / overall accuracy | 60.585% / 90.814% |
-| FP16 vs PyTorch FP32 label agreement | 99.9682% |
-| Complete four-scene throughput | **237,991 points/s** |
-| Complete boundary | Cold process launch to exit, including LAZ input/output |
+| External native TCP workload | Accepted result |
+|---|---|
+| Scene A, stable, two 60-second runs | Approximately **2M freshly classified source points/s**, with map observations |
+| Dense scene C, two 60-second runs | Approximately **1.5M/s**, with map observations |
+| Full churn, 4,096 or 65,536 cells, two 60-second runs each | Approximately **1.5M/s**, with map observations |
+| Ten-minute 65,536-cell full-churn replay | **600,014,848** fresh points / 600.026 s; **999,981/s** |
+| Ten-minute coverage / drops / p99 replay-to-validated-output latency | **100% / zero / 39.85 ms** |
+| Dense/churn TCP trials at 2M/s | **FAIL**: bounded output-delivery queue; failures retained |
 
-[Full performance table and measurement limits](docs/byom/PERFORMANCE_R3.md) ·
-[frozen test and per-class quality](docs/byom/UNET_R2_RELEASE.md).
-Rare-class quality remains limited; this is a bounded engineering model, with no general
-survey accuracy claim. Physical AGX Orin execution is **NOT_RUN** because Spatial Lab's
-allocation is reserved. Historical SegFormer AGX measurements used different hardware,
-model, data and methodology and are **not a controlled model comparison**.
+**What the replay source is.** Each workload replays one finite licensed FRACTAL tile in a
+loop, in 16,384-point frames. Scene A
+([`TEST-0447_6390-002819414.laz`](docs/streaming/SUSTAINED_RTX_REPORT.md)) has 50,096
+records, so at 2M points/s the same records repeat about 40 times per second; dense scene C
+has 400,654 records. Full-churn runs, including the ten-minute run, loop scene A and shift
+each successive frame by 64 m in x, so the map keeps receiving new cells while the point
+attributes repeat. Rates are therefore pipeline throughput on repeated input, not a count
+of distinct points. Accuracy at streaming-window context has not been evaluated separately;
+the mIoU below comes from whole-tile processing.
 
-**Open the release showcase:** extract the release archive and open
-`qgis/ready/synrex-fractal.qgz` in QGIS. Ten genuine scenes contain 1,062,717 points,
-all seven observed semantic classes and source-indexed COPC views. Original classified
-LAZ files and model-bound semantic sidecars remain alongside the viewing derivatives.
+Every counted classification comes from fresh neural execution. Map state never supplies
+cached point labels. The original gates remain 250 ms p99 validated latency, 50 ms maximum
+scheduling lag, two frames per queue, complete coverage and bounded memory.
+[Exact R1 receipts and limits](docs/streaming/STREAMING_R1_QUALIFICATION.md) ·
+[R2 independent audit](docs/streaming/STREAMING_R2_AUDIT.md).
 
-![Genuine native model predictions opened in QGIS](media/unet-r4/TEST-0741_6244-006630086-qgis.png)
+Earlier **in-process** qualification reached approximately 3M/s on A/B, 2.5M/s on dense C
+and 2M/s in full churn. Those boundaries exclude external TCP/subscriber work and must not
+be substituted for the table above. Prepared-block model-only measurements emit **zero
+source points** and are not complete classification throughput.
 
-Screenshot: actual QGIS desktop; IGN FRACTAL geometry under Etalab 2.0, original presentation
-CC BY 4.0 Tuomas Pietilä; QGIS/Qt interface retains upstream rights. Colours show model
-predictions, including mistakes. [One-command export and QGIS diagnosis](docs/byom/QGIS_R4.md).
+## Model quality and semantic contract
 
-Build from this public source and public dependencies using the
-[clean reconstruction instructions](docs/byom/RECONSTRUCTION_R4.md).
-Then follow the [two-model release quickstart](docs/byom/RELEASE_R4.md),
-[synthetic Conv3D commands](docs/byom/QUICKSTART.md) or
-[frozen trained U-Net commands](docs/byom/UNET_R2_QUICKSTART.md).
-Compatible models switch by changing `--model`, without recompiling the runtime.
-TensorRT engines must match the target; the included RTX plan is not a Jetson plan.
+The separately frozen 256-tile / 24,902,618-point evaluation measured **48.756% seven-class
+mIoU**, 60.585% macro-F1 and 90.814% overall accuracy. Rare-class accuracy is limited;
+performance does not establish survey quality. The media includes genuine mistakes.
+[Per-class quality and original evaluation](docs/byom/UNET_R2_RELEASE.md).
 
-Original qualified software is **MIT**, bounded by [LICENSE_SCOPE.json](LICENSE_SCOPE.json).
-Model architecture, learned weights, NVIDIA artifacts, IGN data, documentation and
-screenshots have explicit separate scopes: [third-party notices](THIRD_PARTY_NOTICES.md),
-[model/data/weight provenance](docs/byom/UNET_PROVENANCE.md),
-[preprocessing provenance review](docs/byom/PROVENANCE_REVIEW_R1.md).
-Restricted TreeAIBox/SegFormer source and models are excluded; no clean-room claim is made.
+Semantic IDs 0–6 remain **other, ground, vegetation, building, water, bridge and permanent
+aboveground structure**. They are distinct from the explicit LAS projection
+`[1, 2, 200, 6, 9, 17, 201]`; 200/201 are custom conventions. Source identities,
+measurement timestamps, supplied intensity/returns and complete frame boundaries survive
+classification. There is no implicit georeferencing, pose estimation or physical capture.
 
-Supported native input: compressed LAS 1.4, PDRF 6/7/8, standard 375-byte header,
-qualified Extra Bytes, no EVLR/waveform/COPC input. The current classifier holds a cloud
-in memory. QGIS 3.44.14's direct reader rejects tested 48-byte files; the independently
-verified COPC export avoids that reader lifecycle failure. QGIS is an optional external
-application, separately licensed. No aerial georeferencing, streaming or sparse-model
-compatibility is claimed.
+The map uses 1 m cells in the qualified configuration, a bounded intrusive eviction index
+and the frozen last-accepted-observation revision policy. Older observations of an
+existing cell are rejected; equal timestamps refresh eviction ordering. There is **no
+TTL expiration or calibrated confidence**. Full snapshots are explicit O(N) operations.
 
-[Release notes, identities and reproduction](docs/byom/RELEASE_R4.md) ·
-[technical showcase](docs/byom/PUBLIC_SHOWCASE_R4.md) ·
-[separate future milestones](docs/byom/FUTURE_MILESTONES_R4.md) ·
-[retained historical public README and media](README_HISTORICAL.md).
+## Build, replay and inspect
 
-**Public release:** [R4 RC2 source, notes and showcase archive](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/byom-unet-fractal-r4-rc2)
-(`showcase-r4-rc2.tar.gz`, SHA256
-`a2b6fa566b8982859e2e7b7f1a986291d0f056bb2460ccc8199a7f540dd0d82c`).
-**Separate public streaming release:** [Streaming R2 RC4 source, audit and 37-second video](https://github.com/Juurikko/synrex-jetson-lidar-edge/releases/tag/streaming-r2-rc4).
-Its **~2.0M freshly classified points/s with map observations** is from two accepted
-60-second **scene-A RTX 4090 external-TCP replay** trials; dense/full-churn trials qualified
-at ~1.5M/s. A separate ten-minute full-churn run classified 600,014,848 points at ~1M/s.
-Optional LAZ/COPC export was independently verified but **disabled in the headline throughput
-trials**. In contrast, R4's **237,991 points/s** includes cold launch, LAZ reading and
-classified-LAZ output; these are different end-to-end boundaries, not like-for-like rates.
-Streaming R2 is not part of the frozen R4 executable. Neither the physical LiDAR/UAV path
-nor Jetson AGX Orin/Thor streaming throughput has been qualified.
+Start with the [public reconstruction and two-model guide](docs/streaming/STREAMING_R2_REPRODUCIBILITY.md).
+It covers a CPU build without CUDA, sanitizer tests, allocated-RTX checks, a separate
+GPU build, sender/receiver/subscriber commands, source-indexed output verification,
+optional export and media reconstruction. Public dependencies are external and pinned.
+
+- [Versioned binary protocol](docs/streaming/STREAMING_R1_PROTOCOL.md)
+- [Runtime and command-line examples](docs/streaming/STREAMING_R1_RUNTIME.md)
+- [CPU eviction design](docs/streaming/CPU_EVICTION_INDEX.md)
+- [Performance protocol](docs/streaming/SUSTAINED_PROTOCOL.md)
+- [Atomic streaming export](tools/streaming_export.py) and [verified QGIS COPC path](docs/byom/QGIS_R4.md)
+- [Separate ARM64/Orin/Thor continuation](docs/streaming/STREAMING_R1_PORTING.md)
+- [R2 release notes and review package](docs/streaming/STREAMING_R2_RELEASE.md)
+
+The receiver defaults to loopback. R1 supports one ordered producer identity and one
+subscriber, bounded clean reconnects and explicit fail-closed output backpressure. It
+does not provide authenticated remote transport, late-join resumption, a vendor UDP
+adapter, SLAM or physical sensor qualification. Native file input remains compressed
+LAS 1.4 PDRF 6/7/8 with the qualified layout; COPC is a separate viewing/export derivative.
+The known QGIS direct 48-byte LAZ importer failure remains documented: use verified COPC.
+
+## Rights and release identities
+
+Qualified native source: **`f39fa29`**. Accepted R1 evidence seal: **`14bcb4f`**.
+R2 adds audit, presentation, packaging and reproducibility tooling; it changes no native
+runtime source, model weights, preprocessing or accepted benchmark output.
+
+Original independently licensable source is **MIT**, bounded by
+[LICENSE_SCOPE.json](LICENSE_SCOPE.json). Documentation/original presentation is CC BY 4.0;
+IGN data is Etalab 2.0. Learned weights, upstream architecture, NVIDIA dependencies and
+QGIS/Qt have separate notices. Model/data binaries belong in release assets, not normal
+Git history. See [complete R2 rights/provenance](docs/streaming/STREAMING_R2_RIGHTS.md),
+[third-party notices](THIRD_PARTY_NOTICES.md) and
+[design-informed source provenance](docs/byom/PROVENANCE_REVIEW_R1.md).
+No restricted private implementation or pretrained checkpoint is imported; no clean-room
+claim is made. Physical sensor, AGX Orin and Thor qualification remain **NOT_RUN**.

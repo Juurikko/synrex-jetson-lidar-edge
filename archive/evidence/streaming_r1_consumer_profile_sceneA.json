@@ -1,0 +1,16 @@
+{
+  "bounded_map_size": 65536,
+  "capacity": 65536,
+  "decoded_once_sequence_seconds": 0.9074620540000001,
+  "exact_encoded_point_delta_class_source_bytes": "PASS",
+  "fixture_points": 2097152,
+  "full_snapshot_parity": "PASS",
+  "oracle_without_redundant_tree_seconds": 0.17270851599999998,
+  "reference_decode_and_sequence_seconds": 1.0872466549999995,
+  "reference_oracle_plus_occupancy_tree_seconds": 0.328094969,
+  "schema": "synrex.streaming_r1.consumer_cpu_profile.v1",
+  "scope": "MODEL_FREE_TEST_ONLY; actual licensed geometry/intensity, invented fixture classes. CPU validation service cost only; no neural throughput claim.",
+  "source_basename": "TEST-0447_6390-002819414.laz",
+  "source_sha256": "1bbba7aacc64a0c483df6f7fb970f0b40b7115b4a20989628a0ca4677fdfb4c2",
+  "status": "PASS"
+}

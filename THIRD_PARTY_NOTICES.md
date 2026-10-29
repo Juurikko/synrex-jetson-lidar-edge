@@ -17,7 +17,7 @@ No upstream library source, binary, dataset, model or font file is vendored. The
 | imageio-ffmpeg wheel / bundled FFmpeg | Pinned in `requirements-dev.lock` | MIT wrapper; bundled binary and codecs have separate FFmpeg notices/build licensing. Used locally for the GIF preview; no executable redistributed. |
 | DejaVu font designs | Unmodified system fonts used by accepted media | Bitstream Vera permission notice and public-domain DejaVu changes; [complete notice](LICENSES/DejaVu-font-notice.txt). Rendered media only; fonts not vendored. |
 | [NRCan TreeAIBox](https://github.com/NRCan/TreeAIBox/tree/5380ddec2799f55adb43b63407dd12ccf7abefae) | Frozen reference research commit | Inspected reference lineage identifies CC BY-NC 4.0. Code, weights, configuration, ONNX and TensorRT engine excluded; descriptive attribution only. |
-| NVIDIA Jetson / CUDA / TensorRT | Physical qualification platform | Vendor products/licenses remain separate; no vendor libraries, logos, engine plans or product imagery bundled. |
+| NVIDIA Jetson / CUDA / TensorRT | Physical qualification platform | Vendor products/licenses remain separate; no vendor SDK libraries, logos or product imagery bundled. Generated target-specific model plans are separate release assets under their model/SDK notices, never ordinary source history. |
 | [nlohmann/json](https://github.com/nlohmann/json/tree/v3.11.3) | 3.11.3, `9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03` | MIT; [Niels Lohmann notice](LICENSES/nlohmann-json-MIT.txt). External headers compiled into native BYOM executables, source not vendored. |
 | [OpenSSL](https://www.openssl.org/) | System OpenSSL 3 | Apache-2.0; external EVP SHA256 library. Retain distribution notices when shipping it. |
 | [ONNX](https://github.com/onnx/onnx) | 1.17.0 development exporter | Apache-2.0; external Python package, absent from native classification. |
@@ -37,7 +37,11 @@ attribution and IGN data attribution. See [rights assessment](docs/byom/UNET_PRO
 
 The BYOM R0 CUDA/TensorRT backend is original generic integration source under the scoped MIT grant. It calls vendor APIs and requires separately installed NVIDIA libraries. Local compiler/SDK wheels used for build validation stay in ignored dependency directories; no NVIDIA SDK source/binary is added to the release candidate. The original analytic Conv3D fixture has no third-party weights. Its generated model keeps explicit MIT metadata; user-supplied models retain their own terms. See [BYOM provenance](docs/byom/PROVENANCE.md).
 
-The model's configured metadata has seven classes and its network eight channels; no new architecture or model ownership is asserted. Commercial inference requires appropriately licensed or SynRex-trained weights. Existing research, compression algorithms and vendor technologies remain attributed to their authors.
+The historical excluded reference model's configured metadata has seven classes and
+its network eight channels. This does not describe the separately trained seven-output
+FRACTAL U-Net. Commercial inference requires appropriately licensed or SynRex-trained
+weights. Existing research, compression algorithms and vendor technologies remain
+attributed to their authors.
 
 The source audit found no blanket public license covering the original private runtime sources. Those sources are not copied into this repository. Tuomas Pietilä has confirmed authority over the newly staged original source, documentation and media; scoped MIT / CC BY 4.0 grants apply to that work only. The design relationship remains disclosed and no excluded upstream/private implementation is relicensed.
 
@@ -63,3 +67,20 @@ libraries are bundled. Actual QGIS/Qt screenshots retain upstream UI rights, IGN
 Etalab-2.0 data attribution and CC-BY-4.0 original presentation credit to Tuomas Pietilä.
 The native classifier, writer, pretrained-asset exclusion and frozen model rights are
 unchanged. See `docs/byom/QGIS_R4.md` for the independent conversion/reader evidence.
+
+Streaming R2 uses external **Pillow 11.3.0** (HPND), **pyproj 3.7.2** (MIT, with
+external PROJ/component notices), and the already attributed NumPy, laspy, lazrs,
+DejaVu fonts and FFmpeg for offline verification and rendering. Their executable
+libraries and fonts are not redistributed. Pillow/pyproj are absent from native
+inference. The media contains licensed IGN geometry and genuine native predictions;
+it is not procedural scenery. See the separate
+[R2 rights manifest](docs/streaming/STREAMING_R2_RIGHTS.md).
+
+RC2–RC4 offline tooling membership is reconciled in `LICENSE_SCOPE.json` against
+its original additive grants and author provenance. RC2 also imports external
+Numba/llvmlite (BSD-2-Clause), documented in
+`docs/streaming/rc2/LICENSE_SCOPE_RC2.json`; no compiler/library binaries or source
+are redistributed. Their installed distributions retain their complete notices.
+Historical owner-review packagers may create private-history bundles; they are
+preserved as original source and are **not** the public publication procedure.
+The public package contains no Git bundle and no unfiltered review archive.

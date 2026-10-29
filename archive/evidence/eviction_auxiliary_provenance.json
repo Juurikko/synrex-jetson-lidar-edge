@@ -1,0 +1,20 @@
+{
+  "schema": "synrex.eviction_auxiliary_provenance.v1",
+  "status": "PASS",
+  "native_source_commit_unchanged": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "current_native_files_byte_equal_to_qualified_commit": true,
+  "source_scope": "Original MIT source/tests/controller modifications. CMake adds test targets only; no qualified native implementation changes.",
+  "auxiliary_files_sha256": {
+    "tests/native/map_index.cpp": "eb141e17b6e6ba64a6e5e4d0089859bee5cc223f51d99aca7842c4e5d77bd706",
+    "tests/native/map_index_temporal.cpp": "ae084687e607530881477985ff88d05e52430fdc4c7c3a614f51e35f906ced20",
+    "tools/eviction_campaign.py": "6efbd62632caef75d68fe4d5ba21968d8b3fbbdd4679c8387251a9ec7e276d49",
+    "tools/summarize_sustained.py": "34fa8df772780bb24679027dbb26f8c6f2feff9d146016b5c2a35426cd535996",
+    "CMakeLists.txt": "e5ff4ad9f52f9f49817b7e912c441d2a1fb996577c4e365f3172a8a2f0e1e30c"
+  },
+  "source_commits_before_report_seal": [
+    "3169eb352f80d770e740fe90b2ff516a08092313 Freeze accepted geometry and spatial-churn source and receipts before eviction-index work",
+    "1397b033b4dc5a286928054dc75af885b3912ca2 Replace spatial-map victim scans with bounded intrusive recency index and exact reference qualification",
+    "2acc3ec301d2a7beb9ef04838591a6a993e4ba94 Qualify real-model map regressions and strengthen bounded-memory test with two million accepted refreshes",
+    "f25d897be05285e4262e5f0a934def6bc616d4a3 Assert explicit temporal eviction policy and generic-resolution behavior independently of shared map logic"
+  ]
+}

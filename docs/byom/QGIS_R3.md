@@ -6,8 +6,8 @@ The existing Windows workstation runs **QGIS3.44.14-Solothurn**. Qualification u
 the actual `qgis-ltr-bin.exe` desktop application with an isolated profile,
 `--noplugins --nocustomization --code`, real point-cloud providers, an application
 window and genuine window captures. This is not static XML validation or a
-Matplotlib imitation. The [application receipt](../../evidence/unet_r3_qgis_qualification.json)
-and [independent sidecar/record audit](../../evidence/unet_r3_qgis_sidecar_validation.json)
+Matplotlib imitation. The [application receipt](../../archive/evidence/unet_r3_qgis_qualification.json)
+and [independent sidecar/record audit](../../archive/evidence/unet_r3_qgis_sidecar_validation.json)
 record the executed scope. No system software or existing user profile is changed.
 
 Seven unchanged PDRF8/38-byte real test outputs (862,427 points) load successfully.
@@ -46,7 +46,7 @@ values and qualified metadata. All copied immutable inputs retain their SHA256s.
 
 ## Direct-LAZ limitation and indexed viewing path
 
-The initial [negative trials](../../evidence/unet_r3_qgis_negative_inputs.json)
+The initial [negative trials](../../archive/evidence/unet_r3_qgis_negative_inputs.json)
 reject three48-byte files in QGIS's direct `pdal` provider with
 `readers.las: Extra byte specification exceeds point length beyond base format length.`
 The **same original IGN files** are rejected; this was not introduced by the
@@ -64,7 +64,7 @@ record index) and `SynRexSemanticID` (full model output channel). COPC reorders
 points and rewrites/indexes metadata. It is a viewing derivative, not the accepted
 metadata-preserving native result and not a new native input capability.
 
-[Independent verification](../../evidence/unet_r3_copc_independent.json) sorts
+[Independent verification](../../archive/evidence/unet_r3_copc_independent.json) sorts
 by `SynRexSourceIndex`, requires exactly one copy of every index, restores the
 original structured record and compares **all original point bytes exactly**, as
 well as the full semantic vector, coordinate scale and offset. COPC output hashes
@@ -140,7 +140,7 @@ projects, exact originals, viewing derivatives, notices and validation receipts.
 Screenshot UI is QGIS/Qt third-party material; original presentation is CC-BY4.0
 and underlying IGN survey information remains Etalab2.0.
 
-[Actual COPC application receipt](../../evidence/unet_r3_qgis_copc_qualification.json):
+[Actual COPC application receipt](../../archive/evidence/unet_r3_qgis_copc_qualification.json):
 three views,200,290 points, QGIS `copc` provider, exact per-point source index,
 semantic ID and LAS class checks, actual rendering, EPSG:4326 transformation,
 saved project reopening and process exit0 all PASS. Combined direct-LAZ/COPC

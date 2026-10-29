@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "protected_sha256": {
+    "prior-artifacts/streaming-r2-rc2/owner-review/synrex-streaming-r2-rc2-owner-review.tar.gz": "56a3a0b8d66444daf8dca42202208c2ce795487cac784bd65e9dbd4a846fdd9a",
+    "prior-artifacts/rc2-reference/media/synrex-streaming-r2-rc2.mp4": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+    "prior-artifacts/rc1/streaming-r2-rc1.tar.gz": "a73aa7ce4b4bfd27377bf2d691e213bba70881ca5fefe817c3f460214b650805",
+    "prior-artifacts/rc2-reference/media/thumbnail.png": "c7b90a09dee31e198153b732d27134a6b63d8a134a35336be2e7e2b8b594a26d",
+    "prior-artifacts/rc2-reference/media/preview.mp4": "0ae1c38051944b61ffa62cf4b5024be8db6fed7b57529d5e1cb14090708440e6",
+    "prior-artifacts/rc2-reference/media/contact-sheet.jpg": "ac273b85394787b851da2a273edccba8a1005d6cdf55b85636b4380fda984de8",
+    "prior-artifacts/rc2-reference/evidence/FINAL_REPORT_RC2.json": "7c2190d82e3b8f9602da4aac91ffcb295f770309cd8ba2abd0186fed7d366fdd"
+  },
+  "baseline_tag": "streaming-r2-rc2-qualified",
+  "baseline_commit": "8586a6d742379310f2543fb5f7725c5fb528190f",
+  "changed_tracked_files": [
+    "docs/streaming/rc3/CAMERA_TABLE_RC3.md",
+    "docs/streaming/rc3/RC2_SHOT_DIAGNOSIS.md",
+    "docs/streaming/rc3/RC2_TO_RC3_CHANGES.md",
+    "docs/streaming/rc3/STORYBOARD_RC3.md",
+    "tools/streaming_r2_rc3.py",
+    "tools/streaming_r2_rc3_package.py",
+    "tools/streaming_r2_rc3_qa.py"
+  ],
+  "scope": "Original RC1/RC2 archives hash checked. All pre-existing tracked RC2 bytes unchanged; only RC3 media tooling/docs/evidence may be added.",
+  "public_derivative_notice": "Historical receipt derivative: seven local artifact-location keys replaced with stable logical relative identifiers. Digests, baseline identity, recorded status and all other historical fields unchanged. These identifiers do not assert assets are included in this public package."
+}

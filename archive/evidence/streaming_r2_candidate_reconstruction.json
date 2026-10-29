@@ -1,0 +1,19 @@
+{
+  "schema": "synrex.streaming_r2.candidate_reconstruction.v1",
+  "status": "PASS",
+  "source_commit": "e33679c459593ebf39bc86f1813ccf511613aa67",
+  "source_origin": "Fresh clone of actual staged source.bundle; public dependencies at independently fresh-cloned pins. All exported files compared to bundle Git blobs.",
+  "source_git_blobs": 444,
+  "cpu_ctest_pass": 7,
+  "cpu_pytest_pass": 96,
+  "local_physical_gpu_skip": 5,
+  "native_cpp_unchanged_from_qualified_f39": true,
+  "log_sha256": {
+    "r2-rc1-clean-configure.log": "9543fcb85639d8314bacfae84d1a6faadca729445ed2aee5f2e8e99877de436b",
+    "r2-rc1-clean-build.log": "ff78de20eda309f1b66234324576e937235897cc5209975719032fcaf21e3f01",
+    "r2-rc1-clean-ctest.log": "69a7411d40c394f7569f7d2ec386ebac361b5755b4a5470c7e52ac47785fea47",
+    "r2-rc1-clean-pytest.log": "30a02a4cf54b01397590a4bfee6070ce177f4f4f068d8eca55d06dad3054b673",
+    "r2-package-stage.log": "9797945af701feac5399256547f58f3d3c7435d20b1d90243c688b00f76b88d9",
+    "r2-package-verify.log": "18fd54d11cd7de7c469359a4d2468e9fe6396cb76376967f53af0ca3130400fc"
+  }
+}

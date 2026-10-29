@@ -1,0 +1,30 @@
+{
+  "schema": "synrex.streaming_r2.remote_preservation.v1",
+  "status": "PASS",
+  "accepted_source_archive_sha256": "3a0037ab47913ffc4ba983fe551b50770ecde7fe431d684a7547f4c9ff152c60",
+  "accepted_source_files_unchanged": 380,
+  "accepted_binaries_unchanged": {
+    "synrex-live": "85d09ceccffdceee7ce780746b3b495bbfa613a8e9e3b555cdcb779d50f204f2",
+    "synrex-sustain": "bbdc335b2f5f6b1f1698bfa69c160ac10a77e89261ff0434ffab6659882262c1"
+  },
+  "fresh_gpu_binaries_sha256": {
+    "synrex-live": "b78cd35514d984c3a3100dd7a8af1799f0d7698b386f41a90a7f13c099acf8a5",
+    "synrex-stream": "f67585eeb8c15273bae62ca701e9d7e855e4fb7e0aa46cbcbef15d96d459e0c1",
+    "synrex-native": "540cb56c0fc4486b961535545c9da610e96b57a9823f6f8bea1aa64d7cf372fc"
+  },
+  "model_packages_after": {
+    "unet": {
+      "MODEL_LICENSE.txt": "c82fee6579a3f2d76b62510feef07cf5e55b44de67829ba27efd67d4dfa7e80e",
+      "model.engine": "2f20d4fd17c1e1eb3399ac450f84a2f1c7737ab69e2098ae383dc1911a1455cd",
+      "manifest.json": "2d1206be62385669477a180d98c1b330c1caf40d516625f64682284012f7a325"
+    },
+    "synthetic": {
+      "MODEL_LICENSE.txt": "83fd143d03b0da80dbb449c6d3421db81de30af20666dc104ea9de7be3dcad06",
+      "model.engine": "4dd03d4c2c6291e98145c64ec2fb7e174ba69d7b7e1728e84cf7357e51772f59",
+      "manifest.json": "42baf2c985469cb87aa0723b39a014c117897b188e55029a2d47d9db8131344a"
+    }
+  },
+  "gpu_after": "NVIDIA GeForce RTX 4090, 0 %, 130 MiB, 3.93 W",
+  "AGX": "NOT_RUN",
+  "THOR": "NOT_RUN"
+}

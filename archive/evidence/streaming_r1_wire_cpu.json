@@ -1,0 +1,10 @@
+{
+  "bounded_queue_cancel": "PASS",
+  "coordinate_transform": "PASS",
+  "fragmentation_eof_deadline": "PASS",
+  "neural_inference": "NOT_RUN: CPU protocol test",
+  "point_and_delta_bytes": "PASS",
+  "sequence_gap_duplicate_clock": "PASS",
+  "status": "PASS",
+  "truncations_rejected": 6286
+}

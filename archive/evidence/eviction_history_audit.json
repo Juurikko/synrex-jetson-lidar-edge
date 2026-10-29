@@ -1,0 +1,25 @@
+{
+  "schema": "synrex.track_b_history_audit.v1",
+  "status": "PASS",
+  "base": "958c418d6799196605155f0223418d6f3b4f5c4d",
+  "end": "f6f167cf62338b34e7b9e85e6ce9127a62507c8d",
+  "commits": 5,
+  "reachable_new_objects_scanned": 82,
+  "pattern_findings": {},
+  "forbidden_model_pointcloud_paths": [],
+  "preserved_receipts_rechecked": 35,
+  "preserved_refs": {
+    "main": "147ece0aef29c92e1ae959ddd2353fdca9a0fbfd",
+    "byom-unet-fractal-r4-rc2": "0598b83f8c190c86a5071eb0cf5592eb7788ba1b",
+    "byom-unet-fractal-r4-rc2^{}": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+    "streaming-r0-geometry-frozen-958c418": "958c418d6799196605155f0223418d6f3b4f5c4d",
+    "streaming-r0-2m-frozen-95e80bb": "95e80bbeeb987149618a2ad953d6552095aea4b2"
+  },
+  "qualified_native_commit": "1397b033b4dc5a286928054dc75af885b3912ca2",
+  "current_native_files_byte_identical": 19,
+  "scope": "New reachable source/evidence history since accepted geometry/churn checkpoint. Existing release-check pattern scanner; pattern based, not exhaustive. This audit sealing commit necessarily follows the recorded endpoint; no history rewrite.",
+  "legacy_history_mode": {
+    "status": "NOT_RUN",
+    "reason": "Inherited R0 requires exactly one commit and zero remotes, inapplicable to continued authorized Track B branch. Checker and accepted history unchanged."
+  }
+}

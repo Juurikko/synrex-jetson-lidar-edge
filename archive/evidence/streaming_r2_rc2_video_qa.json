@@ -1,0 +1,112 @@
+{
+  "schema": "synrex.streaming_r2.rc2.video_qa.v1",
+  "status": "PASS",
+  "video_sha256": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+  "width": 1080,
+  "height": 1350,
+  "fps": 30,
+  "seconds": 49,
+  "codec": "H.264",
+  "pixel_format": "yuv420p",
+  "decoded_frames": 1470,
+  "full_resolution_decode": "PASS: all frames read, exact byte count, FFmpeg -xerror; no decoder errors",
+  "full_rate_headless_playback": {
+    "status": "PASS",
+    "elapsed_seconds": 48.45137492194772,
+    "method": "FFmpeg -re -xerror: complete full-rate headless playback/decode to null sink; no GUI/audio claimed",
+    "video_sha256": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+    "returncode": 0
+  },
+  "exact_geometry_static_holds": 0,
+  "text_layout_checks": 475,
+  "minimum_font_px": 22,
+  "headline_font_px": 58,
+  "mobile_review": "See mobile-frame-0.png and explicit visual review",
+  "geometry_motion": [
+    {
+      "time": [
+        0,
+        4
+      ],
+      "median_mae": 11.85336092982032,
+      "min_changed_fraction": 0.20467730239303844,
+      "median_changed_fraction": 0.22975586173555718
+    },
+    {
+      "time": [
+        4,
+        14
+      ],
+      "median_mae": 11.135686084924664,
+      "min_changed_fraction": 0.04273930384336476,
+      "median_changed_fraction": 0.16989213197969544
+    },
+    {
+      "time": [
+        14,
+        25
+      ],
+      "median_mae": 8.506214245427444,
+      "min_changed_fraction": 0.07380045927000242,
+      "median_changed_fraction": 0.11067047377326565
+    },
+    {
+      "time": [
+        25,
+        38
+      ],
+      "median_mae": 6.164795846426557,
+      "min_changed_fraction": 0.05274051244863428,
+      "median_changed_fraction": 0.13074842881314963
+    },
+    {
+      "time": [
+        38,
+        45
+      ],
+      "median_mae": 1.7553329707517524,
+      "min_changed_fraction": 0.04062424462170655,
+      "median_changed_fraction": 0.045730601885424216
+    },
+    {
+      "time": [
+        45,
+        49
+      ],
+      "median_mae": 5.2166701917653695,
+      "min_changed_fraction": 0.0932892192409959,
+      "median_changed_fraction": 0.09733049311094996
+    }
+  ],
+  "map_frames_with_visible_event_outlines": 385,
+  "map_frames_total": 390,
+  "depth_camera_receipt": "DEPTH_AND_PARALLAX_RC2.json",
+  "protected_existing_source_blobs": 449,
+  "preview_sha256": "0ae1c38051944b61ffa62cf4b5024be8db6fed7b57529d5e1cb14090708440e6",
+  "contact_sheet_sha256": "ac273b85394787b851da2a273edccba8a1005d6cdf55b85636b4380fda984de8",
+  "thumbnail_sha256": "c7b90a09dee31e198153b732d27134a6b63d8a134a35336be2e7e2b8b594a26d",
+  "visual_review": {
+    "status": "PASS",
+    "reviewer": "Codex image inspection; owner aesthetic/publication approval remains NOT_RUN",
+    "video_sha256": "3ac6c0bb98b4f7bc993b347051e2933ec4875dc0c34163de7bce19eda922534d",
+    "reviewed": [
+      "Decoded frame 0 at native size and 360x450 mobile reduction",
+      "Final decoded contact sheet and all three detailed decoded sheets",
+      "Native-sized decoded overview endpoint frame 839",
+      "Native-sized metric/stability card frame 1260",
+      "Opening proof before full render"
+    ],
+    "findings": {
+      "first_frame": "Large headline and replay disclosure over genuine visible moving building points; no fade or static title",
+      "depth": "Close roofs, vegetation and tall crane with perspective occlusion; low camera and foreground/background parallax",
+      "reveal": "Input height shading and actual frozen predictions remain aligned under one moving camera; palette and visible model mistakes retained",
+      "map": "Substantive native cell growth and changing white/cyan event outlines across active crops; repeated capture and retiming disclosed; 24458+376196 endpoint visible",
+      "metrics": "Rate and ten-minute cards visibly separated; no implication ten-minute run was 2M/s; held-out mIoU remains 48.756%",
+      "mobile": "Critical headline, subtitles, metric values and repository text readable at 360px width; licence/footer is small secondary disclosure",
+      "pacing": "Short tracked shots, eleven-second moving wipe with continuous camera, three-second overview and two five-second detail passes; no static geometry hold",
+      "closing": "Native stack, scoped MIT BYOM foundation, exact repository and public R4/unpublished R2 status visible"
+    },
+    "scope": "Automated frame/decode/camera measurements complement visual image inspection; no GUI player or human owner review claimed"
+  },
+  "publication": "NOT_RUN"
+}

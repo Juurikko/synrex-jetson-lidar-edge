@@ -1,0 +1,22 @@
+{
+  "schema": "synrex.track_b_history_audit.v1",
+  "status": "PASS",
+  "base": "95e80bbeeb987149618a2ad953d6552095aea4b2",
+  "end": "fc97fcc1816503e73483460474fda33dc60d9834",
+  "commits": 7,
+  "reachable_new_objects_scanned": 92,
+  "pattern_findings": {},
+  "forbidden_model_pointcloud_paths": [],
+  "frozen_receipts_rechecked": 14,
+  "preserved_refs": {
+    "main": "147ece0aef29c92e1ae959ddd2353fdca9a0fbfd",
+    "byom-unet-fractal-r4-rc2": "0598b83f8c190c86a5071eb0cf5592eb7788ba1b",
+    "byom-unet-fractal-r4-rc2^{}": "3f1f3fabd3d92d69c02394936188502678a6b9ed",
+    "streaming-r0-2m-frozen-95e80bb": "95e80bbeeb987149618a2ad953d6552095aea4b2"
+  },
+  "scope": "New reachable Track B commits/trees/blobs since the accepted 2M checkpoint, including the qualified source and evidence commit. Existing release-check pattern scanner; pattern based, not exhaustive. This audit sealing commit necessarily follows the recorded endpoint. No history rewrite.",
+  "legacy_history_mode": {
+    "status": "NOT_RUN",
+    "reason": "Inherited R0 checker requires exactly one commit and zero remotes; continued Track B has multiple authorized local commits. Checker unchanged."
+  }
+}
