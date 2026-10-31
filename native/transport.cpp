@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <openssl/sha.h>
 #include <poll.h>
+#include <set>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <unordered_set>
@@ -19,6 +20,54 @@ void checked(bool ok, const char *message) {
     if (!ok)
         synrex::require(false, message);
 }
+// Validate without a DOM callback: nlohmann 3.11.3's callback parser scans the
+// growing parent array after every object, even when every callback returns true.
+// Keep the legacy event-depth rule, including empty containers at depth 16.
+class JsonGuard final : public nlohmann::json_sax<Json> {
+    std::size_t depth_{};
+    std::vector<std::set<std::string>> keys_;
+    bool value() const {
+        checked(depth_ <= 16, "wire JSON nesting budget");
+        return true;
+    }
+    bool start() {
+        value();
+        ++depth_;
+        return true;
+    }
+
+  public:
+    bool null() override { return value(); }
+    bool boolean(bool) override { return value(); }
+    bool number_integer(number_integer_t) override { return value(); }
+    bool number_unsigned(number_unsigned_t) override { return value(); }
+    bool number_float(number_float_t, const string_t &) override { return value(); }
+    bool string(string_t &) override { return value(); }
+    bool binary(binary_t &) override { return value(); }
+    bool start_object(std::size_t) override {
+        start();
+        keys_.emplace_back();
+        return true;
+    }
+    bool key(string_t &key) override {
+        value();
+        checked(keys_.back().insert(key).second, "duplicate wire JSON key");
+        return true;
+    }
+    bool end_object() override {
+        keys_.pop_back();
+        --depth_;
+        return value();
+    }
+    bool start_array(std::size_t) override { return start(); }
+    bool end_array() override {
+        --depth_;
+        return value();
+    }
+    bool parse_error(std::size_t, const string_t &, const Json::exception &) override {
+        return false;
+    }
+};
 struct Writer {
     Bytes b;
     void u(std::uint64_t x, unsigned n) {
@@ -519,16 +568,10 @@ Bytes json_bytes(const Json &j) {
 }
 Json json(const Bytes &b) {
     checked(b.size() <= max_payload, "wire JSON budget");
-    std::vector<std::set<std::string>> seen;
-    return Json::parse(b, [&](int depth, Json::parse_event_t event, Json &value) {
-        checked(depth <= 16, "wire JSON nesting budget");
-        if (event == Json::parse_event_t::object_start)
-            seen.emplace_back();
-        if (event == Json::parse_event_t::key)
-            checked(seen.back().insert(value.get<std::string>()).second, "duplicate wire JSON key");
-        if (event == Json::parse_event_t::object_end)
-            seen.pop_back();
-        return true;
-    });
+    JsonGuard guard;
+    checked(Json::sax_parse(b, &guard), "malformed wire JSON");
+    // Both passes inspect the same immutable, byte-bounded payload. The first
+    // enforces duplicate/depth/UTF-8/syntax admission before DOM construction.
+    return Json::parse(b);
 }
 } // namespace synrex::streaming::wire

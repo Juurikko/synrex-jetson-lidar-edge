@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <netinet/in.h>
+#include <set>
 #include <sys/socket.h>
 #include <unistd.h>
 using namespace synrex;
@@ -26,9 +27,66 @@ w::Input fixture() {
     require(bool(frame), "fixture complete");
     return {*frame, w::Coordinates::sensor, 0};
 }
+Json legacy_json(const std::string &bytes) {
+    std::vector<std::set<std::string>> seen;
+    return Json::parse(bytes, [&](int depth, Json::parse_event_t event, Json &value) {
+        require(depth <= 16, "wire JSON nesting budget");
+        if (event == Json::parse_event_t::object_start)
+            seen.emplace_back();
+        if (event == Json::parse_event_t::key)
+            require(seen.back().insert(value.get<std::string>()).second, "duplicate wire JSON key");
+        if (event == Json::parse_event_t::object_end)
+            seen.pop_back();
+        return true;
+    });
+}
+std::size_t json_admission() {
+    std::vector<std::pair<std::string, bool>> cases{
+        {R"([0,-1,18446744073709551615,1.5,true,false,null])", true},
+        {R"("Metsä 🌲")", true},
+        {R"([{"a":1},{"a":2}])", true},
+        {R"([{"a":[{"a":1}]}])", true},
+        {R"({"a":1,"a":2})", false},
+        {R"({"parent":{"a":1,"a":2}})", false},
+        {R"({"a":1,"\u0061":2})", false},
+        {"{}{}", false},
+        {"[1,]", false},
+        {"/*comment*/{}", false},
+        {"", false},
+        {"{", false},
+        {R"("\uD800")", false},
+        {std::string("\"") + '\xc3' + '\x28' + '"', false}};
+    for (int depth = 15; depth <= 18; ++depth) {
+        cases.emplace_back(std::string(depth, '[') + std::string(depth, ']'), depth <= 17);
+        cases.emplace_back(std::string(depth, '[') + "0" + std::string(depth, ']'), depth <= 16);
+        cases.emplace_back(std::string(depth - 1, '[') + "{\"a\":0}" +
+                               std::string(depth - 1, ']'),
+                           depth <= 16);
+    }
+    for (const auto &item : cases) {
+        Json original, fresh;
+        bool old_accepts = false, new_accepts = false;
+        try {
+            original = legacy_json(item.first);
+            old_accepts = true;
+        } catch (const std::exception &) {
+        }
+        try {
+            fresh = w::json(w::Bytes(item.first.begin(), item.first.end()));
+            new_accepts = true;
+        } catch (const std::exception &) {
+        }
+        require(old_accepts == item.second && new_accepts == item.second,
+                "strict JSON admission/legacy compatibility mismatch");
+        require(!new_accepts || fresh == original, "strict JSON DOM parity mismatch");
+    }
+    rejects([&] { w::json(w::Bytes(w::max_payload + 1, ' ')); });
+    return cases.size() + 1;
+}
 } // namespace
 int main() {
     try {
+        const auto json_cases = json_admission();
         const auto in = fixture();
         auto optional = in;
         optional.frame.points[0].intensity.reset();
@@ -221,6 +279,7 @@ int main() {
                 "bounded output queue policy");
         require(queue.cancel().size() == 2, "cancel accounting");
         std::cout << Json{{"status", "PASS"},
+                          {"strict_json_admission_cases", json_cases},
                           {"truncations_rejected", bytes.size()},
                           {"bounded_state_observations", 1048576},
                           {"malformed_envelopes_rejected", 4},

@@ -149,21 +149,31 @@ int main(int argc, char **argv) {
         std::optional<std::pair<w::Kind, w::Bytes>> message;
         try {
             message = w::receive(rx, 30000);
+            std::cerr << "snapshot_phase=socket_receive_complete\n";
         } catch (...) {
             rx.shutdown();
             writer.join();
             throw;
         }
         writer.join();
+        std::cerr << "snapshot_phase=socket_writer_joined\n";
         if (error)
             std::rethrow_exception(error);
         require(message && message->first == w::Kind::snapshot && message->second == bytes &&
                     digest(message->second) == digest(bytes),
                 "actual full snapshot transport/digest mismatch");
+        std::cerr << "snapshot_phase=json_parse\n";
+        const auto parse_start = steady_ns();
         const auto reconstructed = w::json(message->second);
-        require(reconstructed == oracle.snapshot(UINT64_MAX) &&
-                    reconstructed.at("cells").size() == w::max_legacy_map_cells,
-                "independent full snapshot/identity reconstruction mismatch");
+        const auto parse_seconds = (steady_ns() - parse_start) / 1e9;
+        std::cerr << "snapshot_phase=oracle_reconstruction\n";
+        {
+            const auto expected = oracle.snapshot(UINT64_MAX);
+            std::cerr << "snapshot_phase=parity_comparison\n";
+            require(reconstructed == expected &&
+                        reconstructed.at("cells").size() == w::max_legacy_map_cells,
+                    "independent full snapshot/identity reconstruction mismatch");
+        }
         require(!w::receive(rx), "unexpected post-snapshot bytes");
         auto &full = receipt["full_admitted_snapshot"];
         full["cells"] = map.size();
@@ -171,6 +181,7 @@ int main(int argc, char **argv) {
         full["sha256"] = digest(bytes);
         full["all_cells_and_identity"] = "PASS";
         full["socket_send_receive"] = "PASS";
+        full["json_parse_seconds"] = parse_seconds;
         // JSON string delimiters count in the final payload budget.
         std::cerr << "snapshot_phase=encoded_byte_boundary\n";
         const auto boundary = w::json_bytes(Json(std::string(w::max_payload - 2, 'x'))).size();

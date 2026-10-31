@@ -17,6 +17,13 @@ combined allowance is therefore 240 seconds. Isolation avoids retaining one
 fixture's allocations or sanitizer quarantine in the next; earlier combined-test
 timeouts remain failed attempts. This is a test execution allowance, separate
 from production latency, capacity and numerical qualification gates.
+That process split alone did not resolve the timeout: the admitted fixture still
+timed out in attempt four. A focused ASan/UBSan diagnostic and independent review
+identified the pinned JSON library's repeated parent-array scan in its DOM
+callback parser. Wire JSON now uses strict SAX duplicate/depth admission followed
+by ordinary DOM parsing of the same bounded bytes. Regressions retain the legacy
+event-depth boundary, decoded-key duplicate rejection and parsed-value parity.
+The complete snapshot transport/reconstruction remains required under sanitizers.
 
 | Check | Release | Debug ASan/UBSan |
 | --- | --- | --- |
