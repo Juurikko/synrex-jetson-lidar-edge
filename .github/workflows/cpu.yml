@@ -40,6 +40,7 @@ jobs:
       OMP_NUM_THREADS: '2'
       OPENBLAS_NUM_THREADS: '2'
       SYNREX_TEST_NATIVE_DIR: ${{ github.workspace }}/build-cpu-${{ matrix.configuration }}
+      SYNREX_TEST_LAZPERF_SOURCE_DIR: ${{ github.workspace }}/.deps/laz-perf
       SYNREX_RUN_GPU: '0'
       ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
       UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1

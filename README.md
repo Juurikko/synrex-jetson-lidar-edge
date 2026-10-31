@@ -170,6 +170,8 @@ optional export and media reconstruction. Public dependencies are external and p
 - [Versioned binary protocol](docs/streaming/STREAMING_R1_PROTOCOL.md)
 - [Runtime and command-line examples](docs/streaming/STREAMING_R1_RUNTIME.md)
 - [Opt-in generic single-file v3 CLI and export, CPU tested](docs/streaming/GENERIC_SINGLE_FILE_V3.md)
+- [Distinct manifest admission and bounded CPU source decoding](docs/streaming/DISTINCT_REPLAY.md)
+- [Checked build-owned LAZ decoder correction](docs/streaming/LAZPERF_OVERLAY.md)
 - [CPU eviction design](docs/streaming/CPU_EVICTION_INDEX.md)
 - [Performance protocol](docs/streaming/SUSTAINED_PROTOCOL.md)
 - [Atomic streaming export](tools/streaming_export.py) and [verified QGIS COPC path](docs/byom/QGIS_R4.md)

@@ -4,7 +4,17 @@
 
 **Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
 
-No upstream library source, binary, dataset, model or font file is vendored. The `LICENSES/` copies below preserve notices for the libraries used in the synthetic demo and fonts used in the already-rendered media. Dependency installation is a separate step and does not relicense upstream material. For BYOM compilation, separate [NVIDIA API notices](LICENSES/NVIDIA-API-NOTICES.txt), [CUDA distribution license](LICENSES/NVIDIA-CUDA-License.txt) and [TensorRT SLA](LICENSES/NVIDIA-TensorRT-SLA.txt) are retained alongside the Apache and MIT texts; vendor binaries are not shipped.
+The bounded [laz-perf decoder patch](patches/lazperf-b7bbe261/coordinate-memory.patch)
+contains Apache-2.0 upstream-derived context and corrections. Its [COPYING](patches/lazperf-b7bbe261/COPYING)
+and original upstream notices remain applicable. The complete dependency is fetched
+externally, verified byte for byte, and patched only in a build-owned copy;
+see [overlay scope and limitations](docs/streaming/LAZPERF_OVERLAY.md).
+No complete upstream library, binary, dataset, model or font file is vendored.
+The `LICENSES/` copies below preserve dependency and rendered-media notices.
+Dependency installation does not relicense upstream material. For BYOM compilation,
+separate [NVIDIA API notices](LICENSES/NVIDIA-API-NOTICES.txt),
+[CUDA distribution license](LICENSES/NVIDIA-CUDA-License.txt) and
+[TensorRT SLA](LICENSES/NVIDIA-TensorRT-SLA.txt) are retained; vendor binaries are not shipped.
 
 | Material | Version/identity used | Upstream license / treatment |
 |---|---|---|

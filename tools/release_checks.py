@@ -65,6 +65,11 @@ def findings(data: bytes) -> list[str]:
 
 
 def origin(path: str) -> tuple[str, str]:
+    if path.startswith("patches/lazperf-b7bbe261/"):
+        return (
+            "laz-perf upstream contributors; explicit SynRex decoder corrections and notices",
+            "Apache-2.0 upstream-derived material; no MIT relicense of upstream expression",
+        )
     scope = json.loads((ROOT / "LICENSE_SCOPE.json").read_text())
     for category in ["source", "documentation", "original_procedural_media"]:
         if path in scope[category]["files"]:
