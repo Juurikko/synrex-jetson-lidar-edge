@@ -5,8 +5,10 @@
 #include "gpu.hpp"
 #include "synrex/benchmark.hpp"
 #include "synrex/engine_artifact.hpp"
+#include "synrex/generic_session.hpp"
 #include "synrex/runtime.hpp"
 #include "synrex/session.hpp"
+#include "synrex/tensor_trace.hpp"
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 #include <algorithm>
@@ -258,6 +260,11 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     same_admission(package, captured);
     const auto &serialized = captured.engine_bytes();
     const auto &c = captured.contract();
+    if (!options.tensor_trace.empty()) {
+        require(options.iterations == 1 && options.warmup == 0,
+                "tensor tracing requires a single inference cycle");
+        (void)generic::diagnostic_tensor_bound(c, plan.blocks.size(), plan.memberships);
+    }
     const auto initialized_at = std::chrono::steady_clock::now();
     InferenceMetrics measured;
     std::size_t initial_free{}, initial_total{};
@@ -280,6 +287,7 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     const auto input_bytes = c.voxels * c.features.size() * (input_half ? 2 : 4);
     const auto output_bytes = c.voxels * c.las_classes.size() * (output_half ? 2 : 4);
     Json trace_blocks = Json::array();
+    std::uint64_t one_shot_trace_written{};
     if (!options.tensor_trace.empty()) {
         require(options.iterations == 1 && options.warmup == 0,
                 "tensor tracing requires a single inference cycle");
@@ -397,9 +405,14 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
                                           cudaMemcpyDeviceToHost));
                     const auto path =
                         options.tensor_trace / block.at(entry.first).get<std::string>();
+                    require(bytes.size() <= 256ULL * 1024 * 1024 - one_shot_trace_written,
+                            "tensor trace write byte budget");
                     write_new(path, bytes);
+                    one_shot_trace_written += bytes.size();
                     block[entry.first + "_sha256"] = sha256(path);
                 }
+                trace_write_memberships(options.tensor_trace, stem, source_ids, voxel_ids, block,
+                                        256ULL * 1024 * 1024, one_shot_trace_written);
                 trace_blocks.push_back(block);
             }
         }
@@ -449,15 +462,19 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
     }
     measured.tracked_peak_requested_cuda_bytes = allocations.peak();
     if (!options.tensor_trace.empty()) {
-        write_new(options.tensor_trace / "manifest.json",
-                  Json{{"schema", "synrex.dense_tensor_trace.v1"},
-                       {"tensor_contract", c.spec},
-                       {"byte_order", "little-endian"},
-                       {"blocks", trace_blocks},
-                       {"scope", "Actual CUDA-prepared inputs and TensorRT device logits; "
-                                 "diagnostic I/O included in classify total"}}
-                          .dump(2) +
-                      "\n");
+        const auto manifest =
+            Json{{"schema", "synrex.dense_tensor_trace.v1"},
+                 {"tensor_contract", c.spec},
+                 {"byte_order", "little-endian"},
+                 {"blocks", trace_blocks},
+                 {"membership_semantics", trace_membership_semantics(c)},
+                 {"scope", "Actual CUDA-prepared inputs and TensorRT device logits; "
+                           "diagnostic I/O included in classify total"}}
+                .dump(2) +
+            "\n";
+        require(manifest.size() <= 256ULL * 1024 * 1024 - one_shot_trace_written,
+                "tensor trace manifest byte budget");
+        write_new(options.tensor_trace / "manifest.json", manifest);
     }
     if (metrics)
         *metrics = measured;
@@ -631,6 +648,16 @@ class PersistentSession final : public InferenceSession {
                 {"scope", "Actual TensorRT enqueueV3 repeatedly executes the last CUDA-prepared block. Batched timing includes stream scheduling; excludes geometry, H2D, scatter, queues and output. Point-equivalent rate is not fully classified source throughput."}};
     }
     WindowResult run(const std::vector<Point> &points, const fs::path &trace) override {
+        return execute_window(points, trace, 0); // Preserve legacy diagnostic semantics.
+    }
+    WindowResult run_traced(const std::vector<Point> &points, const fs::path &trace,
+                            std::uint64_t byte_limit) override {
+        require(!trace.empty() && byte_limit > 0 && byte_limit <= 256ULL * 1024 * 1024,
+                "bounded persistent diagnostic options");
+        return execute_window(points, trace, byte_limit);
+    }
+    WindowResult execute_window(const std::vector<Point> &points, const fs::path &trace,
+                                std::uint64_t byte_limit) {
         require(!poisoned_, "persistent session is poisoned after failed execution");
         require(!points.empty() && points.size() <= capacity_, "persistent window exceeds point budget");
         cuda_check(cudaSetDevice(device_));
@@ -640,9 +667,13 @@ class PersistentSession final : public InferenceSession {
         const auto plan = geometry(points, c, options_.geometry, &geometry_profile);
         const auto geometry_seconds = std::chrono::duration<double>(
             std::chrono::steady_clock::now() - wall).count();
+        std::uint64_t trace_written{};
         if (!trace.empty()) {
-            require((input_bytes_ + output_bytes_) * plan.blocks.size() <= 256ULL * 1024 * 1024,
-                    "persistent tensor trace exceeds budget");
+            if (byte_limit)
+                require(generic::diagnostic_tensor_bound(c, plan.blocks.size(), plan.memberships) <=
+                            byte_limit,
+                        "persistent diagnostic full-byte reservation exceeded");
+            (void)generic::diagnostic_tensor_bound(c, plan.blocks.size(), plan.memberships);
             require(fs::create_directory(trace), "tensor trace directory must be new");
         }
         std::vector<GpuPoint> gpu_points;
@@ -725,8 +756,16 @@ class PersistentSession final : public InferenceSession {
                         std::string bytes(entry.second.second, '\0');
                         cuda_check(cudaMemcpy(bytes.data(), entry.second.first, bytes.size(), cudaMemcpyDeviceToHost));
                         const auto path = trace / block.at(entry.first).get<std::string>();
-                        write_new(path, bytes); block[entry.first + "_sha256"] = sha256(path);
+                        require(bytes.size() <= (byte_limit ? byte_limit : 256ULL * 1024 * 1024) -
+                                                    trace_written,
+                                "persistent diagnostic write byte budget");
+                        write_new(path, bytes);
+                        trace_written += bytes.size();
+                        block[entry.first + "_sha256"] = sha256(path);
                     }
+                    trace_write_memberships(trace, stem, ids, voxels, block,
+                                            byte_limit ? byte_limit : 256ULL * 1024 * 1024,
+                                            trace_written);
                     trace_blocks.push_back(block);
                 }
             }
@@ -750,9 +789,19 @@ class PersistentSession final : public InferenceSession {
                 result.semantic_ids.push_back(static_cast<std::uint8_t>(semantics[i]));
                 result.las_codes.push_back(static_cast<std::uint8_t>(labels[i]));
             }
-            if (!trace.empty()) write_new(trace / "manifest.json",
-                Json{{"schema", "synrex.dense_tensor_trace.v1"}, {"tensor_contract", c.spec},
-                     {"byte_order", "little-endian"}, {"blocks", trace_blocks}}.dump(2) + "\n");
+            if (!trace.empty()) {
+                const auto bytes = Json{{"schema", "synrex.dense_tensor_trace.v1"},
+                                        {"tensor_contract", c.spec},
+                                        {"byte_order", "little-endian"},
+                                        {"blocks", trace_blocks},
+                                        {"membership_semantics", trace_membership_semantics(c)}}
+                                       .dump(2) +
+                                   "\n";
+                require(bytes.size() <=
+                            (byte_limit ? byte_limit : 256ULL * 1024 * 1024) - trace_written,
+                        "persistent diagnostic manifest byte budget");
+                write_new(trace / "manifest.json", bytes);
+            }
             ++windows_; classified_source_points_ += points.size();
             result.timings = {{"cpu_geometry_seconds", geometry_seconds}, {"h2d_and_zero_seconds", h2d},
                 {"cuda_preparation_seconds", prep}, {"tensorrt_seconds", inference},

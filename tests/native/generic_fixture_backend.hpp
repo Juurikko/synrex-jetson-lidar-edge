@@ -22,6 +22,9 @@ inline const synrex::EngineArtifact *last_pointer{};
 inline std::size_t last_capacity{};
 inline synrex::SessionOptions last_options;
 inline std::function<void()> init_hook;
+inline std::vector<synrex::fs::path> trace_paths;
+inline std::vector<std::uint64_t> trace_limits;
+inline bool trace_write_failure{}, trace_timing_collision{};
 inline void reset() {
     synrex::require(live == 0, "cannot reset live CPU backend fixture");
     init_calls = constructions = destructions = runs = 0;
@@ -33,6 +36,9 @@ inline void reset() {
     last_capacity = 0;
     last_options = {};
     init_hook = {};
+    trace_paths.clear();
+    trace_limits.clear();
+    trace_write_failure = trace_timing_collision = false;
 }
 class Backend final : public synrex::InferenceSession {
     const std::shared_ptr<const synrex::EngineArtifact> retained_;
@@ -59,6 +65,21 @@ class Backend final : public synrex::InferenceSession {
                 {"target", retained_->manifest().at("target")},
                 {"max_window_points", capacity_},
                 {"fixture", "opaque CPU test only; no neural inference or GPU execution"}};
+    }
+    synrex::WindowResult run_traced(const std::vector<synrex::Point> &points,
+                                    const synrex::fs::path &trace, std::uint64_t limit) override {
+        trace_paths.push_back(trace);
+        trace_limits.push_back(limit);
+        synrex::require(!trace_write_failure, "CPU fixture trace write failure");
+        synrex::require(synrex::fs::create_directory(trace),
+                        "CPU fixture trace directory collision");
+        const std::string bytes = "CPU fixture placeholder, no neural tensors";
+        synrex::require(bytes.size() <= limit, "CPU fixture trace write budget");
+        synrex::write_new(trace / "fixture.bin", bytes);
+        synrex::write_new(trace / "manifest.json", "{\"schema\":\"opaque_cpu_fixture\"}\n");
+        if (trace_timing_collision)
+            synrex::fs::create_directory(trace / "timing.json");
+        return run(points);
     }
     synrex::WindowResult run(const std::vector<synrex::Point> &points,
                              const synrex::fs::path & = {}) override {

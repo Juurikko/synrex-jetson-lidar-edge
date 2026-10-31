@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Tuomas Pietilä
 #pragma once
 #include "synrex/generic_codec.hpp"
+#include "synrex/generic_session.hpp"
 #include "synrex/session.hpp"
 #include <memory>
 
@@ -53,14 +54,16 @@ class AuthorityTransport {
     // Single-connection initialization: consumes this connection's
     // retained engine and negotiated capacity, then exchanges execution-ready.
     // Destruction on failure precedes propagation; permission is never reusable.
-    std::unique_ptr<Session> create_session(const SessionOptions &options = {});
+    std::unique_ptr<Session> create_session(const SessionOptions &options = {},
+                                            const DiagnosticTraceOptions &trace = {});
     // Both distinct connections must admit exactly the same descriptor before
     // either initialization gate is consumed. One retained backend serves input
     // and output; both readiness exchanges and later session failure are shared.
     // Both coordinated transports and the Session have one caller: do not call
     // them concurrently, including operations on different authority links.
     std::unique_ptr<Session> create_session_with_output(AuthorityTransport &output,
-                                                        const SessionOptions &options = {});
+                                                        const SessionOptions &options = {},
+                                                        const DiagnosticTraceOptions &trace = {});
     // Acknowledges only the exact nonempty received input transcript and EOF.
     // This does not qualify inference, classified output or a final map.
     Json finish_input(std::uint64_t expected_frames, std::uint64_t expected_points,

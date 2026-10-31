@@ -4,6 +4,7 @@
 #include "generic_fixture_backend.hpp"
 #include "synrex/generic_service.hpp"
 #include "synrex/generic_transport.hpp"
+#include "synrex/tensor_trace.hpp"
 #include <fstream>
 #include <future>
 #include <iostream>
@@ -121,7 +122,7 @@ struct Connection {
         authority->metadata_admission();
         remote.get();
     }
-    std::unique_ptr<Session> ready() {
+    std::unique_ptr<Session> ready(const DiagnosticTraceOptions &trace = {}) {
         auto remote = std::async(std::launch::async, [&] {
             try {
                 peer->acknowledge_execution_ready();
@@ -131,7 +132,7 @@ struct Connection {
             }
         });
         try {
-            auto result = authority->create_session();
+            auto result = authority->create_session({}, trace);
             check(remote.get(), "peer ready acknowledgement");
             return result;
         } catch (...) {
@@ -274,6 +275,263 @@ int main(int argc, char **argv) {
                           fb::last_artifact.lock().get() == fb::last_pointer,
                       "single backend owns exact retained artifact");
             });
+        run_case("unsupported_bounded_backend_never_falls_back", [&] {
+            struct Unsupported final : InferenceSession {
+                const Contract &c;
+                explicit Unsupported(const Contract &value) : c(value) {}
+                const Contract &contract() const override { return c; }
+                Json identity() const override { return Json::object(); }
+                WindowResult run(const std::vector<Point> &, const fs::path &) override {
+                    throw std::runtime_error("UNREACHABLE legacy trace fallback");
+                }
+            };
+            const Package original(p4);
+            Unsupported backend(original.contract);
+            rejects([&] { backend.run_traced({}, temporary.path / "unsupported", 1024); },
+                    "unavailable");
+            check(!fs::exists(temporary.path / "unsupported"),
+                  "unsupported bounded method writes nothing");
+        });
+        run_case("traced_invalid_frame_preserves_forward_admission", [&] {
+            DiagnosticTraceOptions trace{temporary.path / "trace-invalid-frame", 4ULL * 1024 * 1024,
+                                         2, std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            auto invalid = frame(*session);
+            invalid.identity.descriptor_sha256 = std::string(64, '0');
+            rejects([&] { session->run(invalid); });
+            check(fb::trace_paths.empty() && fb::runs == 0 && c.authority->failed() &&
+                      !fs::exists(trace.root / "window-0"),
+                  "traced frame authorization still precedes backend and window writes");
+        });
+        run_case("diagnostic_mapping_serialization_order_and_budget", [&] {
+            const std::vector<std::uint32_t> values{0, 1, 0x12345678, UINT32_MAX};
+            const auto bytes = trace_u32_le(values);
+            check(bytes.size() == 16 && static_cast<unsigned char>(bytes[8]) == 0x78 &&
+                      static_cast<unsigned char>(bytes[11]) == 0x12 &&
+                      static_cast<unsigned char>(bytes[15]) == 0xff,
+                  "explicit little endian u32");
+            const Package original(p4);
+            // Input point order differs from voxel order; one point belongs to overlapping blocks.
+            const std::vector<Point> points{{{7, 2, 2}, 100}, {{0, 0, 0}, 101}, {{6, 1, 1}, 102}};
+            const auto plan = geometry(points, original.contract);
+            check(plan.memberships > points.size(), "actual overlapping membership count");
+            const auto path = temporary.path / "mapping";
+            fs::create_directory(path);
+            std::uint64_t written{};
+            bool reordered{};
+            for (std::size_t bi = 0; bi < plan.blocks.size(); ++bi) {
+                const auto &block = plan.blocks[bi];
+                std::vector<std::uint32_t> ids, voxels;
+                for (const auto &m : block.members) {
+                    ids.push_back(m.point);
+                    voxels.push_back(m.voxel);
+                }
+                if (bi == 0)
+                    check(ids == std::vector<std::uint32_t>{1, 2, 0} &&
+                              voxels == std::vector<std::uint32_t>{0, 62, 119},
+                          "noncubic x-fastest mapping and actual sorted order");
+                reordered = reordered || !std::is_sorted(ids.begin(), ids.end());
+                Json metadata;
+                trace_write_memberships(path, std::to_string(bi), ids, voxels, metadata,
+                                        8 * plan.memberships, written);
+                check(metadata.at("membership_count") == ids.size() &&
+                          metadata.at("membership_points_sha256") ==
+                              sha256(path / metadata.at("membership_points").get<std::string>()) &&
+                          metadata.at("membership_voxels_sha256") ==
+                              sha256(path / metadata.at("membership_voxels").get<std::string>()),
+                      "mapping count and both hashes");
+                std::ifstream input(path / metadata.at("membership_points").get<std::string>(),
+                                    std::ios::binary);
+                const std::string saved((std::istreambuf_iterator<char>(input)), {});
+                check(saved == trace_u32_le(ids), "actual backend traversal bytes preserved");
+            }
+            check(reordered && written == 8 * plan.memberships,
+                  "sorted geometry order differs from point input");
+            Json denied;
+            const auto before = written;
+            rejects(
+                [&] {
+                    trace_write_memberships(path, "rejected", values, values, denied, written + 31,
+                                            written);
+                },
+                "byte budget");
+            check(written == before && !fs::exists(path / "rejected.points.u32.bin"),
+                  "full pair reserved before any mapping write");
+            rejects(
+                [&] {
+                    trace_write_memberships(path, "mismatch", values, {}, denied, written + 32,
+                                            written);
+                },
+                "count mismatch");
+            check(
+                diagnostic_tensor_bound(original.contract, plan.blocks.size(), plan.memberships) ==
+                    diagnostic_tensor_bound(original.contract, plan.blocks.size()) +
+                        8 * plan.memberships,
+                "reservation uses actual membership count");
+            rejects([&] { diagnostic_tensor_bound(original.contract, 1, UINT64_MAX); },
+                    "mapping total byte bound");
+            check(trace_membership_semantics(original.contract).at("voxel_linearization") ==
+                      "(iz * ny + iy) * nx + ix; x fastest",
+                  "x fastest semantics");
+        });
+        run_case("diagnostic_disabled_unchanged_forwarding", [&] {
+            Connection c(package);
+            c.admit();
+            auto session = c.ready();
+            check(session->run(frame(*session)).semantic_ids.size() == 3 && fb::trace_paths.empty(),
+                  "off-by-default uses original backend run without trace I/O");
+            check(!session->identity().contains("diagnostic_trace"), "off identity unchanged");
+        });
+        for (const auto fault : {"partial", "bytes", "minimum", "windows", "source", "existing"})
+            run_case(std::string("diagnostic_preGPU_") + fault, [&] {
+                DiagnosticTraceOptions trace{temporary.path / (std::string("trace-") + fault),
+                                             4ULL * 1024 * 1024, 2, std::string(40, 'a')};
+                const std::string name(fault);
+                if (name == "partial")
+                    trace.root.clear();
+                if (name == "bytes")
+                    trace.total_bytes = 512 * 1024;
+                if (name == "minimum")
+                    trace.total_bytes = 512 * 1024 + 1;
+                if (name == "windows")
+                    trace.windows = 65;
+                if (name == "source")
+                    trace.declared_source_commit = "unbound";
+                if (name == "existing")
+                    fs::create_directory(trace.root);
+                Connection c(package);
+                c.admit();
+                rejects([&] { c.authority->create_session({}, trace); }, "diagnostic");
+                failed_gate(c, 0);
+            });
+        run_case("diagnostic_relative_root_is_captured_across_cwd_change", [&] {
+            const auto saved = fs::current_path();
+            fs::current_path(temporary.path);
+            try {
+                DiagnosticTraceOptions trace{"relative-trace", 4ULL * 1024 * 1024, 1,
+                                             std::string(40, 'a')};
+                Connection c(package);
+                c.admit();
+                auto session = c.ready(trace);
+                fs::current_path(saved);
+                session->run(frame(*session));
+                check(fb::trace_paths.back() == temporary.path / "relative-trace/window-0" &&
+                          fs::exists(temporary.path / "relative-trace/window-0/lineage.json"),
+                      "writes use the captured absolute admitted root after cwd changes");
+            } catch (...) {
+                fs::current_path(saved);
+                throw;
+            }
+            fs::current_path(saved);
+        });
+        run_case("diagnostic_forwarding_lineage_and_window_budget", [&] {
+            DiagnosticTraceOptions trace{temporary.path / "trace-good", 4ULL * 1024 * 1024, 2,
+                                         std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            const auto received = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                      std::chrono::steady_clock::now().time_since_epoch())
+                                      .count();
+            const auto first = session->run(frame(*session, 1), received);
+            const auto second = session->run(frame(*session, 2));
+            check(first.semantic_ids == second.semantic_ids && fb::trace_paths.size() == 2 &&
+                      fb::trace_paths[0] == trace.root / "window-0" &&
+                      fb::trace_paths[1] == trace.root / "window-1",
+                  "exact budgeted path forwarding");
+            check(fs::exists(trace.root / "admission.json") &&
+                      read_json(trace.root / "window-0/lineage.json").at("descriptor_sha256") ==
+                          session->descriptor().sha256(),
+                  "actual input/source/policy lineage persisted");
+            check(first.timings.at("diagnostic_service_seconds").get<double>() >= 0 &&
+                      session->identity().at("diagnostic_trace").at("completed_windows") == 2,
+                  "trace timing/counters exposed");
+            const auto timing = read_json(trace.root / "window-0/timing.json");
+            check(timing.at("receiver_frame_available_steady_ns") == received &&
+                      timing.at("receiver_frame_available_steady_ns") <=
+                          timing.at("service_started_steady_ns") &&
+                      timing.at("service_started_steady_ns") <=
+                          timing.at("trace_payload_published_steady_ns") &&
+                      timing.at("trace_payload_published_steady_ns") <=
+                          timing.at("classification_validated_steady_ns") &&
+                      read_json(trace.root / "window-1/timing.json")
+                          .at("receiver_frame_available_steady_ns")
+                          .is_null(),
+                  "durable local boundaries and explicit missing receive sample");
+            auto sampled = [] {
+                return std::chrono::duration_cast<std::chrono::nanoseconds>(
+                           std::chrono::steady_clock::now().time_since_epoch())
+                    .count();
+            };
+            const auto ready = sampled(), started = sampled(), sent = sampled();
+            session->record_output_timing(0, ready, started, sent);
+            check(read_json(trace.root / "window-0/output-timing.json")
+                          .at("output_ready_steady_ns") == ready,
+                  "post-run output-ready boundary persisted after send");
+            rejects([&] { session->run(frame(*session, 3)); }, "window budget");
+            check(fb::runs == 2 && c.authority->failed(),
+                  "trace window limit rejects before inference");
+            rejects([&] { session->run(frame(*session, 4)); }, "permanently failed");
+        });
+        run_case("diagnostic_aggregate_byte_budget_not_per_window", [&] {
+            const Package original(p4);
+            const auto plan =
+                geometry(std::vector<Point>{{{1, 0, 3}, 100}, {{1, 1, 3}, 101}, {{1, 2, 3}, 102}},
+                         original.contract);
+            const auto allowance =
+                diagnostic_tensor_bound(original.contract, plan.blocks.size(), plan.memberships) +
+                3 * 4096;
+            DiagnosticTraceOptions trace{temporary.path / "trace-small", 512 * 1024 + allowance, 2,
+                                         std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            session->run(frame(*session, 1));
+            rejects([&] { session->run(frame(*session, 2)); }, "session byte budget");
+            check(fb::runs == 1 && !fs::exists(trace.root / "window-1") && c.authority->failed(),
+                  "aggregate reserved budget prevents second backend/window before write");
+        });
+        run_case("diagnostic_window_collision_preserves_prior_evidence", [&] {
+            DiagnosticTraceOptions trace{temporary.path / "trace-collision", 4ULL * 1024 * 1024, 2,
+                                         std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            fs::create_directory(trace.root / "window-0");
+            write_file(trace.root / "window-0/prior.txt", "immutable prior evidence");
+            rejects([&] { session->run(frame(*session)); }, "collision");
+            check(fb::runs == 0 && c.authority->failed() &&
+                      fs::file_size(trace.root / "window-0/prior.txt") == 24,
+                  "colliding trace window cannot overwrite or infer");
+        });
+        run_case("diagnostic_timing_publication_failure_poisoning", [&] {
+            DiagnosticTraceOptions trace{temporary.path / "trace-timing-collision",
+                                         4ULL * 1024 * 1024, 2, std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            fb::trace_timing_collision = true;
+            rejects([&] { session->run(frame(*session)); });
+            check(fb::runs == 1 && c.authority->failed() &&
+                      fs::exists(trace.root / "window-0/lineage.json") &&
+                      fs::is_directory(trace.root / "window-0/timing.json"),
+                  "partial trace remains, timing failure prevents classification return");
+            rejects([&] { session->run(frame(*session, 2)); }, "permanently failed");
+        });
+        run_case("diagnostic_write_failure_poisoning", [&] {
+            DiagnosticTraceOptions trace{temporary.path / "trace-failure", 4ULL * 1024 * 1024, 2,
+                                         std::string(40, 'a')};
+            Connection c(package);
+            c.admit();
+            auto session = c.ready(trace);
+            fb::trace_write_failure = true;
+            rejects([&] { session->run(frame(*session, 1)); }, "trace write failure");
+            check(fb::runs == 0 && c.authority->failed(),
+                  "trace failure stops inference/authority");
+            rejects([&] { session->run(frame(*session, 2)); }, "permanently failed");
+        });
         run_case("duplicate_create_rejected_without_second_backend", [&] {
             Connection c(package);
             c.admit();

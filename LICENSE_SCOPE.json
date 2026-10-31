@@ -63,6 +63,7 @@
       "native/include/synrex/service.hpp",
       "native/include/synrex/session.hpp",
       "native/include/synrex/stream.hpp",
+      "native/include/synrex/tensor_trace.hpp",
       "native/include/synrex/taxonomy.hpp",
       "native/include/synrex/transport.hpp",
       "native/kernels.cu",
@@ -343,7 +344,8 @@
       "docs/runtime_sealed_outputs.md",
       "archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md",
       "docs/ATOMIC_DIRECTORY_PUBLICATION.md",
-      "docs/streaming/FROZEN_REFERENCE.md"
+      "docs/streaming/FROZEN_REFERENCE.md",
+      "docs/streaming/GENERIC_DIAGNOSTIC_TRACE.md"
     ],
     "license": "CC-BY-4.0"
   },

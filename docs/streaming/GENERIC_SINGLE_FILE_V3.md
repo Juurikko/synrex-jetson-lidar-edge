@@ -99,3 +99,7 @@ SIGINT/SIGTERM requests cancellation at the next application boundary. Pending I
 remains bounded by its deadline; active vendor work is not preempted. Partial
 receipts have FAIL status. Receipt paths are never overwritten. A receipt write
 failure makes the process fail even after successful transport.
+
+Optional receiver-only [tensor diagnostics](GENERIC_DIAGNOSTIC_TRACE.md) expose
+per-window persistent input/logit traces with a finite total session byte budget.
+They are disabled by default and do not qualify trained quality or capacity.

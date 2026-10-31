@@ -11,6 +11,7 @@
 #include <cmath>
 #include <csignal>
 #include <fcntl.h>
+#include <fstream>
 #include <iostream>
 #include <linux/memfd.h>
 #include <set>
@@ -26,6 +27,11 @@ volatile std::sig_atomic_t interrupted{};
 void interrupt(int) { interrupted = 1; }
 void active() { require(!interrupted, "generic live cancelled"); }
 constexpr std::uint64_t max_records = 1000000;
+std::uint64_t steady_ns() {
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(
+               Startup::Clock::now().time_since_epoch())
+        .count();
+}
 struct Args {
     std::string mode;
     std::map<std::string, std::string> values;
@@ -41,8 +47,15 @@ struct Args {
         const std::set<std::string> extra =
             mode == "send" ? std::set<std::string>{"--source", "--port", "--rate"}
             : mode == "receive"
-                ? std::set<std::string>{"--port",    "--output-port",   "--frames",
-                                        "--records", "--source-sha256", "--map-cells"}
+                ? std::set<std::string>{"--port",
+                                        "--output-port",
+                                        "--frames",
+                                        "--records",
+                                        "--source-sha256",
+                                        "--map-cells",
+                                        "--tensor-trace-root",
+                                        "--tensor-trace-bytes",
+                                        "--trace-source-commit"}
                 : std::set<std::string>{"--port",          "--frames",    "--records",
                                         "--source-sha256", "--map-cells", "--source",
                                         "--export-bundle"};
@@ -90,6 +103,7 @@ struct Config {
     const std::uint16_t port, output_port;
     const std::size_t cells;
     const std::string source_sha;
+    DiagnosticTraceOptions trace;
     explicit Config(const Args &a)
         : args(a),
           limits{a.number("--points", 16384, 65536), a.number("--frame-bytes", 1048576, 16777216),
@@ -115,6 +129,16 @@ struct Config {
         }
         if (a.mode == "receive")
             require(port != output_port, "input/output ports must differ");
+        if (a.values.count("--tensor-trace-root")) {
+            trace.root = a.get("--tensor-trace-root");
+            trace.total_bytes = a.number("--tensor-trace-bytes", 0, 256ULL * 1024 * 1024);
+            trace.windows = frames;
+            trace.declared_source_commit = a.get("--trace-source-commit");
+        } else
+            require(!a.values.count("--tensor-trace-bytes") &&
+                        !a.values.count("--trace-source-commit"),
+                    "diagnostic trace options require root");
+        trace.validate();
         if (a.values.count("--export-bundle")) {
             (void)a.get("--source");
             new_path(a.get("--export-bundle"));
@@ -220,6 +244,14 @@ void send(const Config &config, const CpuAdmittedPackage &admitted, const Packag
             "single-file CLI requires identical peer point limits");
     transport.acknowledge_execution_ready();
     const auto anchor = Startup::Clock::now();
+    receipt["replay_anchor_steady_ns"] =
+        std::chrono::duration_cast<std::chrono::nanoseconds>(anchor.time_since_epoch()).count();
+    receipt["replay_clock_scope"] =
+        "producer local steady_clock; synthetic availability only, no physical capture claim";
+    std::ifstream boot("/proc/sys/kernel/random/boot_id");
+    std::string boot_id;
+    std::getline(boot, boot_id);
+    receipt["replay_clock_boot_id"] = boot_id;
     std::uint64_t sequence{}, rows{};
     while (rows < source.points.size()) {
         active();
@@ -245,6 +277,12 @@ void send(const Config &config, const CpuAdmittedPackage &admitted, const Packag
         // synthetic replay time, never host clocks or physical capture timestamps.
         std::this_thread::sleep_until(anchor +
                                       std::chrono::nanoseconds(end * 1000000000ULL / rate));
+        if (frame.sequence == 0)
+            receipt["first_scheduled_frame_available_steady_ns"] =
+                receipt.at("replay_anchor_steady_ns").get<std::uint64_t>() +
+                end * 1000000000ULL / rate;
+        receipt["last_scheduled_frame_available_steady_ns"] =
+            receipt.at("replay_anchor_steady_ns").get<std::uint64_t>() + end * 1000000000ULL / rate;
         transport.send_frame(frame, config.deadline());
     }
     receipt["input_completion"] = transport.finish_input(config.deadline());
@@ -260,6 +298,12 @@ void send(const Config &config, const CpuAdmittedPackage &admitted, const Packag
 }
 void receive(const Config &config, const CpuAdmittedPackage &admitted, Json &receipt) {
     const auto &args = config.args;
+    if (config.trace.enabled()) {
+        std::ifstream boot("/proc/sys/kernel/random/boot_id");
+        std::string boot_id;
+        std::getline(boot, boot_id);
+        receipt["receiver_clock_boot_id"] = boot_id;
+    }
     auto input_listener = wire::listen_loopback(config.port);
     auto output_listener = wire::listen_loopback(config.output_port);
     std::cerr << "generic_listening=1\n" << std::flush;
@@ -272,20 +316,37 @@ void receive(const Config &config, const CpuAdmittedPackage &admitted, Json &rec
                               args.get("--session"), config.epoch);
     input.metadata_admission();
     output.metadata_admission();
-    auto session = input.create_session_with_output(output);
+    auto session = input.create_session_with_output(output, {}, config.trace);
     OutputSender sender(output, 1.0, config.cells);
     std::uint64_t rows{};
     for (std::uint64_t sequence = 0; sequence < config.frames; ++sequence) {
         auto frame = input.receive_frame(config.deadline());
+        const auto available =
+            config.trace.enabled() ? std::optional<std::uint64_t>(steady_ns()) : std::nullopt;
         require(frame.sequence == sequence && frame.frame_id == sequence,
                 "single-file frame sequence mismatch");
         source_identity(frame, config.source_sha);
         row_coverage(frame, rows, config);
-        sender.send(session->run(std::move(frame)), config.deadline());
+        auto result = session->run(std::move(frame), available);
+        const auto ready = config.trace.enabled() ? steady_ns() : 0;
+        const auto deadline = config.deadline();
+        const auto send_started = config.trace.enabled() ? steady_ns() : 0;
+        sender.send(result, deadline);
+        if (config.trace.enabled()) {
+            const auto sent = steady_ns();
+            session->record_output_timing(sequence, ready, send_started, sent);
+        }
     }
     require(rows == config.records, "single-file missing input records");
     receipt["input_completion"] = input.finish_input(config.frames, rows, config.deadline());
+    if (config.trace.enabled())
+        receipt["input_completion_observed_steady_ns"] = steady_ns();
     receipt["output_completion"] = sender.finish(config.deadline());
+    if (config.trace.enabled()) {
+        receipt["output_completion_observed_steady_ns"] = steady_ns();
+        receipt["completion_clock_scope"] = "receiver local steady_clock; terminal acknowledgments "
+                                            "observed before samples; receipt publication follows";
+    }
     receipt_identity(receipt, input.descriptor());
     receipt["session_identity"] = session->identity();
     receipt.update({{"frames", config.frames},
@@ -372,6 +433,7 @@ int live_main(int argc, char **argv) {
                 "model changed during CPU admission");
         require(config.limits.max_frame_points <= package.contract.max_points,
                 "unsafe persistent window point budget");
+        config.trace.validate_contract(package.contract, config.frames);
         std::signal(SIGINT, interrupt);
         std::signal(SIGTERM, interrupt);
         receipt["mode"] = args.mode;
