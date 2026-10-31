@@ -6,7 +6,10 @@
 `synrex::Taxonomy` validates metadata for the new generic path. This preparatory
 object does not change package-v2, wire-v2, legacy taxonomy mappings, inference,
 or map behavior. It does not establish generic file/stream execution qualification.
-Package and protocol integration must separately bind the validated artifact.
+[Package-v3](PACKAGE_V3.md) binds its validated artifact to the package manifest.
+The [CPU descriptor and startup library](GENERIC_STARTUP.md) binds those captured
+identities to metadata admission. Actual transport, Service and GPU handoff remain
+separate work; existing legacy endpoints continue to reject v3 packages.
 
 The artifact is one UTF-8 JSON document, at most **65,536 bytes**, with no duplicate
 object keys and at most eight nested object/array containers including the root.
