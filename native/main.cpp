@@ -266,7 +266,9 @@ int main(int argc, char **argv) {
                   << '\n';
         return 0;
     } catch (const std::exception &e) {
-        std::cerr << synrex::Json{{"status", "FAIL"}, {"reason", e.what()}}.dump() << '\n';
+        std::cerr << synrex::Json{{"status", "FAIL"}, {"reason", e.what()}}.dump(
+                         -1, ' ', false, synrex::Json::error_handler_t::replace)
+                  << '\n';
         return 1;
     }
 }

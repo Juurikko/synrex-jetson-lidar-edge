@@ -259,6 +259,7 @@ def test_invalid_v3_taxonomy_fails_before_gpu_or_output(tmp_path, fault, command
         arguments += ["--input", tmp_path / "absent.laz", "--out", output]
     result = run(*arguments, ok=False)
     assert result.returncode == 1
+    assert json.loads(result.stderr)["status"] == "FAIL"
     expected = {
         "schema": "unsupported taxonomy schema",
         "channels": "taxonomy/output channel mismatch",
