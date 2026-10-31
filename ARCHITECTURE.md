@@ -4,9 +4,11 @@
 # Maintained native LiDAR runtime architecture
 
 **Developer and project lead: Tuomas Pietilä.** Engineering includes OpenAI Codex
-assistance. This description is grounded in implementation commit
-`b1bfebea38c0cad651710a964401f7b86dc1bebd`; each qualification result has its own
-source, environment, model, data and configuration identity.
+assistance. This description covers the R3 implementation through `92e2067`;
+each qualification result has its own source, environment, model, data and
+configuration identity. The campaign handoff's final report and source-bound
+receipts are authoritative for the delivered candidate. The summaries below do
+not certify later source or documentation revisions.
 
 The maintained runtime separates model admission, original-point inference,
 transport, map state and output preservation. Native classification uses C++17,
@@ -221,18 +223,22 @@ classification proxies, not DTM vertical accuracy without external terrain truth
 
 | Capability/evidence | Current boundary |
 | --- | --- |
-| Package/descriptor admission, codecs, sockets, maps, completion, preservation and scorers | Executed CPU contract/regression fixtures; opaque classes establish mechanics only. Exact candidate acceptance belongs to source/binary-bound receipts and the complete CPU workflow. |
-| Generic package-v3 file/stream execution on actual TensorRT/CUDA | **NOT_RUN** for this maintained generic path; CPU fixtures and SDK compile checks cannot establish GPU interchangeability. |
-| Trained current-source Q0/Q1 quality, causal execution and finite/distinct GPU capacity | **NOT_RUN**; evaluator implementation and retained historical predictions do not replace required execution. |
+| Package/descriptor admission, codecs, sockets, maps, completion, preservation and scorers | Executed CPU contract/regression fixtures, including K=256/channel-255 semantics; opaque classes establish mechanics only. Exact candidate acceptance belongs to source/binary-bound receipts and the complete CPU workflow. |
+| Generic package-v3 file/stream execution on actual TensorRT/CUDA | R3 synthetic mechanics passed at `23b8162`: explicit K4 and non-FRACTAL K7 full-file and identical-window outputs, analytic feature/logit checks, original records/metadata, independent subscriber reconstruction and completion. No trained quality or arbitrary-K GPU claim. |
+| Trained Q0/Q1 and causal execution | Executed at `62a6f81`; identical-window native/reference numerical gates passed under frozen tolerances. Q0 whole-source versus Q1 streaming policy quality remains inconclusive on one metadata-selected validation source, without acquisition-level uncertainty and with five truth classes absent. Sampled prefix and label-erasure checks are bounded evidence, not universal causality proof. |
+| Finite distinct replay and profiling | Source `92e2067` ran an actual FINAL-phase job charged 18 GPU-job wall seconds: four trials over the same 270,300 distinct TRAIN records, each about 2.7–2.9 s wall at 250k offered points/s. Paired input/classification/snapshot semantics matched exactly. Enabled-trial service p99 upper bounds were below 43 ms, while maximum sender lag exceeded the frozen 50 ms gate (137–146 ms). Finite capacity gates failed; no sustained rate or physical capture-age claim. `NO_MATERIAL_OPTIMIZATION`: no qualifying optimization was demonstrated or adopted. |
 | Frozen legacy RTX4090 U-Net file/stream/repeated-tile results | Historical, scene/model/source-specific; [R1 qualification](docs/streaming/STREAMING_R1_QUALIFICATION.md), [R2 audit](docs/streaming/STREAMING_R2_AUDIT.md), [whole-tile model evaluation](docs/byom/UNET_R2_RELEASE.md). No transfer to the generic path or Q1 quality. |
 | Earlier SegFormer/Jetson file product | Separate [historical architecture](archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md) and [benchmark](archive/history/BENCHMARK.md); no current streaming/Orin qualification. |
 | Physical sensor, UAV capture, AGX/Thor generic deployment and terrain accuracy | **NOT_RUN**; no inherited device, acquisition or terrain claim. |
 
 Historical negative rate/latency trials, decoder failures and unsupported layouts
 remain part of their evidence. Neither this architecture rewrite nor a later
-source commit turns them into successful measurements. New generic qualification
-must bind one integrated source, SDK/environment, model/engine, data and policy;
-retain raw disagreement and failure receipts, then obtain independent review.
+source commit turns them into successful measurements. The finite replay's two
+fixed-order instrumentation/profile pairs are descriptive and do not isolate
+instrumentation cost or prove optimization benefit. Campaign receipts retain raw
+disagreements, failures and exact source/SDK/model/data/configuration identities
+outside this source tree. Final qualification must bind the integrated candidate
+and obtain independent review; earlier R3 results do not substitute for that gate.
 
 Original native code is MIT where scoped; original documentation is CC BY 4.0.
 Models, data, patched upstream code and vendor SDKs retain their own rights and

@@ -4,10 +4,19 @@
 # Generic finite single-file replay
 
 `synrex-generic-live` supplies opt-in binary-v3 `receive`, `send` and `subscribe`
-commands. Legacy executables retain their selection. This new path has CPU
-process/socket/export regressions with an explicitly opaque test backend.
-Real generic TensorRT file/stream interchangeability and Q0/Q1 quality remain
-**NOT_RUN**. These fixtures provide no neural or performance result.
+commands. Legacy executables retain their selection. CPU process/socket/export
+regressions use an explicitly opaque test backend, including K=256/channel-255
+coverage; they provide no neural or performance result. R3 additionally executed
+real CUDA/TensorRT full-file, identical-window and independently reconstructed
+stream mechanics for explicit K4 and non-FRACTAL K7 packages at `23b8162`.
+
+Trained Q0/Q1 execution at `62a6f81` passed identical-window numerical gates.
+Whole-source versus streaming policy quality remains inconclusive on one validation
+source with five truth classes absent. Finite manifest replay at `92e2067` preserved
+exact semantics but failed its sender scheduling gate and demonstrated
+`NO_MATERIAL_OPTIMIZATION`. The [scoped R3 evidence summary](../../ARCHITECTURE.md#quality-comparison-and-evidence-boundaries)
+records the measured limits and campaign handoff authority; these source-specific
+results do not qualify another candidate, sensor timing or an Orin deployment.
 
 Build with the usual [native dependencies](../byom/QUICKSTART.md). The production
 executable uses the configured backend; a CPU-only build rejects inference.
@@ -75,8 +84,11 @@ from trial origin zero. Frame availability follows full window accumulation.
 `--rate` must be at least the configured points/window and is capped at 20M/s.
 Finite sender elapsed time is measured, without a sustained throughput or physical
 capture-age claim. No looping, warmup exclusion or cross-host clock subtraction is
-performed. Manifest replay, multi-file distinct accounting, context experiments and
-capacity/quality qualification remain separate E3/E4 work.
+performed. [Manifest replay and multi-file distinct accounting](DISTINCT_REPLAY.md)
+use a separate contract. Their measured finite capacity limits and the
+[Q0/Q1 evaluation method](QUALITY_EVALUATION.md) remain distinct from this
+single-file mechanics qualification; neither establishes sustainable capacity or
+general policy quality.
 
 After frames, input completion binds exact encoded-frame SHA256, nonempty counts,
 descriptor and fresh terminal/ACK challenges, with EOF fences in both directions.
