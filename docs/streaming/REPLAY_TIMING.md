@@ -130,3 +130,78 @@ still require the admitted real workload, repeated paired GPU execution under
 the controller, and an independent source-bound evidence review. The comparator
 always reports actual GPU instrumentation qualification as
 `NOT_ESTABLISHED_BY_THIS_TOOL`.
+
+
+## Optional backend phase profiles
+
+Manifest `receive` accepts `--profile-backend enabled|disabled`, default `disabled`.
+It is separate from `--timing-instrumentation`: this switch only retains values
+already measured by the actual persistent backend. It introduces no GPU event,
+context, model, geometry-policy or transport changes. Disabled/default mode adds
+no backend-profile fields or accumulators. Other peer modes reject this option.
+
+Enabled source receipts include `backend_profile`; the receiver trial receipt
+includes `trial_backend_profile` (`synrex.backend_profile.v1`). Seven named
+phase summaries retain sample count, missing-window count, sum, minimum and
+maximum seconds. A sample is one successful `Session::run` return, before map,
+serialization and output send. Unequal windows remain unweighted window samples;
+three integer summaries separately retain completed inference blocks, freshly
+classified points and occupied voxels. Trial summaries merge actual sums/counts
+and extrema, never source averages. Returned inference results remain counted if
+output later fails. A thrown inference contributes no successful-return sample;
+prior source/trial populations survive failures. Samples do not prove output
+completion; existing coverage and acknowledgment receipts still establish that.
+
+`cpu_geometry_seconds` and `window_seconds` use the receiver's steady clock.
+The H2D/zeroing, feature preparation, TensorRT, scatter and D2H durations are
+backend CUDA-event measurements with the scopes named in the receipt. Geometry
+subphase fields that are uninstrumented under reference/fallback geometry are
+not exposed as measured zeros. GPU phases and host wall scopes may overlap;
+never sum phase durations into end-to-end wall or subtract them from service.
+`window_seconds` includes CPU geometry through synchronized label reconstruction
+and backend result creation, and excludes startup, receiver coverage, map and
+output. Existing receiver-service and process resource measurements retain their
+boundaries.
+
+Workload metadata comes from the actual session identity and contract: manifest
+hash, selected/effective geometry, dimensions/voxel size/overlap and resolution
+policy, feature/class counts, voxels per block and input/output dtype. Occupied
+voxels count block-local occupied cells summed over completed blocks; repeated
+points or cells in overlapping blocks remain in this count. A denominator for
+block-local occupancy is completed blocks times voxels per block, not distinct
+scene volume. No feature/class meaning is inferred from channel count.
+
+Opaque CPU fixtures and unrecognized backends report `UNSUPPORTED_BACKEND` with
+null phase/counter/workload values, even if synthetic timing-like fields exist.
+For a supported backend, absent fields retain zero samples and null statistics;
+explicit `missing_windows` counts distinguish missing values from measured zeros.
+Malformed, negative/nonfinite values, noninteger counters, inconsistent point or
+voxel counts, workload drift and arithmetic overflow fail profiling rather than
+fabricating a measurement. Every completed block must contain at least one
+occupied cell, and occupied cells cannot exceed returned points times completed
+blocks. Block/occupied-cell/returned-point counts cannot exceed the admitted
+membership cap. These checks use only available counter values; missing values
+remain missing. Nominal zero overlap alone is not used to infer a strict point
+partition: existing geometry permits duplicate rounded block origins when block
+extents fall below coordinate precision. Profiling retains those actual counts;
+it does not repair or qualify that pre-existing geometry behavior. Updates are transactional, retaining the previous
+valid prefix. Profiles support source-bound measurement; they do not attest that
+a GPU job ran or establish quality, capacity, optimization or instrumentation
+overhead. External frozen source/binary and actual job receipts remain required.
+
+The seven phase and three counter accumulators have fixed-size storage and no
+per-frame sample list. Only one source and one trial accumulator are active;
+workload metadata is bounded to 2048 compact JSON bytes and each compact serialized
+profile to 16 KiB. `storage_bytes` reports the inline C++ object only, excluding
+that metadata's JSON heap and serialized receipts; it is not total profile memory.
+Outer receipt pretty-printing adds whitespace to the compact profile bound.
+Receipt lists still grow with the already admitted manifest
+source count (at most 4096); worst-case added compact profile JSON is bounded by
+`16384 * (attempted_sources + 1)` bytes. No new admission limit replaces existing
+source, frame, codec or output budgets. Actual profiling overhead remains
+unmeasured until independently compared under the resource controller.
+
+The paired `replay_overhead.py` comparator normalizes absent `backend_profiling`
+to `disabled` for older receipts, and includes the setting in configuration
+identity. It rejects drift between a profiling-enabled and profiling-disabled
+receipt, so that difference cannot be presented as replay histogram overhead.

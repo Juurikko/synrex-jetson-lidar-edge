@@ -292,6 +292,11 @@ def semantic_identity(receipt):
             *COUNTERS,
         )
     }
+    # Profiling is independent of the replay histogram switch. Do not attribute
+    # a profiling configuration change to timing-instrumentation overhead.
+    profile_setting = receipt.get("backend_profiling", "disabled")
+    require(profile_setting in ("disabled", "enabled"), "invalid backend profiling setting")
+    identity["backend_profiling"] = profile_setting
     identity["sources"] = []
     for row in receipt["sources"]:
         source = {

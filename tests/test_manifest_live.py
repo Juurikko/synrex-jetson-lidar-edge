@@ -24,7 +24,7 @@ def arguments(mode, model, receipt, port_number, manifest_path, rate=1000000, wi
 
 def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="binary-v3",
              raw_bits=False, queue_frames=2, timing="enabled", reuse_inputs=False,
-             receipt_dir=None):
+             receipt_dir=None, profile_backend=None):
     receipt_dir = receipt_dir or tmp_path
     model = tmp_path / "model" if reuse_inputs else package(tmp_path, count)
     other_model = package(tmp_path, count, changed=True) if failure == "taxonomy" else model
@@ -60,6 +60,8 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="bin
     receive_args = arguments("receive", model, receipt_dir / "receive.json", input_port,
                              manifest_path, rate, wire)
     receive_args += ["--output-port", str(output_port), "--timing-instrumentation", timing]
+    if profile_backend is not None:
+        receive_args += ["--profile-backend", profile_backend]
     children = {"receive": start_receiver([str(FIXTURE), *receive_args], environment)}
     try:
         for mode, model_path, port_number in [

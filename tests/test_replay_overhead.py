@@ -76,6 +76,7 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
         "output",
         "identity",
         "config",
+        "backend_profiling",
         "tail",
         "resource",
         "fractional_rss",
@@ -90,6 +91,8 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
             value["descriptor"]["context_policy_sha256"] = "0" * 64
         elif mutation == "config":
             value["replay_configuration"]["queue_frames"] += 1
+        elif mutation == "backend_profiling":
+            value["backend_profiling"] = "enabled"
         elif mutation == "tail":
             value["trial_timings"] = {}
         elif mutation == "fractional_rss":
@@ -116,6 +119,15 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
     with pytest.raises(ValueError, match="count/sum"):
         overhead.validate_timings(value)
     path.write_bytes(original)
+    implicit = json.loads(original)
+    explicit = copy.deepcopy(implicit)
+    explicit["backend_profiling"] = "disabled"
+    assert overhead.semantic_identity(implicit) == overhead.semantic_identity(explicit)
+    explicit["backend_profiling"] = "enabled"
+    assert overhead.semantic_identity(implicit) != overhead.semantic_identity(explicit)
+    explicit["backend_profiling"] = None
+    with pytest.raises(ValueError, match="backend profiling setting"):
+        overhead.semantic_identity(explicit)
     subscriber_paths = [
         Path(pair[setting]["subscribe"])
         for pair in plan["pairs"]

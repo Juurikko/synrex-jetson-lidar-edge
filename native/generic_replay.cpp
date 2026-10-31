@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/generic_replay.hpp"
+#include "synrex/backend_profile.hpp"
 #include "synrex/generic_output.hpp"
 #include "synrex/generic_session.hpp"
 #include "synrex/replay_frames.hpp"
@@ -73,10 +74,11 @@ struct Args {
         require(mode == "send" || mode == "receive" || mode == "subscribe",
                 "unknown manifest replay command");
         const std::set<std::string> allowed{
-            "--wire",        "--model",       "--receipt",   "--manifest",
-            "--session",     "--epoch",       "--points",    "--rate",
-            "--port",        "--output-port", "--map-cells", "--queue-frames",
-            "--frame-bytes", "--startup-ms",  "--io-ms",     "--timing-instrumentation"};
+            "--wire",           "--model",       "--receipt",   "--manifest",
+            "--session",        "--epoch",       "--points",    "--rate",
+            "--port",           "--output-port", "--map-cells", "--queue-frames",
+            "--frame-bytes",    "--startup-ms",  "--io-ms",     "--timing-instrumentation",
+            "--profile-backend"};
         for (int i = 2; i < argc; i += 2)
             require(i + 1 < argc && allowed.count(argv[i]) &&
                         values.emplace(argv[i], argv[i + 1]).second,
@@ -112,7 +114,7 @@ struct Config {
     const std::uint64_t epoch, io_ms;
     const std::uint16_t port, output_port;
     const std::size_t cells, queue_frames;
-    const bool timing_enabled;
+    const bool timing_enabled, profile_backend;
     explicit Config(const Args &a)
         : args(a), protocol(a.get("--wire") == "binary-source-v1" ? WireProtocol::binary_source_v1
                                                                   : WireProtocol::binary_v3),
@@ -127,7 +129,13 @@ struct Config {
           output_port(a.mode == "receive" ? a.number("--output-port", 39184, 65535) : 0),
           cells(a.number("--map-cells", 65536, SemanticMap::max_cells)),
           queue_frames(a.number("--queue-frames", 2, 2)),
-          timing_enabled(a.get("--timing-instrumentation", "enabled") == "enabled") {
+          timing_enabled(a.get("--timing-instrumentation", "enabled") == "enabled"),
+          profile_backend(a.get("--profile-backend", "disabled") == "enabled") {
+        require(a.get("--profile-backend", "disabled") == "enabled" ||
+                    a.get("--profile-backend", "disabled") == "disabled",
+                "profile-backend requires enabled or disabled");
+        require(a.mode == "receive" || !a.values.count("--profile-backend"),
+                "profile-backend belongs to manifest receive");
         require(a.get("--timing-instrumentation", "enabled") == "enabled" ||
                     a.get("--timing-instrumentation", "enabled") == "disabled",
                 "timing-instrumentation requires enabled or disabled");
@@ -344,7 +352,8 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
 }
 void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
                     const replay::Catalog &catalog, std::size_t index, wire::Socket &input_listener,
-                    wire::Socket &output_listener, Json &row, TrialTimings &trial) {
+                    wire::Socket &output_listener, Json &row, TrialTimings &trial,
+                    std::optional<BackendProfile> &trial_profile) {
     auto input_socket = wire::accept(input_listener, config.io_ms);
     auto output_socket = wire::accept(output_listener, config.io_ms);
     AuthorityTransport input(config.protocol, input_socket.fd(), admitted, config.limits,
@@ -354,6 +363,19 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     input.metadata_admission();
     output.metadata_admission();
     auto session = input.create_session_with_output(output);
+    std::optional<BackendProfile> profile;
+    if (config.profile_backend) {
+        const auto backend_identity = session->identity();
+        profile.emplace(backend_identity);
+        if (!trial_profile)
+            trial_profile.emplace(backend_identity);
+    }
+    const auto report_profile = [&] {
+        if (profile) {
+            row["backend_profile"] = profile->receipt();
+            trial_profile->merge(*profile);
+        }
+    };
     identity(row, input.descriptor());
     // Reset is structural: no previous Session or map survives this call.
     OutputSender sender(output, 1.0, config.cells);
@@ -393,6 +415,8 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
             row["accepted_records"] = records;
             auto result = session->run(std::move(frame));
             row["freshly_classified_records"] = records;
+            if (profile)
+                profile->observe(result.timings, result.frame.points.size());
             sender.send(result, config.deadline());
             row["emitted_records"] = records;
             if (config.timing_enabled)
@@ -405,6 +429,7 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
         row["output_completion"] = sender.finish(config.deadline());
     } catch (...) {
         row["coverage"] = coverage.receipt();
+        report_profile();
         report_timing();
         throw;
     }
@@ -412,6 +437,7 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     row["subscriber_snapshot_acknowledged_records"] = records;
     row["session_identity"] = session->identity();
     row["frames"] = frames;
+    report_profile();
     report_timing();
 }
 void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
@@ -500,12 +526,20 @@ int replay_main(int argc, char **argv) {
     Clock::time_point anchor{};
     bool anchored{};
     TrialTimings trial;
+    std::optional<BackendProfile> trial_profile;
     try {
         interrupted = 0;
         const Args args(argc, argv);
         receipt_path = args.get("--receipt");
         new_path(receipt_path);
         const Config config(args);
+        if (config.profile_backend) {
+            receipt["backend_profiling"] = "enabled";
+            receipt["trial_backend_profile"] = nullptr;
+            receipt["backend_profile_scope"] =
+                "backend values already measured by the native Session; independent of replay "
+                "timing-instrumentation; no new GPU event or context";
+        }
         receipt["binary_wire"] = args.get("--wire");
         receipt["timing_instrumentation"] = config.timing_enabled ? "enabled" : "disabled";
         receipt["timing_availability"] = config.timing_enabled
@@ -583,13 +617,15 @@ int replay_main(int argc, char **argv) {
         for (std::size_t index = 0; index < catalog.sources().size(); ++index) {
             active();
             auto row = source_row(catalog, index);
+            if (config.profile_backend)
+                row["backend_profile"] = nullptr;
             const auto source_start = Clock::now();
             try {
                 if (args.mode == "send")
                     send_source(config, admitted, catalog, index, anchor, anchored, row, trial);
                 else if (args.mode == "receive")
                     receive_source(config, admitted, catalog, index, input_listener,
-                                   output_listener, row, trial);
+                                   output_listener, row, trial, trial_profile);
                 else
                     subscribe_source(config, admitted, catalog, index, row, trial);
                 active();
@@ -611,6 +647,8 @@ int replay_main(int argc, char **argv) {
         receipt["execution_seconds"] = replay::elapsed_ns(*execution_start, end) / 1e9;
     if (anchored)
         receipt["producer_elapsed_seconds"] = replay::elapsed_ns(anchor, end) / 1e9;
+    if (trial_profile)
+        receipt["trial_backend_profile"] = trial_profile->receipt();
     receipt["trial_timings"] = Json::object();
     for (const auto &[name, measurement] : trial)
         receipt["trial_timings"][name] =
