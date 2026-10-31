@@ -10,6 +10,9 @@
 #include <optional>
 #include <set>
 
+namespace synrex::generic {
+class SemanticMap;
+}
 namespace synrex::streaming {
 inline constexpr const char *schema = "synrex.point_stream.v1";
 struct Limits {
@@ -176,6 +179,12 @@ class SemanticMap {
     std::map<Key, Cell> cells_;
     void unlink(Cell &cell);
     void refresh(Cell &cell);
+    // Both callers validate their own classification contract first. Generic
+    // identities use the exact descriptor digest, never a legacy taxonomy alias.
+    std::vector<MapDelta> update_points(const std::vector<SourcePoint> &,
+                                        const std::vector<std::uint8_t> &,
+                                        const std::array<std::string, 5> &);
+    friend class synrex::generic::SemanticMap;
     friend struct SemanticMapTestAccess;
   public:
     SemanticMap(double resolution, std::size_t capacity, bool profile = false,

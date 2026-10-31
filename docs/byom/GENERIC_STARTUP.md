@@ -62,8 +62,9 @@ full projections and context/text identities are checked. Controls have their ow
 selects the smaller point, byte and initialization-time limits independently.
 The factory also rejects a frame point limit above the admitted Contract.
 The companion control transport exchanges and enforces peer advertisements.
-The companion codec validates complete bounded frame/output bodies. Socket frame
-I/O and CLI integration remain pending.
+The companion codec validates complete bounded frame/output bodies. The transport
+also provides typed socket frame/classification I/O with absolute operation
+deadlines. CLI integration and terminal/snapshot wire protocols remain pending.
 
 Startup proceeds in this order:
 

@@ -1,23 +1,25 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 <!-- Copyright (c) 2026 Tuomas Pietilä -->
 
-# Opt-in binary-v3 control transport
+# Opt-in binary-v3 transport
 
 `generic_transport.hpp` implements a CPU control exchange over a caller-owned,
 connected POSIX `SOCK_STREAM` socket. Callers explicitly select
 `WireProtocol::binary_v3`. This library is separate from legacy wire-v2: no legacy
 CLI, Service, endpoint or codec calls it, and it never falls back to wire-v2.
 The [generic runtime library](GENERIC_RUNTIME.md) now supplies the authority session
-factory, frame/output codecs and separate Service. CLI selection and frame socket
-I/O remain pending. Real generic GPU interchangeability remains **NOT_RUN**.
+factory, frame/output codecs, typed socket I/O and separate Service. CLI selection
+and terminal/snapshot wire protocols remain pending. Real generic GPU
+interchangeability remains **NOT_RUN**.
 
-Every message has a fixed 12-byte header followed by its UTF-8 JSON payload:
+Every message has a fixed 12-byte header. Control payloads use UTF-8 JSON;
+frame/classification payloads use the binary codec described in the runtime guide:
 
 | Byte | Meaning |
 | --- | --- |
 | 0–3 | ASCII `SRX3` |
 | 4 | Binary version 3 |
-| 5 | Message kind: hello=1, descriptor=2, metadata ACK=3, execution-ready=4, ready ACK=5 |
+| 5 | Kind: hello=1, descriptor=2, metadata ACK=3, execution-ready=4, ready ACK=5, frame=16, classification=17 |
 | 6–7 | Reserved, must both be zero |
 | 8–11 | Unsigned payload length, big endian |
 
@@ -81,7 +83,11 @@ poll retries, EINTR and fragment progress never reset it. The admitted metadata 
 starts a separate absolute deadline bounded by the negotiated startup timeout
 (1–120,000 milliseconds); initialization notifications and readiness controls never
 extend it. Equality expires. The startup gate independently checks that deadline.
-Ready sessions need a future application's own execution deadlines.
+Typed frame/classification send and receive methods require a caller-supplied
+absolute `Startup::Time` operation deadline. The library checks readiness before
+socket I/O or encoding, validates the whole-envelope negotiated byte limit before
+incoming payload allocation, and checks the deadline after codec work. A partial
+transfer, poll retry or new fragment never resets that deadline.
 
 Malformed or out-of-order messages, duplicates at a receive gate, identity failures,
 oversize lengths, EOF/truncation and timeouts permanently poison the connection.
@@ -90,10 +96,12 @@ the owner still closes it. Recovery requires a new connection and startup object
 Methods are single-owner and are not thread safe. The connection retains the
 admitted artifact independently of the package wrapper. The borrowed socket must
 outlive all produced Sessions/Services and must not be reused during that lifetime.
-Do not call transport control methods concurrently with a produced Session/Service.
+Do not call any transport method concurrently with a produced Session/Service.
 The socket is neither reconfigured nor closed here.
-After readiness the library performs no receive loop, so inspecting unsolicited
-post-handshake controls belongs to the future frame decoder.
+Typed receive methods reject control envelopes at the frame/classification gate;
+there is no unsolicited background receive loop. Clean EOF throws a diagnostic
+distinct from truncation and permanently fails the connection. There is no terminal
+success envelope: EOF must never qualify a completed stream or snapshot.
 
 `synrex-generic-transport-tests` / CTest `generic_control_transport` exercises real
 TCP loopback, a socketpair proxy that splits every write, K=2/4/non-FRACTAL 7/256
@@ -104,3 +112,11 @@ five-second fragmented metadata stall. A test-only fake backend consumes opaque 
 sentinel proves no GPU query occurs. The production factory is exercised with
 CPU fixtures, but that does not establish valid engine deserialization or neural
 inference. The test establishes the CPU control/factory contracts only.
+
+`generic_binary_v3_socket_io` additionally exercises real socketpairs for typed
+data transfer in both directions, raw fragmentation and coalescing, forced
+backpressure, fixed-header-only oversize rejection, malformed identity/projection,
+startup ordering, EOF/truncation and absolute deadlines. It preserves exact f64,
+uint64 source fields and K256/ID255 while resetting remote host timestamps. These
+checks use the opaque test backend and establish neither GPU execution nor
+concurrent transport/Service integration.

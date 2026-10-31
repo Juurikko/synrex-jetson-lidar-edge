@@ -44,7 +44,13 @@ source preservation, bounded hostile frame/output parsing and admitted taxonomy
 projection including K256/ID255. `generic_session_service` exercises the production
 factory, lifetime/failure cleanup and generic queues using a test-only opaque
 backend. The control transport also uses that test backend for factory-owned
-readiness. These probes never initialize a GPU and do not establish valid engine
+readiness. `generic_binary_v3_socket_io` exercises typed frame/classification
+socketpairs, fragmented/raw peers, fixed-header rejection before body allocation,
+EOF/truncation failure and absolute deadlines under backpressure.
+`generic_taxonomy_map` checks descriptor-bound generic deltas/snapshots, an
+independent scalar eviction oracle, semantic identity/projection failure and full
+65,536-cell serialization/reconstruction with an exact 64 KiB descriptor.
+These probes never initialize a GPU and do not establish valid engine
 deserialization, generic file/stream interchangeability or trained quality.
 `checked_process_memory` also checks resident-page accounting at 4 KiB and 64 KiB,
 invalid page-size queries and multiplication overflow. The live and sustained

@@ -1,14 +1,16 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 <!-- Copyright (c) 2026 Tuomas Pietilä -->
 
-# Generic session, service and binary payload library
+# Generic session, socket and map libraries
 
-The generic API is separate from every legacy CLI, JSON stream, map and single-file
+The generic API is separate from every legacy CLI, JSON stream and single-file
 exporter. It accepts explicit package-v3 taxonomies, including non-FRACTAL seven
 classes, repeated LAS projections and K=256/semantic ID255. Current evidence is CPU
 contract execution with a test-only opaque backend plus native SDK syntax checks.
-Actual generic engine file/stream interchangeability, stream socket I/O, CLI
-selection, generic map/export propagation and trained quality remain unqualified.
+Typed socket I/O and descriptor-bound map output have CPU regressions. Actual
+generic engine file/stream interchangeability, CLI selection, network terminal
+qualification, snapshot reception/export bundles and trained quality remain
+unqualified.
 
 `CpuAdmittedPackage(path)` captures model bytes once. Construct both peers with
 their expected package, session ID and epoch, then perform `metadata_admission()`
@@ -69,8 +71,53 @@ decode resets them. Output adds semantic/LAS byte pairs and at most 16KiB of fla
 finite, nonnegative numeric timing JSON with at most 64 fields. Remote timings
 remain untrusted measurements and never establish local capture-to-output age.
 
-CTest targets `generic_binary_v3_codec`, `generic_control_transport` and
-`generic_session_service` cover the CPU boundaries. The test-only backend is linked
-only into those test executables. Production backend linkage remains in
+Both transports expose typed `send_frame`, `receive_frame`, `send_classification`
+and `receive_classification` operations with a caller-supplied absolute
+`Startup::Time` deadline. Readiness is checked before I/O or encoding. The fixed
+header, expected message kind and whole negotiated envelope size are checked before
+payload allocation; the codec then checks identity, count and all point/label fields.
+Fragmentation does not reset the deadline, which is also checked after encoding or
+decoding. These operations share the same single-owner connection as the Session;
+they cannot run concurrently with that Session or its Service. A future concurrent
+CLI must arrange separate owned connections or synchronized ownership explicitly.
+The socket remains borrowed. Every error permanently fails and shuts down the
+connection. Clean EOF has a distinct diagnostic from a truncated envelope and
+throws; neither constitutes terminal success. This API has no terminal receipt or
+snapshot wire envelope yet.
+
+`generic::SemanticMap` is a CPU consumer of already classified v3 results. It does
+not authorize inference. It validates complete labels, exact descriptor identity,
+LAS projection and encoded result size before mutating the map. The source identity
+and increasing frame sequence/time are fixed within one map. A changed taxonomy,
+model or epoch needs a new consumer. Invalid input or failed snapshot encoding
+permanently fails the consumer. There is no reset that can carry old cells into a
+new model. The private shared map kernel preserves the legacy last accepted
+observation, revision eviction and late timestamp policy; generic labels never pass
+through legacy taxonomy validation.
+
+Map deltas use `synrex.generic_map_delta.v1` and bind descriptor/session/epoch and
+taxonomy digest. Snapshots use `synrex.generic_map_snapshot.v1`, retain exact
+descriptor bytes (including the full ordered taxonomy), source identity and
+`as_of_ns`. Semantic IDs remain distinct when multiple classes share a LAS code.
+Snapshot consumers must validate and reconstruct this new schema; the legacy
+snapshot decoder and single-file exporter do not accept it. Neither snapshots nor
+deltas prove individual original-point coverage or provide calibrated confidence.
+
+Snapshot capacity is 1–65,536 cells with a 16 MiB final encoded-byte guard. The
+conservative bound is 1 MiB base plus 224 bytes per cell: exact descriptor bytes
+are at most 64 KiB and JSON string escaping expands each byte by at most six;
+four source strings each have at most 256 printable ASCII bytes. Remaining fixed
+metadata fits within the base allowance. A cell has three signed coordinate keys
+(the existing kernel limit is 1e15), a byte semantic ID, uint64 timestamp and age,
+and null confidence fields. The unchanged cell encoding fits 224 bytes including
+its array separator. The resulting bound is 15,728,640 bytes. Tests serialize and
+independently reconstruct a full map with extreme keys, uint64 ages, escaped source
+identities and an exact 64 KiB descriptor. This is an encoding and reconstruction
+result, not independently acknowledged network snapshot delivery.
+
+CTest targets `generic_binary_v3_codec`, `generic_control_transport`,
+`generic_binary_v3_socket_io`, `generic_taxonomy_map` and `generic_session_service`
+cover the CPU boundaries. The test-only backend is linked only into fixture test
+executables. Production backend linkage remains in
 `native/generic_backend.hpp`, outside the public include tree. The GPU backend
 deserializes retained engine bytes; the CPU-only backend reports NOT_RUN.

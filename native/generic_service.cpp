@@ -78,7 +78,6 @@ void Service::work() {
             const auto accepted = frame->accepted_steady_ns;
             auto result = session_->run(std::move(*frame));
             result.timings["service_input_queue_wait_seconds"] = (started - accepted) / 1e9;
-            result.timings["service_inference_complete_steady_ns"] = now_ns();
             result.timings["service_acceptance_to_inference_seconds"] = (now_ns() - accepted) / 1e9;
             // Added measurements count against the same declared output budget.
             (void)encode_classification(session_->descriptor(), result);

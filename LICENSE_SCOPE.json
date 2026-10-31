@@ -1,7 +1,7 @@
 {
   "schema": "personal.licensing.scope.v1",
-  "developer": "Tuomas Pietilä",
-  "project_lead": "Tuomas Pietilä",
+  "developer": "Tuomas Pietil\u00e4",
+  "project_lead": "Tuomas Pietil\u00e4",
   "ai_assistance": "OpenAI Codex; coding, testing, automation and documentation under human-led specifications/decisions/review",
   "ownership_confirmation": "CONFIRMED_BY_TUOMAS_PIETILA",
   "active_personal_licenses": true,
@@ -26,6 +26,7 @@
       "native/export.cpp",
       "native/generic_backend.hpp",
       "native/generic_codec.cpp",
+      "native/generic_map.cpp",
       "native/generic_service.cpp",
       "native/generic_session.cpp",
       "native/generic_startup.cpp",
@@ -37,6 +38,7 @@
       "native/include/synrex/engine_artifact.hpp",
       "native/include/synrex/export.hpp",
       "native/include/synrex/generic_codec.hpp",
+      "native/include/synrex/generic_map.hpp",
       "native/include/synrex/generic_service.hpp",
       "native/include/synrex/generic_session.hpp",
       "native/include/synrex/generic_startup.hpp",
@@ -82,6 +84,8 @@
       "tests/native/export.cpp",
       "tests/native/generic_codec.cpp",
       "tests/native/generic_fixture_backend.hpp",
+      "tests/native/generic_io.cpp",
+      "tests/native/generic_map.cpp",
       "tests/native/generic_session.cpp",
       "tests/native/generic_startup.cpp",
       "tests/native/generic_transport.cpp",
@@ -298,7 +302,7 @@
   ],
   "preserve_existing_upstream_notices": true,
   "confirmation_record": "archive/evidence/license_activation.json",
-  "copyright_notice": "Copyright (c) 2026 Tuomas Pietilä",
+  "copyright_notice": "Copyright (c) 2026 Tuomas Pietil\u00e4",
   "copyright_boundary": "Only personally controlled protectable original expression; no claim over facts, standard formats, ideas, AI output without protectable human authorship, or third-party material.",
   "data_derived_media": {
     "license": "Etalab-2.0 for IGN source data; CC-BY-4.0 for original presentation",
@@ -321,7 +325,7 @@
       "media/unet-r4/TEST-0741_6244-006630086-qgis.png",
       "media/unet/pilot-heldout.png"
     ],
-    "notice": "Data: IGNF/FRACTAL, source last modified 2025-04-05T09:37:48Z, retrieved 2026-10-26; original presentation Tuomas Pietilä. No MIT relicense of survey information. QGIS/Qt interface elements retain upstream rights; only original presentation is covered by CC-BY-4.0."
+    "notice": "Data: IGNF/FRACTAL, source last modified 2025-04-05T09:37:48Z, retrieved 2026-10-26; original presentation Tuomas Pietil\u00e4. No MIT relicense of survey information. QGIS/Qt interface elements retain upstream rights; only original presentation is covered by CC-BY-4.0."
   },
   "data_derived_metadata": {
     "license": "Etalab-2.0 IGN taxonomy; MIT original metadata layout",

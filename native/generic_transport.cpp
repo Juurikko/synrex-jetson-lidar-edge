@@ -20,7 +20,9 @@ enum class Message : unsigned char {
     descriptor = 2,
     metadata_ack = 3,
     execution_ready = 4,
-    execution_ready_ack = 5
+    execution_ready_ack = 5,
+    frame = 16,
+    classification = 17
 };
 void check(bool ok, const char *message) {
     if (!ok)
@@ -140,7 +142,8 @@ class ControlConnection {
                 return;
         }
     }
-    void transfer(char *data, std::size_t size, bool sending, Time deadline) const {
+    void transfer(char *data, std::size_t size, bool sending, Time deadline,
+                  bool packet_start = false) const {
         std::size_t offset{};
         while (offset < size) {
             before(deadline);
@@ -153,8 +156,12 @@ class ControlConnection {
                 wait(sending ? POLLOUT : POLLIN, deadline);
                 continue;
             }
+            if (!sending && result == 0)
+                throw std::runtime_error(packet_start && offset == 0
+                                             ? "wire-v3 EOF before envelope; no terminal success"
+                                             : "wire-v3 truncated envelope");
             check(result > 0,
-                  sending ? "wire-v3 socket write failed" : "wire-v3 EOF/truncated envelope");
+                  sending ? "wire-v3 socket write failed" : "wire-v3 socket read failed");
             offset += static_cast<std::size_t>(result);
         }
         before(deadline);
@@ -178,9 +185,7 @@ class ControlConnection {
         // send does not mutate its buffer; transfer uses char* for recv's destination.
         transfer(const_cast<char *>(bytes.data()), bytes.size(), true, deadline);
     }
-    std::string receive(Message expected, Time deadline) const {
-        std::array<char, 12> header{};
-        transfer(header.data(), header.size(), false, deadline);
+    std::uint32_t payload_size(const std::array<char, 12> &header, Message expected) const {
         check(header[0] == 'S' && header[1] == 'R' && header[2] == 'X' && header[3] == '3' &&
                   header[4] == 3 && header[5] == static_cast<char>(expected) && header[6] == 0 &&
                   header[7] == 0,
@@ -188,10 +193,40 @@ class ControlConnection {
         std::uint32_t size{};
         for (unsigned i = 8; i < 12; ++i)
             size = (size << 8) | static_cast<unsigned char>(header[i]);
+        return size;
+    }
+    std::string receive(Message expected, Time deadline) const {
+        std::array<char, 12> header{};
+        transfer(header.data(), header.size(), false, deadline, true);
+        const auto size = payload_size(header, expected);
         // Header and expected-kind bounds are validated BEFORE payload allocation.
         check(size > 0 && size <= bound(expected), "wire-v3 incoming payload bound");
         std::string bytes(size, '\0');
         transfer(bytes.data(), bytes.size(), false, deadline);
+        return bytes;
+    }
+    void ready_for_data(Time deadline) const {
+        before(deadline);
+        check(stage_ == Stage::ready, "wire-v3 frame before execution-ready acknowledgement");
+    }
+    void authorize_data(const Frame &value, std::uint64_t bytes) {
+        frame(value.identity.descriptor_sha256, value.identity.session_id, value.identity.map_epoch,
+              value.points.size(), bytes);
+    }
+    std::string receive_data(Message expected, Time deadline) const {
+        ready_for_data(deadline);
+        std::array<char, 12> header{};
+        transfer(header.data(), header.size(), false, deadline, true);
+        const auto size = payload_size(header, expected);
+        const auto whole_size = static_cast<std::uint64_t>(header.size()) + size;
+        check(size > 0 && whole_size <= negotiated_.max_frame_bytes,
+              "wire-v3 incoming whole frame byte bound");
+        // No peer-sized allocation occurs until stage, fixed header, expected kind
+        // and the whole negotiated envelope budget have all been checked.
+        before(deadline);
+        std::string bytes(header.data(), header.size());
+        bytes.resize(static_cast<std::size_t>(whole_size));
+        transfer(bytes.data() + header.size(), size, false, deadline);
         return bytes;
     }
     template <class F> decltype(auto) guarded(F operation) {
@@ -200,9 +235,15 @@ class ControlConnection {
             return operation();
         } catch (const std::exception &error) {
             poisoned_ = true;
-            if (startup_)
-                startup_->fail(error.what());
+            try {
+                if (startup_)
+                    startup_->fail(error.what());
+            } catch (...) {
+            }
             ::shutdown(socket_, SHUT_RDWR);
+            throw;
+        } catch (...) {
+            abort();
             throw;
         }
     }
@@ -346,6 +387,45 @@ class ControlConnection {
                   "wire-v3 frame exceeds negotiated limits");
         });
     }
+    void send_frame(const Frame &value, Time deadline) {
+        guarded([&] {
+            ready_for_data(deadline);
+            // Authorize readiness, identity and count before any codec allocation.
+            authorize_data(value, 1);
+            auto bytes = encode_frame(*descriptor_, value);
+            authorize_data(value, bytes.size());
+            before(deadline);
+            transfer(bytes.data(), bytes.size(), true, deadline);
+        });
+    }
+    Frame receive_frame(Time deadline) {
+        return guarded([&] {
+            const auto bytes = receive_data(Message::frame, deadline);
+            auto value = decode_frame(*descriptor_, bytes);
+            authorize_data(value, bytes.size());
+            before(deadline);
+            return value;
+        });
+    }
+    void send_classification(const Classification &value, Time deadline) {
+        guarded([&] {
+            ready_for_data(deadline);
+            authorize_data(value.frame, 1);
+            auto bytes = encode_classification(*descriptor_, value);
+            authorize_data(value.frame, bytes.size());
+            before(deadline);
+            transfer(bytes.data(), bytes.size(), true, deadline);
+        });
+    }
+    Classification receive_classification(Time deadline) {
+        return guarded([&] {
+            const auto bytes = receive_data(Message::classification, deadline);
+            auto value = decode_classification(*descriptor_, bytes);
+            authorize_data(value.frame, bytes.size());
+            before(deadline);
+            return value;
+        });
+    }
     const Descriptor &descriptor() const {
         alive();
         check(descriptor_ != nullptr && stage_ != Stage::fresh, "wire-v3 descriptor not admitted");
@@ -388,6 +468,18 @@ void AuthorityTransport::authorize_frame(std::string_view hash, std::string_view
                                          std::uint64_t bytes) {
     connection_->frame(hash, session, epoch, points, bytes);
 }
+void AuthorityTransport::send_frame(const Frame &value, Startup::Time deadline) {
+    connection_->send_frame(value, deadline);
+}
+Frame AuthorityTransport::receive_frame(Startup::Time deadline) {
+    return connection_->receive_frame(deadline);
+}
+void AuthorityTransport::send_classification(const Classification &value, Startup::Time deadline) {
+    connection_->send_classification(value, deadline);
+}
+Classification AuthorityTransport::receive_classification(Startup::Time deadline) {
+    return connection_->receive_classification(deadline);
+}
 const Descriptor &AuthorityTransport::descriptor() const { return connection_->descriptor(); }
 Limits AuthorityTransport::negotiated_limits() const { return connection_->limits(); }
 bool AuthorityTransport::failed() const { return connection_->failed(); }
@@ -402,6 +494,18 @@ void PeerTransport::authorize_frame(std::string_view hash, std::string_view sess
                                     std::uint64_t epoch, std::uint64_t points,
                                     std::uint64_t bytes) {
     connection_->frame(hash, session, epoch, points, bytes);
+}
+void PeerTransport::send_frame(const Frame &value, Startup::Time deadline) {
+    connection_->send_frame(value, deadline);
+}
+Frame PeerTransport::receive_frame(Startup::Time deadline) {
+    return connection_->receive_frame(deadline);
+}
+void PeerTransport::send_classification(const Classification &value, Startup::Time deadline) {
+    connection_->send_classification(value, deadline);
+}
+Classification PeerTransport::receive_classification(Startup::Time deadline) {
+    return connection_->receive_classification(deadline);
 }
 const Descriptor &PeerTransport::descriptor() const { return connection_->descriptor(); }
 Limits PeerTransport::negotiated_limits() const { return connection_->limits(); }
