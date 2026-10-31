@@ -117,8 +117,11 @@ if(BUILD_TESTING)
   add_executable(synrex-snapshot-tests tests/native/snapshot.cpp)
   target_link_libraries(synrex-snapshot-tests PRIVATE synrex_stream)
   target_compile_options(synrex-snapshot-tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
-  add_test(NAME legacy_snapshot_budget COMMAND synrex-snapshot-tests)
-  set_tests_properties(legacy_snapshot_budget PROPERTIES TIMEOUT 120)
+  # Isolate the historical oversize allocation from the admitted live-map fixture.
+  # Both complete cases are mandatory; each process has the same bounded deadline.
+  add_test(NAME legacy_snapshot_oversize COMMAND synrex-snapshot-tests historical)
+  add_test(NAME legacy_snapshot_budget COMMAND synrex-snapshot-tests admitted)
+  set_tests_properties(legacy_snapshot_oversize legacy_snapshot_budget PROPERTIES TIMEOUT 120)
   add_executable(synrex-core-tests tests/native/core.cpp)
   target_link_libraries(synrex-core-tests PRIVATE synrex_backend)
   target_compile_options(synrex-core-tests PRIVATE -Wall -Wextra -Wpedantic -Werror)

@@ -11,6 +11,12 @@ The workflow pins action revisions, Python dependencies and native source commit
 Debug uses `-O1 -g` with both sanitizers, preserving the full snapshot and map
 fixtures within the same test deadlines. Run steps use explicit Bash with
 `-eo pipefail`, so logging through `tee` cannot convert a failed check into success.
+The 262,144-cell historical oversize reproduction and full 65,536-cell admitted
+snapshot run in separate required processes, each capped at 120 seconds. Their
+combined allowance is therefore 240 seconds. Isolation avoids retaining one
+fixture's allocations or sanitizer quarantine in the next; earlier combined-test
+timeouts remain failed attempts. This is a test execution allowance, separate
+from production latency, capacity and numerical qualification gates.
 
 | Check | Release | Debug ASan/UBSan |
 | --- | --- | --- |

@@ -67,8 +67,11 @@ void populate(SemanticMap &map, MapOracle *oracle, std::size_t count) {
     }
 }
 } // namespace
-int main() {
+int main(int argc, char **argv) {
     try {
+        const std::string mode = argc == 1 ? "all" : argv[1];
+        require(argc <= 2 && (mode == "all" || mode == "historical" || mode == "admitted"),
+                "usage: snapshot-tests [all|historical|admitted]");
         w::LegacyLiveLimits limits;
         limits.validate();
         for (const auto cells : std::array<std::uint64_t, 4>{0, 65537, 262144, UINT64_MAX}) {
@@ -85,8 +88,9 @@ int main() {
         limits.validate();
 
         Json receipt{{"schema", "synrex.legacy_snapshot.cpu.v1"},
+                     {"case", mode},
                      {"neural_inference", "NOT_RUN: CPU classifications"}};
-        {
+        if (mode != "admitted") {
             // Recreate the original admission defect without retaining a huge fixture.
             std::cerr << "snapshot_phase=historical_262144_cells\n";
             SemanticMap historical(1, 262144);
@@ -98,6 +102,11 @@ int main() {
             receipt["original_262144_cells"] = {{"encoded_bytes", raw.size()},
                                                 {"wire_limit_bytes", w::max_payload},
                                                 {"encoded_guard", "REJECTED"}};
+        }
+        if (mode == "historical") {
+            receipt["status"] = "PASS";
+            std::cout << receipt.dump(2) << '\n';
+            return 0;
         }
         SemanticMap map(1, w::max_legacy_map_cells);
         std::cerr << "snapshot_phase=empty_and_minimal\n";
