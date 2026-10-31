@@ -19,6 +19,9 @@ The workflow pins action revisions, Python dependencies and native source commit
 | Ruff on changed maintained Python files; clang-format on changed C++ lines | Required | — |
 
 CTest covers native package, geometry, stream and semantic-map/transport contracts.
+`checked_process_memory` also checks resident-page accounting at 4 KiB and 64 KiB,
+invalid page-size queries and multiplication overflow. The live and sustained
+receivers share this conversion; Linux `ru_maxrss` remains a separate KiB quantity.
 Some native tests require generated fixtures: `tests/test_streaming_r1.py` invokes
 `synrex-export-tests`, and `tests/test_preservation.py` invokes `synrex-laz-labels`.
 Running CTest alone therefore does not cover the CPU suite. Performance/profile

@@ -10,13 +10,13 @@ import hashlib
 import json
 import math
 import os
-from pathlib import Path
 import re
 import signal
 import subprocess
 import sys
 import time
 import uuid
+from pathlib import Path
 
 
 STATES = {"STARTING", "RUNNING", "QUEUED", "SUCCEEDED", "FAILED", "CANCELLED",
@@ -212,7 +212,9 @@ class Controller:
                 job["state"] = "RUNNING"
             elif job["state"] in ACTIVE:
                 job["state"] = "DEFERRED"
-                job["block_reason"] = "identity not live and verified exit unavailable; reservation retained"
+                job["block_reason"] = (
+                    "identity not live and verified exit unavailable; reservation retained"
+                )
         return value
 
     def reconcile(self):
@@ -240,7 +242,9 @@ class Controller:
         if actual != source_commit:
             raise JobError("source HEAD does not match source_commit")
         if gpu:
-            dirty = subprocess.check_output(["git", "-C", source_dir, "status", "--porcelain"], text=True)
+            dirty = subprocess.check_output(
+                ["git", "-C", source_dir, "status", "--porcelain"], text=True
+            )
             if dirty:
                 raise JobError("GPU jobs require a clean committed source checkout")
             if not gpu_lock or type(gpu_lock_inode) is not int:
@@ -272,7 +276,8 @@ class Controller:
                 raise JobError("GPU budget exhausted or final reserve would be consumed")
             job = {"id": job_id, "job_id": job_id, "state": "STARTING", "gpu": bool(gpu),
                    "source_commit": source_commit, "command_sha256": digest(command),
-                   "spec_identity": identities, "identity": None, "identity_sha256": digest(identities),
+                   "spec_identity": identities, "identity": None,
+                   "identity_sha256": digest(identities),
                    "budget_phase": phase, "reservation_seconds": reservation,
                    "max_seconds": max_seconds, "launch_time": time.time(),
                    "launch_monotonic": time.monotonic(),

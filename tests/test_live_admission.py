@@ -15,6 +15,123 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+CPU_MANIFEST = b'{"fixture":"CPU subscriber peer only; no neural inference"}\n'
+
+
+def json_payload(value):
+    return json.dumps(value, separators=(",", ":"), sort_keys=True).encode()
+
+
+def run_subscriber_peer(tmp_path, messages, validation_mode="decoded"):
+    """Send independently encoded fixtures to the actual CPU subscriber executable."""
+    model = tmp_path / "model"
+    model.mkdir()
+    (model / "manifest.json").write_bytes(CPU_MANIFEST)
+    receipt = tmp_path / "receipt.json"
+    listener = socket.socket()
+    listener.bind(("127.0.0.1", 0))
+    listener.listen(1)
+    listener.settimeout(10)
+    port = listener.getsockname()[1]
+    errors = []
+
+    def peer():
+        try:
+            with listener:
+                conn, _ = listener.accept()
+                with conn:
+                    conn.settimeout(10)
+                    for kind, payload in messages:
+                        header = struct.pack(
+                            "<8sHHIQ32s",
+                            b"SRXWIRE1",
+                            2,
+                            kind,
+                            len(payload),
+                            0,
+                            hashlib.sha256(payload).digest(),
+                        )
+                        conn.sendall(header + payload)
+        except (BrokenPipeError, ConnectionResetError):
+            # A malformed snapshot can be rejected before the terminal record arrives.
+            pass
+        except Exception as error:
+            errors.append(error)
+
+    thread = threading.Thread(target=peer)
+    thread.start()
+    try:
+        result = subprocess.run(
+            [
+                str(NATIVE / "synrex-live"),
+                "subscribe",
+                "--receipt",
+                str(receipt),
+                "--model",
+                str(model),
+                "--output-port",
+                str(port),
+                "--validation-mode",
+                validation_mode,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+    finally:
+        thread.join(timeout=12)
+    assert not thread.is_alive()
+    assert not errors
+    assert "subscriber_ready=1" in result.stdout, result.stderr + result.stdout
+    # stdout also contains readiness markers; only the receipt is a JSON document.
+    return result, json.loads(receipt.read_text())
+
+
+def classified_prefix_fixture():
+    """Wire-v2 layout from transport.cpp; all classes and counters are synthetic CPU data."""
+    identity = ["cpu-sensor", "cpu-stream", "cpu-world", "LOCAL:cpu", "synrex.synthetic3.v1"]
+
+    def identifier(value):
+        encoded = value.encode("ascii")
+        return struct.pack("<H", len(encoded)) + encoded
+
+    # Five identifiers, world coordinates, UNIX ns, metres, complete frame,
+    # sequence/frame/start/end/replay times, point count, and one 48-byte point.
+    source = b"".join(identifier(value) for value in identity)
+    source += struct.pack("<BBBBQQQQQI", 3, 1, 1, 1, 0, 0, 1000, 1000, 0, 1)
+    source += struct.pack("<QQdddHBBB3x", 17, 1000, -1.25, 2.5, 3.75, 0, 0, 0, 0)
+    model_hash = hashlib.sha256(CPU_MANIFEST).hexdigest()
+    # synthetic3 channel 2 maps exactly to LAS code 6. Its sole 64-byte map delta
+    # contains floor(xyz), semantic ID, absent eviction, timestamp and zero victim.
+    tail = identifier(model_hash) + struct.pack("<BBI", 2, 6, 1)
+    tail += struct.pack("<qqqBB6xQqqq", -2, 2, 3, 2, 0, 1000, 0, 0, 0)
+    classified = source + struct.pack("<QQQ", 1, 2, 1) + tail
+    canonical_classified = source + struct.pack("<QQQ", 0, 0, 1) + tail
+    snapshot = {
+        "identity": identity,
+        "schema": "synrex.semantic_map.v1",
+        "resolution_metres": 1.0,
+        "capacity": 65536,
+        "mode": "map_delta_output",
+        "cells": [{
+            "key": [-2, 2, 3],
+            "semantic_id": 2,
+            "timestamp_ns": 1000,
+            "classification_age_ns": 0,
+            "confidence": None,
+            "confidence_age_ns": None,
+        }],
+    }
+    terminal = {
+        "status": "PASS",
+        "output_points": 1,
+        "received_frames": 1,
+        "input_sha256": hashlib.sha256(source).hexdigest(),
+        "output_sha256": hashlib.sha256(canonical_classified).hexdigest(),
+        "map_snapshot_sha256": hashlib.sha256(json_payload(snapshot)).hexdigest(),
+        "test_scope": "CPU peer fixture; no neural inference evidence",
+    }
+    return classified, snapshot, terminal
 
 
 @pytest.mark.parametrize("mode", ["receive", "subscribe"])
@@ -77,89 +194,69 @@ def test_point_rate_admission_before_initialization(tmp_path, mode, points, rate
 @pytest.mark.parametrize("fault", ["missing", "corrupt", "empty_success"])
 def test_required_snapshot_cannot_be_omitted_or_forged(tmp_path, fault):
     """A fake CPU peer cannot qualify success by sending only a PASS end marker."""
-    model = tmp_path / "model"
-    model.mkdir()
-    (model / "manifest.json").write_text('{"fixture":"no-inference"}\n')
-    listener = socket.socket()
-    listener.bind(("127.0.0.1", 0))
-    listener.listen(1)
-    listener.settimeout(10)
-    port = listener.getsockname()[1]
-    errors = []
-
-    def peer():
-        try:
-            with listener:
-                conn, _ = listener.accept()
-                with conn:
-                    conn.settimeout(10)
-
-                    def send(kind, value):
-                        payload = json.dumps(value, separators=(",", ":")).encode()
-                        header = struct.pack(
-                            "<8sHHIQ32s",
-                            b"SRXWIRE1",
-                            2,
-                            kind,
-                            len(payload),
-                            0,
-                            hashlib.sha256(payload).digest(),
-                        )
-                        conn.sendall(header + payload)
-                        return hashlib.sha256(payload).hexdigest()
-
-                    snapshot_hash = "0" * 64
-                    if fault != "missing":
-                        snapshot_hash = send(
-                            3,
-                            {
-                                "identity": None,
-                                "schema": "synrex.semantic_map.v1",
-                                "resolution_metres": 1.0,
-                                "capacity": 65536,
-                                "mode": "map_delta_output",
-                                "cells": [] if fault == "empty_success" else [{}],
-                            },
-                        )
-                    send(
-                        4,
-                        {
-                            "status": "PASS",
-                            "output_points": 0,
-                            "received_frames": 0,
-                            "map_snapshot_sha256": snapshot_hash,
-                        },
-                    )
-        except (BrokenPipeError, ConnectionResetError):
-            # Early rejection is expected for the corrupt snapshot.
-            pass
-        except Exception as error:
-            errors.append(error)
-
-    thread = threading.Thread(target=peer)
-    thread.start()
-    try:
-        result = subprocess.run(
-            [
-                str(NATIVE / "synrex-live"),
-                "subscribe",
-                "--receipt",
-                str(tmp_path / "receipt.json"),
-                "--model",
-                str(model),
-                "--output-port",
-                str(port),
-            ],
-            capture_output=True,
-            text=True,
-            timeout=15,
-        )
-    finally:
-        thread.join(timeout=12)
-    assert not thread.is_alive()
-    assert not errors
+    messages = []
+    snapshot_hash = "0" * 64
+    if fault != "missing":
+        snapshot = json_payload({
+            "identity": None,
+            "schema": "synrex.semantic_map.v1",
+            "resolution_metres": 1.0,
+            "capacity": 65536,
+            "mode": "map_delta_output",
+            "cells": [] if fault == "empty_success" else [{}],
+        })
+        messages.append((3, snapshot))
+        snapshot_hash = hashlib.sha256(snapshot).hexdigest()
+    messages.append((4, json_payload({
+        "status": "PASS",
+        "output_points": 0,
+        "received_frames": 0,
+        "map_snapshot_sha256": snapshot_hash,
+    })))
+    result, data = run_subscriber_peer(tmp_path, messages)
     assert result.returncode == 1, result.stderr
-    data = json.loads(result.stdout)
     assert data["status"] == "FAIL"
     assert "subscriber" in data["error"]
     assert data.get("required_snapshot_validated") is not True
+
+
+@pytest.mark.parametrize("validation_mode", ["decoded", "reference"])
+@pytest.mark.parametrize("fault", ["none", "missing", "digest", "semantic", "receiver_fail"])
+def test_nonempty_subscriber_terminal_contract(tmp_path, validation_mode, fault):
+    """Exercise the native subscriber after a valid prefix; never claim real inference."""
+    classified, snapshot, terminal = classified_prefix_fixture()
+    messages = [(2, classified)]
+    if fault == "semantic":
+        snapshot["cells"][0]["semantic_id"] = 1
+        # Rebind the digest so semantic rejection cannot be a transport checksum failure.
+        terminal["map_snapshot_sha256"] = hashlib.sha256(json_payload(snapshot)).hexdigest()
+    if fault != "missing":
+        messages.append((3, json_payload(snapshot)))
+    if fault == "digest":
+        terminal["map_snapshot_sha256"] = "0" * 64
+    if fault == "receiver_fail":
+        terminal["status"] = "FAIL"
+    messages.append((4, json_payload(terminal)))
+    result, data = run_subscriber_peer(tmp_path, messages, validation_mode)
+    assert data["validated_prefix"]["frames"] == 1, data
+    assert data["validated_prefix"]["points"] == 1, data
+    assert data["validated_prefix"]["map_updates"] == 1, data
+    if fault in {"none", "receiver_fail"}:
+        assert data["required_snapshot_validated"] is True
+        assert data["frames"] == data["points"] == data["model_executions"] == 1
+        assert data["map_snapshot_sha256"] == terminal["map_snapshot_sha256"]
+        assert data["input_sha256"] == terminal["input_sha256"]
+        assert data["output_sha256"] == terminal["output_sha256"]
+        assert data["receiver"]["test_scope"] == "CPU peer fixture; no neural inference evidence"
+        assert data["status"] == terminal["status"]
+        assert result.returncode == (0 if fault == "none" else 1), result.stderr
+    else:
+        expected_error = {
+            "missing": "subscriber complete output coverage",
+            "digest": "subscriber/receiver full snapshot digest parity",
+            "semantic": "subscriber full snapshot parity",
+        }[fault]
+        assert result.returncode == 1, result.stderr
+        assert data["status"] == "FAIL"
+        assert expected_error in data["error"], data
+        assert data.get("required_snapshot_validated") is not True

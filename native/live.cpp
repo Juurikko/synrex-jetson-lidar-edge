@@ -4,6 +4,7 @@
 #include "synrex/benchmark.hpp"
 #include "synrex/export.hpp"
 #include "synrex/map_oracle.hpp"
+#include "synrex/process_memory.hpp"
 #include "synrex/transport.hpp"
 #include <algorithm>
 #include <atomic>
@@ -49,7 +50,7 @@ std::uint64_t current_rss() {
     std::ifstream f("/proc/self/statm");
     std::uint64_t total, resident;
     require(bool(f >> total >> resident), "RSS current");
-    return resident * sysconf(_SC_PAGESIZE);
+    return checked_rss_bytes(resident, sysconf(_SC_PAGESIZE));
 }
 struct Args {
     std::map<std::string, std::string> a;

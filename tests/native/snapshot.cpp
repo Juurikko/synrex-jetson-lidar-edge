@@ -3,6 +3,7 @@
 // CPU-only serializer and independent reconstruction; no neural inference claims.
 #include "synrex/map_oracle.hpp"
 #include "synrex/transport.hpp"
+#include <cerrno>
 #include <iostream>
 #include <openssl/sha.h>
 #include <sys/socket.h>
@@ -10,11 +11,13 @@ using namespace synrex;
 using namespace synrex::streaming;
 namespace w = synrex::streaming::wire;
 namespace {
-template <class F> void rejects(F f) {
+template <class F> void rejects(F f, const std::string &diagnostic = "") {
     bool failed = false;
     try {
         f();
-    } catch (const std::exception &) {
+    } catch (const std::exception &error) {
+        require(diagnostic.empty() || std::string(error.what()).find(diagnostic) != std::string::npos,
+                "unexpected snapshot/admission error: " + std::string(error.what()));
         failed = true;
     }
     require(failed, "expected snapshot/admission rejection");
@@ -156,7 +159,16 @@ int main() {
                     w::max_payload,
                 "exact encoded JSON boundary rejected");
         rejects([&] { w::json_bytes(Json(std::string(w::max_payload - 1, 'x'))); });
-        rejects([&] { w::send(tx, w::Kind::snapshot, w::Bytes(w::max_payload + 1)); });
+        // A live unused socket distinguishes admission failure from EPIPE or timeout.
+        int budget_pair[2];
+        require(socketpair(AF_UNIX, SOCK_STREAM, 0, budget_pair) == 0, "budget socketpair");
+        w::Socket budget_tx(budget_pair[0]), budget_rx(budget_pair[1]);
+        rejects([&] { w::send(budget_tx, w::Kind::snapshot, w::Bytes(w::max_payload + 1), 100); },
+                "wire send budget");
+        std::uint8_t unexpected{};
+        require(::recv(budget_rx.fd(), &unexpected, 1, MSG_DONTWAIT) == -1 &&
+                    (errno == EAGAIN || errno == EWOULDBLOCK),
+                "oversized payload wrote bytes before admission");
         receipt["encoded_byte_boundary"] = "PASS";
         receipt["shared_admission"] = "PASS";
         receipt["status"] = "PASS";

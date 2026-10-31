@@ -4,13 +4,13 @@
 import importlib.util
 import json
 import os
-from pathlib import Path
 import signal
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
+from pathlib import Path
 from unittest import mock
 
 
@@ -64,7 +64,9 @@ class JobControllerTests(unittest.TestCase):
                            gpu_lock=str(self.lease), gpu_lock_inode=self.lease.stat().st_ino,
                            **kwargs)
 
-    def wait(self, job_id, states={"SUCCEEDED", "FAILED", "CANCELLED"}, timeout=5):
+    def wait(self, job_id, states=None, timeout=5):
+        if states is None:
+            states = frozenset({"SUCCEEDED", "FAILED", "CANCELLED"})
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline:
             value = self.controller.reconcile()
@@ -81,7 +83,9 @@ class JobControllerTests(unittest.TestCase):
         self.assertEqual(job["id"], job["job_id"])
         self.assertEqual(job["identity"], job["worker_identity"])
         self.assertIn("command", job["spec_identity"])
-        self.assertEqual(job["checkpoint"], str(self.controller._job_dir("once") / "checkpoint.json"))
+        self.assertEqual(
+            job["checkpoint"], str(self.controller._job_dir("once") / "checkpoint.json")
+        )
         receipt = job["exit_receipt"]
         self.assertEqual(receipt["exit_code"], 0)
         self.assertEqual(receipt["gpu_seconds"], 0)

@@ -4,6 +4,7 @@
 #include "synrex/benchmark.hpp"
 #include "synrex/service.hpp"
 #include "synrex/map_oracle.hpp"
+#include "synrex/process_memory.hpp"
 #include <openssl/evp.h>
 #include <iomanip>
 #include <sstream>
@@ -38,8 +39,7 @@ std::uint64_t rss() {
 std::uint64_t current_rss() {
     std::ifstream in("/proc/self/statm"); std::uint64_t total{}, resident{};
     require(bool(in >> total >> resident), "cannot sample current host RSS");
-    const auto page = sysconf(_SC_PAGESIZE); require(page > 0, "cannot determine host page size");
-    return resident * static_cast<std::uint64_t>(page);
+    return checked_rss_bytes(resident, sysconf(_SC_PAGESIZE));
 }
 struct OutputStats {
     LatencyHistogram inference, source_age, queue_wait, sink_latency;
