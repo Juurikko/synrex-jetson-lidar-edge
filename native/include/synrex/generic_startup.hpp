@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #pragma once
-#include "synrex/runtime.hpp"
+#include "synrex/engine_artifact.hpp"
 #include <chrono>
 #include <functional>
 #include <string_view>
@@ -17,7 +17,7 @@ struct Limits {
 // Admission provenance is private ownership, not a rehash of caller-mutable fields.
 // The production constructor is the only ingress. No Package/Contract is exposed.
 class CpuAdmittedPackage {
-    const Package package_;
+    const EngineArtifact package_;
     friend class Descriptor;
 
   public:

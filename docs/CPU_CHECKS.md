@@ -35,6 +35,12 @@ The complete snapshot transport/reconstruction remains required under sanitizers
 | Ruff on changed maintained Python files; clang-format on changed C++ lines | Required | — |
 
 CTest covers native package, geometry, stream and semantic-map/transport contracts.
+`immutable_engine_artifact` checks private CPU capture of exact model bytes,
+including pathname replacement, same-inode mutation and invalid members.
+`generic_descriptor_startup` and `generic_control_transport` cover descriptor
+identity, negotiated limits, fragmented sockets and separate absolute admission
+and initialization deadlines. These probes never initialize a GPU; the control
+transport probe does not exercise a generic frame codec or Service.
 `checked_process_memory` also checks resident-page accounting at 4 KiB and 64 KiB,
 invalid page-size queries and multiplication overflow. The live and sustained
 receivers share this conversion; Linux `ru_maxrss` remains a separate KiB quantity.

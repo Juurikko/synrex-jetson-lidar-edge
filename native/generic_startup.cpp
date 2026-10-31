@@ -173,15 +173,16 @@ Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Li
     const auto &package = admitted.package_;
     // This object was privately constructed by the actual Package CPU reader;
     // no caller may provide, replace or mutate its raw or derived fields.
-    const auto manifest = strict_json(package.manifest_bytes, 1048576);
-    check(digest(package.manifest_bytes) == package.manifest_sha256 && manifest == package.manifest,
+    const auto manifest = strict_json(package.manifest_bytes(), 1048576);
+    check(digest(package.manifest_bytes()) == package.manifest_sha256() &&
+              manifest == package.manifest(),
           "captured manifest identity mismatch");
-    check(manifest.at("schema") == "synrex.srxmodel.v3" && package.taxonomy.has_value(),
+    check(manifest.at("schema") == "synrex.srxmodel.v3" && package.taxonomy().has_value(),
           "generic descriptor requires explicit v3 taxonomy package");
-    const auto &contract = package.contract;
+    const auto &contract = package.contract();
     check(contract.spec == manifest.at("contract"), "captured Contract mismatch");
     check(limits.max_frame_points <= contract.max_points, "frame points exceed admitted Contract");
-    const auto &taxonomy = *package.taxonomy;
+    const auto &taxonomy = *package.taxonomy();
     taxonomy.validate_digest(
         manifest.at("artifacts").at("taxonomy").at("sha256").get<std::string>());
     taxonomy.validate_channels(contract.las_classes.size());
@@ -194,7 +195,7 @@ Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Li
                {"text_stream_schema", nullptr},
                {"context_policy_id", "synrex.context.current_frame.v1"},
                {"context_policy_sha256", digest(context_bytes)},
-               {"manifest_sha256", package.manifest_sha256},
+               {"manifest_sha256", package.manifest_sha256()},
                {"taxonomy_utf8", taxonomy.raw_bytes()},
                {"taxonomy_sha256", taxonomy.sha256()},
                {"class_count", taxonomy.classes().size()},
@@ -214,7 +215,8 @@ Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Li
     return result;
 }
 std::string Descriptor::control(const std::string &kind) const {
-    check(kind == "metadata_ack" || kind == "execution_ready_ack", "unsupported control kind");
+    check(kind == "metadata_ack" || kind == "execution_ready" || kind == "execution_ready_ack",
+          "unsupported control kind");
     return Json{{"schema", "synrex.session.control.v3"},
                 {"kind", kind},
                 {"descriptor_sha256", sha256_},

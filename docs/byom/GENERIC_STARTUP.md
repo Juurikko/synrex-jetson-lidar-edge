@@ -6,24 +6,26 @@
 `native/include/synrex/generic_startup.hpp` and `native/generic_startup.cpp`
 provide CPU metadata admission and an authority-side startup gate in
 `synrex::generic`. They are library preparation for generic streaming. No CLI,
-binary transport, Service, session factory, frame codec or GPU initializer calls
-this module yet. Existing package-v3 rejection at every legacy streaming endpoint
+Service, session factory, frame codec or GPU initializer calls this module yet.
+The companion [binary-v3 control transport](GENERIC_TRANSPORT.md) exercises it
+over real sockets. Existing package-v3 rejection at every legacy streaming endpoint
 remains in force. Generic file/stream GPU interchangeability and trained quality
 are **NOT_RUN**; this module does not complete E2.
 
 `CpuAdmittedPackage(path)` privately constructs and owns a const production
-`Package`. The constructor performs envelope, Contract, artifact hash, taxonomy,
+`EngineArtifact`, which privately owns its production `Package` and captures the
+exact model bytes. The constructor performs envelope, Contract, artifact hash, taxonomy,
 size and member admission. It exposes no mutable Package or Contract reference,
 raw-state mutator, public-Package constructor or boolean admission waiver. Copying
 is disabled. Only this wrapper can create an authority descriptor through
 `Descriptor::from_package`; a descriptor parsed solely from a peer cannot supply
 an authority's expected identity.
 
-The wrapper retains captured manifest, taxonomy and derived Contract metadata.
-A separate mutable Package cannot change that identity. This is historical CPU
-admission: package files can change afterward. A future GPU factory must retain
-an admitted artifact snapshot or validate its handoff and bind the engine actually
-loaded to this same identity. The descriptor does not establish that handoff.
+The wrapper retains captured manifest, taxonomy, derived Contract metadata and
+hash-verified model bytes. A separate mutable Package or subsequent source-file
+change cannot replace this retained identity. Descriptor construction does not
+create a GPU session or pass those retained bytes to one. Future generic Service
+integration must bind its execution session to this same captured artifact.
 
 The descriptor carries exact [taxonomy UTF-8 bytes](TAXONOMY.md), including their
 whitespace and ordered class meanings, plus the taxonomy digest, K, complete
@@ -58,8 +60,8 @@ full projections and context/text identities are checked. Controls have their ow
 1,024-byte limit and exact schema. `Limits::negotiate` validates both inputs and
 selects the smaller point, byte and initialization-time limits independently.
 The factory also rejects a frame point limit above the admitted Contract.
-Exchange and enforcement of peer advertisements and actual frame bodies are
-future transport work.
+The companion control transport exchanges and enforces peer advertisements.
+Actual frame bodies remain future integration work.
 
 Startup proceeds in this order:
 

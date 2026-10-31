@@ -2,9 +2,10 @@
 // Copyright (c) 2026 Tuomas Pietilä
 // Original generic TensorRT 10 backend using NVIDIA's documented public APIs.
 #include "gpu.hpp"
+#include "synrex/benchmark.hpp"
+#include "synrex/engine_artifact.hpp"
 #include "synrex/runtime.hpp"
 #include "synrex/session.hpp"
-#include "synrex/benchmark.hpp"
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 #include <algorithm>
@@ -175,17 +176,25 @@ static void check_engine(const nvinfer1::ICudaEngine &engine, const Contract &c)
     check_tensor(engine, c, true);
     check_tensor(engine, c, false);
 }
-static std::string read_model(const fs::path &path) {
-    const auto count = fs::file_size(path);
-    require(count > 0 && count <= 2147483648ULL, "unsupported model size");
-    std::string bytes(count, '\0');
-    std::ifstream in(path, std::ios::binary);
-    require(bool(in.read(bytes.data(), static_cast<std::streamsize>(count))), "model read failure");
-    return bytes;
+// The public legacy Package is mutable. Re-admit by pathname and compare the
+// captured identity before using only the privately retained metadata/bytes.
+static void same_admission(const Package &supplied, const EngineArtifact &captured) {
+    require(supplied.manifest_bytes == captured.manifest_bytes() &&
+                supplied.manifest_sha256 == captured.manifest_sha256() &&
+                supplied.manifest == captured.manifest() &&
+                supplied.contract.spec == captured.contract().spec &&
+                bool(supplied.taxonomy) == bool(captured.taxonomy()),
+            "package metadata changed since CPU admission");
+    if (supplied.taxonomy)
+        require(supplied.taxonomy->raw_bytes() == captured.taxonomy()->raw_bytes(),
+                "package taxonomy changed since CPU admission");
 }
 void build_engine(const Package &package, const fs::path &output, const std::string &precision) {
     require(precision == "default" || precision == "fp16", "unsupported engine precision");
-    const auto model = package.artifact("onnx");
+    const EngineArtifact captured(package.root);
+    same_admission(package, captured);
+    require(captured.artifact_kind() == "onnx", "engine build requires an ONNX artifact");
+    const auto &bytes = captured.model_bytes();
     (void)
         target_info(); // Verify CUDA before building; offline compilation still needs a target GPU.
     auto &logger = shared_logger();
@@ -195,7 +204,6 @@ void build_engine(const Package &package, const fs::path &output, const std::str
     require(bool(network), "cannot create TensorRT network");
     std::unique_ptr<nvonnxparser::IParser> parser(nvonnxparser::createParser(*network, logger));
     require(bool(parser), "cannot create ONNX parser");
-    const auto bytes = read_model(model);
     // In-memory parsing intentionally provides no external-weight filesystem base path.
     require(parser->parse(bytes.data(), bytes.size()),
             "ONNX parse failed; standard self-contained graphs only");
@@ -220,7 +228,7 @@ void build_engine(const Package &package, const fs::path &output, const std::str
     std::unique_ptr<nvinfer1::ICudaEngine> engine(
         runtime->deserializeCudaEngine(plan->data(), plan->size()));
     require(bool(engine), "cannot initialize built engine");
-    check_engine(*engine, package.contract);
+    check_engine(*engine, captured.contract());
     std::unique_ptr<nvinfer1::IEngineInspector> inspector(engine->createEngineInspector());
     require(bool(inspector), "cannot create engine inspector");
     const auto layers = inspector->getEngineInformation(nvinfer1::LayerInformationFormat::kJSON);
@@ -241,15 +249,17 @@ std::vector<std::uint8_t> infer(const Package &package, const std::vector<Point>
                                 const InferenceOptions &options) {
     require(options.iterations > 0 && options.iterations <= 100 && options.warmup <= 20,
             "persistent iteration budget exceeded");
+    const EngineArtifact captured(package.root);
+    same_admission(package, captured);
+    const auto &serialized = captured.engine_bytes();
+    const auto &c = captured.contract();
     const auto initialized_at = std::chrono::steady_clock::now();
     InferenceMetrics measured;
     std::size_t initial_free{}, initial_total{};
     cuda_check(cudaMemGetInfo(&initial_free, &initial_total));
     measured.gpu_free_before_initialization_bytes = initial_free;
-    require(package.manifest.at("target") == target_info(),
+    require(captured.manifest().at("target") == target_info(),
             "engine target mismatch; rebuild and package on this target");
-    const auto serialized = read_model(package.artifact("engine"));
-    const auto &c = package.contract;
     TrackedAllocator allocations;
     auto &logger = shared_logger();
     std::unique_ptr<nvinfer1::IRuntime> runtime(nvinfer1::createInferRuntime(logger));
@@ -465,8 +475,15 @@ class PinnedStaging {
 // Track B: independent persistent window session; legacy infer() remains the R4 reference.
 class PersistentSession final : public InferenceSession {
     const std::chrono::steady_clock::time_point started_ = std::chrono::steady_clock::now();
-    Package package_;
-    std::string manifest_sha256_ = package_.manifest_sha256;
+    // Declared before every CUDA-owning member: capture and engine-kind checks
+    // must finish before their constructors can query or initialize the device.
+    struct PreparedEngine {
+        const EngineArtifact artifact;
+        explicit PreparedEngine(const fs::path &root) : artifact(root, PackageUse::legacy_stream) {
+            (void)artifact.engine_bytes();
+        }
+    } prepared_;
+    const EngineArtifact &package_ = prepared_.artifact;
     std::size_t capacity_;
     SessionOptions options_;
     std::unique_ptr<PinnedStaging> host_points_, host_ids_, host_voxels_, host_groups_, host_labels_, host_semantics_, host_bad_;
@@ -487,14 +504,14 @@ class PersistentSession final : public InferenceSession {
     Stream stream_; // Destroyed first: synchronize before any device resource is released.
   public:
     PersistentSession(const fs::path &root, std::size_t capacity, const SessionOptions &options)
-        : package_(root, PackageUse::legacy_stream), capacity_(capacity), options_(options) {
+        : prepared_(root), capacity_(capacity), options_(options) {
         cuda_check(cudaGetDevice(&device_));
-        const auto &c = package_.contract;
+        const auto &c = package_.contract();
         require(capacity > 0 && capacity <= c.max_points && capacity <= 1000000,
                 "unsafe persistent window point budget");
-        require(package_.manifest.at("target") == target_info(),
+        require(package_.manifest().at("target") == target_info(),
                 "engine target mismatch; build a separately licensed target package");
-        const auto serialized = read_model(package_.artifact("engine"));
+        const auto &serialized = package_.engine_bytes();
         runtime_.reset(nvinfer1::createInferRuntime(logger_));
         require(bool(runtime_), "cannot initialize persistent TensorRT runtime");
         runtime_->setGpuAllocator(&allocations_);
@@ -541,15 +558,27 @@ class PersistentSession final : public InferenceSession {
         initialization_seconds_ = std::chrono::duration<double>(
             std::chrono::steady_clock::now() - started_).count();
     }
-    const Contract &contract() const override { return package_.contract; }
+    const Contract &contract() const override { return package_.contract(); }
     Json identity() const override {
-        return {{"schema", "synrex.persistent_session.v1"}, {"backend", "CUDA/TensorRT"},
-                {"target", package_.manifest.at("target")}, {"artifacts", package_.manifest.at("artifacts")},
-                {"contract", package_.contract.spec}, {"manifest_sha256", manifest_sha256_}, {"package_verifications", 1},
-                {"engine_deserializations", 1}, {"execution_contexts", 1}, {"cuda_streams", 1},
-                {"max_window_points", capacity_}, {"completed_windows", windows_},
-                {"successful_enqueue_calls", successful_enqueues_}, {"classified_source_points", classified_source_points_},
-                {"geometry_mode", geometry_name(options_.geometry)}, {"pinned_staging", options_.pinned_staging}, {"pinned_host_bytes", pinned_bytes_},
+        return {{"schema", "synrex.persistent_session.v1"},
+                {"backend", "CUDA/TensorRT"},
+                {"target", package_.manifest().at("target")},
+                {"artifacts", package_.manifest().at("artifacts")},
+                {"contract", package_.contract().spec},
+                {"manifest_sha256", package_.manifest_sha256()},
+                {"package_verifications", 1},
+                {"engine_deserializations", 1},
+                {"execution_contexts", 1},
+                {"cuda_streams", 1},
+                {"retained_model_bytes", package_.model_bytes().size()},
+                {"artifact_bytes_ownership", "private_immutable_cpu_capture"},
+                {"max_window_points", capacity_},
+                {"completed_windows", windows_},
+                {"successful_enqueue_calls", successful_enqueues_},
+                {"classified_source_points", classified_source_points_},
+                {"geometry_mode", geometry_name(options_.geometry)},
+                {"pinned_staging", options_.pinned_staging},
+                {"pinned_host_bytes", pinned_bytes_},
                 {"initialization_seconds", initialization_seconds_},
                 {"tracked_peak_requested_cuda_bytes", allocations_.peak()}};
     }
@@ -557,7 +586,7 @@ class PersistentSession final : public InferenceSession {
         require(warmup <= 30 && seconds > 0 && seconds <= 120, "model-only duration budget");
         const auto prepared = run(points, {});
         (void)prepared;
-        const auto plan = geometry(points, package_.contract, options_.geometry);
+        const auto plan = geometry(points, package_.contract(), options_.geometry);
         const auto represented = plan.blocks.back().members.size();
         streaming::LatencyHistogram batches;
         constexpr unsigned batch = 32;
@@ -595,7 +624,7 @@ class PersistentSession final : public InferenceSession {
         require(!points.empty() && points.size() <= capacity_, "persistent window exceeds point budget");
         cuda_check(cudaSetDevice(device_));
         const auto wall = std::chrono::steady_clock::now();
-        const auto &c = package_.contract;
+        const auto &c = package_.contract();
         GeometryProfile geometry_profile;
         const auto plan = geometry(points, c, options_.geometry, &geometry_profile);
         const auto geometry_seconds = std::chrono::duration<double>(

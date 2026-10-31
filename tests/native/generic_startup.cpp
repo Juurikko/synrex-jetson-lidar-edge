@@ -525,7 +525,7 @@ int main(int argc, char **argv) {
                           {"gpu_target_calls", target_queries},
                           {"inference_calls", 0},
                           {"laz_calls", 0},
-                          {"transport_implemented", false},
+                          {"control_transport_exercised", false},
                           {"generic_gpu_execution_qualified", false}}
                          .dump()
                   << '\n';
