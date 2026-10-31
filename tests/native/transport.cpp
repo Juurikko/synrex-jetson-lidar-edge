@@ -59,8 +59,7 @@ std::size_t json_admission() {
     for (int depth = 15; depth <= 18; ++depth) {
         cases.emplace_back(std::string(depth, '[') + std::string(depth, ']'), depth <= 17);
         cases.emplace_back(std::string(depth, '[') + "0" + std::string(depth, ']'), depth <= 16);
-        cases.emplace_back(std::string(depth - 1, '[') + "{\"a\":0}" +
-                               std::string(depth - 1, ']'),
+        cases.emplace_back(std::string(depth - 1, '[') + "{\"a\":0}" + std::string(depth - 1, ']'),
                            depth <= 16);
     }
     for (const auto &item : cases) {
