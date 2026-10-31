@@ -25,6 +25,7 @@ inline std::function<void()> init_hook;
 inline std::vector<synrex::fs::path> trace_paths;
 inline std::vector<std::uint64_t> trace_limits;
 inline bool trace_write_failure{}, trace_timing_collision{};
+inline double reported_seconds{};
 inline void reset() {
     synrex::require(live == 0, "cannot reset live CPU backend fixture");
     init_calls = constructions = destructions = runs = 0;
@@ -39,6 +40,7 @@ inline void reset() {
     trace_paths.clear();
     trace_limits.clear();
     trace_write_failure = trace_timing_collision = false;
+    reported_seconds = 0;
 }
 class Backend final : public synrex::InferenceSession {
     const std::shared_ptr<const synrex::EngineArtifact> retained_;
@@ -88,7 +90,7 @@ class Backend final : public synrex::InferenceSession {
         synrex::require(run_fault != RunFault::throw_error, "CPU fixture run failure");
         synrex::require(points.size() <= capacity_, "CPU fixture capacity exceeded");
         synrex::WindowResult result;
-        result.timings = {{"cpu_fixture_seconds", 0.0}};
+        result.timings = {{"cpu_fixture_seconds", reported_seconds}};
         const auto count = contract().las_classes.size();
         for (std::size_t i = 0; i < points.size(); ++i) {
             const auto id = static_cast<std::uint8_t>(i % 2 ? i % count : count - 1);

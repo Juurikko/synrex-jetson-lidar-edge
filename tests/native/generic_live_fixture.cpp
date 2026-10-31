@@ -15,6 +15,9 @@ int main(int argc, char **argv) {
     if (const auto fault = std::getenv("SYNREX_FIXTURE_TRACE");
         fault && std::string(fault) == "fail")
         fixture_backend::trace_write_failure = true;
+    // Synthetic timing variance exercises normalization, never neural timing evidence.
+    if (const auto variant = std::getenv("SYNREX_FIXTURE_TIMINGS"))
+        fixture_backend::reported_seconds = std::string(variant) == "enabled" ? 0.25 : 0.125;
     const auto result = synrex::generic::live_main(argc, argv);
     std::cerr << synrex::Json{{"scope", "opaque CPU backend only; no neural/GPU execution"},
                               {"initializations", fixture_backend::init_calls.load()},

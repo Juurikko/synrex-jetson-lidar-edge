@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Tuomas Pietilä
 // CPU-only input/frame/coverage contracts. No model or engine is executed.
 #include "synrex/replay_frames.hpp"
+#include "synrex/classification_transcript.hpp"
 #include <cmath>
 #include <cstring>
 #include <fstream>
@@ -341,6 +342,102 @@ int main(int argc, char **argv) {
         check(source_exact.receipt()["raw_source_attribute_points"] == 5,
               "independent source bit coverage");
         Classification classified{sf0, {0, 1, 2}, {41, 58, 75}, Json::object()};
+        const auto normalized_hash = [&](const Descriptor &d, const Classification &result) {
+            ClassificationTranscript transcript(d);
+            transcript.add(result);
+            return transcript.receipt().at("sha256");
+        };
+        auto timed = classified;
+        timed.timings = {{"tensorrt_seconds", 0.1}, {"window_started_steady_ns", 123}};
+        auto differently_timed = timed;
+        differently_timed.timings = {{"tensorrt_seconds", 9.5}, {"window_started_steady_ns", 999}};
+        check(encode_classification(source_descriptor, timed) !=
+                      encode_classification(source_descriptor, differently_timed) &&
+                  normalized_hash(source_descriptor, timed) ==
+                      normalized_hash(source_descriptor, differently_timed),
+              "real timing-bearing codec differs while timing-only normalized transcript agrees");
+        const auto before_wire = encode_classification(source_descriptor, timed);
+        ClassificationTranscript transcript(source_descriptor);
+        check(transcript.receipt().at("classification_frames") == 0 &&
+                  transcript.receipt().at("classified_points") == 0 &&
+                  transcript.receipt().at("sha256") ==
+                      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "empty normalized prefix has standard SHA256 and explicit zero counts");
+        transcript.add(timed);
+        const auto saved = transcript.receipt();
+        check(encode_classification(source_descriptor, timed) == before_wire &&
+                  saved.at("classification_frames") == 1 && saved.at("classified_points") == 3 &&
+                  saved.at("encoded_bytes") ==
+                      encode_classification(source_descriptor, classified).size(),
+              "normalization leaves original result/wire unchanged and counts normalized bytes");
+        const auto expect_change = [&](auto mutation) {
+            auto changed = timed;
+            mutation(changed);
+            check(normalized_hash(source_descriptor, changed) != saved.at("sha256"),
+                  "encoded non-timing attribute changes normalized identity");
+        };
+        expect_change([](auto &r) {
+            r.semantic_ids[0] = 3;
+            r.las_codes[0] = 92;
+        });
+        expect_change([](auto &r) { r.frame.source_rows[1].gps_time_bits ^= 1; });
+        expect_change([](auto &r) { r.frame.source_header->las14[26] ^= 1; });
+        expect_change([](auto &r) {
+            r.frame.source_rows[0].integer_xyz[0] = r.frame.source_rows[1].integer_xyz[0];
+            r.frame.points[0].xyz[0] = r.frame.points[1].xyz[0];
+        });
+        expect_change([](auto &r) { ++r.frame.frame_id; });
+        expect_change([](auto &r) { ++r.frame.sequence; });
+        expect_change(
+            [](auto &r) { r.frame.stream_id[0] = r.frame.stream_id[0] == '0' ? '1' : '0'; });
+        expect_change([](auto &r) { ++r.frame.points[1].timestamp_ns; });
+        auto legacy = Classification{f0, {0, 1, 2}, {41, 58, 75}, Json::object()};
+        const auto legacy_hash = normalized_hash(descriptor, legacy);
+        auto changed_id = legacy;
+        changed_id.frame.points[0].id = 999;
+        check(normalized_hash(descriptor, changed_id) != legacy_hash, "local point ID retained");
+        auto changed_xyz = legacy;
+        changed_xyz.frame.points[0].xyz[0] += 1;
+        check(normalized_hash(descriptor, changed_xyz) != legacy_hash,
+              "point coordinates retained");
+        auto changed_order = legacy;
+        std::swap(changed_order.frame.points[0], changed_order.frame.points[1]);
+        std::swap(changed_order.semantic_ids[0], changed_order.semantic_ids[1]);
+        std::swap(changed_order.las_codes[0], changed_order.las_codes[1]);
+        check(normalized_hash(descriptor, changed_order) != legacy_hash, "point order retained");
+        auto changed_intensity = legacy;
+        changed_intensity.frame.points[0].intensity = 1337;
+        check(normalized_hash(descriptor, changed_intensity) != legacy_hash,
+              "source intensity retained");
+        Classification last_classification{sf1, {0, 1}, {41, 58}, Json::object()};
+        ClassificationTranscript ordered(source_descriptor), reversed(source_descriptor);
+        ordered.add(timed);
+        ordered.add(last_classification);
+        reversed.add(last_classification);
+        reversed.add(timed);
+        check(ordered.receipt().at("sha256") != reversed.receipt().at("sha256") &&
+                  ordered.receipt().at("classification_frames") == 2 &&
+                  ordered.receipt().at("classified_points") == 5,
+              "stream frame order and finite partial count retained");
+        auto invalid_classification = timed;
+        invalid_classification.las_codes[0] ^= 1;
+        rejects([&] { transcript.add(invalid_classification); });
+        invalid_classification = timed;
+        invalid_classification.timings = {{"bad", -1}};
+        rejects([&] { transcript.add(invalid_classification); });
+        invalid_classification = timed;
+        invalid_classification.frame.identity.descriptor_sha256 = std::string(64, '0');
+        rejects([&] { transcript.add(invalid_classification); });
+        check(transcript.receipt() == saved,
+              "invalid normalization attempts retain prior prefix atomically");
+        ClassificationTranscript repeated(source_descriptor);
+        for (unsigned i = 0; i < 1000; ++i)
+            repeated.add(timed);
+        check(repeated.receipt().at("classification_frames") == 1000 &&
+                  repeated.receipt().at("classified_points") == 3000 &&
+                  repeated.receipt().at("encoded_bytes") ==
+                      saved.at("encoded_bytes").get<std::uint64_t>() * 1000,
+              "incremental transcript has exact counts without retaining frame history");
         const auto output = decode_classification(
             source_descriptor, encode_classification(source_descriptor, classified));
         Coverage output_exact(catalog, source_descriptor, options, 0);

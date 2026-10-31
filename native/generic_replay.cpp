@@ -2,6 +2,7 @@
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/generic_replay.hpp"
 #include "synrex/backend_profile.hpp"
+#include "synrex/classification_transcript.hpp"
 #include "synrex/generic_output.hpp"
 #include "synrex/generic_session.hpp"
 #include "synrex/replay_frames.hpp"
@@ -377,6 +378,7 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
         }
     };
     identity(row, input.descriptor());
+    ClassificationTranscript semantic(input.descriptor());
     // Reset is structural: no previous Session or map survives this call.
     OutputSender sender(output, 1.0, config.cells);
     replay::Coverage coverage(catalog, input.descriptor(), config.frames, index);
@@ -422,17 +424,20 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
             if (config.timing_enabled)
                 service.add_ns(replay::elapsed_ns(after_read, config.timing_now()),
                                result.frame.points.size());
+            semantic.add(result);
         }
         coverage.source_eof();
         coverage.finish();
         row["input_completion"] = input.finish_input(frames, records, config.deadline());
         row["output_completion"] = sender.finish(config.deadline());
     } catch (...) {
+        row["classification_semantic_transcript"] = semantic.receipt();
         row["coverage"] = coverage.receipt();
         report_profile();
         report_timing();
         throw;
     }
+    row["classification_semantic_transcript"] = semantic.receipt();
     row["coverage"] = coverage.receipt();
     row["subscriber_snapshot_acknowledged_records"] = records;
     row["session_identity"] = session->identity();
@@ -454,6 +459,7 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
     transport.acknowledge_execution_ready();
     identity(row, transport.descriptor());
     OutputReceiver receiver(transport, 1.0, config.cells);
+    ClassificationTranscript semantic(transport.descriptor());
     replay::Coverage coverage(catalog, transport.descriptor(), config.frames, index);
     replay::Window window;
     std::uint64_t records{}, frames{};
@@ -490,17 +496,20 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
             row["frames"] = frames;
             if (config.timing_enabled)
                 source_validation.add_ns(replay::elapsed_ns(after_receive, config.timing_now()));
+            semantic.add(result);
         }
         expected.finish();
         coverage.source_eof();
         coverage.finish();
         row["output_completion"] = receiver.finish(config.deadline());
     } catch (...) {
+        row["classification_semantic_transcript"] = semantic.receipt();
         row["coverage"] = coverage.receipt();
         row["decoder"] = expected.metadata();
         report_timing();
         throw;
     }
+    row["classification_semantic_transcript"] = semantic.receipt();
     row["coverage"] = coverage.receipt();
     row["decoder"] = expected.metadata();
     row["frames"] = frames;

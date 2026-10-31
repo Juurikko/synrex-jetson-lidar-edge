@@ -205,3 +205,51 @@ The paired `replay_overhead.py` comparator normalizes absent `backend_profiling`
 to `disabled` for older receipts, and includes the setting in configuration
 identity. It rejects drift between a profiling-enabled and profiling-disabled
 receipt, so that difference cannot be presented as replay histogram overhead.
+
+
+## Classification semantics across measured runs
+
+Raw `classification_sha256` completion fences hash exact transport envelopes,
+including real backend timing measurements. Those timing bytes can differ between
+correct measured runs. The receiver and subscriber must still agree on that raw
+hash within each actual trial; raw transport integrity, challenges, input hashes,
+map/snapshot hashes, coverage and completion fences remain unchanged.
+
+Manifest receiver/subscriber source receipts additionally contain
+`classification_semantic_transcript` (`synrex.classification_semantic_transcript.v1`).
+The normalization is `encode_classification_with_empty_timings_v1`: validate the
+original classification, copy it with only `timings` replaced by `{}`, and hash
+its complete actual codec envelope in observed order. Codec timing-length and
+payload-length fields naturally reflect that replacement. Every other encoded
+field remains exact: descriptor/session/epoch, source/frame/point identities,
+coordinates, intensity/returns, raw source header/integer/GPS attributes,
+declared timestamps, point/frame order, semantic channel IDs and LAS projection.
+Host-local clock fields already excluded by the codec remain excluded. No wire
+message, inference value, geometry, source policy or numerical gate is changed.
+
+The helper retains constant SHA256 state and uint64 frame/point/normalized-byte
+counts, with one temporary bounded classification copy and codec envelope per
+update. It retains no frame/sample history. All byte/count and original codec
+validation precede atomic digest-state publication. Original inputs and their
+raw timing metadata remain unchanged. Receiver updates follow successful output
+send; subscriber updates follow independent source coverage/attribute validation.
+Failure receipts expose only those locally verified prefixes; an empty prefix is
+the standard empty SHA256 and zero counts, never successful terminal completion.
+
+Existing per-frame receiver-service and subscriber-validation samples are taken
+before this post-output/post-validation evidence work, preserving their actual
+boundaries. Trial wall, process CPU/RSS and subsequent frame/ingress behavior
+include its cost. No duration is subtracted and no instrumentation-overhead or
+capacity verdict follows from the extra digest.
+
+`replay_overhead.py` validates the new schema, normalization/scope declarations,
+descriptor binding, exact frame/point counts, normalized byte bounds and hash
+syntax. Receiver/subscriber normalized records must match independently, alongside
+their original raw completion fences. Cross-run semantic identity replaces only
+the timing-bearing classification hash with that normalized record; exact input,
+snapshot, descriptor, taxonomy, source coverage and all counters remain required.
+Older receipts lacking the record use the original exact raw-wire comparison.
+Mixed or asymmetric proof schemes reject, including within a source list. A
+normalized hash never supplies a missing raw completion proof. The analyzer checks
+reported peer evidence; frozen source/binary/job identities and retained raw
+receipts establish execution provenance, and remain required.

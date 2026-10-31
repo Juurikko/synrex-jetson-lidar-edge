@@ -42,6 +42,7 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
                 timing=setting,
                 reuse_inputs=bool(index or setting == "enabled"),
                 receipt_dir=out,
+                fixture_timings=setting if classes == 7 else None,
             )
             assert all(row["code"] == 0 for row in result.values()), result
             pair[setting] = {mode: str(out / f"{mode}.json") for mode in overhead.MODES}
@@ -68,6 +69,33 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
         for sample in result["pairs"]
     )
     (tmp_path / "comparison.json").write_text(json.dumps(result, indent=2) + "\n")
+    first = plan["pairs"][0]
+    off = json.loads(Path(first["disabled"]["receive"]).read_text())
+    on = json.loads(Path(first["enabled"]["receive"]).read_text())
+    off_row, on_row = off["sources"][0], on["sources"][0]
+    assert (off_row["classification_semantic_transcript"] ==
+            on_row["classification_semantic_transcript"])
+    if classes == 7:
+        assert (off_row["output_completion"]["classification_sha256"] !=
+                on_row["output_completion"]["classification_sha256"])
+    # Legacy receipts still use exact raw wire parity; asymmetric normalization rejects.
+    paths = [Path(pair[setting][role]) for pair in plan["pairs"]
+             for setting in ("disabled", "enabled") for role in ("receive", "subscribe")]
+    saved_paths = {path: path.read_bytes() for path in paths}
+    try:
+        for path, raw in saved_paths.items():
+            value = json.loads(raw)
+            for source in value["sources"]:
+                del source["classification_semantic_transcript"]
+            path.write_text(json.dumps(value))
+        if classes == 4:
+            assert overhead.compare(plan, tmp_path)["status"] == "PAIRED_OUTPUTS_IDENTICAL"
+        else:
+            with pytest.raises(ValueError, match="paired output"):
+                overhead.compare(plan, tmp_path)
+    finally:
+        for path, raw in saved_paths.items():
+            path.write_bytes(raw)
     # Adversarial edits never turn an incomplete/mismatched trial into a result.
     path = Path(plan["pairs"][0]["enabled"]["receive"])
     original = path.read_bytes()
@@ -77,6 +105,15 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
         "identity",
         "config",
         "backend_profiling",
+        "semantic_hash",
+        "semantic_points",
+        "semantic_descriptor",
+        "semantic_scope",
+        "semantic_asymmetric",
+        "semantic_schema",
+        "raw_wire",
+        "raw_wire_missing",
+        "raw_fence_missing",
         "tail",
         "resource",
         "fractional_rss",
@@ -93,6 +130,26 @@ def test_paired_actual_pipeline_optional_instrumentation(tmp_path, classes, wire
             value["replay_configuration"]["queue_frames"] += 1
         elif mutation == "backend_profiling":
             value["backend_profiling"] = "enabled"
+        elif mutation == "raw_wire":
+            value["sources"][0]["output_completion"]["classification_sha256"] = "0" * 64
+        elif mutation == "raw_wire_missing":
+            del value["sources"][0]["output_completion"]["classification_sha256"]
+        elif mutation == "raw_fence_missing":
+            del value["sources"][0]["output_completion"]
+        elif mutation.startswith("semantic_"):
+            semantic = value["sources"][0]["classification_semantic_transcript"]
+            if mutation == "semantic_hash":
+                semantic["sha256"] = "0" * 64
+            elif mutation == "semantic_points":
+                semantic["classified_points"] += 1
+            elif mutation == "semantic_descriptor":
+                semantic["descriptor_sha256"] = "0" * 64
+            elif mutation == "semantic_scope":
+                semantic["scope"] = "labels omitted"
+            elif mutation == "semantic_asymmetric":
+                del value["sources"][0]["classification_semantic_transcript"]
+            elif mutation == "semantic_schema":
+                semantic["schema"] = "unknown"
         elif mutation == "tail":
             value["trial_timings"] = {}
         elif mutation == "fractional_rss":

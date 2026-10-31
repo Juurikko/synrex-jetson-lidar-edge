@@ -169,3 +169,32 @@ def test_manifest_failure_retains_empty_service_population_and_failed_prefix(tmp
     check_histogram(row["timings"]["frame_ingress"], 1)
     check_histogram(row["timings"]["receiver_service"], 0)
     assert row["status"] == "FAIL"
+
+
+@pytest.mark.parametrize("wire", ["binary-v3", "binary-source-v1"])
+def test_classification_semantic_transcript_actual_peers_and_failed_prefix(tmp_path, wire):
+    results, _ = pipeline(tmp_path, wire=wire, fixture_timings="enabled")
+    assert all(value["code"] == 0 for value in results.values()), results
+    for receive, subscribe in zip(results["receive"]["receipt"]["sources"],
+                                  results["subscribe"]["receipt"]["sources"], strict=True):
+        actual = receive["classification_semantic_transcript"]
+        assert actual == subscribe["classification_semantic_transcript"]
+        assert actual["schema"] == "synrex.classification_semantic_transcript.v1"
+        assert actual["classification_frames"] == receive["frames"]
+        assert actual["classified_points"] == receive["expected_records"]
+        assert actual["descriptor_sha256"] == receive["descriptor_sha256"]
+        assert actual["encoded_bytes"] > 0
+        assert len(actual["sha256"]) == 64
+        assert receive["output_completion"]["classification_sha256"] == (
+            subscribe["output_completion"]["classification_sha256"])
+    failed = tmp_path / "failed"
+    failed.mkdir()
+    results, _ = pipeline(failed, wire=wire, failure="late-decode")
+    for mode in ("receive", "subscribe"):
+        receipt = results[mode]["receipt"]
+        assert receipt["status"] == "FAIL"
+        first, last = receipt["sources"]
+        assert first["classification_semantic_transcript"]["classified_points"] == 23
+        assert last["classification_semantic_transcript"]["classified_points"] == 0
+        assert last["classification_semantic_transcript"]["classification_frames"] == 0
+        assert "output_completion" not in last

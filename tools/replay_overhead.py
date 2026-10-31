@@ -234,7 +234,8 @@ def validate_counts(receipt):
             if role == "send"
             else ("output_completion",)
         ):
-            completion = row[field]
+            completion = row.get(field)
+            require(isinstance(completion, dict), "missing completion fence")
             is_input = field == "input_completion"
             point_key, frame_key = (
                 ("input_points", "input_frames")
@@ -247,13 +248,13 @@ def validate_counts(receipt):
                 else "VALIDATED_ACK_SENT"
             )
             require(
-                completion["schema"]
+                completion.get("schema")
                 == ("synrex.input.delivery.v1" if is_input else "synrex.output.delivery.v1")
-                and completion["status"] == status
-                and completion[point_key] == count
-                and completion[frame_key] == frames
+                and completion.get("status") == status
+                and completion.get(point_key) == count
+                and completion.get(frame_key) == frames
                 and all(
-                    completion[key] == row[key]
+                    completion.get(key) == row[key]
                     for key in ("descriptor_sha256", "taxonomy_sha256", "map_epoch")
                 ),
                 "inconsistent completion fence",
@@ -273,6 +274,47 @@ def digest(value):
     return hashlib.sha256(
         json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
     ).hexdigest()
+
+
+def normalized_classifications(receipt, row):
+    """Validate the reported normalization; raw transport proof is checked separately."""
+    if "classification_semantic_transcript" not in row:
+        return None
+    value = row["classification_semantic_transcript"]
+    required = {"schema", "normalization", "descriptor_sha256", "sha256",
+                "classification_frames", "classified_points", "encoded_bytes",
+                "scope", "observation", "storage_scope"}
+    require(isinstance(value, dict) and set(value) == required,
+            "invalid classification semantic transcript fields")
+    require(value["schema"] == "synrex.classification_semantic_transcript.v1" and
+            value["normalization"] == "encode_classification_with_empty_timings_v1",
+            "unsupported classification semantic normalization")
+    require(value["descriptor_sha256"] == row["descriptor_sha256"] and
+            uint(value["classification_frames"], True) and
+            value["classification_frames"] == row["frames"] and
+            uint(value["classified_points"], True) and
+            value["classified_points"] == row["expected_records"] and
+            uint(value["encoded_bytes"], True) and
+            value["encoded_bytes"] <= (1 << 64) - 1 and
+            value["classification_frames"] * 12 + value["classified_points"] * 50 <=
+            value["encoded_bytes"] <= value["classification_frames"] *
+            receipt["descriptor"]["limits"]["max_frame_bytes"],
+            "inconsistent classification semantic transcript binding/counts")
+    require(isinstance(value["sha256"], str) and len(value["sha256"]) == 64 and
+            all(c in "0123456789abcdef" for c in value["sha256"]),
+            "invalid classification semantic transcript hash")
+    require(value["scope"] == (
+                "ordered complete codec envelopes; only timings replaced by {}; all encoded "
+                "source/frame/point identities, attributes, timestamps, semantic IDs and LAS "
+                "codes retained") and
+            value["observation"] == (
+                "receiver after successful send; subscriber after independent source validation; "
+                "partial local prefixes do not prove terminal completion") and
+            value["storage_scope"] == (
+                "constant retained SHA256 state and counters; one bounded temporary classification "
+                "copy plus codec envelope; no frame history"),
+            "invalid classification semantic transcript scope")
+    return value
 
 
 def semantic_identity(receipt):
@@ -298,6 +340,7 @@ def semantic_identity(receipt):
     require(profile_setting in ("disabled", "enabled"), "invalid backend profiling setting")
     identity["backend_profiling"] = profile_setting
     identity["sources"] = []
+    normalization_modes = set()
     for row in receipt["sources"]:
         source = {
             name: row[name]
@@ -329,14 +372,23 @@ def semantic_identity(receipt):
         )
         for name in hashes:
             require(
-                isinstance(completion[name], str)
+                isinstance(completion.get(name), str)
                 and len(completion[name]) == 64
                 and all(c in "0123456789abcdef" for c in completion[name]),
                 "missing completion transcript hash",
             )
+        if mode != "send":
+            normalized = normalized_classifications(receipt, row)
+            normalization_modes.add(normalized is not None)
+            if normalized is not None:
+                # Only this timing-bearing hash is replaced for CROSS-RUN identity.
+                # Raw peer completion fences remain checked on original receipts below.
+                del source["output_completion"]["classification_sha256"]
+                source["classification_semantic_transcript"] = normalized
         if mode == "receive":
             source["session_identity"] = row["session_identity"]
         identity["sources"].append(source)
+    require(len(normalization_modes) <= 1, "asymmetric classification normalization within receipt")
     require(len(identity["sources"]) == receipt["source_count"], "unattempted source")
     return identity
 
@@ -369,9 +421,11 @@ def compare(plan, root):
         require(pair["order"] == order, "paired order must alternate")
         sample = {"pair": index, "order": order, "modes": {}}
         loaded = {}
+        raw_loaded = {}
         for setting in order:
             require(set(pair[setting]) == set(MODES), "all three process receipts required")
             loaded[setting] = {}
+            raw_loaded[setting] = {}
             for mode in MODES:
                 path = (root / pair[setting][mode]).resolve()
                 require(path not in used_paths, "receipt reused across observations")
@@ -424,6 +478,7 @@ def compare(plan, root):
                     validate_timings(receipt)
                 identity = semantic_identity(receipt)
                 loaded[setting][mode] = identity
+                raw_loaded[setting][mode] = receipt
                 metrics = {
                     name: receipt[name]
                     for name in (
@@ -520,11 +575,19 @@ def compare(plan, root):
                     ),
                 ),
             ):
-                for a, b in zip(peers[sender]["sources"], peers[receiver]["sources"], strict=True):
+                for a, b in zip(raw_loaded[setting][sender]["sources"],
+                                raw_loaded[setting][receiver]["sources"], strict=True):
                     require(
                         all(a[field][key] == b[field][key] for key in hashes),
                         "peer completion transcript disagreement",
                     )
+                    if field == "output_completion":
+                        a_normal = normalized_classifications(raw_loaded[setting][sender], a)
+                        b_normal = normalized_classifications(raw_loaded[setting][receiver], b)
+                        require((a_normal is None) == (b_normal is None),
+                                "asymmetric peer classification normalization")
+                        require(a_normal == b_normal,
+                                "peer classification semantic transcript disagreement")
         require(loaded["enabled"] == loaded["disabled"], "paired output or workload mismatch")
         if baseline is None:
             baseline = loaded["enabled"]
@@ -544,6 +607,10 @@ def compare(plan, root):
         "schema": "synrex.replay.overhead_comparison.v1",
         "status": "PAIRED_OUTPUTS_IDENTICAL",
         "scope": plan["scope"],
+        "classification_comparison": (
+            "validated timing-only normalized envelopes when present symmetrically; otherwise "
+            "legacy exact wire transcripts; raw wire peer fences remain mandatory in each trial"
+        ),
         "pairs": evidence,
         "executable": {"path": str(executable), "sha256": executable_sha},
         "source_identity": plan.get("source_identity"),
