@@ -2,20 +2,20 @@
 // Copyright (c) 2026 Tuomas Pietilä
 // B5 bounded native benchmark. All neural execution uses InferenceSession, never a simulator.
 #include "synrex/benchmark.hpp"
-#include "synrex/service.hpp"
 #include "synrex/map_oracle.hpp"
 #include "synrex/process_memory.hpp"
-#include <openssl/evp.h>
-#include <iomanip>
-#include <sstream>
+#include "synrex/service.hpp"
 #include <algorithm>
 #include <atomic>
 #include <chrono>
 #include <csignal>
 #include <cstring>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <numeric>
+#include <openssl/evp.h>
+#include <sstream>
 #include <sys/resource.h>
 #include <thread>
 #include <unistd.h>

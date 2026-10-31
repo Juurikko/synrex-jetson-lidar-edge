@@ -16,7 +16,8 @@ template <class F> void rejects(F f, const std::string &diagnostic = "") {
     try {
         f();
     } catch (const std::exception &error) {
-        require(diagnostic.empty() || std::string(error.what()).find(diagnostic) != std::string::npos,
+        const auto found = std::string(error.what()).find(diagnostic);
+        require(diagnostic.empty() || found != std::string::npos,
                 "unexpected snapshot/admission error: " + std::string(error.what()));
         failed = true;
     }
@@ -44,9 +45,11 @@ void populate(SemanticMap &map, MapOracle *oracle, std::size_t count) {
         h.taxonomy = "synrex.fractal7.v1";
         h.sequence = h.frame_id = begin / 4096;
         c.frame.first_sequence = c.frame.last_sequence = h.sequence;
-        const auto time = begin == 0 ? 0ULL
-                          : begin + 4096 >= count ? UINT64_MAX
-                                                  : 10000000000000000000ULL;
+        std::uint64_t time = 10000000000000000000ULL;
+        if (begin == 0)
+            time = 0;
+        else if (begin + 4096 >= count)
+            time = UINT64_MAX;
         h.frame_start_ns = h.frame_end_ns = time;
         h.chunk_count = 1;
         h.frame_points = std::min<std::size_t>(4096, count - begin);
@@ -85,6 +88,7 @@ int main() {
                      {"neural_inference", "NOT_RUN: CPU classifications"}};
         {
             // Recreate the original admission defect without retaining a huge fixture.
+            std::cerr << "snapshot_phase=historical_262144_cells\n";
             SemanticMap historical(1, 262144);
             populate(historical, nullptr, 262144);
             const auto snapshot = historical.snapshot(UINT64_MAX);
@@ -96,6 +100,7 @@ int main() {
                                                 {"encoded_guard", "REJECTED"}};
         }
         SemanticMap map(1, w::max_legacy_map_cells);
+        std::cerr << "snapshot_phase=empty_and_minimal\n";
         MapOracle oracle(w::max_legacy_map_cells);
         const auto empty = w::json_bytes(map.snapshot(UINT64_MAX));
         require(w::json(empty) == oracle.snapshot(UINT64_MAX), "empty snapshot parity");
@@ -108,6 +113,7 @@ int main() {
                     "one-cell snapshot parity");
             receipt["minimal_snapshot_bytes"] = bytes.size();
         }
+        std::cerr << "snapshot_phase=full_admitted_65536_cells\n";
         populate(map, &oracle, w::max_legacy_map_cells);
         const auto snapshot = map.snapshot(UINT64_MAX);
         const auto bytes = w::json_bytes(snapshot);
@@ -118,6 +124,7 @@ int main() {
             require(cell.dump().size() + 1 <= w::legacy_snapshot_cell_bytes,
                     "cell serialization exceeded proven bound");
         int pair[2];
+        std::cerr << "snapshot_phase=socket_transfer_and_reconstruction\n";
         require(socketpair(AF_UNIX, SOCK_STREAM, 0, pair) == 0, "snapshot socketpair");
         w::Socket tx(pair[0]), rx(pair[1]);
         std::exception_ptr error;
@@ -149,15 +156,16 @@ int main() {
                     reconstructed.at("cells").size() == w::max_legacy_map_cells,
                 "independent full snapshot/identity reconstruction mismatch");
         require(!w::receive(rx), "unexpected post-snapshot bytes");
-        receipt["full_admitted_snapshot"] = {{"cells", map.size()},
-                                              {"encoded_bytes", bytes.size()},
-                                              {"sha256", digest(bytes)},
-                                              {"all_cells_and_identity", "PASS"},
-                                              {"socket_send_receive", "PASS"}};
+        auto &full = receipt["full_admitted_snapshot"];
+        full["cells"] = map.size();
+        full["encoded_bytes"] = bytes.size();
+        full["sha256"] = digest(bytes);
+        full["all_cells_and_identity"] = "PASS";
+        full["socket_send_receive"] = "PASS";
         // JSON string delimiters count in the final payload budget.
-        require(w::json_bytes(Json(std::string(w::max_payload - 2, 'x'))).size() ==
-                    w::max_payload,
-                "exact encoded JSON boundary rejected");
+        std::cerr << "snapshot_phase=encoded_byte_boundary\n";
+        const auto boundary = w::json_bytes(Json(std::string(w::max_payload - 2, 'x'))).size();
+        require(boundary == w::max_payload, "exact encoded JSON boundary rejected");
         rejects([&] { w::json_bytes(Json(std::string(w::max_payload - 1, 'x'))); });
         // A live unused socket distinguishes admission failure from EPIPE or timeout.
         int budget_pair[2];

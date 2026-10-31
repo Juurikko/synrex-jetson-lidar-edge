@@ -488,7 +488,7 @@ void receiver(const Args &a, Json &r) {
                             {"failed_point_deliveries", failed_points.load()},
                             {"error", output_error},
                             {"required_snapshot_sent", snapshot_delivered.load()},
-                            {"validation_scope", "socket sends; independent validation is in the subscriber receipt"},
+                            {"validation_scope", "socket sends; independent subscriber validation"},
                             {"queue", deliveries.stats()}};
     if (output_dead || failed || !snapshot_delivered)
         r["status"] = "FAIL";

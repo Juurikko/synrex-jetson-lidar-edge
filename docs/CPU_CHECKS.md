@@ -8,7 +8,7 @@ Ubuntu 24.04 workers with GCC 13, CPython 3.11.12 and two build workers. Both
 Release and Debug ASan/UBSan configurations build with CUDA disabled. No job
 uses the persistent RTX runner, repository secrets, dependency caches or a GPU.
 The workflow pins action revisions, Python dependencies and native source commits.
-Debug uses `-Og -g` with both sanitizers, preserving the full snapshot and map
+Debug uses `-O1 -g` with both sanitizers, preserving the full snapshot and map
 fixtures within the same test deadlines. Run steps use explicit Bash with
 `-eo pipefail`, so logging through `tee` cannot convert a failed check into success.
 

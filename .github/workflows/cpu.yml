@@ -75,7 +75,7 @@ jobs:
           cmake -S . -B "$SYNREX_TEST_NATIVE_DIR" -G Ninja \
             -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} \
             -DCMAKE_CXX_COMPILER="$CXX" -DBUILD_TESTING=ON \
-            -DCMAKE_CXX_FLAGS_DEBUG='-Og -g' \
+            -DCMAKE_CXX_FLAGS_DEBUG='-O1 -g' \
             -DSYNREX_ENABLE_CUDA=OFF -DSYNREX_SANITIZE=${{ matrix.sanitize }} \
             -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" \
             -DNLOHMANN_JSON_INCLUDE_DIR="$PWD/.deps/json/single_include" \
