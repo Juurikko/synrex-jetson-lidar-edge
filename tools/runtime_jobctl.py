@@ -5,6 +5,7 @@
 
 import argparse
 import contextlib
+import ctypes
 import fcntl
 import hashlib
 import json
@@ -12,6 +13,7 @@ import math
 import os
 import re
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -23,6 +25,9 @@ STATES = {"STARTING", "RUNNING", "QUEUED", "SUCCEEDED", "FAILED", "CANCELLED",
 ACTIVE = {"STARTING", "RUNNING", "QUEUED"}
 TOTAL_SECONDS = 57600
 DEVELOPMENT_SECONDS = 43200
+LIFECYCLE_CONTRACT = "synrex.runtime.owned-process-group.v2"
+LOCK_FDS_ENV = "SYNREX_JOB_LOCK_FDS"
+LOCK_FDS_SCHEMA = "synrex.runtime.lock-fds.v1"
 
 
 class JobError(RuntimeError):
@@ -70,6 +75,137 @@ def process_identity(pid=None):
         return None
     return {"pid": int(pid), "start_ticks": int(fields[19]),
             "boot_id": Path("/proc/sys/kernel/random/boot_id").read_text().strip()}
+
+
+def inherited_lock_fds(required=True):
+    """Validate worker-derived inherited descriptors for explicit pass_fds.
+
+    This is resource-exclusion plumbing, not authorization for another job.
+    A coordinator must preserve this environment context on its descendants.
+    """
+    raw = os.environ.get(LOCK_FDS_ENV)
+    if raw is None and not required:
+        return ()
+    try:
+        context = json.loads(raw)
+        if (set(context) != {"schema", "job_id", "entries"}
+                or context["schema"] != LOCK_FDS_SCHEMA
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,95}", context["job_id"])
+                or not isinstance(context["entries"], list)
+                or not 1 <= len(context["entries"]) <= 2):
+            raise ValueError("invalid lock context")
+        roles, descriptors = set(), []
+        for entry in context["entries"]:
+            if (set(entry) != {"role", "fd", "device", "inode", "path"}
+                    or entry["role"] not in {"job", "gpu"} or entry["role"] in roles
+                    or type(entry["fd"]) is not int or not 3 <= entry["fd"] < 2**31
+                    or entry["fd"] in descriptors
+                    or type(entry["device"]) is not int or type(entry["inode"]) is not int
+                    or not isinstance(entry["path"], str)
+                    or not Path(entry["path"]).is_absolute()):
+                raise ValueError("invalid lock descriptor entry")
+            info, path_info = os.fstat(entry["fd"]), os.stat(entry["path"], follow_symlinks=False)
+            if (not stat.S_ISREG(info.st_mode) or not stat.S_ISREG(path_info.st_mode)
+                    or (info.st_dev, info.st_ino) != (entry["device"], entry["inode"])
+                    or (path_info.st_dev, path_info.st_ino) != (info.st_dev, info.st_ino)):
+                raise ValueError("inherited lock identity changed")
+            roles.add(entry["role"])
+            descriptors.append(entry["fd"])
+        if "job" not in roles:
+            raise ValueError("per-job lock required")
+        return tuple(descriptors)
+    except (TypeError, ValueError, OSError, KeyError) as error:
+        raise JobError("valid inherited job lock context required") from error
+
+
+def enable_subreaper():
+    # Linux per-process setting; no host policy or global scheduler changes.
+    if ctypes.CDLL(None, use_errno=True).prctl(36, 1, 0, 0, 0) != 0:
+        raise JobError("cannot enable owned worker child subreaper")
+
+
+def process_details(pid):
+    try:
+        raw = Path(f"/proc/{pid}/stat").read_text()
+    except (FileNotFoundError, ProcessLookupError):
+        return None
+    try:
+        fields = raw[raw.rfind(")") + 2:].split()
+        return {"pid": int(pid), "state": fields[0], "parent_pid": int(fields[1]),
+                "process_group": int(fields[2]), "session": int(fields[3]),
+                "start_ticks": int(fields[19])}
+    except (ValueError, IndexError) as error:
+        raise JobError("process group identity unavailable") from error
+
+
+def group_members(group):
+    """Inspect the original group while its unreaped leader pins the PGID."""
+    boot = Path("/proc/sys/kernel/random/boot_id").read_text().strip()
+    leader = process_details(group["pgid"])
+    if (boot != group["boot_id"] or leader is None
+            or leader["start_ticks"] != group["leader_start_ticks"]
+            or leader["process_group"] != group["pgid"]
+            or leader["session"] != group["pgid"]):
+        raise JobError("original process group leader identity unavailable")
+    members = []
+    for path in Path("/proc").iterdir():
+        if not path.name.isdecimal():
+            continue
+        member = process_details(int(path.name))
+        if member is None or member["process_group"] != group["pgid"]:
+            continue
+        if (member["session"] != group["pgid"]
+                or member["start_ticks"] < group["leader_start_ticks"]):
+            raise JobError("process group member identity mismatch")
+        members.append(member)
+    # Adopted children in another session/group are unsupported, not proof of an
+    # empty job. Never signal an unrelated or unidentified process group.
+    for pid in Path(f"/proc/{os.getpid()}/task/{os.getpid()}/children").read_text().split():
+        member = process_details(int(pid))
+        if member is not None and member["process_group"] != group["pgid"]:
+            raise JobError("detached descendant unsupported; cleanup unverified")
+    return members
+
+
+def drain_process_group(child, group):
+    """Terminate/reap ordinary descendants before reaping the pinned leader.
+
+    The direct child must never be poll()/wait() reaped before this function.
+    Every signal targets an original, identity-checked group with its original
+    leader still present, preventing a recycled PGID from becoming a target.
+    """
+    initial = group_members(group)
+    proof = {"group": group, "drained": False,
+             "initial_descendants": [m for m in initial if m["pid"] != child.pid],
+             "reaped_descendants": [], "signals": []}
+    for signum, grace in ((signal.SIGTERM, 1.0), (signal.SIGKILL, 2.0)):
+        members = group_members(group)
+        if any(m["state"] != "Z" for m in members):
+            os.killpg(group["pgid"], signum)
+            proof["signals"].append(int(signum))
+        limit = time.monotonic() + grace
+        while True:
+            members = group_members(group)
+            for member in members:
+                if member["pid"] != child.pid and member["parent_pid"] == os.getpid():
+                    pid, status = os.waitpid(member["pid"], os.WNOHANG)
+                    if pid:
+                        proof["reaped_descendants"].append(dict(member, wait_status=status))
+            members = group_members(group)
+            if len(members) == 1 and members[0]["pid"] == child.pid and members[0]["state"] == "Z":
+                code = child.wait()
+                # Nothing live could fork between that snapshot and leader reap.
+                # If a reused group appears now, retain exclusion without signals.
+                try:
+                    os.killpg(group["pgid"], 0)
+                except ProcessLookupError:
+                    proof["drained"] = True
+                    return code, proof
+                raise JobError("process group still exists after original leader reap")
+            if time.monotonic() >= limit:
+                break
+            time.sleep(.01)
+    raise JobError("original process group did not drain; exclusion retained")
 
 
 def is_live(identity):
@@ -178,6 +314,8 @@ class Controller:
         if not path.exists():
             return None
         receipt = read_json(path)
+        if digest(job["spec_identity"]) != job["identity_sha256"]:
+            raise JobError("unverified immutable job specification digest")
         for key in ("job_id", "source_commit", "command_sha256", "budget_phase",
                     "identity_sha256", "worker_identity"):
             if receipt.get(key) != job.get(key):
@@ -192,6 +330,18 @@ class Controller:
             return None
         if is_live(job.get("child_identity")):
             return None
+        if (job.get("lifecycle_contract") or job["spec_identity"].get("lifecycle_contract")
+                or receipt.get("lifecycle_contract")):
+            proof = receipt.get("process_group_cleanup")
+            if (job.get("lifecycle_contract") != LIFECYCLE_CONTRACT
+                    or job["spec_identity"].get("lifecycle_contract") != LIFECYCLE_CONTRACT
+                    or receipt.get("lifecycle_contract") != LIFECYCLE_CONTRACT
+                    or not isinstance(proof, dict) or proof.get("drained") is not True
+                    or proof.get("group") != job.get("child_group")
+                    or receipt.get("lock_fd_context") != job.get("lock_fd_context")
+                    or receipt.get("child_environment_sha256")
+                    != job.get("child_environment_sha256")):
+                raise JobError("unverified original process group cleanup or lock context")
         return receipt
 
     def _reconcile(self, value):
@@ -255,8 +405,11 @@ class Controller:
         # os.putenv/native extensions can change the C environment without updating
         # os.environ. Hash and explicitly inherit the same Python snapshot.
         execution_environment = dict(os.environ)
+        if LOCK_FDS_ENV in execution_environment:
+            raise JobError("reserved inherited lock context cannot be supplied by caller")
         identities = {"source_commit": source_commit, "source_dir": source_dir,
                       "command": command, "environment_sha256": digest(execution_environment),
+                      "lifecycle_contract": LIFECYCLE_CONTRACT,
                       "runner_identity": file_identity(__file__),
                       "configs": [file_identity(p) for p in configs],
                       "inputs": [file_identity(p) for p in inputs]}
@@ -277,6 +430,7 @@ class Controller:
                          budget["development_gpu_seconds"] + reservation > DEVELOPMENT_SECONDS)):
                 raise JobError("GPU budget exhausted or final reserve would be consumed")
             job = {"id": job_id, "job_id": job_id, "state": "STARTING", "gpu": bool(gpu),
+                   "lifecycle_contract": LIFECYCLE_CONTRACT,
                    "source_commit": source_commit, "command_sha256": digest(command),
                    "spec_identity": identities, "identity": None,
                    "identity_sha256": digest(identities),
@@ -330,6 +484,10 @@ def worker_main(controller, job_id):
     fcntl.flock(job_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
     gpu_fd = None
     child = None
+    child_group = None
+    cleanup = {"group": None, "drained": True, "initial_descendants": [],
+               "reaped_descendants": [], "signals": []}
+    lock_context = child_environment_sha256 = None
     cancelled = False
     error = None
     code = 125
@@ -360,6 +518,7 @@ def worker_main(controller, job_id):
     signal.signal(signal.SIGTERM, cancel)
     signal.signal(signal.SIGINT, cancel)
     try:
+        enable_subreaper()
         if file_identity(__file__, deadline) != job["spec_identity"]["runner_identity"]:
             raise JobError("job wrapper identity changed before execution")
         # Fail if inputs changed between admission and actual execution.
@@ -372,6 +531,8 @@ def worker_main(controller, job_id):
         execution_environment = dict(os.environ)
         if digest(execution_environment) != job["spec_identity"]["environment_sha256"]:
             raise JobError("execution environment changed before execution")
+        if LOCK_FDS_ENV in execution_environment:
+            raise JobError("reserved inherited lock context in worker base environment")
         if job["gpu"] and git_output("status", "--porcelain"):
             raise JobError("GPU source checkout changed before execution")
         check_deadline(deadline)
@@ -385,6 +546,24 @@ def worker_main(controller, job_id):
             if os.stat(job["gpu_lock"]).st_ino != job["gpu_lock_inode"]:
                 raise JobError("GPU lease path changed during acquisition")
             inherited.append(gpu_fd)
+        entries = []
+        locks = [("job", job_fd, directory / "worker.lock")]
+        if gpu_fd is not None:
+            locks.append(("gpu", gpu_fd, job["gpu_lock"]))
+        for role, fd, path in locks:
+            info = os.fstat(fd)
+            entries.append({"role": role, "fd": fd, "device": info.st_dev,
+                            "inode": info.st_ino, "path": str(path)})
+        lock_context = {"schema": LOCK_FDS_SCHEMA, "job_id": job_id, "entries": entries}
+        child_environment = dict(execution_environment,
+                                 **{LOCK_FDS_ENV: canonical(lock_context).decode()})
+        child_environment_sha256 = digest(child_environment)
+        with locked(controller.registry_lock):
+            value = controller._load()
+            current = next(j for j in value["jobs"] if j["job_id"] == job_id)
+            current.update(lock_fd_context=lock_context,
+                           child_environment_sha256=child_environment_sha256)
+            controller._save(value)
         # Recheck after all hashing, Git admission and lease operations. No child
         # may start merely because a reservation once existed before preflight.
         check_deadline(deadline)
@@ -396,29 +575,42 @@ def worker_main(controller, job_id):
                                      cwd=job["spec_identity"]["source_dir"],
                                      stdin=subprocess.DEVNULL, stdout=out, stderr=err,
                                      start_new_session=True, pass_fds=inherited,
-                                     env=execution_environment)
-            child_identity = process_identity(child.pid)
-            if not child_identity:
-                # Fast exit is safe only after wait() reaps this exact child.
-                child.poll()
+                                     env=child_environment)
+            cleanup = None  # Spawn occurred: no terminal receipt without group proof.
+            details = process_details(child.pid)
+            if (details is None or details["process_group"] != child.pid
+                    or details["session"] != child.pid):
+                raise JobError("new command process group identity unavailable")
+            child_group = {"pgid": child.pid, "leader_start_ticks": details["start_ticks"],
+                           "boot_id": identity["boot_id"]}
+            child_identity = {"pid": child.pid, "start_ticks": details["start_ticks"],
+                              "boot_id": identity["boot_id"]}
             with locked(controller.registry_lock):
                 value = controller._load()
                 current = next(j for j in value["jobs"] if j["job_id"] == job_id)
                 current["child_identity"] = child_identity
+                current["child_group"] = child_group
                 controller._save(value)
             atomic_json(directory / "checkpoint.json",
                         {"state": "RUNNING", "worker_identity": identity,
-                         "child_identity": child_identity})
-            while child.poll() is None:
+                         "child_identity": child_identity, "child_group": child_group,
+                         "lock_fd_context": lock_context,
+                         "child_environment_sha256": child_environment_sha256})
+            command_exited = False
+            while True:
+                # Retain the exact leader as a zombie after exit until its group
+                # is drained; poll()/wait() here would allow unsafe PGID reuse.
+                if os.waitid(os.P_PID, child.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT):
+                    command_exited = True
+                    break
                 if cancelled or time.monotonic() >= deadline:
-                    os.killpg(child.pid, signal.SIGTERM)
-                    try:
-                        child.wait(timeout=1)
-                    except subprocess.TimeoutExpired:
-                        os.killpg(child.pid, signal.SIGKILL)
                     break
                 time.sleep(0.05)
-            code = child.wait()
+            code, cleanup = drain_process_group(child, child_group)
+            if command_exited and cleanup["initial_descendants"]:
+                error = "command exited with surviving descendants; original group drained"
+                if code == 0:
+                    code = 125
             if not cancelled and time.monotonic() >= deadline:
                 code = 124
         for entry in job["spec_identity"]["configs"] + job["spec_identity"]["inputs"]:
@@ -434,13 +626,29 @@ def worker_main(controller, job_id):
     except Exception as caught:
         error = f"{type(caught).__name__}: {caught}"
         code = 124 if isinstance(caught, (TimeoutError, subprocess.TimeoutExpired)) else 125
-        if child is not None and child.poll() is None:
-            os.killpg(child.pid, signal.SIGKILL)
-            child.wait()
     finally:
-        if gpu_fd is not None:
-            os.close(gpu_fd)
-            gpu_fd = None
+        if child is not None and not (cleanup and cleanup["drained"]):
+            try:
+                if child_group is None:
+                    raise JobError("spawned command group identity unavailable")
+                _, cleanup = drain_process_group(child, child_group)
+            except Exception as caught:
+                # No accepted terminal evidence and no voluntary lease release.
+                # Unknown/detached survivors require operator reconciliation.
+                blocked = {"state": "CLEANUP_UNVERIFIED", "worker_identity": identity,
+                           "child_group": child_group, "error": str(caught),
+                           "lock_fd_context": lock_context}
+                try:
+                    atomic_json(directory / "checkpoint.json", blocked)
+                    with locked(controller.registry_lock):
+                        value = controller._load()
+                        current = next(j for j in value["jobs"] if j["job_id"] == job_id)
+                        current["cleanup_unverified"] = blocked
+                        controller._save(value)
+                except Exception as publication_error:
+                    print(f"cleanup checkpoint unavailable: {publication_error}", file=sys.stderr)
+                while True:
+                    time.sleep(1)
         charge = elapsed(job) + 1 if job["gpu"] else 0
         budget_qualified = not job["gpu"] or charge <= job["allowed_gpu_seconds"]
         if not budget_qualified:
@@ -451,6 +659,9 @@ def worker_main(controller, job_id):
         receipt.update(worker_identity=identity, exit_code=int(code),
                        gpu_seconds=charge, budget_qualified=budget_qualified,
                        child_reaped=True, cancelled=cancelled, error=error,
+                       lifecycle_contract=LIFECYCLE_CONTRACT, process_group_cleanup=cleanup,
+                       lock_fd_context=lock_context,
+                       child_environment_sha256=child_environment_sha256,
                        finished_time=time.time())
         atomic_json(directory / "exit.json", receipt)
         atomic_json(directory / "checkpoint.json", {"state": "EXITED", "exit_receipt": receipt})

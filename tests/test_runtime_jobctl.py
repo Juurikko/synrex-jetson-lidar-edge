@@ -2,6 +2,7 @@
 # Copyright (c) 2026 Tuomas Pietilä
 """CPU fixtures only: temporary git source, registry and simulated GPU lease."""
 import importlib.util
+import json
 import os
 import signal
 import subprocess
@@ -19,6 +20,12 @@ SPEC.loader.exec_module(jobctl)
 
 
 class JobControllerTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Own orphaned fixture processes after deliberate worker loss, so this
+        # test process can reap them instead of relying on the host init process.
+        jobctl.enable_subreaper()
+
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix="runtime-jobctl-fixture-")
         self.root = Path(self.temporary.name)
@@ -37,12 +44,16 @@ class JobControllerTests(unittest.TestCase):
         self.config.write_text('{"fixture": "CPU only"}')
         self.input = self.root / "input.txt"
         self.input.write_text("CPU fixture input")
+        self.descendants = []
 
     def git(self, *args):
         return subprocess.check_output(["git", "-C", str(self.source), *args], text=True)
 
     def tearDown(self):
         # Never leave fixture children alive on assertion failure.
+        for identity in self.descendants:
+            if jobctl.is_live(identity):
+                os.kill(identity["pid"], signal.SIGKILL)
         if self.controller.registry.exists():
             for job in jobctl.read_json(self.controller.registry)["jobs"]:
                 for key in ("child_identity", "worker_identity"):
@@ -51,7 +62,56 @@ class JobControllerTests(unittest.TestCase):
                         os.kill(identity["pid"], signal.SIGKILL)
         for worker in self.controller._workers:
             worker.wait(timeout=3)
+        limit = time.monotonic() + 3
+        while time.monotonic() < limit:
+            try:
+                pid, _ = os.waitpid(-1, os.WNOHANG)
+            except ChildProcessError:
+                break
+            if not pid:
+                time.sleep(.01)
         self.temporary.cleanup()
+
+    def wait_marker(self, path, timeout=3):
+        limit = time.monotonic() + timeout
+        while not path.exists():
+            self.assertLess(time.monotonic(), limit, "fixture marker deadline")
+            time.sleep(.01)
+        value = json.loads(path.read_text())
+        self.descendants.append(value["identity"])
+        return value
+
+    def descendant_script(self, marker, *, parent_wait=True, ignore_term=False,
+                          propagate=False, detached=False):
+        runner = str(Path(jobctl.__file__).resolve())
+        loader = (
+            "import importlib.util; "
+            f"s=importlib.util.spec_from_file_location('fixture_jobctl',{runner!r}); "
+            "j=importlib.util.module_from_spec(s); s.loader.exec_module(j); "
+        )
+        child = (
+            "import json,os,signal,time; from pathlib import Path; " + loader +
+            ("signal.signal(signal.SIGTERM,signal.SIG_IGN); " if ignore_term else "") +
+            f"Path({str(marker)!r}).write_text(json.dumps({{'identity':j.process_identity(),"
+            "'process_group':os.getpgrp(),"
+            f"'lock_fds':list(j.inherited_lock_fds()) if {propagate!r} else []}})); "
+            "time.sleep(30)"
+        )
+        return (
+            "import subprocess,sys,time; from pathlib import Path; " + loader +
+            f"c=subprocess.Popen([sys.executable,'-c',{child!r}],"
+            f"pass_fds=j.inherited_lock_fds() if {propagate!r} else (),"
+            f"start_new_session={detached!r}); "
+            f"marker=Path({str(marker)!r}); "
+            "exec('while not marker.exists(): time.sleep(.005)'); " +
+            ("c.wait()" if parent_wait else "sys.exit(0)")
+        )
+
+    def assert_fake_locks_held(self, job_id):
+        for path in [self.lease, self.controller._job_dir(job_id) / "worker.lock"]:
+            with path.open() as handle:
+                with self.assertRaises(BlockingIOError):
+                    jobctl.fcntl.flock(handle, jobctl.fcntl.LOCK_EX | jobctl.fcntl.LOCK_NB)
 
     def launch(self, job_id, script="print('fixture done')", **kwargs):
         return self.controller.launch(job_id, [sys.executable, "-c", script],
@@ -274,6 +334,220 @@ class JobControllerTests(unittest.TestCase):
                                    self.commit, self.source, [self.config], [self.input],
                                    True, 1, "DEVELOPMENT", str(self.lease), 123)
         self.assertFalse(self.lease.exists())
+
+    def test_normal_command_waiting_for_child_has_drained_proof(self):
+        self.simulated_gpu("normal-wait", script=(
+            "import subprocess,sys; "
+            "c=subprocess.Popen([sys.executable,'-c','print(42)']); c.wait()"), max_seconds=5)
+        job = self.wait("normal-wait")
+        self.assertEqual(job["state"], "SUCCEEDED", job)
+        self.assertTrue(job["exit_receipt"]["process_group_cleanup"]["drained"])
+        self.assertEqual(job["exit_receipt"]["process_group_cleanup"]["initial_descendants"], [])
+
+    def test_direct_command_sigkill_drains_waited_child_and_unrelated_group_survives(self):
+        marker = self.root / "grandchild.json"
+        unrelated = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"],
+                                     start_new_session=True)
+        try:
+            self.simulated_gpu("command-killed", script=self.descendant_script(marker),
+                               max_seconds=10)
+            descendant = self.wait_marker(marker)
+            job = self.wait_for_child("command-killed")
+            self.assert_fake_locks_held("command-killed")
+            os.kill(job["child_identity"]["pid"], signal.SIGKILL)
+            terminal = self.wait("command-killed")
+            self.assertEqual(terminal["state"], "FAILED", terminal)
+            self.assertEqual(terminal["exit_receipt"]["exit_code"], -signal.SIGKILL)
+            proof = terminal["exit_receipt"]["process_group_cleanup"]
+            self.assertTrue(proof["drained"])
+            self.assertIn(descendant["identity"]["pid"],
+                          [entry["pid"] for entry in proof["reaped_descendants"]])
+            self.assertFalse(jobctl.is_live(descendant["identity"]))
+            self.assertIsNone(unrelated.poll(), "unrelated process group was signalled")
+            with self.lease.open() as handle:
+                jobctl.fcntl.flock(handle, jobctl.fcntl.LOCK_EX | jobctl.fcntl.LOCK_NB)
+        finally:
+            unrelated.kill()
+            unrelated.wait()
+
+    def test_exit_zero_with_survivor_is_failed_and_survivor_reaped(self):
+        marker = self.root / "survivor.json"
+        self.simulated_gpu("unwaited", script=self.descendant_script(marker, parent_wait=False),
+                           max_seconds=10)
+        descendant = self.wait_marker(marker)
+        terminal = self.wait("unwaited")
+        self.assertEqual(terminal["state"], "FAILED", terminal)
+        self.assertEqual(terminal["exit_receipt"]["exit_code"], 125)
+        self.assertIn("surviving descendants", terminal["exit_receipt"]["error"])
+        self.assertFalse(jobctl.is_live(descendant["identity"]))
+
+    def test_term_ignoring_descendant_is_killed_on_worker_interrupt(self):
+        marker = self.root / "ignores-term.json"
+        self.simulated_gpu("ignores-term", script=self.descendant_script(marker, ignore_term=True),
+                           max_seconds=10)
+        descendant = self.wait_marker(marker)
+        job = self.wait_for_child("ignores-term")
+        os.kill(job["worker_identity"]["pid"], signal.SIGTERM)
+        terminal = self.wait("ignores-term")
+        self.assertEqual(terminal["state"], "CANCELLED", terminal)
+        self.assertIn(int(signal.SIGKILL),
+                      terminal["exit_receipt"]["process_group_cleanup"]["signals"])
+        self.assertFalse(jobctl.is_live(descendant["identity"]))
+
+    def test_worker_and_command_loss_preserve_inherited_descendant_exclusion(self):
+        marker = self.root / "inherited-locks.json"
+        self.simulated_gpu("dual-loss", script=self.descendant_script(marker, propagate=True),
+                           max_seconds=10)
+        descendant = self.wait_marker(marker)
+        job = self.wait_for_child("dual-loss")
+        self.assertEqual(len(descendant["lock_fds"]), 2)
+        self.assertEqual(descendant["process_group"], job["child_group"]["pgid"])
+        os.kill(job["worker_identity"]["pid"], signal.SIGKILL)
+        os.kill(job["child_identity"]["pid"], signal.SIGKILL)
+        self.wait("dual-loss", {"DEFERRED"})
+        self.assertTrue(jobctl.is_live(descendant["identity"]))
+        self.assert_fake_locks_held("dual-loss")
+        with self.assertRaisesRegex(jobctl.JobError, "unverified exit"):
+            self.simulated_gpu("dual-loss-blocked")
+        self.assertFalse((self.controller._job_dir("dual-loss") / "exit.json").exists())
+        os.kill(descendant["identity"]["pid"], signal.SIGKILL)
+        os.waitpid(descendant["identity"]["pid"], 0)
+        with self.lease.open() as handle:
+            jobctl.fcntl.flock(handle, jobctl.fcntl.LOCK_EX | jobctl.fcntl.LOCK_NB)
+        self.assertNotIn("exit_receipt", self.controller.reconcile()["jobs"][0])
+
+    def test_unverifiable_group_retains_worker_and_locks_without_receipt(self):
+        copied = self.source / "test_only_runner.py"
+        raw = Path(jobctl.__file__).read_text().replace(
+            'if __name__ == "__main__":',
+            'def group_members(group):\n    raise JobError("fixture malformed process scan")\n\n'
+            'if __name__ == "__main__":')
+        copied.write_text(raw)
+        self.git("add", ".")
+        self.git("-c", "user.name=CPU fixture", "-c", "user.email=fixture@invalid",
+                 "commit", "-qm", "test-only malformed scan fixture")
+        self.commit = self.git("rev-parse", "HEAD").strip()
+        spec = importlib.util.spec_from_file_location("test_only_bad_scan", copied)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.controller = module.Controller(self.controller.root)
+        self.simulated_gpu("bad-scan", max_seconds=5)
+        checkpoint = self.controller._job_dir("bad-scan") / "checkpoint.json"
+        limit = time.monotonic() + 3
+        while (not checkpoint.exists()
+               or jobctl.read_json(checkpoint)["state"] != "CLEANUP_UNVERIFIED"):
+            self.assertLess(time.monotonic(), limit)
+            time.sleep(.01)
+        self.assertEqual(self.controller.reconcile()["jobs"][0]["state"], "RUNNING")
+        self.assertGreaterEqual(self.controller.reconcile()["budget"]["total_gpu_seconds"], 10)
+        self.assert_fake_locks_held("bad-scan")
+        self.assertFalse((self.controller._job_dir("bad-scan") / "exit.json").exists())
+        with self.assertRaisesRegex(jobctl.JobError, "unverified exit"):
+            # Different module defines a distinct exception class.
+            try:
+                self.simulated_gpu("bad-scan-blocked")
+            except module.JobError as error:
+                raise jobctl.JobError(str(error)) from error
+
+    def test_new_receipt_requires_bound_group_and_lock_context(self):
+        self.simulated_gpu("bound-proof")
+        job = self.wait("bound-proof")
+        path = self.controller._job_dir("bound-proof") / "exit.json"
+        receipt = jobctl.read_json(path)
+        self.assertEqual(receipt["lock_fd_context"], job["lock_fd_context"])
+        self.assertEqual(receipt["child_environment_sha256"], job["child_environment_sha256"])
+        receipt["process_group_cleanup"]["drained"] = False
+        jobctl.atomic_json(path, receipt)
+        with self.assertRaisesRegex(jobctl.JobError, "process group cleanup"):
+            self.controller.reconcile()
+
+    def test_existing_legacy_terminal_receipt_remains_valid(self):
+        self.launch("legacy-fixture")
+        job = self.wait("legacy-fixture")
+        # Reconstruct the former marker-less intent/receipt representation.
+        job.pop("lifecycle_contract")
+        job["spec_identity"].pop("lifecycle_contract")
+        job["identity_sha256"] = jobctl.digest(job["spec_identity"])
+        receipt = dict(job["exit_receipt"], identity_sha256=job["identity_sha256"])
+        for key in ["lifecycle_contract", "process_group_cleanup", "lock_fd_context",
+                    "child_environment_sha256"]:
+            receipt.pop(key)
+        path = self.controller._job_dir("legacy-fixture") / "exit.json"
+        jobctl.atomic_json(path, receipt)
+        self.assertEqual(self.controller._verified_receipt(job), receipt)
+
+    def test_stripping_new_intent_markers_cannot_downgrade_receipt(self):
+        self.launch("no-downgrade")
+        job = self.wait("no-downgrade")
+        path = self.controller._job_dir("no-downgrade") / "exit.json"
+        receipt = dict(job["exit_receipt"])
+        job.pop("lifecycle_contract")
+        job["spec_identity"].pop("lifecycle_contract")
+        receipt.pop("lifecycle_contract")
+        receipt.pop("process_group_cleanup")
+        jobctl.atomic_json(path, receipt)
+        with self.assertRaisesRegex(jobctl.JobError, "specification digest"):
+            self.controller._verified_receipt(job)
+
+    def test_detached_descendant_is_explicitly_unverified_and_excluded(self):
+        marker = self.root / "detached-descendant.json"
+        self.simulated_gpu("unsupported-detach", script=self.descendant_script(
+            marker, parent_wait=False, detached=True, propagate=True), max_seconds=10)
+        descendant = self.wait_marker(marker)
+        checkpoint = self.controller._job_dir("unsupported-detach") / "checkpoint.json"
+        limit = time.monotonic() + 3
+        while (not checkpoint.exists()
+               or jobctl.read_json(checkpoint)["state"] != "CLEANUP_UNVERIFIED"):
+            self.assertLess(time.monotonic(), limit)
+            time.sleep(.01)
+        self.assertIn("detached descendant unsupported", jobctl.read_json(checkpoint)["error"])
+        self.assertTrue(jobctl.is_live(descendant["identity"]))
+        self.assert_fake_locks_held("unsupported-detach")
+        self.assertFalse((self.controller._job_dir("unsupported-detach") / "exit.json").exists())
+
+    def test_reserved_environment_and_lock_context_validation(self):
+        with mock.patch.dict(os.environ, {jobctl.LOCK_FDS_ENV: "not worker derived"}):
+            with self.assertRaisesRegex(jobctl.JobError, "reserved"):
+                self.launch("caller-spoofed")
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(jobctl.inherited_lock_fds(required=False), ())
+            with self.assertRaises(jobctl.JobError):
+                jobctl.inherited_lock_fds()
+        with self.lease.open() as handle:
+            info = os.fstat(handle.fileno())
+            entry = {"role": "job", "fd": handle.fileno(), "device": info.st_dev,
+                     "inode": info.st_ino, "path": str(self.lease)}
+            context = {"schema": jobctl.LOCK_FDS_SCHEMA, "job_id": "fixture", "entries": [entry]}
+            def validate(value):
+                with mock.patch.dict(os.environ, {jobctl.LOCK_FDS_ENV: json.dumps(value)}):
+                    return jobctl.inherited_lock_fds()
+            self.assertEqual(validate(context), (handle.fileno(),))
+            cases = [dict(context, schema="unknown"), dict(context, job_id="../bad"),
+                     dict(context, entries=[entry, entry]),
+                     dict(context, entries=[entry, dict(entry, role="gpu")]),
+                     dict(context, entries=[dict(entry, inode=-1)]),
+                     dict(context, entries=[dict(entry, fd=True)]),
+                     dict(context, entries=[dict(entry, fd=10**100)]),
+                     dict(context, entries=[dict(entry, path=str(self.root))])]
+            for value in cases:
+                with self.subTest(value=value), self.assertRaises(jobctl.JobError):
+                    validate(value)
+        with self.assertRaises(jobctl.JobError):
+            validate(context)  # Closed descriptor identity is never accepted.
+        descriptor = os.open(self.root, os.O_DIRECTORY | os.O_RDONLY)
+        try:
+            info = os.fstat(descriptor)
+            context["entries"] = [dict(entry, fd=descriptor, device=info.st_dev,
+                                       inode=info.st_ino, path=str(self.root))]
+            with self.assertRaises(jobctl.JobError):
+                validate(context)
+        finally:
+            os.close(descriptor)
+
+    def test_malformed_process_identity_cannot_become_group_proof(self):
+        with mock.patch.object(jobctl.Path, "read_text", return_value="malformed"):
+            with self.assertRaises(jobctl.JobError):
+                jobctl.process_details(os.getpid())
 
 
 if __name__ == "__main__":

@@ -26,9 +26,11 @@ committed source and explicit config/input hashes. Identify the actual inputs,
 or a previously verified immutable dataset manifest; a manifest does not itself
 prove its referenced files are unchanged. Commands inherit the launching
 environment snapshot, whose hash is recorded and checked before execution.
-The exact admitted mapping is passed explicitly to the worker and command;
-native library changes to the process environment cannot silently diverge from
-the mapping that was hashed. A changed worker environment still fails admission.
+The exact admitted base mapping is passed explicitly to the worker. The command
+receives that base plus the worker-derived reserved lock context described below;
+its complete derived environment hash is recorded separately. Native library
+changes cannot silently diverge from the admitted base mapping. A changed worker
+environment still fails admission.
 The wrapper's
 own file hash is sealed and checked before and after execution. HEAD is checked
 again after execution; GPU jobs also require a clean source checkout afterward.
@@ -39,6 +41,25 @@ Commands must
 run in the foreground and wait for their children; do not launch daemons or
 detach descendants. This is an owned campaign wrapper, not a system scheduler.
 
+Each new worker is a Linux child subreaper. It observes direct-command exit with
+`waitid(WNOWAIT)` and retains the original leader until its original process group
+has drained. This pins the leader PID and group ID while signals are issued.
+After **any** direct-command exit, including SIGKILL, the worker checks member
+start ticks, boot and session identity, sends TERM and then KILL when needed,
+adopts/reaps ordinary descendants, and finally reaps the leader. A command that
+returns zero while leaving descendants receives a failed receipt. A command that
+waits for all its children keeps its normal success behavior. Cleanup allows a
+one-second TERM grace and two-second KILL grace; observed wall time is still
+charged without clamping.
+
+Unverifiable process identities, incomplete cleanup, or adopted descendants that
+detached into another process group/session produce `CLEANUP_UNVERIFIED` in the
+checkpoint. The worker keeps the per-job/GPU descriptors open, writes no terminal
+receipt, and waits for operator recovery. Reservation/exclusion remain in force;
+SIGTERM does not make an unknown survivor safe. Detached/`setsid` children are
+unsupported. A killed worker cannot itself perform cleanup, so inherited
+descriptors and an unverified registry entry remain essential.
+
 The durable intent precedes worker spawn. The detached worker holds a per-job
 flock, records PID/start ticks/boot identity and child identity, checkpoints, logs
 stdout/stderr and publishes an fsynced exit receipt. For GPU jobs it opens the
@@ -46,6 +67,35 @@ existing shared lock without `O_CREAT`, verifies the admitted inode, and takes
 the established nonblocking exclusive flock. The command inherits both lock
 descriptors, preserving resource exclusion if its worker is interrupted. An
 unavailable lease fails the attempt rather than competing with another owner.
+
+Python coordinators must explicitly propagate the lock descriptors on every
+subprocess edge (Python normally closes them). The worker overlays its derived
+`SYNREX_JOB_LOCK_FDS` context only after verifying the original admitted environment.
+The JSON context identifies schema `synrex.runtime.lock-fds.v1`, job ID and
+per-job/optional GPU descriptor roles with actual descriptor number, device,
+inode and path. Caller-supplied reserved context is rejected at launch. Use the
+runner's exported API rather than guessing descriptor numbers:
+
+```python
+subprocess.run(command, check=True, pass_fds=jobctl.inherited_lock_fds(required=True))
+```
+
+`inherited_lock_fds` validates unique roles/descriptors, regular descriptor types
+and descriptor/path device/inode identity. Missing or invalid context fails closed;
+`required=False` returns an empty tuple only when context is absent. Descendants
+must retain the context in their environment and remain in the original process
+group. A custom environment must preserve the derived context unchanged. The
+context is exclusion plumbing, not permission to launch another job. If both
+worker and coordinator die while an ordinary descendant survives, correctly
+propagated descriptors keep both locks held; the missing terminal receipt still
+blocks a new GPU intent after that descendant exits.
+
+New intents seal the `synrex.runtime.owned-process-group.v2` lifecycle contract in
+their immutable specification. Their registry/checkpoint/exit evidence binds the
+derived lock context and child environment hash, and accepted terminal receipts
+require matching drained-group proof. Previously accepted marker-less historical
+receipts retain their original verification contract; adding flags to an old
+receipt does not upgrade its scientific or lifecycle evidence.
 
 An absolute deadline applies to worker preflight as well as execution. Chunked
 identity hashing and bounded Git subprocesses check that deadline; a final check
