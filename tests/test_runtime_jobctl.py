@@ -2,7 +2,6 @@
 # Copyright (c) 2026 Tuomas Pietilä
 """CPU fixtures only: temporary git source, registry and simulated GPU lease."""
 import importlib.util
-import json
 import os
 import signal
 import subprocess
@@ -12,7 +11,6 @@ import time
 import unittest
 from pathlib import Path
 from unittest import mock
-
 
 SPEC = importlib.util.spec_from_file_location(
     "runtime_jobctl", Path(__file__).resolve().parents[1] / "tools/runtime_jobctl.py")
@@ -76,10 +74,21 @@ class JobControllerTests(unittest.TestCase):
             time.sleep(.02)
         self.fail(f"fixture did not reach {states}: {job}")
 
+    def wait_for_child(self, job_id, timeout=3):
+        deadline = time.monotonic() + timeout
+        while True:
+            value = self.controller.reconcile()
+            job = next(j for j in value["jobs"] if j["job_id"] == job_id)
+            if job.get("child_identity"):
+                return job
+            self.assertIn(job["state"], jobctl.ACTIVE, job)
+            self.assertLess(time.monotonic(), deadline, job)
+            time.sleep(.02)
+
     def test_verified_exit_and_duplicate_rejection(self):
         self.launch("once")
         job = self.wait("once")
-        self.assertEqual(job["state"], "SUCCEEDED")
+        self.assertEqual(job["state"], "SUCCEEDED", job)
         self.assertEqual(job["id"], job["job_id"])
         self.assertEqual(job["identity"], job["worker_identity"])
         self.assertIn("command", job["spec_identity"])
@@ -98,9 +107,45 @@ class JobControllerTests(unittest.TestCase):
 
     def test_nonzero_and_timeout_are_real_failures(self):
         self.launch("nonzero", "import sys; sys.exit(7)")
-        self.assertEqual(self.wait("nonzero")["exit_receipt"]["exit_code"], 7)
+        job = self.wait("nonzero")
+        self.assertEqual(job["exit_receipt"]["exit_code"], 7, job)
         self.launch("timeout", "import time; time.sleep(20)", max_seconds=.15)
-        self.assertEqual(self.wait("timeout")["exit_receipt"]["exit_code"], 124)
+        job = self.wait("timeout")
+        self.assertEqual(job["exit_receipt"]["exit_code"], 124, job)
+
+    def test_native_environment_divergence_uses_admitted_snapshot(self):
+        variable = "SYNREX_JOBCTL_ENVIRONMENT_FIXTURE"
+        with mock.patch.dict(os.environ, {variable: "admitted"}):
+            # Native libraries and os.putenv can leave os.environ stale. The
+            # child must receive the exact mapping whose hash was admitted.
+            os.putenv(variable, "unrecorded-native-value")
+            self.launch("environment-snapshot", f"import os; print(os.environ[{variable!r}])")
+            job = self.wait("environment-snapshot")
+        self.assertEqual(job["state"], "SUCCEEDED", job)
+        self.assertEqual(
+            (self.controller._job_dir("environment-snapshot") / "stdout.log").read_text(),
+            "admitted\n",
+        )
+
+    def test_worker_environment_tampering_fails_before_child(self):
+        marker = self.root / "must-not-execute"
+        original_popen = subprocess.Popen
+
+        def tampered_worker(command, *args, **kwargs):
+            if "_worker" in command:
+                environment = dict(kwargs.get("env", os.environ))
+                environment["SYNREX_JOBCTL_TAMPER_FIXTURE"] = "not-admitted"
+                kwargs["env"] = environment
+            return original_popen(command, *args, **kwargs)
+
+        with mock.patch.object(jobctl.subprocess, "Popen", side_effect=tampered_worker):
+            self.launch("environment-tampered",
+                        f"from pathlib import Path; Path({str(marker)!r}).touch()")
+        job = self.wait("environment-tampered")
+        self.assertEqual(job["state"], "FAILED", job)
+        self.assertEqual(job["exit_receipt"]["exit_code"], 125, job)
+        self.assertIn("execution environment changed", job["exit_receipt"]["error"], job)
+        self.assertFalse(marker.exists(), job)
 
     def test_caller_exit_leaves_durable_worker(self):
         result = subprocess.run([
@@ -131,13 +176,7 @@ class JobControllerTests(unittest.TestCase):
 
     def test_interrupted_worker_keeps_live_child_and_gpu_exclusivity(self):
         self.simulated_gpu("interrupted", script="import time; time.sleep(.7)", max_seconds=5)
-        deadline = time.monotonic() + 3
-        while True:
-            job = self.controller.reconcile()["jobs"][0]
-            if job.get("child_identity"):
-                break
-            self.assertLess(time.monotonic(), deadline)
-            time.sleep(.02)
+        job = self.wait_for_child("interrupted")
         self.assertEqual(job["identity"], job["worker_identity"])
         self.assertEqual(job["lease"], {"path": str(self.lease), "inode": self.lease.stat().st_ino})
         self.assertEqual(job["config_identity"], job["spec_identity"]["configs"])
@@ -157,13 +196,7 @@ class JobControllerTests(unittest.TestCase):
 
     def test_controlled_interrupt_restart_reconcile_and_new_attempt(self):
         self.simulated_gpu("cancel-request", script="import time; time.sleep(10)", max_seconds=15)
-        deadline = time.monotonic() + 3
-        while True:
-            job = self.controller.reconcile()["jobs"][0]
-            if job.get("child_identity"):
-                break
-            self.assertLess(time.monotonic(), deadline)
-            time.sleep(.02)
+        job = self.wait_for_child("cancel-request")
         os.kill(job["worker_identity"]["pid"], signal.SIGTERM)
         cancelled = self.wait("cancel-request", {"CANCELLED"})
         self.assertTrue(cancelled["exit_receipt"]["cancelled"])
@@ -179,13 +212,7 @@ class JobControllerTests(unittest.TestCase):
 
     def test_source_mutation_during_child_is_failed(self):
         self.simulated_gpu("source-mutates", script="import time; time.sleep(.3)", max_seconds=5)
-        deadline = time.monotonic() + 3
-        while True:
-            job = self.controller.reconcile()["jobs"][0]
-            if job.get("child_identity"):
-                break
-            self.assertLess(time.monotonic(), deadline)
-            time.sleep(.02)
+        self.wait_for_child("source-mutates")
         (self.source / "fixture.txt").write_text("changed after command began\n")
         job = self.wait("source-mutates")
         self.assertEqual(job["state"], "FAILED")

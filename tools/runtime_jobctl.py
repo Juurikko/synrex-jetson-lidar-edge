@@ -18,7 +18,6 @@ import time
 import uuid
 from pathlib import Path
 
-
 STATES = {"STARTING", "RUNNING", "QUEUED", "SUCCEEDED", "FAILED", "CANCELLED",
           "DEFERRED", "NOT_RUN"}
 ACTIVE = {"STARTING", "RUNNING", "QUEUED"}
@@ -253,8 +252,11 @@ class Controller:
             if lease.stat().st_ino != gpu_lock_inode or not lease.is_file():
                 raise JobError("shared GPU lock inode changed")
             gpu_lock = str(lease)
+        # os.putenv/native extensions can change the C environment without updating
+        # os.environ. Hash and explicitly inherit the same Python snapshot.
+        execution_environment = dict(os.environ)
         identities = {"source_commit": source_commit, "source_dir": source_dir,
-                      "command": command, "environment_sha256": digest(dict(os.environ)),
+                      "command": command, "environment_sha256": digest(execution_environment),
                       "runner_identity": file_identity(__file__),
                       "configs": [file_identity(p) for p in configs],
                       "inputs": [file_identity(p) for p in inputs]}
@@ -299,7 +301,7 @@ class Controller:
                     worker = subprocess.Popen(
                         [sys.executable, str(Path(__file__).resolve()), "--root", str(self.root),
                          "_worker", job_id], stdin=subprocess.DEVNULL, stdout=log, stderr=log,
-                        start_new_session=True, close_fds=True)
+                        start_new_session=True, close_fds=True, env=execution_environment)
             except OSError as error:
                 job["state"] = "NOT_RUN"
                 job["block_reason"] = str(error)
@@ -367,7 +369,8 @@ def worker_main(controller, job_id):
         actual = git_output("rev-parse", "HEAD").strip()
         if actual != job["source_commit"]:
             raise JobError("source HEAD changed before execution")
-        if digest(dict(os.environ)) != job["spec_identity"]["environment_sha256"]:
+        execution_environment = dict(os.environ)
+        if digest(execution_environment) != job["spec_identity"]["environment_sha256"]:
             raise JobError("execution environment changed before execution")
         if job["gpu"] and git_output("status", "--porcelain"):
             raise JobError("GPU source checkout changed before execution")
@@ -392,7 +395,8 @@ def worker_main(controller, job_id):
             child = subprocess.Popen(job["spec_identity"]["command"],
                                      cwd=job["spec_identity"]["source_dir"],
                                      stdin=subprocess.DEVNULL, stdout=out, stderr=err,
-                                     start_new_session=True, pass_fds=inherited)
+                                     start_new_session=True, pass_fds=inherited,
+                                     env=execution_environment)
             child_identity = process_identity(child.pid)
             if not child_identity:
                 # Fast exit is safe only after wait() reaps this exact child.

@@ -1,4 +1,4 @@
-<!-- SPDX-License-Identifier: MIT -->
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
 <!-- Copyright (c) 2026 Tuomas Pietilä -->
 
 # Campaign job receipts
@@ -25,7 +25,11 @@ CPU jobs omit `--gpu` and its lease arguments. GPU admission requires clean,
 committed source and explicit config/input hashes. Identify the actual inputs,
 or a previously verified immutable dataset manifest; a manifest does not itself
 prove its referenced files are unchanged. Commands inherit the launching
-environment, whose hash is recorded and checked before execution. The wrapper's
+environment snapshot, whose hash is recorded and checked before execution.
+The exact admitted mapping is passed explicitly to the worker and command;
+native library changes to the process environment cannot silently diverge from
+the mapping that was hashed. A changed worker environment still fails admission.
+The wrapper's
 own file hash is sealed and checked before and after execution. HEAD is checked
 again after execution; GPU jobs also require a clean source checkout afterward.
 Use a separate immutable worktree for running jobs; do not develop or write

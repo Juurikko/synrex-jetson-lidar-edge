@@ -10,6 +10,11 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    # Explicit bash enables -eo pipefail, including commands logged through tee.
+    shell: bash
+
 concurrency:
   group: cpu-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -70,6 +75,7 @@ jobs:
           cmake -S . -B "$SYNREX_TEST_NATIVE_DIR" -G Ninja \
             -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} \
             -DCMAKE_CXX_COMPILER="$CXX" -DBUILD_TESTING=ON \
+            -DCMAKE_CXX_FLAGS_DEBUG='-Og -g' \
             -DSYNREX_ENABLE_CUDA=OFF -DSYNREX_SANITIZE=${{ matrix.sanitize }} \
             -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" \
             -DNLOHMANN_JSON_INCLUDE_DIR="$PWD/.deps/json/single_include" \
@@ -96,8 +102,12 @@ jobs:
         if: ${{ !cancelled() && success() && matrix.configuration == 'Release' }}
         env:
           CHANGE_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          if [ -z "$CHANGE_BASE" ] || [ "$CHANGE_BASE" = 0000000000000000000000000000000000000000 ]; then
+          if [ "$EVENT_NAME" != pull_request ] && [ "$GITHUB_REF_NAME" != "$DEFAULT_BRANCH" ]; then
+            CHANGE_BASE="$(git merge-base HEAD "origin/$DEFAULT_BRANCH")"
+          elif [ -z "$CHANGE_BASE" ] || [ "$CHANGE_BASE" = 0000000000000000000000000000000000000000 ]; then
             CHANGE_BASE="$(git rev-parse HEAD^)"
           fi
           python tools/check_cpu_style.py --base "$CHANGE_BASE" \
