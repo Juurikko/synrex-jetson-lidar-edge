@@ -229,7 +229,10 @@
       "tools/runtime_sealed_outputs.py",
       "tests/test_runtime_sealed_outputs.py",
       "tools/replay_overhead.py",
-      "tests/test_replay_overhead.py"
+      "tests/test_replay_overhead.py",
+      "native/directory_publication.cpp",
+      "native/include/synrex/directory_publication.hpp",
+      "tests/native/directory_publication.cpp"
     ],
     "license": "MIT"
   },
@@ -336,7 +339,8 @@
       "docs/streaming/QUALITY_EVALUATION.md",
       "docs/runtime_representation.md",
       "docs/runtime_sealed_outputs.md",
-      "archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md"
+      "archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md",
+      "docs/ATOMIC_DIRECTORY_PUBLICATION.md"
     ],
     "license": "CC-BY-4.0"
   },

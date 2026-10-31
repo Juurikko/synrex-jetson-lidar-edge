@@ -3,13 +3,16 @@
 // CPU-only preservation/export tests. Opaque models are never executed.
 #include "synrex/generic_export.hpp"
 #include <algorithm>
+#include <cerrno>
 #include <fstream>
 #include <iostream>
 #include <lazperf/readers.hpp>
 #include <lazperf/utils.hpp>
 #include <lazperf/writers.hpp>
 #include <poll.h>
+#include <set>
 #include <sys/inotify.h>
+#include <sys/stat.h>
 #include <thread>
 #include <unistd.h>
 
@@ -17,6 +20,9 @@ namespace {
 using namespace synrex;
 namespace g = synrex::generic;
 unsigned checks{}, rejections{}, packages{}, target_queries{};
+bool fail_parent_sync{};
+dev_t sync_device{};
+ino_t sync_inode{};
 void check(bool okay, const std::string &message) {
     ++checks;
     require(okay, message);
@@ -176,11 +182,31 @@ void preservation(const fs::path &input, const fs::path &output,
     }
 }
 void no_stage(const fs::path &parent) {
+    std::set<fs::path> owned;
+    for (const auto &entry : fs::directory_iterator(parent)) {
+        if (fs::is_symlink(entry.symlink_status())) {
+            const auto target = fs::read_symlink(entry.path());
+            if (!target.has_parent_path())
+                owned.insert(target);
+        }
+    }
     for (const auto &entry : fs::directory_iterator(parent))
-        check(entry.path().filename().string().find(".staging-") == std::string::npos,
-              "no abandoned export stage");
+        check(entry.path().filename().string().find(".staging-") == std::string::npos ||
+                  owned.count(entry.path().filename()),
+              "no abandoned export stage; published backing stages remain owned");
 }
 } // namespace
+extern "C" int __real_fsync(int);
+extern "C" int __wrap_fsync(int fd) {
+    struct stat info {};
+    if (fail_parent_sync && ::fstat(fd, &info) == 0 && info.st_dev == sync_device &&
+        info.st_ino == sync_inode) {
+        fail_parent_sync = false;
+        errno = EIO;
+        return -1;
+    }
+    return __real_fsync(fd);
+}
 namespace synrex {
 Json target_info() {
     ++target_queries;
@@ -189,7 +215,9 @@ Json target_info() {
 } // namespace synrex
 int main(int argc, char **argv) {
     try {
-        check(argc == 3, "usage: generic-export-tests CONTRACT SCRATCH_PARENT");
+        check(argc == 3 || (argc == 4 && std::string(argv[3]) == "--publication-filesystem"),
+              "usage: generic-export-tests CONTRACT SCRATCH_PARENT [--publication-filesystem]");
+        const bool publication_filesystem = argc == 4;
         Temporary temporary(argv[2]);
         const auto base = read_json(argv[1]);
         for (const unsigned k : {4, 7, 256}) {
@@ -384,7 +412,7 @@ int main(int argc, char **argv) {
             check(bytes(output / "sentinel") == "competitor original",
                   "existing product untouched");
         }
-        {
+        if (!publication_filesystem) {
             // A real source mutation after staging has started must be noticed
             // before publication. Encoding uses the sealed snapshot, so it must
             // neither consume changed source bytes nor publish stale provenance.
@@ -465,6 +493,65 @@ int main(int argc, char **argv) {
             fs::create_symlink(temporary.path / "nonexistent-target", linkout);
             rejects([&] { g::LazExport e(input, model, linkout, d); }, "new bundle");
         }
+        {
+            struct stat parent {};
+            check(::stat(temporary.path.c_str(), &parent) == 0, "parent fsync injection identity");
+            sync_device = parent.st_dev;
+            sync_inode = parent.st_ino;
+            const auto output = temporary.path / "post-publication-fsync-error";
+            g::LazExport e(input, model, output, d);
+            e.observe(c);
+            fail_parent_sync = true;
+            rejects([&] { e.finish(); }, "durability");
+            check(!fail_parent_sync && fs::is_directory(output),
+                  "post-publication export fsync failure preserves committed output");
+            const auto receipt = read_json(output / "bundle.json");
+            for (const auto &entry : receipt.at("files").items())
+                check(sha256(output / entry.key()) == entry.value(),
+                      "post-publication exception retains every export byte");
+            if (fs::is_symlink(output))
+                check(fs::is_directory(output.parent_path() / fs::read_symlink(output)),
+                      "post-publication exception never deletes backing stage");
+
+            const auto spec = temporary.path / "pack-spec.json";
+            write(spec, read_json(model / "manifest.json").at("contract").dump());
+            const auto v2 = temporary.path / "packed-v2";
+            pack(spec, model / "model.onnx", "onnx", model / "MODEL_LICENSE.txt", v2);
+            const Package packed_v2(v2);
+            check(packed_v2.manifest.at("schema") == "synrex.srxmodel.v2" &&
+                      sha256(packed_v2.artifact("onnx")) == sha256(model / "model.onnx"),
+                  "actual filesystem v2 pack admission reads complete bytes");
+            const auto v3 = temporary.path / "packed-v3";
+            pack(spec, model / "model.onnx", "onnx", model / "MODEL_LICENSE.txt", v3,
+                 model / "taxonomy.json");
+            check(Package(v3).taxonomy->sha256() == d.taxonomy().sha256(),
+                  "actual filesystem v3 pack admission reads taxonomy");
+            const auto repacked = temporary.path / "repacked-v3";
+            repack(v2, model / "taxonomy.json", repacked);
+            check(Package(repacked).taxonomy->sha256() == d.taxonomy().sha256(),
+                  "actual filesystem repack admission reads taxonomy");
+            for (unsigned mode = 0; mode < 3; ++mode) {
+                const auto failed_output =
+                    temporary.path / ("pack-parent-sync-error-" + std::to_string(mode));
+                fail_parent_sync = true;
+                rejects(
+                    [&] {
+                        if (mode == 0)
+                            pack(spec, model / "model.onnx", "onnx", model / "MODEL_LICENSE.txt",
+                                 failed_output);
+                        else if (mode == 1)
+                            pack(spec, model / "model.onnx", "onnx", model / "MODEL_LICENSE.txt",
+                                 failed_output, model / "taxonomy.json");
+                        else
+                            repack(v2, model / "taxonomy.json", failed_output);
+                    },
+                    "durability");
+                check(!fail_parent_sync && fs::is_directory(failed_output) &&
+                          sha256(Package(failed_output).artifact("onnx")) ==
+                              sha256(model / "model.onnx"),
+                      "post-publication package fsync exception retains admitted bytes");
+            }
+        }
         no_stage(temporary.path);
         check(target_queries == 0, "CPU export never queries GPU target");
         std::cout << Json{{"status", "PASS_CPU_GENERIC_EXPORT"},
@@ -473,6 +560,11 @@ int main(int argc, char **argv) {
                           {"gpu_target_calls", target_queries},
                           {"class_counts", {4, 7, 256}},
                           {"pdrf", {6, 7, 8}},
+                          {"qualification_mode",
+                           publication_filesystem ? "PUBLICATION_FILESYSTEM" : "FULL_CPU_EXPORT"},
+                          {"post_stage_mutation_inotify",
+                           publication_filesystem ? "NOT_RUN_EXPLICIT_PUBLICATION_FILESYSTEM_MODE"
+                                                  : "PASS"},
                           {"scope", "real preservation writer; opaque CPU fixtures; no "
                                     "quality/throughput/transport qualification"}}
                          .dump()

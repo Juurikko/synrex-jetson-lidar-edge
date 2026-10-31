@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/generic_export.hpp"
+#include "synrex/directory_publication.hpp"
 #include <algorithm>
 #include <cerrno>
 #include <fcntl.h>
 #include <lazperf/readers.hpp>
-#include <linux/fs.h>
 #include <linux/memfd.h>
 #include <openssl/evp.h>
 #include <sys/stat.h>
@@ -210,6 +210,7 @@ struct LazExport::Impl {
         const auto created = ::mkdtemp(pattern.data());
         require(created, "export staging creation failure");
         const fs::path stage(created);
+        bool published = false;
         try {
             write_new(stage / "descriptor.json", descriptor.bytes());
             write_new(stage / "taxonomy.json", descriptor.taxonomy().raw_bytes());
@@ -273,15 +274,15 @@ struct LazExport::Impl {
                 durable(entry.path());
             durable(stage, true);
             verify_inputs();
-            require(::syscall(SYS_renameat2, AT_FDCWD, stage.c_str(), AT_FDCWD, destination.c_str(),
-                              RENAME_NOREPLACE) == 0,
-                    "atomic export publication failed/refusing replacement");
+            publish_directory_noreplace(stage, destination);
+            published = true;
             durable(destination.parent_path(), true);
             finished = true;
             return receipt;
         } catch (...) {
             std::error_code ignored;
-            fs::remove_all(stage, ignored);
+            if (!published)
+                fs::remove_all(stage, ignored);
             throw;
         }
     }

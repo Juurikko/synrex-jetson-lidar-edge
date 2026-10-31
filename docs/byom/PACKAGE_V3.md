@@ -73,6 +73,11 @@ package identity. Existing files and packages are never replaced, and a new
 package cannot be written inside its source package, including through a parent
 symlink alias.
 
+Package roots may be directory aliases. Admission resolves the root once and retains
+the canonical real directory; final member symlinks remain rejected. See
+[atomic directory publication](../ATOMIC_DIRECTORY_PUBLICATION.md) for the portable
+publication representation and its backing-directory ownership and copy rules.
+
 New v3 creation/repack stages privately beside the destination. A shared reader
 opens model/license members with `O_NOFOLLOW | O_NONBLOCK`, checks regular type
 and initial size in 1..2 GiB, then reads at most that initial byte count in bounded

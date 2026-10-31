@@ -65,6 +65,7 @@ install(DIRECTORY patches/lazperf-b7bbe261 DESTINATION "${CMAKE_INSTALL_DATADIR}
 install(FILES "${LAZPERF_OVERLAY_DIR}/SYNREX_OVERLAY_NOTICE.txt"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/patches/lazperf-b7bbe261")
 install(FILES tools/prepare_lazperf_overlay.py DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/tools")
+install(FILES docs/ATOMIC_DIRECTORY_PUBLICATION.md DESTINATION "${CMAKE_INSTALL_DATADIR}/synrex/docs")
 
 # Existing model-free writer can still be built with its original dependencies only.
 option(SYNREX_BUILD_BYOM "Build the native BYOM runtime" ON)
@@ -76,7 +77,7 @@ if(NOT SYNREX_JSON_INCLUDE)
   message(FATAL_ERROR "Set NLOHMANN_JSON_INCLUDE_DIR to nlohmann/json 3.11.3 single_include")
 endif()
 find_package(OpenSSL 3 REQUIRED COMPONENTS Crypto)
-add_library(synrex_core STATIC native/package.cpp native/taxonomy.cpp native/engine_artifact.cpp native/generic_startup.cpp native/generic_transport.cpp native/generic_snapshot.cpp native/generic_codec.cpp native/generic_session.cpp native/generic_service.cpp native/replay_manifest.cpp native/replay_reader.cpp native/replay_frames.cpp native/geometry.cpp native/geometry_fast.cpp src/preserve_laz.cpp)
+add_library(synrex_core STATIC native/package.cpp native/directory_publication.cpp native/taxonomy.cpp native/engine_artifact.cpp native/generic_startup.cpp native/generic_transport.cpp native/generic_snapshot.cpp native/generic_codec.cpp native/generic_session.cpp native/generic_service.cpp native/replay_manifest.cpp native/replay_reader.cpp native/replay_frames.cpp native/geometry.cpp native/geometry_fast.cpp src/preserve_laz.cpp)
 target_include_directories(synrex_core PUBLIC native/include)
 target_include_directories(synrex_core SYSTEM PUBLIC "${SYNREX_JSON_INCLUDE}")
 target_compile_definitions(synrex_core PRIVATE SYNREX_LAZ_LIBRARY _GNU_SOURCE)
@@ -130,6 +131,12 @@ target_link_libraries(synrex-generic-live PRIVATE synrex_stream)
 target_compile_options(synrex-generic-live PRIVATE -Wall -Wextra -Wpedantic -Werror)
 include(CTest)
 if(BUILD_TESTING)
+  add_executable(synrex-directory-publication-tests tests/native/directory_publication.cpp native/directory_publication.cpp)
+  target_include_directories(synrex-directory-publication-tests PRIVATE native/include)
+  target_link_libraries(synrex-directory-publication-tests PRIVATE Threads::Threads)
+  target_compile_options(synrex-directory-publication-tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME atomic_directory_publication COMMAND synrex-directory-publication-tests "${CMAKE_CURRENT_BINARY_DIR}")
+  set_tests_properties(atomic_directory_publication PROPERTIES TIMEOUT 30)
   add_executable(synrex-lazperf-overlay-tests tests/native/lazperf_overlay.cpp)
   target_link_libraries(synrex-lazperf-overlay-tests PRIVATE lazperf_review)
   target_compile_options(synrex-lazperf-overlay-tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
@@ -164,10 +171,17 @@ if(BUILD_TESTING)
   set_tests_properties(generic_dual_peer_input_completion PROPERTIES TIMEOUT 60)
   add_executable(synrex-generic-export-tests tests/native/generic_export.cpp native/generic_export.cpp)
   target_link_libraries(synrex-generic-export-tests PRIVATE synrex_core Threads::Threads)
+  # Test-only link seam: fail the parent fsync after publication, never a runtime option.
+  target_link_options(synrex-generic-export-tests PRIVATE -Wl,--wrap=fsync)
   target_compile_options(synrex-generic-export-tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
   add_test(NAME generic_single_file_export COMMAND synrex-generic-export-tests
     "${PROJECT_SOURCE_DIR}/examples/dense_voxel.json" "${CMAKE_CURRENT_BINARY_DIR}")
   set_tests_properties(generic_single_file_export PROPERTIES TIMEOUT 60)
+  # Explicit publication-only filesystem mode omits the unrelated inotify race
+  # fixture, which some storage backends cannot deliver. Full export gate remains.
+  add_test(NAME generic_directory_publication_filesystem COMMAND synrex-generic-export-tests
+    "${PROJECT_SOURCE_DIR}/examples/dense_voxel.json" "${CMAKE_CURRENT_BINARY_DIR}" --publication-filesystem)
+  set_tests_properties(generic_directory_publication_filesystem PROPERTIES TIMEOUT 60)
   # Same production CLI entry point, explicitly opaque CPU backend for process
   # integration/fault tests. Never installed and never a GPU qualification tool.
   add_executable(synrex-generic-live-cpu-fixture tests/native/generic_live_fixture.cpp native/generic_live.cpp native/generic_replay.cpp native/generic_export.cpp native/stream.cpp native/service.cpp native/semantic_map.cpp native/generic_map.cpp native/generic_output.cpp native/transport.cpp)
@@ -300,7 +314,7 @@ if(BUILD_TESTING)
   add_test(NAME dense_voxel_contract COMMAND synrex-core-tests "${PROJECT_SOURCE_DIR}/examples/dense_voxel.json")
 endif()
 if(SYNREX_SANITIZE)
-  foreach(t synrex-replay-metrics-tests synrex-replay-frames-tests synrex-replay-queue-tests synrex-lazperf-overlay-tests synrex-replay synrex-replay-manifest-tests synrex-generic-duplex-tests synrex-generic-export-tests synrex-generic-live-cpu-fixture synrex-generic-live synrex-generic-output-tests synrex-generic-snapshot-tests synrex-generic-map-tests synrex-generic-io-tests synrex-generic-codec-tests synrex-generic-session-tests synrex-engine-artifact-tests synrex-generic-transport-tests synrex-generic-startup-tests synrex-package-policy-tests synrex-taxonomy-tests synrex-process-memory-tests synrex-snapshot-tests synrex-transport-profile synrex-export-tests synrex-live synrex-wire-tests synrex_core synrex_backend synrex-native synrex-core-tests synrex_stream synrex-stream-tests synrex-stream-gpu-tests synrex-sustain synrex-map-replay-tests synrex-geometry-tests synrex-map-churn-tests synrex-map-eviction-profile synrex-geometry-replay-tests synrex-map-index-tests synrex-map-temporal-tests)
+  foreach(t synrex-directory-publication-tests synrex-replay-metrics-tests synrex-replay-frames-tests synrex-replay-queue-tests synrex-lazperf-overlay-tests synrex-replay synrex-replay-manifest-tests synrex-generic-duplex-tests synrex-generic-export-tests synrex-generic-live-cpu-fixture synrex-generic-live synrex-generic-output-tests synrex-generic-snapshot-tests synrex-generic-map-tests synrex-generic-io-tests synrex-generic-codec-tests synrex-generic-session-tests synrex-engine-artifact-tests synrex-generic-transport-tests synrex-generic-startup-tests synrex-package-policy-tests synrex-taxonomy-tests synrex-process-memory-tests synrex-snapshot-tests synrex-transport-profile synrex-export-tests synrex-live synrex-wire-tests synrex_core synrex_backend synrex-native synrex-core-tests synrex_stream synrex-stream-tests synrex-stream-gpu-tests synrex-sustain synrex-map-replay-tests synrex-geometry-tests synrex-map-churn-tests synrex-map-eviction-profile synrex-geometry-replay-tests synrex-map-index-tests synrex-map-temporal-tests)
     if(TARGET ${t})
       target_compile_options(${t} PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fsanitize=address,undefined;-fno-omit-frame-pointer>)
       target_link_options(${t} PUBLIC -fsanitize=address,undefined)

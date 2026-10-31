@@ -178,7 +178,42 @@ int main(int argc, char **argv) {
         fs::create_symlink(v2 / "model.engine", linked / "model.engine");
         rejects([&] { EngineArtifact ignored(linked); }, "non-symlink");
         fs::create_directory_symlink(v2, temporary.path / "root-link");
-        rejects([&] { EngineArtifact ignored(temporary.path / "root-link"); }, "directory package");
+        const auto alias = temporary.path / "root-link";
+        const Package aliased_package(alias);
+        const EngineArtifact aliased_capture(alias);
+        check(aliased_package.root == fs::canonical(v2) && aliased_capture.engine_bytes() == model,
+              "root alias admits canonical real package and captured bytes");
+        fs::remove(alias);
+        fs::create_directory_symlink(linked, alias);
+        check(aliased_package.root == fs::canonical(v2) &&
+                  aliased_package.artifact("engine") == fs::canonical(v2) / "model.engine" &&
+                  sha256(aliased_package.artifact("engine")) == sha256(v2 / "model.engine") &&
+                  aliased_capture.engine_bytes() == model,
+              "alias retarget cannot redirect retained package paths or capture");
+        rejects([&] { EngineArtifact ignored(alias); }, "non-symlink");
+        fs::remove(alias);
+        const auto redirected = fixture(temporary.path, contract);
+        const std::string redirected_bytes = "different valid opaque engine capture";
+        write(redirected / "model.engine", redirected_bytes);
+        auto redirected_manifest = read_json(redirected / "manifest.json");
+        redirected_manifest["artifacts"]["engine"]["sha256"] = sha256(redirected / "model.engine");
+        write(redirected / "manifest.json", redirected_manifest.dump() + "\n");
+        fs::create_directory_symlink(redirected, alias);
+        const EngineArtifact redirected_capture(alias);
+        check(
+            redirected_capture.engine_bytes() == redirected_bytes &&
+                aliased_capture.engine_bytes() == model &&
+                sha256(aliased_package.artifact("engine")) == sha256(v2 / "model.engine"),
+            "fresh alias admission sees new target while retained package and capture stay pinned");
+        fs::remove(alias);
+        fs::create_symlink(temporary.path / "absent", alias);
+        rejects([&] { EngineArtifact ignored(alias); }, "directory package");
+        fs::remove(alias);
+        fs::create_symlink(v2 / "model.engine", alias);
+        rejects([&] { EngineArtifact ignored(alias); }, "directory package");
+        fs::remove(alias);
+        fs::create_symlink(alias.filename(), alias);
+        rejects([&] { EngineArtifact ignored(alias); }, "directory package");
         const auto fifo = fixture(temporary.path, contract);
         fs::remove(fifo / "model.engine");
         check(::mkfifo((fifo / "model.engine").c_str(), 0600) == 0, "FIFO fixture");

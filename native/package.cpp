@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 // Original generic package/contract implementation; see docs/byom/PROVENANCE.md.
+#include "synrex/directory_publication.hpp"
 #include "synrex/runtime.hpp"
 #include <algorithm>
 #include <cerrno>
@@ -293,6 +294,15 @@ std::string read_manifest_bytes(const fs::path &path) {
     }
     return result;
 }
+fs::path package_root(const fs::path &path) {
+    // Resolve the root alias once; every subsequent manifest/member operation
+    // uses this real directory path, never the mutable caller-supplied alias.
+    // Final-component member no-follow checks remain in their existing readers.
+    std::error_code error;
+    const auto resolved = fs::canonical(path, error);
+    require(!error && fs::is_directory(resolved), "requires .srxmodel directory package");
+    return resolved;
+}
 // Guard before DOM construction: nlohmann callback DOM parsing can scan parent
 // arrays repeatedly. This pass also bounds nesting before building a DOM.
 struct ManifestGuard : nlohmann::json_sax<Json> {
@@ -345,7 +355,7 @@ Json parse_manifest(const std::string &bytes, PackageUse use) {
 } // namespace
 Package::Package(const fs::path &path) : Package(path, PackageUse::file) {}
 Package::Package(const fs::path &path, PackageUse use)
-    : root(path), manifest_bytes(read_manifest_bytes(path)),
+    : root(package_root(path)), manifest_bytes(read_manifest_bytes(root)),
       manifest_sha256(hash_bytes(manifest_bytes)), manifest(parse_manifest(manifest_bytes, use)),
       contract(manifest.at("contract")) {
     exact_keys(manifest, {"schema", "contract", "artifacts", "target"});
@@ -413,13 +423,14 @@ void pack(const fs::path &spec, const fs::path &artifact, const std::string &kin
             "model/license files required");
     require(!fs::exists(output) && !fs::is_symlink(output), "refusing package replacement");
     const Json target = kind == "engine" ? target_info() : Json(nullptr);
-    // Stage privately beside output; rename through renameat2(NO_REPLACE) on Linux.
+    // Publish the verified private stage atomically without replacing any name.
     auto pattern = (output.parent_path() / ".srxmodel-XXXXXX").string();
     std::vector<char> buffer(pattern.begin(), pattern.end());
     buffer.push_back('\0');
     const auto p = ::mkdtemp(buffer.data());
     require(p != nullptr, "cannot stage package");
     const fs::path staging(p);
+    bool published = false;
     try {
         Json artifacts = Json::object();
         for (const auto &pair : std::vector<std::pair<std::string, fs::path>>{
@@ -434,11 +445,15 @@ void pack(const fs::path &spec, const fs::path &artifact, const std::string &kin
                             {"target", target}};
         write_new(staging / "manifest.json", manifest.dump(2) + "\n");
         const Package validated(staging);
-        require(
-            ::renameat2(AT_FDCWD, staging.c_str(), AT_FDCWD, output.c_str(), RENAME_NOREPLACE) == 0,
-            "cannot publish package without replacement");
+        sync_publication_stage(staging);
+        publish_directory_noreplace(staging, output);
+        published = true;
+        sync_publication_parent(output);
     } catch (...) {
-        fs::remove_all(staging);
+        if (!published) {
+            std::error_code ignored;
+            fs::remove_all(staging, ignored);
+        }
         throw;
     }
 }
@@ -457,6 +472,7 @@ void stage_v3(const Contract &contract, const Json &target, Json artifacts,
     const auto created = ::mkdtemp(buffer.data());
     require(created != nullptr, "cannot stage package");
     const fs::path staging(created);
+    bool published = false;
     try {
         for (const auto &input : inputs) {
             auto &entry = artifacts.at(input.first);
@@ -483,11 +499,15 @@ void stage_v3(const Contract &contract, const Json &target, Json artifacts,
         if (source)
             require(read_manifest_bytes(source->root) == source->manifest_bytes,
                     "source package manifest changed during repack");
-        require(
-            ::renameat2(AT_FDCWD, staging.c_str(), AT_FDCWD, output.c_str(), RENAME_NOREPLACE) == 0,
-            "cannot publish package without replacement");
+        sync_publication_stage(staging);
+        publish_directory_noreplace(staging, output);
+        published = true;
+        sync_publication_parent(output);
     } catch (...) {
-        fs::remove_all(staging);
+        if (!published) {
+            std::error_code ignored;
+            fs::remove_all(staging, ignored);
+        }
         throw;
     }
 }
