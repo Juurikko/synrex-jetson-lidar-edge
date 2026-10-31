@@ -3,6 +3,7 @@
 #include "synrex/generic_live.hpp"
 #include "synrex/generic_export.hpp"
 #include "synrex/generic_output.hpp"
+#include "synrex/generic_replay.hpp"
 #include "synrex/generic_session.hpp"
 #include "synrex/transport.hpp"
 #include <algorithm>
@@ -347,6 +348,9 @@ void subscribe(const Config &config, const CpuAdmittedPackage &admitted, const P
 }
 } // namespace
 int live_main(int argc, char **argv) {
+    for (int i = 2; i < argc; ++i)
+        if (std::string(argv[i]) == "--manifest")
+            return replay_main(argc, argv);
     Json receipt{{"schema", "synrex.generic_single_file_cli.v1"},
                  {"status", "FAIL"},
                  {"workload", "finite file-order replay with synthetic pacing"},
