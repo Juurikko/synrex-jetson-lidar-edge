@@ -50,6 +50,13 @@ EOF/truncation failure and absolute deadlines under backpressure.
 `generic_taxonomy_map` checks descriptor-bound generic deltas/snapshots, an
 independent scalar eviction oracle, semantic identity/projection failure and full
 65,536-cell serialization/reconstruction with an exact 64 KiB descriptor.
+`generic_snapshot_admission` additionally rejects hostile snapshot JSON and
+reconstructs the complete map at the encoded byte limit.
+`generic_output_completion` exercises independent maps through actual sockets,
+terminal/ACK and EOF fences, configuration and classification failures, and
+nonempty completion with K4/non-FRACTAL7/K256 ID255, and actual full 65,536-cell
+snapshot transport and independent map reconstruction. Absolute operation deadlines
+include map/JSON work.
 These probes never initialize a GPU and do not establish valid engine
 deserialization, generic file/stream interchangeability or trained quality.
 `checked_process_memory` also checks resident-page accounting at 4 KiB and 64 KiB,

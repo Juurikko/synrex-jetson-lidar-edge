@@ -7,6 +7,8 @@
 
 namespace synrex::generic {
 class Session;
+class OutputSender;
+class OutputReceiver;
 // Explicit selection only. No legacy decoder/fallback.
 enum class WireProtocol { binary_v3 };
 namespace detail {
@@ -24,14 +26,19 @@ class ControlConnection;
 // encoding; header/kind/whole-envelope bounds precede receive allocation.
 // Every I/O/validation failure permanently poisons and shuts down the connection.
 // Clean EOF and a truncated envelope both throw (with distinct diagnostics).
-// EOF is never successful stream completion: no terminal protocol is defined here.
+// EOF alone is never successful stream completion. OutputSender/OutputReceiver
+// add independently reconstructed, acknowledged terminal snapshot completion.
 class AuthorityTransport {
+    friend class OutputSender;
     std::shared_ptr<detail::ControlConnection> connection_;
     std::shared_ptr<const EngineArtifact> begin_session();
     void complete_session();
     void abort_session() noexcept;
     std::function<void(std::uint64_t, std::uint64_t)> frame_authorizer() const;
     std::function<void()> session_aborter() const;
+    Json finish_output(const std::string &snapshot_bytes, std::uint64_t frames,
+                       std::uint64_t points, Startup::Time deadline);
+    void abort_output() noexcept;
 
   public:
     AuthorityTransport(WireProtocol, int connected_socket, const CpuAdmittedPackage &,
@@ -57,7 +64,11 @@ class AuthorityTransport {
 };
 // Same borrowed socket, deadline, failure and single-thread ownership rules apply.
 class PeerTransport {
+    friend class OutputReceiver;
     std::unique_ptr<detail::ControlConnection> connection_;
+    Json finish_output(const std::string &expected_snapshot_bytes, std::uint64_t frames,
+                       std::uint64_t points, Startup::Time deadline);
+    void abort_output() noexcept;
 
   public:
     PeerTransport(WireProtocol, int connected_socket, const CpuAdmittedPackage &expected_package,

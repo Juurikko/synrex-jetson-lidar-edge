@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/generic_transport.hpp"
+#include "synrex/generic_map.hpp"
 #include <algorithm>
 #include <array>
 #include <cerrno>
 #include <climits>
+#include <openssl/evp.h>
 #include <openssl/rand.h>
 #include <poll.h>
 #include <set>
@@ -22,12 +24,57 @@ enum class Message : unsigned char {
     execution_ready = 4,
     execution_ready_ack = 5,
     frame = 16,
-    classification = 17
+    classification = 17,
+    snapshot = 32,
+    output_complete = 33,
+    output_complete_ack = 34
 };
 void check(bool ok, const char *message) {
     if (!ok)
         throw std::runtime_error(message);
 }
+using DigestContext = std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)>;
+DigestContext new_digest() {
+    DigestContext context(EVP_MD_CTX_new(), EVP_MD_CTX_free);
+    check(context && EVP_DigestInit_ex(context.get(), EVP_sha256(), nullptr) == 1,
+          "wire-v3 SHA256 initialization failed");
+    return context;
+}
+std::string digest_value(const DigestContext &context) {
+    auto copy = new_digest();
+    check(EVP_MD_CTX_copy_ex(copy.get(), context.get()) == 1, "wire-v3 SHA256 copy failed");
+    std::array<unsigned char, 32> hash{};
+    unsigned size{};
+    check(EVP_DigestFinal_ex(copy.get(), hash.data(), &size) == 1 && size == hash.size(),
+          "wire-v3 SHA256 final failed");
+    const char hex[] = "0123456789abcdef";
+    std::string result;
+    for (const auto value : hash) {
+        result += hex[value >> 4];
+        result += hex[value & 15];
+    }
+    return result;
+}
+std::string digest_bytes(std::string_view bytes) {
+    auto context = new_digest();
+    check(EVP_DigestUpdate(context.get(), bytes.data(), bytes.size()) == 1,
+          "wire-v3 SHA256 update failed");
+    return digest_value(context);
+}
+// Exact complete classification envelopes in wire order; no decoded JSON or
+// host-local clock is substituted. Envelope lengths make the concatenation unique.
+struct Transcript {
+    DigestContext context = new_digest();
+    std::uint64_t frames{}, points{};
+    void add(std::string_view bytes, std::size_t count) {
+        check(frames < UINT64_MAX && count <= UINT64_MAX - points,
+              "wire-v3 output accounting overflow");
+        check(EVP_DigestUpdate(context.get(), bytes.data(), bytes.size()) == 1,
+              "wire-v3 classification transcript failed");
+        ++frames;
+        points += count;
+    }
+};
 Json limit_json(const Limits &limits) {
     return {{"max_frame_points", limits.max_frame_points},
             {"max_frame_bytes", limits.max_frame_bytes},
@@ -51,6 +98,7 @@ Limits read_limits(const Json &value) {
 // Hello is tiny, flat and has an exact schema. Reject duplicate (including escaped) keys
 // and nesting during bounded DOM parsing; Descriptor has its own bounded SAX guard.
 Json small_json(const std::string &bytes) {
+    check(bytes.find('\0') == std::string::npos, "wire-v3 control contains a NUL byte");
     std::vector<std::set<std::string>> keys;
     auto callback = [&keys](int depth, Json::parse_event_t event, Json &value) {
         check(depth <= 2, "wire-v3 hello nesting limit");
@@ -96,6 +144,10 @@ std::string readiness(const Descriptor &descriptor, const std::string &kind,
     return control.dump();
 }
 std::size_t bound(Message message) {
+    if (message == Message::snapshot)
+        return SemanticMap::max_snapshot_bytes - 12; // Whole envelope <=16MiB.
+    if (message == Message::output_complete || message == Message::output_complete_ack)
+        return 2048;
     if (message == Message::descriptor)
         return Descriptor::max_bytes;
     if (message == Message::hello)
@@ -111,7 +163,9 @@ class ControlConnection {
     std::string session_;
     std::uint64_t epoch_;
     bool authority_, poisoned_{};
-    enum class Stage { fresh, admitted, initializing, ready } stage_{Stage::fresh};
+    enum class Stage { fresh, admitted, initializing, ready, terminal_pending, complete };
+    Stage stage_{Stage::fresh};
+    Transcript sent_, received_;
     const Time metadata_deadline_;
     Time startup_deadline_{};
     std::unique_ptr<Descriptor> descriptor_;
@@ -165,6 +219,46 @@ class ControlConnection {
             offset += static_cast<std::size_t>(result);
         }
         before(deadline);
+    }
+    void end_writes(Time deadline) const {
+        before(deadline);
+        check(::shutdown(socket_, SHUT_WR) == 0, "wire-v3 terminal half-close failed");
+        before(deadline);
+    }
+    void require_eof(Time deadline) const {
+        for (;;) {
+            before(deadline);
+            char extra{};
+            const auto result = ::recv(socket_, &extra, 1, MSG_DONTWAIT);
+            if (result < 0 && errno == EINTR)
+                continue;
+            if (result < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)) {
+                wait(POLLIN, deadline);
+                continue;
+            }
+            check(result >= 0, "wire-v3 terminal EOF read failed");
+            check(result == 0, "wire-v3 trailing bytes after terminal record");
+            before(deadline);
+            return;
+        }
+    }
+    Json completion_record(const std::string &kind, const Json &snapshot,
+                           const std::string &snapshot_bytes, const Transcript &transcript,
+                           const std::string &challenge) const {
+        return {{"schema", "synrex.output.terminal.v3"},
+                {"kind", kind},
+                {"descriptor_sha256", descriptor_->sha256()},
+                {"session_id", session_},
+                {"map_epoch", epoch_},
+                {"taxonomy_sha256", descriptor_->taxonomy().sha256()},
+                {"classification_frames", transcript.frames},
+                {"classified_points", transcript.points},
+                {"classification_sha256", digest_value(transcript.context)},
+                {"snapshot_sha256", digest_bytes(snapshot_bytes)},
+                {"snapshot_bytes", snapshot_bytes.size()},
+                {"snapshot_cells", snapshot.at("cells").size()},
+                {"as_of_ns", snapshot.at("as_of_ns")},
+                {"completion_challenge", challenge}};
     }
     void send(Message message, const std::string &bytes, Time deadline) const {
         check(!bytes.empty() && bytes.size() <= bound(message), "wire-v3 outgoing payload bound");
@@ -415,6 +509,8 @@ class ControlConnection {
             authorize_data(value.frame, bytes.size());
             before(deadline);
             transfer(bytes.data(), bytes.size(), true, deadline);
+            sent_.add(bytes, value.frame.points.size());
+            before(deadline);
         });
     }
     Classification receive_classification(Time deadline) {
@@ -422,8 +518,78 @@ class ControlConnection {
             const auto bytes = receive_data(Message::classification, deadline);
             auto value = decode_classification(*descriptor_, bytes);
             authorize_data(value.frame, bytes.size());
+            received_.add(bytes, value.frame.points.size());
             before(deadline);
             return value;
+        });
+    }
+    Json finish_output(const std::string &expected_snapshot_bytes, std::uint64_t frames,
+                       std::uint64_t points, Time deadline) {
+        return guarded([&] {
+            ready_for_data(deadline);
+            auto &transcript = authority_ ? sent_ : received_;
+            check(transcript.frames > 0 && transcript.points > 0,
+                  "wire-v3 empty output cannot qualify completion");
+            check(transcript.frames == frames && transcript.points == points,
+                  "wire-v3 output consumer omitted classification records");
+            // Only the output consumer wrappers can call this operation. Their
+            // snapshot is generated from every successfully sent/received result.
+            const auto snapshot = admit_snapshot(*descriptor_, expected_snapshot_bytes);
+            check(expected_snapshot_bytes.size() <= bound(Message::snapshot) &&
+                      snapshot.dump() == expected_snapshot_bytes && !snapshot.at("cells").empty(),
+                  "wire-v3 terminal snapshot encoding/cell bound");
+            before(deadline);
+            stage_ = Stage::terminal_pending;
+            Json terminal;
+            if (authority_) {
+                send(Message::snapshot, expected_snapshot_bytes, deadline);
+                // Fresh only after the final snapshot write. A pre-sent ACK or
+                // a receipt from a prior session cannot confer delivery success.
+                const auto challenge = new_challenge();
+                terminal = completion_record("output_complete", snapshot, expected_snapshot_bytes,
+                                             transcript, challenge);
+                send(Message::output_complete, terminal.dump(), deadline);
+                end_writes(deadline);
+                const auto acknowledgement = receive(Message::output_complete_ack, deadline);
+                const auto expected =
+                    completion_record("output_complete_ack", snapshot, expected_snapshot_bytes,
+                                      transcript, challenge);
+                check(
+                    acknowledgement == expected.dump(),
+                    "wire-v3 completion acknowledgement identity/count/digest/challenge mismatch");
+                require_eof(deadline);
+            } else {
+                const auto received = receive(Message::snapshot, deadline);
+                (void)admit_snapshot(*descriptor_, received);
+                check(received == expected_snapshot_bytes,
+                      "wire-v3 snapshot differs from independently reconstructed output map");
+                before(deadline);
+                const auto bytes = receive(Message::output_complete, deadline);
+                terminal = small_json(bytes);
+                const auto challenge = terminal.at("completion_challenge").get<std::string>();
+                check(challenge_valid(challenge) &&
+                          bytes == completion_record("output_complete", snapshot,
+                                                     expected_snapshot_bytes, transcript, challenge)
+                                       .dump(),
+                      "wire-v3 terminal identity/count/digest/challenge mismatch");
+                // A valid record followed by extra data is not a complete stream.
+                // EOF fences the write direction; EOF by itself is never success.
+                require_eof(deadline);
+                send(Message::output_complete_ack,
+                     completion_record("output_complete_ack", snapshot, expected_snapshot_bytes,
+                                       transcript, challenge)
+                         .dump(),
+                     deadline);
+                end_writes(deadline);
+            }
+            before(deadline);
+            stage_ = Stage::complete;
+            terminal.erase("kind");
+            terminal["schema"] = "synrex.output.delivery.v1";
+            terminal["status"] = authority_ ? "PEER_VALIDATED" : "VALIDATED_ACK_SENT";
+            terminal["time_boundary"] =
+                "classified_output_and_terminal_map; no_inference_quality_claim";
+            return terminal;
         });
     }
     const Descriptor &descriptor() const {
@@ -444,6 +610,11 @@ AuthorityTransport::AuthorityTransport(WireProtocol protocol, int socket,
     : connection_(std::make_shared<detail::ControlConnection>(protocol, socket, p, limits,
                                                               std::move(session), epoch, true)) {}
 AuthorityTransport::~AuthorityTransport() = default;
+Json AuthorityTransport::finish_output(const std::string &bytes, std::uint64_t frames,
+                                       std::uint64_t points, Startup::Time deadline) {
+    return connection_->finish_output(bytes, frames, points, deadline);
+}
+void AuthorityTransport::abort_output() noexcept { connection_->abort(); }
 void AuthorityTransport::metadata_admission() { connection_->admission(); }
 bool AuthorityTransport::initialization_permission() { return connection_->permission(); }
 std::shared_ptr<const EngineArtifact> AuthorityTransport::begin_session() {
@@ -488,6 +659,11 @@ PeerTransport::PeerTransport(WireProtocol protocol, int socket, const CpuAdmitte
     : connection_(std::make_unique<detail::ControlConnection>(protocol, socket, p, limits,
                                                               std::move(session), epoch, false)) {}
 PeerTransport::~PeerTransport() = default;
+Json PeerTransport::finish_output(const std::string &bytes, std::uint64_t frames,
+                                  std::uint64_t points, Startup::Time deadline) {
+    return connection_->finish_output(bytes, frames, points, deadline);
+}
+void PeerTransport::abort_output() noexcept { connection_->abort(); }
 void PeerTransport::metadata_admission() { connection_->admission(); }
 void PeerTransport::acknowledge_execution_ready() { connection_->ready(); }
 void PeerTransport::authorize_frame(std::string_view hash, std::string_view session,

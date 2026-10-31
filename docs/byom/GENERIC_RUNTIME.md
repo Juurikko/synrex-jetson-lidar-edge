@@ -7,10 +7,10 @@ The generic API is separate from every legacy CLI, JSON stream and single-file
 exporter. It accepts explicit package-v3 taxonomies, including non-FRACTAL seven
 classes, repeated LAS projections and K=256/semantic ID255. Current evidence is CPU
 contract execution with a test-only opaque backend plus native SDK syntax checks.
-Typed socket I/O and descriptor-bound map output have CPU regressions. Actual
-generic engine file/stream interchangeability, CLI selection, network terminal
-qualification, snapshot reception/export bundles and trained quality remain
-unqualified.
+Typed socket I/O, descriptor-bound maps, strict snapshot admission and independently
+reconstructed terminal output have CPU regressions. Actual generic engine
+file/stream interchangeability, CLI selection, export bundles and trained quality
+remain unqualified.
 
 `CpuAdmittedPackage(path)` captures model bytes once. Construct both peers with
 their expected package, session ID and epoch, then perform `metadata_admission()`
@@ -82,8 +82,8 @@ they cannot run concurrently with that Session or its Service. A future concurre
 CLI must arrange separate owned connections or synchronized ownership explicitly.
 The socket remains borrowed. Every error permanently fails and shuts down the
 connection. Clean EOF has a distinct diagnostic from a truncated envelope and
-throws; neither constitutes terminal success. This API has no terminal receipt or
-snapshot wire envelope yet.
+throws; neither constitutes terminal success. The output wrappers below add
+explicit terminal receipts and snapshot admission.
 
 `generic::SemanticMap` is a CPU consumer of already classified v3 results. It does
 not authorize inference. It validates complete labels, exact descriptor identity,
@@ -112,11 +112,17 @@ metadata fits within the base allowance. A cell has three signed coordinate keys
 and null confidence fields. The unchanged cell encoding fits 224 bytes including
 its array separator. The resulting bound is 15,728,640 bytes. Tests serialize and
 independently reconstruct a full map with extreme keys, uint64 ages, escaped source
-identities and an exact 64 KiB descriptor. This is an encoding and reconstruction
-result, not independently acknowledged network snapshot delivery.
+identities and an exact 64 KiB descriptor. `admit_snapshot` adds strict bounded
+duplicate/depth/schema/type and exact identity,
+key-order and timestamp/age validation without changing the serializer.
+`OutputSender`/`OutputReceiver` independently reconstruct maps and use the
+[terminal transport](GENERIC_TRANSPORT.md#terminal-output-admission) for bounded
+snapshot comparison, transcript-bound completion and a fresh challenge ACK.
+This is CPU output validation, not real model qualification.
 
 CTest targets `generic_binary_v3_codec`, `generic_control_transport`,
-`generic_binary_v3_socket_io`, `generic_taxonomy_map` and `generic_session_service`
+`generic_binary_v3_socket_io`, `generic_taxonomy_map`, `generic_snapshot_admission`,
+`generic_output_completion` and `generic_session_service`
 cover the CPU boundaries. The test-only backend is linked only into fixture test
 executables. Production backend linkage remains in
 `native/generic_backend.hpp`, outside the public include tree. The GPU backend

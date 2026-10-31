@@ -617,7 +617,7 @@ int main(int argc, char **argv) {
                           {"backend", "opaque CPU fixture; no neural inference or GPU execution"},
                           {"limitations",
                            {"AF_UNIX stream sockets only; no TCP network qualification",
-                            "No terminal-success protocol is implemented or claimed"}}}
+                            "This typed-I/O suite does not exercise terminal completion"}}}
                          .dump(2)
                   << '\n';
         return 0;

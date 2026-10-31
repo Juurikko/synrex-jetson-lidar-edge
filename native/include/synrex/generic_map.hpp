@@ -39,4 +39,9 @@ class SemanticMap final {
 static_assert(SemanticMap::snapshot_base_bytes +
                   SemanticMap::snapshot_cell_bytes * SemanticMap::max_cells <=
               SemanticMap::max_snapshot_bytes);
+// Independently admit exact received bytes against an already admitted descriptor.
+// Strict schema/types, duplicate keys, bounds, identities, cell order and ages are
+// checked before returning a DOM. Semantic IDs refer only to the bound descriptor's
+// taxonomy/LAS projection. This CPU check does not authorize execution/readiness.
+Json admit_snapshot(const Descriptor &, std::string_view bytes);
 } // namespace synrex::generic

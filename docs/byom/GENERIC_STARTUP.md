@@ -64,7 +64,9 @@ The factory also rejects a frame point limit above the admitted Contract.
 The companion control transport exchanges and enforces peer advertisements.
 The companion codec validates complete bounded frame/output bodies. The transport
 also provides typed socket frame/classification I/O with absolute operation
-deadlines. CLI integration and terminal/snapshot wire protocols remain pending.
+deadlines. The output wrappers add independently reconstructed terminal snapshots
+and challenge acknowledgments; see [transport](GENERIC_TRANSPORT.md#terminal-output-admission).
+CLI integration remains pending.
 
 Startup proceeds in this order:
 
