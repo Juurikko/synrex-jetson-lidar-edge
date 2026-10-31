@@ -466,7 +466,7 @@ class PinnedStaging {
 class PersistentSession final : public InferenceSession {
     const std::chrono::steady_clock::time_point started_ = std::chrono::steady_clock::now();
     Package package_;
-    std::string manifest_sha256_ = sha256(package_.root / "manifest.json");
+    std::string manifest_sha256_ = package_.manifest_sha256;
     std::size_t capacity_;
     SessionOptions options_;
     std::unique_ptr<PinnedStaging> host_points_, host_ids_, host_voxels_, host_groups_, host_labels_, host_semantics_, host_bad_;
@@ -487,7 +487,7 @@ class PersistentSession final : public InferenceSession {
     Stream stream_; // Destroyed first: synchronize before any device resource is released.
   public:
     PersistentSession(const fs::path &root, std::size_t capacity, const SessionOptions &options)
-        : package_(root), capacity_(capacity), options_(options) {
+        : package_(root, PackageUse::legacy_stream), capacity_(capacity), options_(options) {
         cuda_check(cudaGetDevice(&device_));
         const auto &c = package_.contract;
         require(capacity > 0 && capacity <= c.max_points && capacity <= 1000000,

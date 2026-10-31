@@ -16,7 +16,9 @@ std::vector<std::uint8_t> infer(const Package &, const std::vector<Point> &, con
     (void)target_info();
     return {};
 }
-std::unique_ptr<InferenceSession> create_session(const fs::path &, std::size_t, const SessionOptions &) {
+std::unique_ptr<InferenceSession> create_session(const fs::path &model, std::size_t,
+                                                 const SessionOptions &) {
+    const Package package(model, PackageUse::legacy_stream);
     (void)target_info();
     return {};
 }

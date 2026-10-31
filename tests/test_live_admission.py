@@ -15,7 +15,18 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
-CPU_MANIFEST = b'{"fixture":"CPU subscriber peer only; no neural inference"}\n'
+CPU_MODEL = b"CPU_SUBSCRIBER_MODEL_FREE_ONNX_PLACEHOLDER_NO_INFERENCE"
+CPU_LICENSE = b"MIT; CPU wire fixture only; no weights or inference qualification.\n"
+CPU_SPEC = json.loads((ROOT / "examples/dense_voxel.json").read_text())
+CPU_MANIFEST = (json.dumps({
+    "schema": "synrex.srxmodel.v2",
+    "contract": CPU_SPEC,
+    "artifacts": {
+        "onnx": {"path": "model.onnx", "sha256": hashlib.sha256(CPU_MODEL).hexdigest()},
+        "license": {"path": "MODEL_LICENSE.txt", "sha256": hashlib.sha256(CPU_LICENSE).hexdigest()},
+    },
+    "target": None,
+}, sort_keys=True) + "\n").encode()
 
 
 def json_payload(value):
@@ -27,6 +38,8 @@ def run_subscriber_peer(tmp_path, messages, validation_mode="decoded"):
     model = tmp_path / "model"
     model.mkdir()
     (model / "manifest.json").write_bytes(CPU_MANIFEST)
+    (model / "model.onnx").write_bytes(CPU_MODEL)
+    (model / "MODEL_LICENSE.txt").write_bytes(CPU_LICENSE)
     receipt = tmp_path / "receipt.json"
     listener = socket.socket()
     listener.bind(("127.0.0.1", 0))

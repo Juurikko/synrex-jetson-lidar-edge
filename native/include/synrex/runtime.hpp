@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #pragma once
+#include "taxonomy.hpp"
 #include <array>
 #include <cstdint>
 #include <filesystem>
@@ -30,15 +31,23 @@ struct Contract {
     std::uint64_t voxels, max_points, max_blocks, max_memberships, max_tensor_bytes;
     explicit Contract(const Json &spec);
 };
+// Current persistent sessions and exporters implement only the legacy streaming contract.
+enum class PackageUse { file, legacy_stream };
 struct Package {
     fs::path root;
+    std::string manifest_bytes, manifest_sha256; // Same captured bytes are parsed and hashed.
     Json manifest;
     Contract contract;
+    std::optional<Taxonomy> taxonomy; // Only explicit package-v3 metadata; no inference from K.
     explicit Package(const fs::path &root);
+    Package(const fs::path &root, PackageUse use);
     fs::path artifact(const std::string &name) const;
 };
 void pack(const fs::path &spec, const fs::path &artifact, const std::string &kind,
           const fs::path &license, const fs::path &output);
+void pack(const fs::path &spec, const fs::path &artifact, const std::string &kind,
+          const fs::path &license, const fs::path &output, const fs::path &taxonomy);
+void repack(const fs::path &source, const fs::path &taxonomy, const fs::path &output);
 
 struct Point {
     std::array<double, 3> xyz;

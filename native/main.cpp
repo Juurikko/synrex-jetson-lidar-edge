@@ -33,9 +33,11 @@ void usage() {
                  "synrex-native version\n"
                  "synrex-native target\n"
                  "synrex-native pack --spec SPEC.json --onnx MODEL.onnx --license NOTICE --out "
-                 "MODEL.srxmodel\n"
+                 "MODEL.srxmodel [--taxonomy TAXONOMY.json]\n"
                  "synrex-native pack --spec SPEC.json --engine MODEL.engine --license NOTICE --out "
-                 "MODEL.srxmodel\n"
+                 "MODEL.srxmodel [--taxonomy TAXONOMY.json]\n"
+                 "synrex-native repack --model OLD.srxmodel --taxonomy TAXONOMY.json --out "
+                 "NEW.srxmodel\n"
                  "synrex-native inspect --model MODEL.srxmodel\n"
                  "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine [--precision "
                  "fp16]\n"
@@ -89,12 +91,23 @@ int main(int argc, char **argv) {
             return args.at(key);
         };
         if (command == "pack") {
-            require(args.size() == 4 && (args.count("--onnx") != args.count("--engine")),
+            require(args.size() == 4 + args.count("--taxonomy") &&
+                        (args.count("--onnx") != args.count("--engine")),
                     "pack requires spec, model, license and out");
             const auto kind = args.count("--onnx") ? "onnx" : "engine";
-            pack(get("--spec"), get(std::string("--") + kind), kind, get("--license"),
-                 get("--out"));
+            if (args.count("--taxonomy"))
+                pack(get("--spec"), get(std::string("--") + kind), kind, get("--license"),
+                     get("--out"), get("--taxonomy"));
+            else
+                pack(get("--spec"), get(std::string("--") + kind), kind, get("--license"),
+                     get("--out"));
             std::cout << "{\"status\":\"PASS\",\"operation\":\"package_creation\"}\n";
+            return 0;
+        }
+        if (command == "repack") {
+            require(args.size() == 3, "repack requires model, taxonomy and out");
+            repack(get("--model"), get("--taxonomy"), get("--out"));
+            std::cout << "{\"status\":\"PASS\",\"operation\":\"taxonomy_repack\"}\n";
             return 0;
         }
         require(command == "inspect" || command == "build-engine" || command == "plan" ||
@@ -189,7 +202,9 @@ int main(int argc, char **argv) {
         if (!sidecar.empty()) {
             const Json semantic{{"schema", "synrex.point_semantics.v1"},
                                 {"source_sha256", sha256(input)},
-                                {"model_manifest_sha256", sha256(package.root / "manifest.json")},
+                                {"model_manifest_sha256",
+                                 package.taxonomy ? package.manifest_sha256
+                                                  : sha256(package.root / "manifest.json")},
                                 {"point_count", points.size()},
                                 {"index_order", "original source point record order"},
                                 {"semantic_id_definition",

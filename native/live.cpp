@@ -106,7 +106,7 @@ struct Replay {
         : count(a.n("--points", 16384, 65536)), rate(a.n("--rate", 1000000, 20000000)),
           churn(a.n("--churn-mm", 0, 1000000)), sensor(a.get("--sensor", "replay")),
           stream(a.get("--stream", "r1")) {
-        Package p(a.get("--model"));
+        Package p(a.get("--model"), PackageUse::legacy_stream);
         taxonomy =
             p.contract.las_classes.size() == 7 ? "synrex.fractal7.v1" : "synrex.synthetic3.v1";
         corpus = decode(a.get("--source"), p.contract);
@@ -502,6 +502,7 @@ void receiver(const Args &a, Json &r) {
 }
 void subscriber(const Args &a, Json &r) {
     const auto limits = live_limits(a);
+    const Package package(a.get("--model"), PackageUse::legacy_stream);
     const auto validation_mode = a.get("--validation-mode", "decoded");
     require(validation_mode == "reference" || validation_mode == "decoded",
             "unknown validation strategy");
@@ -520,7 +521,7 @@ void subscriber(const Args &a, Json &r) {
     const auto stall = a.n("--stall-ms", 0, 60000);
     if (stall)
         std::this_thread::sleep_for(std::chrono::milliseconds(stall));
-    const auto expected_model_hash = sha256(fs::path(a.get("--model")) / "manifest.json");
+    const auto &expected_model_hash = package.manifest_sha256;
     Hash input_hash, output_hash;
     std::uint64_t frames = 0, points = 0, updates = 0, executions = 0, last_asof = 0;
     w::Sequence sequence;
