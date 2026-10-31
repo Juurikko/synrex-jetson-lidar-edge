@@ -158,12 +158,17 @@ def group_members(group):
                 or member["start_ticks"] < group["leader_start_ticks"]):
             raise JobError("process group member identity mismatch")
         members.append(member)
-    # Adopted children in another session/group are unsupported, not proof of an
-    # empty job. Never signal an unrelated or unidentified process group.
+    # Already-dead, kernel-adopted children in this original session can be
+    # reaped even if they changed process group. Never signal another group or
+    # admit live/detached/unknown descendants as evidence of completed cleanup.
     for pid in Path(f"/proc/{os.getpid()}/task/{os.getpid()}/children").read_text().split():
         member = process_details(int(pid))
         if member is not None and member["process_group"] != group["pgid"]:
-            raise JobError("detached descendant unsupported; cleanup unverified")
+            if (member["parent_pid"] != os.getpid() or member["state"] != "Z"
+                    or member["session"] != group["pgid"]
+                    or member["start_ticks"] < group["leader_start_ticks"]):
+                raise JobError("detached descendant unsupported; cleanup unverified")
+            members.append(member)
     return members
 
 
@@ -188,9 +193,18 @@ def drain_process_group(child, group):
             members = group_members(group)
             for member in members:
                 if member["pid"] != child.pid and member["parent_pid"] == os.getpid():
+                    actual = process_details(member["pid"])
+                    keys = ("pid", "parent_pid", "start_ticks", "process_group", "session")
+                    if (actual is None or any(actual[key] != member[key] for key in keys)
+                            or actual["process_group"] != group["pgid"]
+                            and actual["state"] != "Z"):
+                        raise JobError("adopted child identity changed before reap")
                     pid, status = os.waitpid(member["pid"], os.WNOHANG)
                     if pid:
-                        proof["reaped_descendants"].append(dict(member, wait_status=status))
+                        proof["reaped_descendants"].append(
+                            dict(actual, boot_id=group["boot_id"], wait_status=status))
+                    elif actual["process_group"] != group["pgid"]:
+                        raise JobError("verified adopted zombie was not waitable")
             members = group_members(group)
             if len(members) == 1 and members[0]["pid"] == child.pid and members[0]["state"] == "Z":
                 code = child.wait()
@@ -607,7 +621,8 @@ def worker_main(controller, job_id):
                     break
                 time.sleep(0.05)
             code, cleanup = drain_process_group(child, child_group)
-            if command_exited and cleanup["initial_descendants"]:
+            if command_exited and any(m["state"] != "Z"
+                                      for m in cleanup["initial_descendants"]):
                 error = "command exited with surviving descendants; original group drained"
                 if code == 0:
                     code = 125

@@ -47,10 +47,18 @@ has drained. This pins the leader PID and group ID while signals are issued.
 After **any** direct-command exit, including SIGKILL, the worker checks member
 start ticks, boot and session identity, sends TERM and then KILL when needed,
 adopts/reaps ordinary descendants, and finally reaps the leader. A command that
-returns zero while leaving descendants receives a failed receipt. A command that
+returns zero while leaving live descendants receives a failed receipt. A command that
 waits for all its children keeps its normal success behavior. Cleanup allows a
 one-second TERM grace and two-second KILL grace; observed wall time is still
 charged without clamping.
+
+Already-dead kernel-adopted zombies from the original session may be reaped even
+if they changed process group. Their exact PID/start ticks, parent, boot, group,
+session and wait status are retained in cleanup proof; no other group is signaled.
+When only dead children remain, the direct command's exit code is preserved.
+Auxiliary wait status is cleanup evidence, not a scientific or output-quality
+verdict. Live alternate-group children and different-session descendants remain
+unsupported and fail closed.
 
 Unverifiable process identities, incomplete cleanup, or adopted descendants that
 detached into another process group/session produce `CLEANUP_UNVERIFIED` in the

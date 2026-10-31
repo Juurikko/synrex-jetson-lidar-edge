@@ -82,7 +82,7 @@ class JobControllerTests(unittest.TestCase):
         return value
 
     def descendant_script(self, marker, *, parent_wait=True, ignore_term=False,
-                          propagate=False, detached=False):
+                          propagate=False, detached=False, new_process_group=False):
         runner = str(Path(jobctl.__file__).resolve())
         loader = (
             "import importlib.util; "
@@ -91,6 +91,7 @@ class JobControllerTests(unittest.TestCase):
         )
         child = (
             "import json,os,signal,time; from pathlib import Path; " + loader +
+            ("os.setpgid(0,0); " if new_process_group else "") +
             ("signal.signal(signal.SIGTERM,signal.SIG_IGN); " if ignore_term else "") +
             f"Path({str(marker)!r}).write_text(json.dumps({{'identity':j.process_identity(),"
             "'process_group':os.getpgrp(),"
@@ -429,7 +430,9 @@ class JobControllerTests(unittest.TestCase):
         self.commit = self.git("rev-parse", "HEAD").strip()
         spec = importlib.util.spec_from_file_location("test_only_bad_scan", copied)
         module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        with mock.patch.object(sys, "dont_write_bytecode", True):
+            spec.loader.exec_module(module)
+        self.assertEqual(self.git("status", "--porcelain"), "")
         self.controller = module.Controller(self.controller.root)
         self.simulated_gpu("bad-scan", max_seconds=5)
         checkpoint = self.controller._job_dir("bad-scan") / "checkpoint.json"
@@ -548,6 +551,115 @@ class JobControllerTests(unittest.TestCase):
         with mock.patch.object(jobctl.Path, "read_text", return_value="malformed"):
             with self.assertRaises(jobctl.JobError):
                 jobctl.process_details(os.getpid())
+
+    def zombie_script(self, marker, code, detached=False):
+        # Foreground coordinator waits for its direct child. That child forks an
+        # auxiliary process, which exits after changing only its process group.
+        # The worker adopts the already-dead auxiliary, matching the gh edge.
+        auxiliary = "\n".join([
+            "import json,os,time",
+            "from pathlib import Path",
+            "if os.fork() == 0:",
+            "    " + ("os.setsid()" if detached else "os.setpgid(0,0)"),
+            "    raw=Path('/proc/self/stat').read_text()",
+            "    fields=raw[raw.rfind(')')+2:].split()",
+            "    identity={'pid':os.getpid(),'start_ticks':int(fields[19]),",
+            "              'boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip()}",
+            f"    Path({str(marker)!r}).write_text(json.dumps({{'identity':identity,",
+            "          'process_group':os.getpgrp(),'session':os.getsid(0)}))",
+            "    os._exit(23)",
+            "os._exit(0)",
+        ])
+        return "\n".join([
+            "import json,subprocess,sys,time",
+            "from pathlib import Path",
+            f"child=subprocess.Popen([sys.executable,'-c',{auxiliary!r}])",
+            "assert child.wait() == 0",
+            f"marker=Path({str(marker)!r})",
+            "while not marker.exists(): time.sleep(.005)",
+            "identity=json.loads(marker.read_text())['identity']",
+            "while True:",
+            "    raw=Path('/proc/'+str(identity['pid'])+'/stat').read_text()",
+            "    if raw[raw.rfind(')')+2:].split()[0] == 'Z': break",
+            "    time.sleep(.005)",
+            f"sys.exit({code})",
+        ])
+
+    def test_dead_adopted_same_session_alternate_group_is_reaped_with_original_code(self):
+        for code in (0, 7):
+            with self.subTest(code=code):
+                name = f"owned-zombie-{code}"
+                marker = self.root / (name + ".json")
+                self.simulated_gpu(name, script=self.zombie_script(marker, code), max_seconds=10)
+                descendant = self.wait_marker(marker)
+                job = self.wait(name)
+                receipt = job["exit_receipt"]
+                self.assertEqual(receipt["exit_code"], code, receipt)
+                self.assertEqual(job["state"], "SUCCEEDED" if code == 0 else "FAILED", job)
+                proof = receipt["process_group_cleanup"]
+                self.assertTrue(proof["drained"])
+                self.assertEqual(proof["signals"], [], "no live process needed a signal")
+                records = [p for p in proof["reaped_descendants"]
+                           if p["pid"] == descendant["identity"]["pid"]]
+                self.assertEqual(len(records), 1)
+                record = records[0]
+                self.assertEqual(record["state"], "Z")
+                self.assertEqual(record["parent_pid"], job["worker_identity"]["pid"])
+                self.assertEqual(record["start_ticks"], descendant["identity"]["start_ticks"])
+                self.assertEqual(record["boot_id"], descendant["identity"]["boot_id"])
+                self.assertEqual(record["process_group"], descendant["process_group"])
+                self.assertNotEqual(record["process_group"], proof["group"]["pgid"])
+                self.assertEqual(record["session"], proof["group"]["pgid"])
+                self.assertEqual(record["wait_status"], 23 << 8)
+                self.assertIsNone(jobctl.process_details(descendant["identity"]["pid"]))
+
+    def test_live_same_session_alternate_group_retains_exclusion(self):
+        marker = self.root / "live-alternate-group.json"
+        self.simulated_gpu("live-alternate", script=self.descendant_script(
+            marker, parent_wait=False, propagate=True, new_process_group=True), max_seconds=10)
+        descendant = self.wait_marker(marker)
+        checkpoint = self.controller._job_dir("live-alternate") / "checkpoint.json"
+        limit = time.monotonic() + 3
+        while (not checkpoint.exists()
+               or jobctl.read_json(checkpoint)["state"] != "CLEANUP_UNVERIFIED"):
+            self.assertLess(time.monotonic(), limit)
+            time.sleep(.01)
+        self.assertTrue(jobctl.is_live(descendant["identity"]))
+        self.assert_fake_locks_held("live-alternate")
+        self.assertFalse((self.controller._job_dir("live-alternate") / "exit.json").exists())
+
+    def test_dead_different_session_descendant_still_retains_exclusion(self):
+        marker = self.root / "dead-detached-session.json"
+        self.simulated_gpu("dead-detached", script=self.zombie_script(marker, 0, detached=True),
+                           max_seconds=10)
+        descendant = self.wait_marker(marker)
+        checkpoint = self.controller._job_dir("dead-detached") / "checkpoint.json"
+        limit = time.monotonic() + 3
+        while (not checkpoint.exists()
+               or jobctl.read_json(checkpoint)["state"] != "CLEANUP_UNVERIFIED"):
+            self.assertLess(time.monotonic(), limit)
+            time.sleep(.01)
+        details = jobctl.process_details(descendant["identity"]["pid"])
+        self.assertEqual(details["state"], "Z")
+        self.assertNotEqual(details["session"],
+                            jobctl.read_json(checkpoint)["child_group"]["pgid"])
+        self.assert_fake_locks_held("dead-detached")
+        self.assertFalse((self.controller._job_dir("dead-detached") / "exit.json").exists())
+
+    def test_changed_adopted_zombie_identity_is_not_reaped(self):
+        group = {"pgid": 10, "leader_start_ticks": 5, "boot_id": "fixture-boot"}
+        leader = {"pid": 10, "state": "Z", "parent_pid": os.getpid(),
+                  "start_ticks": 5, "process_group": 10, "session": 10}
+        zombie = dict(leader, pid=11, process_group=11, start_ticks=6)
+        changed = dict(zombie, start_ticks=7)
+        with mock.patch.object(jobctl, "group_members", return_value=[leader, zombie]), \
+                mock.patch.object(jobctl, "process_details", return_value=changed), \
+                mock.patch.object(jobctl.os, "waitpid") as wait, \
+                mock.patch.object(jobctl.os, "killpg") as kill:
+            with self.assertRaisesRegex(jobctl.JobError, "identity changed before reap"):
+                jobctl.drain_process_group(mock.Mock(pid=10), group)
+        wait.assert_not_called()
+        kill.assert_not_called()
 
 
 if __name__ == "__main__":
