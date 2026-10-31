@@ -75,6 +75,7 @@ and matching release assets; this post-release layout is not a new benchmark or
 reconstruction qualification.
 
 
+- **Maintained architecture and evidence boundaries:** [runtime architecture](ARCHITECTURE.md) · [preserved earlier architecture](archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md)
 - **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM adapter contract](docs/byom/ADAPTER.md)
 - **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
 - **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](archive/evidence/streaming_r1_transport_trials.csv)

@@ -335,7 +335,8 @@
       "docs/runtime_uncertainty.md",
       "docs/streaming/QUALITY_EVALUATION.md",
       "docs/runtime_representation.md",
-      "docs/runtime_sealed_outputs.md"
+      "docs/runtime_sealed_outputs.md",
+      "archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md"
     ],
     "license": "CC-BY-4.0"
   },
