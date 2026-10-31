@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <lazperf/readers.hpp>
+#include <lazperf/utils.hpp>
 #include <lazperf/writers.hpp>
 #include <poll.h>
 #include <sys/inotify.h>
@@ -125,6 +126,10 @@ void source(const fs::path &path, int pdrf, unsigned count = 260) {
         record[16] = static_cast<char>(2);
         for (int b = 17; b < length; ++b)
             record[b] = static_cast<char>((i + b) % 256);
+        // PDRF6/7/8 stores GPS time at bytes22..29. Use bounded, variable,
+        // binary-exact synthetic times instead of arbitrary double bit patterns.
+        const double gps_time = 1000000.0 + static_cast<double>(i) / 1024.0;
+        lazperf::utils::pack(gps_time, record.data() + 22);
         writer.writePoint(record.data());
     }
     writer.close();
