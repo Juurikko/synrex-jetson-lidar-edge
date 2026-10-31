@@ -145,6 +145,12 @@ No scene/acquisition bootstrap, independent holdout, rare-object support or
 quality noninferiority claim is implied. Those analyses consume separately
 frozen scene/acquisition provenance and criteria.
 
+[Paired acquisition uncertainty](runtime_uncertainty.md) consumes identity-bound
+paired confusion summaries with acquisition assignments frozen before evaluation.
+[Q0/Q1 artifact evaluation](streaming/QUALITY_EVALUATION.md) validates the declared
+whole-source and unchanged 16,384-point window artifacts before interpreting
+their scores. Neither tool establishes executable/GPU lineage by itself.
+
 If `ground_class_id` is declared, ground precision/recall and false-ground
 contamination are a **semantic-label proxy**, excluding ignored truth. They do
 not measure elevation error. Survey availability is false; DTM bias/RMSE,

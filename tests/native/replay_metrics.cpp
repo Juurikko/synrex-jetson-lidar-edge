@@ -150,6 +150,47 @@ void clocks() {
               elapsed_ns(begin, end) == static_cast<std::uint64_t>((end - begin).count()),
           "actual steady clock smoke");
 }
+void merge_histograms() {
+    LatencyHistogram first, second, reference;
+    // Unequal source populations: averaging per-source quantiles would turn
+    // the trial's p99 into a value absent from the actual population.
+    first.add_ns(10, 1000);
+    second.add_ns(1000000, 3);
+    reference.add_ns(10, 1000);
+    reference.add_ns(1000000, 3);
+    first.merge(second);
+    check(first.count() == reference.count() && first.sum_ns() == reference.sum_ns() &&
+              first.max_ns() == reference.max_ns(),
+          "merged exact accounting");
+    for (unsigned percent = 1; percent <= 100; ++percent)
+        check(first.percentile(percent)->lower_ns == reference.percentile(percent)->lower_ns &&
+                  first.percentile(percent)->upper_ns == reference.percentile(percent)->upper_ns,
+              "merged quantiles equal pooled population");
+    check(second.count() == 3 && second.sum_ns() == 3000000, "merging preserves source histogram");
+    LatencyHistogram empty;
+    first.merge(empty);
+    empty.merge(first);
+    check(empty.count() == first.count() && empty.sum_ns() == first.sum_ns(),
+          "empty merge identity");
+    second.merge(second);
+    check(second.count() == 6 && second.sum_ns() == 6000000, "self merge duplicates population");
+    const auto maximum = std::numeric_limits<std::uint64_t>::max();
+    LatencyHistogram count_limit, one;
+    count_limit.add_ns(0, maximum);
+    one.add_ns(0);
+    rejects<std::overflow_error>([&] { count_limit.merge(one); }, "latency sample count overflow");
+    check(count_limit.count() == maximum && count_limit.sum_ns() == 0 &&
+              count_limit.p99()->upper_ns == 0,
+          "merge count overflow is atomic");
+    LatencyHistogram sum_limit, positive;
+    sum_limit.add_ns(maximum);
+    positive.add_ns(1);
+    rejects<std::overflow_error>([&] { sum_limit.merge(positive); },
+                                 "latency nanosecond sum overflow");
+    check(sum_limit.count() == 1 && sum_limit.sum_ns() == maximum && sum_limit.max_ns() == maximum,
+          "merge sum overflow is atomic");
+    contains(*sum_limit.p99(), maximum);
+}
 volatile std::uint64_t sink{};
 void benchmark() {
     constexpr std::uint64_t iterations = 1000000;
@@ -207,6 +248,7 @@ int main(int argc, char **argv) {
         } else {
             check(argc == 1, "usage: replay-metrics-tests [--benchmark]");
             histogram();
+            merge_histograms();
             clocks();
             std::cout << "replay_metrics=PASS checks=" << checks << '\n';
         }

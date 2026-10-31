@@ -2,9 +2,11 @@
 <!-- Copyright (c) 2026 Tuomas Pietilä -->
 # Manifest replay timing
 
-The manifest CLI reports fixed-memory latency histograms **per source**. These
-are measurements at named process-local boundaries, with no aggregate trial
-quantile or physical capture-age verdict. All durations use the measuring
+The manifest CLI reports fixed-memory latency histograms **per source** and in
+`trial_timings` for the whole attempted trial. Trial histograms merge the actual
+sample bins with the same population, weighting and process-local boundary;
+they never average per-source quantiles. Failed sources contribute their measured
+partial populations, while unattempted sources contribute no samples. All durations use the measuring
 process's `steady_clock`; serialized source GPS and synthetic replay timestamps
 are never subtracted from a host clock.
 
@@ -13,7 +15,9 @@ without a sample array. Nearest-rank p50/p95/p99 are intervals containing the
 sample quantile. Values below 128 ns are exact; wider intervals have width at
 most their lower endpoint divided by 64. Use the upper endpoint for conservative
 comparisons. Empty populations have null quantiles/maximum. Counter or sum
-overflow fails the trial before mutating that histogram.
+overflow fails the trial before mutating that histogram, including when merging
+source populations into a trial histogram. Histogram storage is fixed per metric;
+the source receipt list still grows with the admitted source count.
 
 The sender measures decoded windows (`Reader::next`, excluding open/hash and
 EOF verification), frame assembly plus exact source validation, dispatch lag,
@@ -42,10 +46,16 @@ window. Source decode is excluded from those two intervals. Its terminal
 acknowledgment and source/coverage receipts establish success separately.
 
 Partial measurements and verified counters remain visible on failure; no failed
-trial becomes a passing throughput result. Linux process peak RSS is the whole
+trial becomes a passing throughput result. Execution duration, anchored producer
+duration, completed frame counts and sender decode/dispatch timing survive faults.
+`actual_sender_rate_pps` divides emitted input points by the same reported anchored
+producer duration, including a failed prefix; it proves neither classified output
+success nor capacity. A full bounded decode queue applies backpressure and can drain
+successfully; cancellation and decoder faults discard queued windows, join the
+producer and retain a failed trial. Linux process peak RSS is the whole
 process lifetime `ru_maxrss` (KiB converted to bytes), including admission and
 startup. It is distinct from device memory. Missing power/capture provenance
 remains null. `instrumentation_overhead` stays
 `NOT_MEASURED_FOR_ACTUAL_PIPELINE`: the standalone helper CPU fixture reports
-only its own measurement overhead. Finite replay capacity and trial-wide timing
+only its own measurement overhead. Finite replay capacity and timing target
 qualification still require the admitted real workload and GPU evidence.

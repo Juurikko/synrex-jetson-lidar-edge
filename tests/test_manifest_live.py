@@ -23,7 +23,7 @@ def arguments(mode, model, receipt, port_number, manifest_path, rate=1000000, wi
 
 
 def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="binary-v3",
-             raw_bits=False):
+             raw_bits=False, queue_frames=2):
     model = package(tmp_path, count)
     other_model = package(tmp_path, count, changed=True) if failure == "taxonomy" else model
     paths = [tmp_path / f"source-{i}.laz" for i in range(sources)]
@@ -65,6 +65,7 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="bin
                 continue
             command = arguments(mode, model_path, tmp_path / f"{mode}.json", port_number,
                                 manifest_path, rate, wire)
+            command[command.index("--queue-frames") + 1] = str(queue_frames)
             if mode == "subscribe" and failure == "output-map":
                 command[command.index("--map-cells") + 1] = "1"
             children[mode] = subprocess.Popen(

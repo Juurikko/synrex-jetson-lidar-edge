@@ -46,6 +46,24 @@ Json latency(const replay::LatencyHistogram &histogram, const std::string &popul
             {"bin_width", "exact below128ns; otherwise width<=lower_ns/64"},
             {"storage_bytes", sizeof(histogram)}};
 }
+struct TrialMeasurement {
+    replay::LatencyHistogram histogram;
+    std::string population, boundary;
+};
+using TrialTimings = std::map<std::string, TrialMeasurement>;
+Json record_latency(TrialTimings &trial, const std::string &name,
+                    const replay::LatencyHistogram &histogram, const std::string &population,
+                    const std::string &boundary) {
+    auto &measurement = trial[name];
+    if (measurement.population.empty()) {
+        measurement.population = population;
+        measurement.boundary = boundary;
+    }
+    require(measurement.population == population && measurement.boundary == boundary,
+            "trial latency population/boundary mismatch");
+    measurement.histogram.merge(histogram);
+    return latency(histogram, population, boundary);
+}
 struct Args {
     std::string mode;
     std::map<std::string, std::string> values;
@@ -151,6 +169,7 @@ Json source_row(const replay::Catalog &catalog, std::size_t index) {
             {"emitted_records", 0},
             {"independently_validated_records", 0},
             {"subscriber_snapshot_acknowledged_records", 0},
+            {"frames", 0},
             {"status", "FAIL"}};
 }
 void preflight(const replay::Catalog &catalog, WireProtocol protocol) {
@@ -184,7 +203,7 @@ void wait_until(Clock::time_point due) {
 }
 void send_source(const Config &config, const CpuAdmittedPackage &admitted,
                  const replay::Catalog &catalog, std::size_t index, Clock::time_point &anchor,
-                 bool &anchored, Json &row) {
+                 bool &anchored, Json &row, TrialTimings &trial) {
     auto socket = wire::connect_loopback(config.port);
     PeerTransport transport(config.protocol, socket.fd(), admitted, config.limits,
                             config.args.get("--session"), config.epoch + index);
@@ -203,22 +222,26 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
     const auto report_timing = [&] {
         row["timings"] = {
             {"decode_window",
-             latency(
-                 decode_windows, "decoded windows",
+             record_latency(
+                 trial, "decode_window", decode_windows, "decoded windows",
                  "Reader::next only; excludes source open/hash, EOF verification and queue wait")},
             {"assembly_and_validation",
-             latency(assembly, "assembled frames",
-                     "make_frame plus exact coverage validation before pacing")},
+             record_latency(trial, "assembly_and_validation", assembly, "assembled frames",
+                            "make_frame plus exact coverage validation before pacing")},
             {"frame_send",
-             latency(sending, "successfully emitted frames",
-                     "send_frame serialization and socket write; no peer output acknowledgment")},
-            {"sender_scheduling_lag", latency(lag, "frame dispatch attempts",
-                                              "same sender steady clock: actual dispatch minus "
-                                              "scheduled frame release, clamped at zero")},
+             record_latency(
+                 trial, "frame_send", sending, "successfully emitted frames",
+                 "send_frame serialization and socket write; no peer output acknowledgment")},
+            {"sender_scheduling_lag",
+             record_latency(trial, "sender_scheduling_lag", lag, "frame dispatch attempts",
+                            "same sender steady clock: actual dispatch minus "
+                            "scheduled frame release, clamped at zero")},
             {"synthetic_accumulation",
-             latency(accumulation, "successfully emitted source points",
-                     "scheduled end-exclusive frame release minus synthetic point timestamp; no "
-                     "physical acquisition claim")}};
+             record_latency(
+                 trial, "synthetic_accumulation", accumulation,
+                 "successfully emitted source points",
+                 "scheduled end-exclusive frame release minus synthetic point timestamp; no "
+                 "physical acquisition claim")}};
     };
     const auto decode_start = Clock::now();
     std::thread producer([&] {
@@ -268,6 +291,7 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
             lag.add_ns(replay::scheduling_lag_ns(due, before_send));
             transport.send_frame(frame, config.deadline());
             ++sequence;
+            row["frames"] = sequence;
             sent += frame.points.size();
             row["emitted_records"] = sent;
             sending.add_ns(replay::elapsed_ns(before_send, Clock::now()));
@@ -286,6 +310,9 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
         row["decoder"] = decode;
         row["decode_queue"] = queue.stats().json();
         row["coverage"] = coverage.receipt();
+        row["decode_and_dispatch_seconds"] = seconds(decode_start);
+        row["maximum_sender_scheduling_lag_seconds"] =
+            lag.max_ns() ? Json(*lag.max_ns() / 1e9) : Json(nullptr);
         report_timing();
         throw;
     }
@@ -299,7 +326,7 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
 }
 void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
                     const replay::Catalog &catalog, std::size_t index, wire::Socket &input_listener,
-                    wire::Socket &output_listener, Json &row) {
+                    wire::Socket &output_listener, Json &row, TrialTimings &trial) {
     auto input_socket = wire::accept(input_listener, config.io_ms);
     auto output_socket = wire::accept(output_listener, config.io_ms);
     AuthorityTransport input(config.protocol, input_socket.fd(), admitted, config.limits,
@@ -318,14 +345,17 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     replay::LatencyHistogram ingress, service;
     const auto report_timing = [&] {
         row["timings"] = {
-            {"frame_ingress", latency(ingress, "received frames",
-                                      "same receiver steady clock: receive_frame wait, socket read "
-                                      "and codec validation")},
+            {"frame_ingress",
+             record_latency(trial, "frame_ingress", ingress, "received frames",
+                            "same receiver steady clock: receive_frame wait, socket read "
+                            "and codec validation")},
             {"receiver_service",
-             latency(service, "successfully emitted points, weighted by frame point count",
-                     "same receiver steady clock: after receive_frame validation through coverage, "
-                     "inference, map, serialization and output socket write; excludes "
-                     "accumulation, ingress wait and subscriber validation")}};
+             record_latency(
+                 trial, "receiver_service", service,
+                 "successfully emitted points, weighted by frame point count",
+                 "same receiver steady clock: after receive_frame validation through coverage, "
+                 "inference, map, serialization and output socket write; excludes "
+                 "accumulation, ingress wait and subscriber validation")}};
     };
     try {
         while (records < source.records) {
@@ -336,6 +366,7 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
             coverage.accept_frame(frame);
             records += frame.points.size();
             ++frames;
+            row["frames"] = frames;
             row["accepted_records"] = records;
             auto result = session->run(std::move(frame));
             row["freshly_classified_records"] = records;
@@ -360,7 +391,8 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     report_timing();
 }
 void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
-                      const replay::Catalog &catalog, std::size_t index, Json &row) {
+                      const replay::Catalog &catalog, std::size_t index, Json &row,
+                      TrialTimings &trial) {
     // This is a second independent decode, bounded to one expected window. It
     // checks source attributes as well as the descriptor/map transcript.
     replay::Reader expected(catalog, index, config.frames.window_points);
@@ -377,14 +409,17 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
     std::uint64_t records{}, frames{};
     replay::LatencyHistogram receive_map, source_validation;
     const auto report_timing = [&] {
-        row["timings"] = {{"classification_receive_and_map",
-                           latency(receive_map, "received classifications",
-                                   "same subscriber steady clock: classification socket wait/read, "
-                                   "codec and independent map validation")},
-                          {"source_attribute_validation",
-                           latency(source_validation, "independently validated frames",
-                                   "coverage and attributes against independent Reader window; "
-                                   "excludes independent source decode")}};
+        row["timings"] = {
+            {"classification_receive_and_map",
+             record_latency(trial, "classification_receive_and_map", receive_map,
+                            "received classifications",
+                            "same subscriber steady clock: classification socket wait/read, "
+                            "codec and independent map validation")},
+            {"source_attribute_validation",
+             record_latency(trial, "source_attribute_validation", source_validation,
+                            "independently validated frames",
+                            "coverage and attributes against independent Reader window; "
+                            "excludes independent source decode")}};
     };
     try {
         while (expected.next(window)) {
@@ -397,6 +432,7 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
             records += result.frame.points.size();
             row["independently_validated_records"] = records;
             ++frames;
+            row["frames"] = frames;
             source_validation.add_ns(replay::elapsed_ns(after_receive, Clock::now()));
         }
         expected.finish();
@@ -430,6 +466,10 @@ int replay_main(int argc, char **argv) {
                   "not raw GPS; original integer/scale/GPS roundtrip NOT_SUPPORTED"}};
     fs::path receipt_path;
     const auto start = Clock::now();
+    std::optional<Clock::time_point> execution_start;
+    Clock::time_point anchor{};
+    bool anchored{};
+    TrialTimings trial;
     try {
         interrupted = 0;
         const Args args(argc, argv);
@@ -484,13 +524,13 @@ int replay_main(int argc, char **argv) {
               "window; frame/codec/socket/decoder buffers are additional"},
              {"warmup_records", 0}});
         receipt["timing_population"] =
-            "per source only; no aggregate trial quantile or physical capture-age verdict";
+            "trial_timings merges the same measured populations across attempted sources, "
+            "including partial failures; sources[].timings retains per-source histograms; "
+            "no physical capture-age verdict";
         receipt["instrumentation_overhead"] = "NOT_MEASURED_FOR_ACTUAL_PIPELINE";
         std::signal(SIGINT, interrupt);
         std::signal(SIGTERM, interrupt);
-        const auto execution_start = Clock::now();
-        Clock::time_point anchor{};
-        bool anchored{};
+        execution_start = Clock::now();
         auto input_listener =
             args.mode == "receive" ? wire::listen_loopback(config.port) : wire::Socket{};
         auto output_listener =
@@ -503,12 +543,12 @@ int replay_main(int argc, char **argv) {
             const auto source_start = Clock::now();
             try {
                 if (args.mode == "send")
-                    send_source(config, admitted, catalog, index, anchor, anchored, row);
+                    send_source(config, admitted, catalog, index, anchor, anchored, row, trial);
                 else if (args.mode == "receive")
                     receive_source(config, admitted, catalog, index, input_listener,
-                                   output_listener, row);
+                                   output_listener, row, trial);
                 else
-                    subscribe_source(config, admitted, catalog, index, row);
+                    subscribe_source(config, admitted, catalog, index, row, trial);
                 active();
                 row["status"] = "PASS";
             } catch (const std::exception &error) {
@@ -518,16 +558,20 @@ int replay_main(int argc, char **argv) {
             receipt["sources"].push_back(row);
             require(row.at("status") == "PASS", "manifest source failed; see source receipt");
         }
-        receipt["execution_seconds"] = seconds(execution_start);
-        if (anchored) {
-            receipt["producer_elapsed_seconds"] = seconds(anchor);
-            receipt["actual_sender_rate_pps"] = catalog.total_records() / seconds(anchor);
-        }
         receipt["status"] = "PASS";
     } catch (const std::exception &error) {
         receipt["error"] = error.what();
     }
-    receipt["elapsed_seconds"] = seconds(start);
+    const auto end = Clock::now();
+    receipt["elapsed_seconds"] = replay::elapsed_ns(start, end) / 1e9;
+    if (execution_start)
+        receipt["execution_seconds"] = replay::elapsed_ns(*execution_start, end) / 1e9;
+    if (anchored)
+        receipt["producer_elapsed_seconds"] = replay::elapsed_ns(anchor, end) / 1e9;
+    receipt["trial_timings"] = Json::object();
+    for (const auto &[name, measurement] : trial)
+        receipt["trial_timings"][name] =
+            latency(measurement.histogram, measurement.population, measurement.boundary);
     rusage usage{};
     receipt["process_peak_rss_bytes"] =
         getrusage(RUSAGE_SELF, &usage) == 0 && usage.ru_maxrss >= 0 &&
@@ -543,6 +587,13 @@ int replay_main(int argc, char **argv) {
         for (const auto &row : receipt.at("sources"))
             total += row.at(name).get<std::uint64_t>();
         receipt[name] = total;
+    }
+    if (anchored) {
+        receipt["actual_sender_rate_pps"] = receipt.at("emitted_records").get<std::uint64_t>() /
+                                            receipt.at("producer_elapsed_seconds").get<double>();
+        receipt["actual_sender_rate_scope"] =
+            "emitted input points per anchored sender second, including failed prefixes; "
+            "not a capacity or output success verdict";
     }
     if (receipt.contains("declared_records")) {
         const auto declared = receipt.at("declared_records").get<std::uint64_t>();

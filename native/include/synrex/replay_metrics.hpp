@@ -62,6 +62,20 @@ class LatencyHistogram final {
         sum_ns_ += ns * occurrences;
         max_ns_ = std::max(max_ns_, ns);
     }
+    // Merge sample populations, never their reported quantile endpoints. The
+    // count bound also proves every resulting bin fits. Check both bounds
+    // before changing any state so failed trial aggregation remains explicit.
+    void merge(const LatencyHistogram &other) {
+        if (other.count_ > maximum - count_)
+            throw std::overflow_error("latency sample count overflow");
+        if (other.sum_ns_ > maximum - sum_ns_)
+            throw std::overflow_error("latency nanosecond sum overflow");
+        for (std::size_t bin = 0; bin < bins_.size(); ++bin)
+            bins_[bin] += other.bins_[bin];
+        count_ += other.count_;
+        sum_ns_ += other.sum_ns_;
+        max_ns_ = std::max(max_ns_, other.max_ns_);
+    }
     std::uint64_t count() const { return count_; }
     std::uint64_t sum_ns() const { return sum_ns_; }
     std::optional<std::uint64_t> max_ns() const {

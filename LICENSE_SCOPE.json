@@ -219,7 +219,11 @@
       "tests/native/replay_metrics.cpp",
       "tests/test_manifest_metrics.py",
       "tests/test_runtime_comparison.py",
-      "tools/runtime_comparison.py"
+      "tools/runtime_comparison.py",
+      "tools/runtime_uncertainty.py",
+      "tests/test_runtime_uncertainty.py",
+      "tools/runtime_quality.py",
+      "tests/test_runtime_quality.py"
     ],
     "license": "MIT"
   },
@@ -321,7 +325,9 @@
       "media/PERSONAL_CREDITS.md",
       "docs/byom/SOURCE_FIDELITY.md",
       "docs/streaming/REPLAY_TIMING.md",
-      "docs/runtime_comparison.md"
+      "docs/runtime_comparison.md",
+      "docs/runtime_uncertainty.md",
+      "docs/streaming/QUALITY_EVALUATION.md"
     ],
     "license": "CC-BY-4.0"
   },
