@@ -4,6 +4,7 @@
 #include "synrex/benchmark.hpp"
 #include "synrex/export.hpp"
 #include "synrex/map_oracle.hpp"
+#include "synrex/process_memory.hpp"
 #include "synrex/transport.hpp"
 #include <algorithm>
 #include <atomic>
@@ -49,7 +50,7 @@ std::uint64_t current_rss() {
     std::ifstream f("/proc/self/statm");
     std::uint64_t total, resident;
     require(bool(f >> total >> resident), "RSS current");
-    return resident * sysconf(_SC_PAGESIZE);
+    return checked_rss_bytes(resident, sysconf(_SC_PAGESIZE));
 }
 struct Args {
     std::map<std::string, std::string> a;
@@ -88,6 +89,14 @@ struct Args {
         return x;
     }
 };
+w::LegacyLiveLimits live_limits(const Args &a) {
+    w::LegacyLiveLimits limits;
+    limits.map_cells = a.n("--map-cells", w::max_legacy_map_cells, UINT64_MAX);
+    limits.points = a.n("--points", 16384, 65536);
+    limits.rate = a.n("--rate", 1000000, 20000000);
+    limits.validate();
+    return limits;
+}
 struct Replay {
     std::vector<Point> corpus;
     std::size_t count;
@@ -97,7 +106,7 @@ struct Replay {
         : count(a.n("--points", 16384, 65536)), rate(a.n("--rate", 1000000, 20000000)),
           churn(a.n("--churn-mm", 0, 1000000)), sensor(a.get("--sensor", "replay")),
           stream(a.get("--stream", "r1")) {
-        Package p(a.get("--model"));
+        Package p(a.get("--model"), PackageUse::legacy_stream);
         taxonomy =
             p.contract.las_classes.size() == 7 ? "synrex.fractal7.v1" : "synrex.synthetic3.v1";
         corpus = decode(a.get("--source"), p.contract);
@@ -198,6 +207,7 @@ void producer(const Args &a, Json &r) {
          {"note", "External native TCP replay; not physical sensor latency or physical motion."}});
 }
 void receiver(const Args &a, Json &r) {
+    const auto limits = live_limits(a);
     const auto validation_mode = a.get("--validation-mode", "decoded");
     require(validation_mode == "reference" || validation_mode == "decoded",
             "unknown validation strategy");
@@ -206,7 +216,7 @@ void receiver(const Args &a, Json &r) {
     SessionOptions options;
     options.geometry = geometry_mode(a.get("--geometry", "direct"));
     options.timeline = true;
-    const auto count = a.n("--points", 16384, 65536), cells = a.n("--map-cells", 65536, 262144);
+    const auto count = limits.points, cells = limits.map_cells;
     auto session = create_session(a.get("--model"), count, options);
     r["initialization_seconds"] = (steady_ns() - start) / 1e9;
     const auto model_manifest_sha256 = session->identity().at("manifest_sha256").get<std::string>();
@@ -222,7 +232,7 @@ void receiver(const Args &a, Json &r) {
     };
     Queue<Delivery> deliveries(2);
     std::atomic<std::uint64_t> delivered{0}, failed{0}, delivered_points{0}, failed_points{0};
-    std::atomic<bool> output_dead{false};
+    std::atomic<bool> output_dead{false}, snapshot_delivered{false};
     std::string output_error;
     std::thread writer([&] {
         try {
@@ -234,6 +244,8 @@ void receiver(const Args &a, Json &r) {
                 }
                 try {
                     w::send(subscriber, item->kind, item->bytes, 100);
+                    if (item->kind == w::Kind::snapshot)
+                        snapshot_delivered = true;
                     ++delivered;
                     delivered_points += item->points;
                 } catch (const std::exception &e) {
@@ -270,8 +282,7 @@ void receiver(const Args &a, Json &r) {
     SemanticMap map(1, cells, true);
     w::Sequence sequence;
     Hash input_hash, output_hash;
-    const auto rate = a.n("--rate", 1000000, 20000000);
-    require(count && rate >= count, "receiver rate/count");
+    const auto rate = limits.rate;
     const auto warm = (a.n("--warmup", a.a.count("--rate") ? 5 : 0, 30) * rate + count - 1) / count;
     std::uint64_t frames = 0, points = 0, measured_points = 0, updates = 0, executions = 0,
                   asof = 0, first = 0, last = 0, measured_updates = 0;
@@ -476,8 +487,10 @@ void receiver(const Args &a, Json &r) {
                             {"complete_point_records_sent", delivered_points.load()},
                             {"failed_point_deliveries", failed_points.load()},
                             {"error", output_error},
+                            {"required_snapshot_sent", snapshot_delivered.load()},
+                            {"validation_scope", "socket sends; independent subscriber validation"},
                             {"queue", deliveries.stats()}};
-    if (output_dead || failed)
+    if (output_dead || failed || !snapshot_delivered)
         r["status"] = "FAIL";
     r["failure_phase"] = r["status"] == "PASS" ? "none" : measured_points ? "measured" : "warmup";
     r["stop_reason"] = r["status"] == "PASS" ? ""
@@ -488,6 +501,8 @@ void receiver(const Args &a, Json &r) {
     r["resources_after_service_before_destruction"] = session_resources();
 }
 void subscriber(const Args &a, Json &r) {
+    const auto limits = live_limits(a);
+    const Package package(a.get("--model"), PackageUse::legacy_stream);
     const auto validation_mode = a.get("--validation-mode", "decoded");
     require(validation_mode == "reference" || validation_mode == "decoded",
             "unknown validation strategy");
@@ -500,13 +515,13 @@ void subscriber(const Args &a, Json &r) {
     if (a.a.count("--export-bundle"))
         exporter = std::make_unique<AsyncLazExport>(a.get("--source"), a.get("--model"),
                                                     a.get("--taxonomy"), a.get("--export-bundle"));
-    MapOracle oracle(a.n("--map-cells", 65536, 262144));
+    MapOracle oracle(limits.map_cells);
     auto sock = w::connect_loopback(a.n("--output-port", 39182, 65535));
     std::cout << "subscriber_ready=1" << std::endl;
     const auto stall = a.n("--stall-ms", 0, 60000);
     if (stall)
         std::this_thread::sleep_for(std::chrono::milliseconds(stall));
-    const auto expected_model_hash = sha256(fs::path(a.get("--model")) / "manifest.json");
+    const auto &expected_model_hash = package.manifest_sha256;
     Hash input_hash, output_hash;
     std::uint64_t frames = 0, points = 0, updates = 0, executions = 0, last_asof = 0;
     w::Sequence sequence;
@@ -538,6 +553,9 @@ void subscriber(const Args &a, Json &r) {
             require(!snapshot_seen, "duplicate snapshot");
             snapshot = w::json(message->second);
             require(snapshot == oracle.snapshot(last_asof), "subscriber full snapshot parity");
+            Hash snapshot_hash;
+            snapshot_hash.add(message->second);
+            r["map_snapshot_sha256"] = snapshot_hash.finish();
             snapshot_seen = true;
             continue;
         }
@@ -596,9 +614,12 @@ void subscriber(const Args &a, Json &r) {
     }
     if (exporter)
         r["async_laz_export"] = exporter->finish();
-    require(end_seen && snapshot_seen && r["receiver"]["output_points"] == points &&
+    require(end_seen && snapshot_seen && frames > 0 && points > 0 && executions > 0 &&
+                r["receiver"]["output_points"] == points &&
                 r["receiver"]["received_frames"] == frames,
             "subscriber complete output coverage");
+    require(r["map_snapshot_sha256"] == r["receiver"]["map_snapshot_sha256"],
+            "subscriber/receiver full snapshot digest parity");
     if (replay)
         require(frames == replay->total && points == replay->total * replay->count,
                 "subscriber expected replay coverage");
@@ -613,6 +634,7 @@ void subscriber(const Args &a, Json &r) {
               {"source_to_subscriber", latency.json()},
               {"receive_to_subscriber", receive_latency.json()},
               {"map_oracle", "PASS"},
+              {"required_snapshot_validated", true},
               {"validation_mode", validation_mode},
               {"cpu_stage_seconds", cpu_stages},
               {"peak_rss_bytes", rss()},

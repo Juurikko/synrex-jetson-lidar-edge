@@ -39,11 +39,21 @@ def run(*args: str) -> str:
 
 
 def files() -> list[Path]:
+    # Git inventory bounds traversal even when external build trees/caches are present.
+    # Include new candidates during local review, while honoring repository ignores.
+    names = subprocess.check_output(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT
+    ).decode().split("\0")
     return sorted(
-        p
-        for p in ROOT.rglob("*")
-        if p.is_file()
-        and not any(x in IGNORE or x.startswith("build") for x in p.relative_to(ROOT).parts)
+        ROOT / name
+        for name in set(names)
+        if name
+        and (ROOT / name).is_file()
+        and not (ROOT / name).is_symlink()
+        and not any(
+            part in IGNORE or part.startswith("build") or part == "archive"
+            for part in Path(name).parts
+        )
     )
 
 
@@ -100,7 +110,9 @@ def origin(path: str) -> tuple[str, str]:
     )
 
 
-def check(history: bool, check_only: bool) -> dict:
+def check(
+    history: bool, check_only: bool, dependency_locks: list[Path] | None = None
+) -> dict:
     selected = files()
     hits = {str(p.relative_to(ROOT)): findings(p.read_bytes()) for p in selected}
     hits = {name: rules for name, rules in hits.items() if rules}
@@ -146,8 +158,11 @@ def check(history: bool, check_only: bool) -> dict:
     for name, record in json.loads((ROOT / "evidence/media_manifest.json").read_text()).items():
         assert hashlib.sha256((ROOT / "media" / name).read_bytes()).hexdigest() == record["sha256"]
     dependency_licenses = {}
-    locks = [ROOT / "requirements-dev.lock", ROOT / "requirements-byom.lock"]
+    locks = dependency_locks or [ROOT / "requirements-dev.lock", ROOT / "requirements-byom.lock"]
     for line in [line for lock in locks for line in lock.read_text().splitlines()]:
+        line = line.partition("#")[0].strip()
+        if not line:
+            continue
         name, version = line.split("==")
         dist = metadata.distribution(name)
         assert dist.version == version
@@ -177,6 +192,8 @@ def check(history: bool, check_only: bool) -> dict:
         "forbidden_data_model_extensions": "NONE",
         "history": "Use --history --check-only after the single initial commit; no public remote",
         "tracked_candidate_files": len(selected),
+        "inventory_scope": "maintained Git candidates; historical archive excluded",
+        "dependency_locks": [lock.name for lock in locks],
     }
     scope = json.loads((ROOT / "LICENSE_SCOPE.json").read_text())
     assert scope["developer"] == scope["project_lead"] == "Tuomas Pietilä"
@@ -270,5 +287,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--history", action="store_true")
     parser.add_argument("--check-only", action="store_true")
+    parser.add_argument(
+        "--dependency-lock",
+        action="append",
+        type=Path,
+        help="Verify this lock (repeatable); defaults to historical development/BYOM locks",
+    )
     args = parser.parse_args()
-    print(json.dumps(check(args.history, args.check_only), indent=2))
+    print(json.dumps(check(args.history, args.check_only, args.dependency_lock), indent=2))

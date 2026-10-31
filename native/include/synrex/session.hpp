@@ -30,7 +30,10 @@ class InferenceSession {
                               const fs::path &tensor_trace = {}) = 0;
 };
 Json session_resources(); // Owned tracked CUDA and pinned-host lifetimes; excludes driver/vendor caches.
-// Loads and validates a package once. No ONNX compilation or Python execution in this path.
+// Legacy streaming factory: loads/validates the retained package with PackageUse::legacy_stream
+// before any GPU resource construction. Explicit v3 packages require a separate generic factory
+// and descriptor/readiness state path; this path-only API cannot waive that boundary.
+// No ONNX compilation or Python execution in this path.
 std::unique_ptr<InferenceSession> create_session(const fs::path &package,
                                                 std::size_t max_window_points,
                                                 const SessionOptions &options = {});
