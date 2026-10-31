@@ -23,15 +23,18 @@ def arguments(mode, model, receipt, port_number, manifest_path, rate=1000000, wi
 
 
 def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="binary-v3",
-             raw_bits=False, queue_frames=2):
-    model = package(tmp_path, count)
+             raw_bits=False, queue_frames=2, timing="enabled", reuse_inputs=False,
+             receipt_dir=None):
+    receipt_dir = receipt_dir or tmp_path
+    model = tmp_path / "model" if reuse_inputs else package(tmp_path, count)
     other_model = package(tmp_path, count, changed=True) if failure == "taxonomy" else model
     paths = [tmp_path / f"source-{i}.laz" for i in range(sources)]
     counts = [23, 11][:sources]
     if failure == "cancel":
         counts[0] = 1001
     for index, (path, records) in enumerate(zip(paths, counts, strict=True)):
-        cloud(path, records, 6 + index, offsets=[1000.0 * index, -2000.0 * index, 12.5])
+        if not reuse_inputs:
+            cloud(path, records, 6 + index, offsets=[1000.0 * index, -2000.0 * index, 12.5])
     if raw_bits:
         import laspy
         import numpy as np
@@ -46,16 +49,17 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="bin
     if failure == "late-decode":
         cloud(paths[-1], counts[-1], 7, offsets=[1000000001.0, 0.0, 0.0])
     manifest_path = tmp_path / "manifest.json"
-    manifest(manifest_path, list(zip(paths, counts, strict=True)))
+    if not reuse_inputs:
+        manifest(manifest_path, list(zip(paths, counts, strict=True)))
     input_port, output_port = port(), port()
     while input_port == output_port:
         output_port = port()
     environment = dict(os.environ)
     if failure == "inference":
         environment["SYNREX_FIXTURE_RUN"] = "fail"
-    receive_args = arguments("receive", model, tmp_path / "receive.json", input_port,
+    receive_args = arguments("receive", model, receipt_dir / "receive.json", input_port,
                              manifest_path, rate, wire)
-    receive_args += ["--output-port", str(output_port)]
+    receive_args += ["--output-port", str(output_port), "--timing-instrumentation", timing]
     children = {"receive": start_receiver([str(FIXTURE), *receive_args], environment)}
     try:
         for mode, model_path, port_number in [
@@ -63,9 +67,10 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="bin
         ]:
             if mode == "subscribe" and failure == "missing-subscriber":
                 continue
-            command = arguments(mode, model_path, tmp_path / f"{mode}.json", port_number,
+            command = arguments(mode, model_path, receipt_dir / f"{mode}.json", port_number,
                                 manifest_path, rate, wire)
             command[command.index("--queue-frames") + 1] = str(queue_frames)
+            command += ["--timing-instrumentation", timing]
             if mode == "subscribe" and failure == "output-map":
                 command[command.index("--map-cells") + 1] = "1"
             children[mode] = subprocess.Popen(
@@ -205,6 +210,7 @@ def test_manifest_cli_missing_peer_and_active_decode_cancellation_fail(tmp_path,
 @pytest.mark.parametrize("key,value", [
     ("--queue-frames", "3"), ("--rate", "7"), ("--points", "0"),
     ("--wire", "binary-v2"), ("--map-cells", "65537"), ("--frame-bytes", "10"),
+    ("--timing-instrumentation", "maybe"),
     ("--export-bundle", "forbidden-export"), ("--source", "forbidden-source"),
 ])
 def test_manifest_cli_invalid_options_reject_before_manifest_package_or_gpu(tmp_path, key, value):

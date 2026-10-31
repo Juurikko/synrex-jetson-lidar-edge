@@ -223,7 +223,13 @@
       "tools/runtime_uncertainty.py",
       "tests/test_runtime_uncertainty.py",
       "tools/runtime_quality.py",
-      "tests/test_runtime_quality.py"
+      "tests/test_runtime_quality.py",
+      "tools/runtime_representation.py",
+      "tests/test_runtime_representation.py",
+      "tools/runtime_sealed_outputs.py",
+      "tests/test_runtime_sealed_outputs.py",
+      "tools/replay_overhead.py",
+      "tests/test_replay_overhead.py"
     ],
     "license": "MIT"
   },
@@ -327,7 +333,9 @@
       "docs/streaming/REPLAY_TIMING.md",
       "docs/runtime_comparison.md",
       "docs/runtime_uncertainty.md",
-      "docs/streaming/QUALITY_EVALUATION.md"
+      "docs/streaming/QUALITY_EVALUATION.md",
+      "docs/runtime_representation.md",
+      "docs/runtime_sealed_outputs.md"
     ],
     "license": "CC-BY-4.0"
   },

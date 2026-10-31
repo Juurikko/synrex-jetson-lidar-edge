@@ -7,6 +7,10 @@ It performs no inference, training, GPU scheduling or dataset copying. Its tests
 use synthetic CPU fixtures; they establish no trained-model or runtime result.
 Production adapters and measured Q0/Q1 outputs must be supplied separately.
 
+[Retained semantic-output rescoring](runtime_sealed_outputs.md) provides a bounded
+CPU adapter for sealed source-order semantic sidecars and raw LAS/LAZ truth. Its
+historical output checks remain distinct from current runtime/GPU qualification.
+
 ```sh
 python tools/runtime_comparison.py --spec frozen-comparison.json \
   --truth truth.jsonl --reference reference.jsonl --candidate candidate.jsonl \

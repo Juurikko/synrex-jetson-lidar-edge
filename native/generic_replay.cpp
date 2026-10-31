@@ -73,9 +73,10 @@ struct Args {
         require(mode == "send" || mode == "receive" || mode == "subscribe",
                 "unknown manifest replay command");
         const std::set<std::string> allowed{
-            "--wire",      "--model",        "--receipt",     "--manifest",   "--session",
-            "--epoch",     "--points",       "--rate",        "--port",       "--output-port",
-            "--map-cells", "--queue-frames", "--frame-bytes", "--startup-ms", "--io-ms"};
+            "--wire",        "--model",       "--receipt",   "--manifest",
+            "--session",     "--epoch",       "--points",    "--rate",
+            "--port",        "--output-port", "--map-cells", "--queue-frames",
+            "--frame-bytes", "--startup-ms",  "--io-ms",     "--timing-instrumentation"};
         for (int i = 2; i < argc; i += 2)
             require(i + 1 < argc && allowed.count(argv[i]) &&
                         values.emplace(argv[i], argv[i + 1]).second,
@@ -111,6 +112,7 @@ struct Config {
     const std::uint64_t epoch, io_ms;
     const std::uint16_t port, output_port;
     const std::size_t cells, queue_frames;
+    const bool timing_enabled;
     explicit Config(const Args &a)
         : args(a), protocol(a.get("--wire") == "binary-source-v1" ? WireProtocol::binary_source_v1
                                                                   : WireProtocol::binary_v3),
@@ -124,7 +126,11 @@ struct Config {
           port(a.number("--port", 39183, 65535)),
           output_port(a.mode == "receive" ? a.number("--output-port", 39184, 65535) : 0),
           cells(a.number("--map-cells", 65536, SemanticMap::max_cells)),
-          queue_frames(a.number("--queue-frames", 2, 2)) {
+          queue_frames(a.number("--queue-frames", 2, 2)),
+          timing_enabled(a.get("--timing-instrumentation", "enabled") == "enabled") {
+        require(a.get("--timing-instrumentation", "enabled") == "enabled" ||
+                    a.get("--timing-instrumentation", "enabled") == "disabled",
+                "timing-instrumentation requires enabled or disabled");
         require(a.get("--wire") == "binary-v3" || a.get("--wire") == "binary-source-v1",
                 "explicit --wire binary-v3 or binary-source-v1 required");
         limits.validate();
@@ -136,6 +142,9 @@ struct Config {
         require(frames.points_per_second >= frames.window_points,
                 "manifest window spans more than one synthetic replay second");
         require(a.mode != "receive" || port != output_port, "input/output ports must differ");
+    }
+    Clock::time_point timing_now() const {
+        return timing_enabled ? Clock::now() : Clock::time_point{};
     }
     Startup::Time deadline() const {
         active();
@@ -220,6 +229,10 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
     Json decode;
     replay::LatencyHistogram decode_windows, assembly, sending, lag, accumulation;
     const auto report_timing = [&] {
+        if (!config.timing_enabled) {
+            row["timings"] = nullptr;
+            return;
+        }
         row["timings"] = {
             {"decode_window",
              record_latency(
@@ -250,10 +263,11 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
             reader = std::make_unique<replay::Reader>(catalog, index, config.frames.window_points);
             replay::Window window;
             for (;;) {
-                const auto before_decode = Clock::now();
+                const auto before_decode = config.timing_now();
                 if (!reader->next(window))
                     break;
-                decode_windows.add_ns(replay::elapsed_ns(before_decode, Clock::now()));
+                if (config.timing_enabled)
+                    decode_windows.add_ns(replay::elapsed_ns(before_decode, config.timing_now()));
                 active();
                 queue.push(std::move(window));
             }
@@ -277,26 +291,30 @@ void send_source(const Config &config, const CpuAdmittedPackage &admitted,
         replay::Window window;
         while (queue.pop(window)) {
             active();
-            const auto before_assembly = Clock::now();
+            const auto before_assembly = config.timing_now();
             auto frame = replay::make_frame(catalog, transport.descriptor(), config.frames, window,
                                             sequence);
             coverage.accept(window, frame);
-            assembly.add_ns(replay::elapsed_ns(before_assembly, Clock::now()));
+            if (config.timing_enabled)
+                assembly.add_ns(replay::elapsed_ns(before_assembly, config.timing_now()));
             const auto after_last = frame.points.back().id + 1;
             const auto release_ns =
                 replay::synthetic_time_ns(after_last, config.frames.points_per_second);
             const auto due = anchor + std::chrono::nanoseconds(release_ns);
             wait_until(due);
-            const auto before_send = Clock::now();
-            lag.add_ns(replay::scheduling_lag_ns(due, before_send));
+            const auto before_send = config.timing_now();
+            if (config.timing_enabled)
+                lag.add_ns(replay::scheduling_lag_ns(due, before_send));
             transport.send_frame(frame, config.deadline());
             ++sequence;
             row["frames"] = sequence;
             sent += frame.points.size();
             row["emitted_records"] = sent;
-            sending.add_ns(replay::elapsed_ns(before_send, Clock::now()));
-            for (const auto &point : frame.points)
-                accumulation.add_ns(release_ns - point.timestamp_ns);
+            if (config.timing_enabled) {
+                sending.add_ns(replay::elapsed_ns(before_send, config.timing_now()));
+                for (const auto &point : frame.points)
+                    accumulation.add_ns(release_ns - point.timestamp_ns);
+            }
         }
         producer.join();
         coverage.source_eof();
@@ -344,6 +362,10 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     std::uint64_t records{}, frames{};
     replay::LatencyHistogram ingress, service;
     const auto report_timing = [&] {
+        if (!config.timing_enabled) {
+            row["timings"] = nullptr;
+            return;
+        }
         row["timings"] = {
             {"frame_ingress",
              record_latency(trial, "frame_ingress", ingress, "received frames",
@@ -359,10 +381,11 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
     };
     try {
         while (records < source.records) {
-            const auto before_read = Clock::now();
+            const auto before_read = config.timing_now();
             auto frame = input.receive_frame(config.deadline());
-            const auto after_read = Clock::now();
-            ingress.add_ns(replay::elapsed_ns(before_read, after_read));
+            const auto after_read = config.timing_now();
+            if (config.timing_enabled)
+                ingress.add_ns(replay::elapsed_ns(before_read, after_read));
             coverage.accept_frame(frame);
             records += frame.points.size();
             ++frames;
@@ -372,8 +395,9 @@ void receive_source(const Config &config, const CpuAdmittedPackage &admitted,
             row["freshly_classified_records"] = records;
             sender.send(result, config.deadline());
             row["emitted_records"] = records;
-            service.add_ns(replay::elapsed_ns(after_read, Clock::now()),
-                           result.frame.points.size());
+            if (config.timing_enabled)
+                service.add_ns(replay::elapsed_ns(after_read, config.timing_now()),
+                               result.frame.points.size());
         }
         coverage.source_eof();
         coverage.finish();
@@ -409,6 +433,10 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
     std::uint64_t records{}, frames{};
     replay::LatencyHistogram receive_map, source_validation;
     const auto report_timing = [&] {
+        if (!config.timing_enabled) {
+            row["timings"] = nullptr;
+            return;
+        }
         row["timings"] = {
             {"classification_receive_and_map",
              record_latency(trial, "classification_receive_and_map", receive_map,
@@ -423,17 +451,19 @@ void subscribe_source(const Config &config, const CpuAdmittedPackage &admitted,
     };
     try {
         while (expected.next(window)) {
-            const auto before_receive = Clock::now();
+            const auto before_receive = config.timing_now();
             const auto result = receiver.receive(config.deadline());
-            const auto after_receive = Clock::now();
-            receive_map.add_ns(replay::elapsed_ns(before_receive, after_receive));
+            const auto after_receive = config.timing_now();
+            if (config.timing_enabled)
+                receive_map.add_ns(replay::elapsed_ns(before_receive, after_receive));
             row["accepted_records"] = records + result.frame.points.size();
             coverage.accept(window, result.frame);
             records += result.frame.points.size();
             row["independently_validated_records"] = records;
             ++frames;
             row["frames"] = frames;
-            source_validation.add_ns(replay::elapsed_ns(after_receive, Clock::now()));
+            if (config.timing_enabled)
+                source_validation.add_ns(replay::elapsed_ns(after_receive, config.timing_now()));
         }
         expected.finish();
         coverage.source_eof();
@@ -477,6 +507,19 @@ int replay_main(int argc, char **argv) {
         new_path(receipt_path);
         const Config config(args);
         receipt["binary_wire"] = args.get("--wire");
+        receipt["timing_instrumentation"] = config.timing_enabled ? "enabled" : "disabled";
+        receipt["timing_availability"] = config.timing_enabled
+                                             ? "UNAVAILABLE_NO_SAMPLES"
+                                             : "UNAVAILABLE_INSTRUMENTATION_DISABLED";
+        receipt["timing_instrumentation_scope"] =
+            "optional replay latency histograms and their clock reads only; pacing, deadlines, "
+            "correctness counters, queue diagnostics, backend timing, whole-process wall/CPU/RSS "
+            "and per-source histogram storage remain in both modes";
+        receipt["replay_configuration"] = {{"window_points", config.frames.window_points},
+                                           {"points_per_second", config.frames.points_per_second},
+                                           {"map_cells", config.cells},
+                                           {"queue_frames", config.queue_frames},
+                                           {"io_timeout_ms", config.io_ms}};
         if (config.protocol == WireProtocol::binary_source_v1)
             receipt["source_timestamp_transport"] =
                 "synrex.las14.source_attributes.v1: exact public header, integer xyz, raw GPS "
@@ -572,9 +615,23 @@ int replay_main(int argc, char **argv) {
     for (const auto &[name, measurement] : trial)
         receipt["trial_timings"][name] =
             latency(measurement.histogram, measurement.population, measurement.boundary);
+    if (receipt.value("timing_instrumentation", "") == "enabled" &&
+        std::any_of(trial.begin(), trial.end(),
+                    [](const auto &entry) { return entry.second.histogram.count() > 0; }))
+        receipt["timing_availability"] = "MEASURED";
     rusage usage{};
+    const bool have_usage = getrusage(RUSAGE_SELF, &usage) == 0;
+    const auto cpu_seconds = [have_usage](const timeval &value) -> Json {
+        return have_usage && value.tv_sec >= 0 && value.tv_usec >= 0 && value.tv_usec < 1000000
+                   ? Json(static_cast<double>(value.tv_sec) + value.tv_usec / 1e6)
+                   : Json(nullptr);
+    };
+    receipt["process_user_cpu_seconds"] = cpu_seconds(usage.ru_utime);
+    receipt["process_system_cpu_seconds"] = cpu_seconds(usage.ru_stime);
+    receipt["process_cpu_scope"] =
+        "getrusage RUSAGE_SELF; whole process lifetime including admission, excluding children";
     receipt["process_peak_rss_bytes"] =
-        getrusage(RUSAGE_SELF, &usage) == 0 && usage.ru_maxrss >= 0 &&
+        have_usage && usage.ru_maxrss >= 0 &&
                 static_cast<std::uint64_t>(usage.ru_maxrss) <= UINT64_MAX / 1024
             ? Json(static_cast<std::uint64_t>(usage.ru_maxrss) * 1024)
             : Json(nullptr);
