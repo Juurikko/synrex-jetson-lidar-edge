@@ -111,7 +111,8 @@ Startup::Time deadline(Startup::Time start, std::chrono::milliseconds duration) 
     return start + duration;
 }
 } // namespace
-CpuAdmittedPackage::CpuAdmittedPackage(const fs::path &path) : package_(path, PackageUse::file) {}
+CpuAdmittedPackage::CpuAdmittedPackage(const fs::path &path)
+    : package_(std::make_shared<const EngineArtifact>(path, PackageUse::file)) {}
 void Limits::validate() const {
     check(max_frame_points >= 1 && max_frame_points <= 20000000, "frame point limit");
     check(max_frame_bytes >= 1 && max_frame_bytes <= 16777216, "frame byte limit");
@@ -170,7 +171,7 @@ Descriptor Descriptor::parse(std::string_view bytes) {
 Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Limits &limits,
                                     const std::string &session_id, std::uint64_t map_epoch) {
     limits.validate();
-    const auto &package = admitted.package_;
+    const auto &package = *admitted.package_;
     // This object was privately constructed by the actual Package CPU reader;
     // no caller may provide, replace or mutate its raw or derived fields.
     const auto manifest = strict_json(package.manifest_bytes(), 1048576);

@@ -2,6 +2,8 @@
 // Copyright (c) 2026 Tuomas Pietilä
 // Real CPU sockets; synthetic model bytes are opaque and never executed.
 #include "synrex/generic_transport.hpp"
+#include "generic_fixture_backend.hpp"
+#include "synrex/generic_session.hpp"
 #include <arpa/inet.h>
 #include <atomic>
 #include <fstream>
@@ -81,18 +83,23 @@ fs::path package_path(const fs::path &parent, const Json &base, const Json &tax)
         projection.push_back(entry.las_code);
     contract["las_classes"] = projection;
     contract["output"]["shape"][1] = admitted.classes().size();
-    write(path / "model.onnx", "Opaque CPU fixture: never executed");
+    write(path / "model.engine", "Opaque CPU fixture: never executed");
     write(path / "MODEL_LICENSE.txt", "MIT CPU fixture");
     write(path / "taxonomy.json", tax.dump());
     write(path / "manifest.json",
           Json{{"schema", "synrex.srxmodel.v3"},
                {"contract", contract},
                {"artifacts",
-                {{"onnx", {{"path", "model.onnx"}, {"sha256", sha256(path / "model.onnx")}}},
+                {{"engine", {{"path", "model.engine"}, {"sha256", sha256(path / "model.engine")}}},
                  {"license",
                   {{"path", "MODEL_LICENSE.txt"}, {"sha256", sha256(path / "MODEL_LICENSE.txt")}}},
                  {"taxonomy", {{"path", "taxonomy.json"}, {"sha256", admitted.sha256()}}}}},
-               {"target", nullptr}}
+               {"target",
+                {{"architecture", "CPU-test-only"},
+                 {"gpu_name", "NO GPU"},
+                 {"sm", 89},
+                 {"tensorrt", "10.test"},
+                 {"cuda_runtime", 12010}}}}
               .dump());
     return path;
 }
@@ -213,8 +220,8 @@ void successful(int authority_socket, int peer_socket, const CpuAdmittedPackage 
     });
     authority.metadata_admission();
     check(authority.initialization_permission(), "metadata admits initialization");
-    authority.begin_initialization();
-    authority.initialization_complete_and_wait_ready();
+    const auto initialized = authority.create_session();
+    check(bool(initialized), "factory-owned initialization completed before ready");
     remote.get();
     const auto &d = authority.descriptor();
     check(peer.descriptor().bytes() == d.bytes(), "same complete descriptor");
@@ -319,7 +326,7 @@ int main(int argc, char **argv) {
                                 (reorder ? "_order" : "_meaning"));
             }
         // No frame authorization at fresh/admitted/initializing stages.
-        for (unsigned stage = 0; stage < 3; ++stage) {
+        for (unsigned stage = 0; stage < 2; ++stage) {
             current_case = "early_frame";
             Sockets sockets;
             AuthorityTransport authority(v3, sockets.a, package, {}, session, 1);
@@ -329,16 +336,14 @@ int main(int argc, char **argv) {
                 authority.metadata_admission();
                 remote.get();
             }
-            if (stage == 2)
-                authority.begin_initialization();
             rejects([&] { authority.authorize_frame(std::string(64, '0'), session, 1, 1, 1); },
                     "before execution-ready");
             check(authority.failed(), "early frame poisons");
-            rejects([&] { authority.begin_initialization(); }, "permanently failed");
+            rejects([&] { authority.create_session(); }, "permanently failed");
             rejects([&] { peer.authorize_frame(std::string(64, '0'), session, 1, 1, 1); },
                     "before execution-ready");
         }
-        cases.push_back("no_frames_before_readiness_all_stages");
+        cases.push_back("no_frames_before_readiness_fresh_and_admitted");
         // Malformed/out-of-order envelopes rejected from the fixed header alone.
         for (const auto &fault :
              {"v2", "unknown_version", "reserved", "kind", "huge", "zero", "truncated_header",
@@ -440,8 +445,7 @@ int main(int argc, char **argv) {
                 if (name == "duplicate_admission")
                     rejects([&] { authority.metadata_admission(); }, "duplicate");
                 else {
-                    authority.begin_initialization();
-                    rejects([&] { authority.initialization_complete_and_wait_ready(); });
+                    rejects([&] { authority.create_session(); });
                 }
             }
             remote.get();
@@ -488,13 +492,16 @@ int main(int argc, char **argv) {
             cases.push_back("real_5second_fragmented_metadata_stall");
         }
         check(target_queries == 0, "no GPU target calls");
-        std::cout
-            << Json{{"status", "PASS_CPU_WIRE_V3_CONTROL_ONLY"}, {"checks", checks},
-                    {"expected_rejections", rejections},         {"cases", cases},
-                    {"gpu_target_calls", target_queries.load()}, {"gpu_initializations", 0},
-                    {"frame_codec_implemented", false},          {"service_integrated", false}}
-                   .dump()
-            << '\n';
+        std::cout << Json{{"status", "PASS_CPU_WIRE_V3_CONTROL_ONLY"},
+                          {"checks", checks},
+                          {"expected_rejections", rejections},
+                          {"cases", cases},
+                          {"gpu_target_calls", target_queries.load()},
+                          {"gpu_initializations", 0},
+                          {"frame_codec_exercised", false},
+                          {"service_exercised", false}}
+                         .dump()
+                  << '\n';
         return 0;
     } catch (const std::exception &error) {
         std::cerr << current_case << ": " << error.what() << '\n';

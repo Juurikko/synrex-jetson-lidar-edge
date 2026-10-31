@@ -7,8 +7,9 @@
 connected POSIX `SOCK_STREAM` socket. Callers explicitly select
 `WireProtocol::binary_v3`. This library is separate from legacy wire-v2: no legacy
 CLI, Service, endpoint or codec calls it, and it never falls back to wire-v2.
-It does not implement generic streaming classification, a frame codec, output
-propagation or GPU initialization. Those E2 requirements remain unqualified.
+The [generic runtime library](GENERIC_RUNTIME.md) now supplies the authority session
+factory, frame/output codecs and separate Service. CLI selection and frame socket
+I/O remain pending. Real generic GPU interchangeability remains **NOT_RUN**.
 
 Every message has a fixed 12-byte header followed by its UTF-8 JSON payload:
 
@@ -48,8 +49,11 @@ The exchange is:
 3. The peer rejects chosen values above its supported limits, reconstructs and
    validates the full expected descriptor, and sends the metadata ACK immediately.
 4. The authority validates the ACK through its privately owned `Startup` gate.
-   Only then may `initialization_permission()` return true. The caller explicitly
-   reports initialization beginning and completion; the library performs no GPU work.
+   Only then may `initialization_permission()` return true. Authority
+   `create_session(options)` consumes this same gate and retained engine. It
+   validates engine kind/capacity before device construction, initializes the
+   backend and verifies the loaded contract, manifest, artifacts, target and
+   capacity. Public caller-asserted initialization completion is unavailable.
 5. After initialization completion the authority generates a fresh random 128-bit
    readiness challenge and sends execution-ready. The peer verifies its full
    descriptor, session and epoch binding and echoes that challenge in the ready ACK.
@@ -83,8 +87,11 @@ Malformed or out-of-order messages, duplicates at a receive gate, identity failu
 oversize lengths, EOF/truncation and timeouts permanently poison the connection.
 Failure shuts down the borrowed socket in both directions so blocked peers wake;
 the owner still closes it. Recovery requires a new connection and startup object.
-Methods are single-owner and are not thread safe. Keep the admitted package alive
-through metadata admission. The socket is neither reconfigured nor closed here.
+Methods are single-owner and are not thread safe. The connection retains the
+admitted artifact independently of the package wrapper. The borrowed socket must
+outlive all produced Sessions/Services and must not be reused during that lifetime.
+Do not call transport control methods concurrently with a produced Session/Service.
+The socket is neither reconfigured nor closed here.
 After readiness the library performs no receive loop, so inspecting unsolicited
 post-handshake controls belongs to the future frame decoder.
 
@@ -93,6 +100,7 @@ TCP loopback, a socketpair proxy that splits every write, K=2/4/non-FRACTAL 7/25
 metadata and semantic ID 255, actual limit negotiation, changed meanings/order with
 the same K/projection/ID, malformed/oversized/truncated envelopes, duplicate and
 out-of-order controls, frame authorization gates, startup stalls and an actual
-five-second fragmented metadata stall. A throwing `target_info` sentinel proves
-these opaque fixture model bytes are never passed to a GPU. The test establishes
-only this CPU control transport slice.
+five-second fragmented metadata stall. A test-only fake backend consumes opaque engine bytes; a throwing `target_info`
+sentinel proves no GPU query occurs. The production factory is exercised with
+CPU fixtures, but that does not establish valid engine deserialization or neural
+inference. The test establishes the CPU control/factory contracts only.

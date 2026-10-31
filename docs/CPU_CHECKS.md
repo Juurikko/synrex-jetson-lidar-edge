@@ -39,8 +39,13 @@ CTest covers native package, geometry, stream and semantic-map/transport contrac
 including pathname replacement, same-inode mutation and invalid members.
 `generic_descriptor_startup` and `generic_control_transport` cover descriptor
 identity, negotiated limits, fragmented sockets and separate absolute admission
-and initialization deadlines. These probes never initialize a GPU; the control
-transport probe does not exercise a generic frame codec or Service.
+and initialization deadlines. `generic_binary_v3_codec` covers exact binary64
+source preservation, bounded hostile frame/output parsing and admitted taxonomy
+projection including K256/ID255. `generic_session_service` exercises the production
+factory, lifetime/failure cleanup and generic queues using a test-only opaque
+backend. The control transport also uses that test backend for factory-owned
+readiness. These probes never initialize a GPU and do not establish valid engine
+deserialization, generic file/stream interchangeability or trained quality.
 `checked_process_memory` also checks resident-page accounting at 4 KiB and 64 KiB,
 invalid page-size queries and multiplication overflow. The live and sustained
 receivers share this conversion; Linux `ru_maxrss` remains a separate KiB quantity.

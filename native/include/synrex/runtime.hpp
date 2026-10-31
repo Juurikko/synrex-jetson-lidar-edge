@@ -31,7 +31,8 @@ struct Contract {
     std::uint64_t voxels, max_points, max_blocks, max_memberships, max_tensor_bytes;
     explicit Contract(const Json &spec);
 };
-// Current persistent sessions and exporters implement only the legacy streaming contract.
+// Path-only streaming sessions/exporters retain the legacy contract. Generic
+// sessions use a separate retained-artifact and descriptor/readiness path.
 enum class PackageUse { file, legacy_stream };
 struct Package {
     fs::path root;

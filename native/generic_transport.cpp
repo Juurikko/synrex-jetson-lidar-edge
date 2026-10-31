@@ -104,7 +104,7 @@ std::size_t bound(Message message) {
 namespace detail {
 class ControlConnection {
     int socket_;
-    const CpuAdmittedPackage &package_;
+    const CpuAdmittedPackage package_;
     Limits supported_, negotiated_{};
     std::string session_;
     std::uint64_t epoch_;
@@ -215,8 +215,8 @@ class ControlConnection {
   public:
     ControlConnection(WireProtocol protocol, int socket, const CpuAdmittedPackage &package,
                       Limits supported, std::string session, std::uint64_t epoch, bool authority)
-        : socket_(socket), package_(package), supported_(supported), session_(std::move(session)),
-          epoch_(epoch), authority_(authority),
+        : socket_(socket), package_(package.package_), supported_(supported),
+          session_(std::move(session)), epoch_(epoch), authority_(authority),
           metadata_deadline_(Clock::now() +
                              std::chrono::milliseconds(Descriptor::metadata_timeout_ms)) {
         check(protocol == WireProtocol::binary_v3, "explicit binary-v3 selection required");
@@ -278,6 +278,31 @@ class ControlConnection {
             stage_ = Stage::initializing;
         });
     }
+    std::shared_ptr<const EngineArtifact> begin_session() {
+        return guarded([&] {
+            check(authority_ && stage_ == Stage::admitted,
+                  "wire-v3 session initialization out of order");
+            before(startup_deadline_);
+            const auto retained = package_.package_;
+            (void)retained->engine_bytes();
+            // The dense persistent backend's supported capacity is smaller than
+            // the generic metadata envelope. Reject before any device construction.
+            check(negotiated_.max_frame_points <= 1000000 &&
+                      negotiated_.max_frame_points <= retained->contract().max_points,
+                  "unsafe persistent window point budget");
+            begin();
+            return retained;
+        });
+    }
+    void abort() noexcept {
+        poisoned_ = true;
+        try {
+            if (startup_)
+                startup_->fail("generic session failed");
+        } catch (...) {
+        }
+        ::shutdown(socket_, SHUT_RDWR);
+    }
     void ready() {
         guarded([&] {
             if (authority_) {
@@ -336,13 +361,28 @@ class ControlConnection {
 AuthorityTransport::AuthorityTransport(WireProtocol protocol, int socket,
                                        const CpuAdmittedPackage &p, Limits limits,
                                        std::string session, std::uint64_t epoch)
-    : connection_(std::make_unique<detail::ControlConnection>(protocol, socket, p, limits,
+    : connection_(std::make_shared<detail::ControlConnection>(protocol, socket, p, limits,
                                                               std::move(session), epoch, true)) {}
 AuthorityTransport::~AuthorityTransport() = default;
 void AuthorityTransport::metadata_admission() { connection_->admission(); }
 bool AuthorityTransport::initialization_permission() { return connection_->permission(); }
-void AuthorityTransport::begin_initialization() { connection_->begin(); }
-void AuthorityTransport::initialization_complete_and_wait_ready() { connection_->ready(); }
+std::shared_ptr<const EngineArtifact> AuthorityTransport::begin_session() {
+    return connection_->begin_session();
+}
+void AuthorityTransport::complete_session() { connection_->ready(); }
+void AuthorityTransport::abort_session() noexcept { connection_->abort(); }
+std::function<void(std::uint64_t, std::uint64_t)> AuthorityTransport::frame_authorizer() const {
+    const auto &descriptor = connection_->descriptor();
+    return [connection = connection_, hash = descriptor.sha256(),
+            session = descriptor.spec().at("session_id").get<std::string>(),
+            epoch = descriptor.spec().at("map_epoch").get<std::uint64_t>()](std::uint64_t points,
+                                                                            std::uint64_t bytes) {
+        connection->frame(hash, session, epoch, points, bytes);
+    };
+}
+std::function<void()> AuthorityTransport::session_aborter() const {
+    return [connection = connection_] { connection->abort(); };
+}
 void AuthorityTransport::authorize_frame(std::string_view hash, std::string_view session,
                                          std::uint64_t epoch, std::uint64_t points,
                                          std::uint64_t bytes) {

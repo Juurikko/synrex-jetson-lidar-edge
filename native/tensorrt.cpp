@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 // Original generic TensorRT 10 backend using NVIDIA's documented public APIs.
+#include "generic_backend.hpp"
 #include "gpu.hpp"
 #include "synrex/benchmark.hpp"
 #include "synrex/engine_artifact.hpp"
@@ -478,12 +479,17 @@ class PersistentSession final : public InferenceSession {
     // Declared before every CUDA-owning member: capture and engine-kind checks
     // must finish before their constructors can query or initialize the device.
     struct PreparedEngine {
-        const EngineArtifact artifact;
-        explicit PreparedEngine(const fs::path &root) : artifact(root, PackageUse::legacy_stream) {
-            (void)artifact.engine_bytes();
+        const std::shared_ptr<const EngineArtifact> artifact;
+        PreparedEngine(std::shared_ptr<const EngineArtifact> retained, std::size_t capacity)
+            : artifact(std::move(retained)) {
+            require(bool(artifact), "retained engine required");
+            (void)artifact->engine_bytes();
+            require(capacity > 0 && capacity <= artifact->contract().max_points &&
+                        capacity <= 1000000,
+                    "unsafe persistent window point budget");
         }
     } prepared_;
-    const EngineArtifact &package_ = prepared_.artifact;
+    const EngineArtifact &package_ = *prepared_.artifact;
     std::size_t capacity_;
     SessionOptions options_;
     std::unique_ptr<PinnedStaging> host_points_, host_ids_, host_voxels_, host_groups_, host_labels_, host_semantics_, host_bad_;
@@ -503,8 +509,9 @@ class PersistentSession final : public InferenceSession {
     Event upload_start_, upload_end_, prepare_end_, infer_end_, scatter_end_;
     Stream stream_; // Destroyed first: synchronize before any device resource is released.
   public:
-    PersistentSession(const fs::path &root, std::size_t capacity, const SessionOptions &options)
-        : prepared_(root), capacity_(capacity), options_(options) {
+    PersistentSession(std::shared_ptr<const EngineArtifact> retained, std::size_t capacity,
+                      const SessionOptions &options)
+        : prepared_(std::move(retained), capacity), capacity_(capacity), options_(options) {
         cuda_check(cudaGetDevice(&device_));
         const auto &c = package_.contract();
         require(capacity > 0 && capacity <= c.max_points && capacity <= 1000000,
@@ -767,7 +774,15 @@ class PersistentSession final : public InferenceSession {
     }
 };
 std::unique_ptr<InferenceSession> create_session(const fs::path &package, std::size_t capacity, const SessionOptions &options) {
-    return std::make_unique<PersistentSession>(package, capacity, options);
+    return std::make_unique<PersistentSession>(
+        std::make_shared<const EngineArtifact>(package, PackageUse::legacy_stream), capacity,
+        options);
+}
+
+std::unique_ptr<InferenceSession>
+generic::detail::create_persistent_session(std::shared_ptr<const EngineArtifact> retained,
+                                           std::size_t capacity, const SessionOptions &options) {
+    return std::make_unique<PersistentSession>(std::move(retained), capacity, options);
 }
 
 } // namespace synrex

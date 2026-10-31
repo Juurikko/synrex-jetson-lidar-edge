@@ -5,16 +5,16 @@
 
 `native/include/synrex/generic_startup.hpp` and `native/generic_startup.cpp`
 provide CPU metadata admission and an authority-side startup gate in
-`synrex::generic`. They are library preparation for generic streaming. No CLI,
-Service, session factory, frame codec or GPU initializer calls this module yet.
+`synrex::generic`. They implement CPU admission for the companion generic control transport and
+[session/Service library](GENERIC_RUNTIME.md). Legacy CLIs do not select this path.
 The companion [binary-v3 control transport](GENERIC_TRANSPORT.md) exercises it
 over real sockets. Existing package-v3 rejection at every legacy streaming endpoint
 remains in force. Generic file/stream GPU interchangeability and trained quality
 are **NOT_RUN**; this module does not complete E2.
 
 `CpuAdmittedPackage(path)` privately constructs and owns a const production
-`EngineArtifact`, which privately owns its production `Package` and captures the
-exact model bytes. The constructor performs envelope, Contract, artifact hash, taxonomy,
+`EngineArtifact`, through private shared const ownership; the artifact privately owns its production
+`Package` and captures the exact model bytes. The constructor performs envelope, Contract, artifact hash, taxonomy,
 size and member admission. It exposes no mutable Package or Contract reference,
 raw-state mutator, public-Package constructor or boolean admission waiver. Copying
 is disabled. Only this wrapper can create an authority descriptor through
@@ -23,9 +23,9 @@ an authority's expected identity.
 
 The wrapper retains captured manifest, taxonomy, derived Contract metadata and
 hash-verified model bytes. A separate mutable Package or subsequent source-file
-change cannot replace this retained identity. Descriptor construction does not
-create a GPU session or pass those retained bytes to one. Future generic Service
-integration must bind its execution session to this same captured artifact.
+change cannot replace this retained identity. Descriptor construction does not create a GPU session. The authority factory
+retains and consumes that same artifact after metadata admission; no later
+pathname load or caller-selected Package can replace it.
 
 The descriptor carries exact [taxonomy UTF-8 bytes](TAXONOMY.md), including their
 whitespace and ordered class meanings, plus the taxonomy digest, K, complete
@@ -44,8 +44,9 @@ context identity separately binds this exact declaration:
 {"schema":"synrex.context.current_frame.v1","history":false,"origin":"per_window_minimum","emit":"current_once"}
 ```
 
-The library admits that declaration without implementing preprocessing. Future
-Service integration must show that execution matches it. Callers supply a
+The descriptor admits that declaration; the generic Session uses the retained
+persistent dense backend with one current frame per run and no historical context.
+Real GPU parity of this combined path remains unqualified. Callers supply a
 32-character lowercase hex session ID and a nonzero uint64 map epoch. Every
 control and admitted frame identity binds both and the entire encoded descriptor
 digest. New model, taxonomy, context or epoch requires a new startup object.
@@ -61,7 +62,8 @@ full projections and context/text identities are checked. Controls have their ow
 selects the smaller point, byte and initialization-time limits independently.
 The factory also rejects a frame point limit above the admitted Contract.
 The companion control transport exchanges and enforces peer advertisements.
-Actual frame bodies remain future integration work.
+The companion codec validates complete bounded frame/output bodies. Socket frame
+I/O and CLI integration remain pending.
 
 Startup proceeds in this order:
 

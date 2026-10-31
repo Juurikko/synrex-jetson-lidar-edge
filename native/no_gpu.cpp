@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
+#include "generic_backend.hpp"
 #include "synrex/runtime.hpp"
 #include "synrex/session.hpp"
 #include <stdexcept>
@@ -19,6 +20,12 @@ std::vector<std::uint8_t> infer(const Package &, const std::vector<Point> &, con
 std::unique_ptr<InferenceSession> create_session(const fs::path &model, std::size_t,
                                                  const SessionOptions &) {
     const Package package(model, PackageUse::legacy_stream);
+    (void)target_info();
+    return {};
+}
+std::unique_ptr<InferenceSession>
+generic::detail::create_persistent_session(std::shared_ptr<const EngineArtifact>, std::size_t,
+                                           const SessionOptions &) {
     (void)target_info();
     return {};
 }

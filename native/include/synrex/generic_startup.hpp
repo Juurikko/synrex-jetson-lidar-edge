@@ -4,10 +4,14 @@
 #include "synrex/engine_artifact.hpp"
 #include <chrono>
 #include <functional>
+#include <memory>
 #include <string_view>
 
 namespace synrex::generic {
-// CPU preparation only: no socket, Service, session factory, frame codec or GPU operation.
+namespace detail {
+class ControlConnection;
+}
+// CPU preparation only; companion transport/session/codec modules consume it.
 struct Limits {
     std::uint64_t max_frame_points{16384}, max_frame_bytes{1048576};
     std::uint64_t startup_timeout_ms{30000};
@@ -17,8 +21,11 @@ struct Limits {
 // Admission provenance is private ownership, not a rehash of caller-mutable fields.
 // The production constructor is the only ingress. No Package/Contract is exposed.
 class CpuAdmittedPackage {
-    const EngineArtifact package_;
+    const std::shared_ptr<const EngineArtifact> package_;
     friend class Descriptor;
+    friend class detail::ControlConnection;
+    explicit CpuAdmittedPackage(std::shared_ptr<const EngineArtifact> retained)
+        : package_(std::move(retained)) {}
 
   public:
     explicit CpuAdmittedPackage(const fs::path &path);

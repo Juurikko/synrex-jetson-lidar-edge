@@ -2,18 +2,28 @@
 // Copyright (c) 2026 Tuomas Pietilä
 #pragma once
 #include "synrex/generic_startup.hpp"
+#include "synrex/session.hpp"
 #include <memory>
 
 namespace synrex::generic {
-// Explicit selection only. There is no legacy decoder, fallback, Service or frame codec here.
+class Session;
+// Explicit selection only. No legacy decoder/fallback or frame socket I/O here.
 enum class WireProtocol { binary_v3 };
 namespace detail {
 class ControlConnection;
 }
 // The connected SOCK_STREAM descriptor is borrowed, never closed. Failure shuts it down.
-// Keep the admitted package alive through metadata_admission(). Calls are single-threaded.
+// Retains the admitted artifact independently of the package wrapper. The borrowed
+// socket must outlive every produced Session/Service; it is never closed here.
+// Control calls are single-threaded; do not call this object concurrently with a
+// produced Session/Service. Transfer inference ownership to one worker after creation.
 class AuthorityTransport {
-    std::unique_ptr<detail::ControlConnection> connection_;
+    std::shared_ptr<detail::ControlConnection> connection_;
+    std::shared_ptr<const EngineArtifact> begin_session();
+    void complete_session();
+    void abort_session() noexcept;
+    std::function<void(std::uint64_t, std::uint64_t)> frame_authorizer() const;
+    std::function<void()> session_aborter() const;
 
   public:
     AuthorityTransport(WireProtocol, int connected_socket, const CpuAdmittedPackage &,
@@ -23,9 +33,10 @@ class AuthorityTransport {
     AuthorityTransport &operator=(const AuthorityTransport &) = delete;
     void metadata_admission();
     bool initialization_permission();
-    void begin_initialization();
-    // Caller reports initialization completion; this library never initializes a GPU.
-    void initialization_complete_and_wait_ready();
+    // The sole authority initialization operation: consumes this connection's
+    // retained engine and negotiated capacity, then exchanges execution-ready.
+    // Destruction on failure precedes propagation; permission is never reusable.
+    std::unique_ptr<Session> create_session(const SessionOptions &options = {});
     void authorize_frame(std::string_view descriptor_sha256, std::string_view session_id,
                          std::uint64_t map_epoch, std::uint64_t points, std::uint64_t bytes);
     const Descriptor &descriptor() const;

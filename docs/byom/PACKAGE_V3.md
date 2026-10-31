@@ -4,8 +4,9 @@
 # Explicit taxonomy packages
 
 Package-v3 adds a validated [taxonomy artifact](TAXONOMY.md) to the existing dense
-adapter envelope. The package-only implementation does not add a generic service,
-new wire protocol, GPU startup state machine or execution qualification.
+adapter envelope. The [generic runtime library](GENERIC_RUNTIME.md) adds explicit control/session/
+Service and frame/output contracts. These CPU-qualified APIs do not establish
+real GPU execution qualification.
 
 The existing live receiver, sender, subscriber (including source-less validation),
 text-stream replay, sustained benchmark and asynchronous streaming exporter are
@@ -14,8 +15,9 @@ legacy streaming requires package v2`, before Contract/artifact admission or GPU
 construction, source decode, exporter work or socket readiness. The retained
 legacy session package enforces this policy itself, avoiding a check/reopen gap.
 Matching the legacy class count, taxonomy ID or LAS vector grants no exception.
-The path-only `create_session` API is legacy-only until a distinct generic factory
-and descriptor/readiness state path is implemented. Metadata-only stream fixture
+The path-only `create_session` API remains legacy-only. The separate generic
+`AuthorityTransport::create_session` API requires the admitted v3 descriptor and
+actual backend initialization before readiness. Metadata-only stream fixture
 and validate modes remain model-free. Generic file/stream GPU interchangeability
 and trained quality are **NOT_RUN**; these guards do not complete E2.
 `DENSE_VOXEL_SEGMENTATION_V1`, tensor layouts, features, geometry and numerical
