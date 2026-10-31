@@ -506,8 +506,15 @@ void send(const Socket &s, Kind kind, const Bytes &b, unsigned ms, std::size_t f
     write(s.fd(), w.b.data(), w.b.size(), until, fragment);
     write(s.fd(), b.data(), b.size(), until, fragment);
 }
+void LegacyLiveLimits::validate() const {
+    checked(map_cells > 0 && map_cells <= max_legacy_map_cells,
+            "legacy map capacity must be in 1..65536 cells (16 MiB snapshot budget)");
+    checked(points > 0 && points <= 65536 && rate >= points && rate <= 20000000,
+            "legacy live point/rate budget");
+}
 Bytes json_bytes(const Json &j) {
     const auto s = j.dump();
+    checked(s.size() <= max_payload, "wire encoded JSON exceeds 16 MiB payload budget");
     return Bytes(s.begin(), s.end());
 }
 Json json(const Bytes &b) {

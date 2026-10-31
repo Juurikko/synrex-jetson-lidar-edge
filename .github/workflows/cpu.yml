@@ -1,0 +1,114 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Tuomas Pietilä
+name: CPU contracts
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cpu-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu:
+    # PR code runs only on disposable GitHub-hosted CPUs, never the RTX worker.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - configuration: Release
+            sanitize: 'OFF'
+          - configuration: Debug
+            sanitize: 'ON'
+    env:
+      CC: gcc-13
+      CXX: g++-13
+      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+      CTEST_PARALLEL_LEVEL: '1'
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      SYNREX_TEST_NATIVE_DIR: ${{ github.workspace }}/build-cpu-${{ matrix.configuration }}
+      SYNREX_RUN_GPU: '0'
+      ASAN_OPTIONS: detect_leaks=1:halt_on_error=1
+      UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11.12'
+      - name: Install pinned CPU Python dependencies
+        run: |
+          python -m pip install --only-binary=:all: -r requirements-cpu-ci.lock
+          python -m pip check
+      - name: Fetch immutable native dependencies
+        run: |
+          git init .deps/laz-perf
+          git -C .deps/laz-perf fetch --depth 1 https://github.com/hobu/laz-perf.git b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce
+          git -C .deps/laz-perf checkout --detach FETCH_HEAD
+          test "$(git -C .deps/laz-perf rev-parse HEAD)" = b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce
+          git init .deps/json
+          git -C .deps/json fetch --depth 1 https://github.com/nlohmann/json.git 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+          git -C .deps/json checkout --detach FETCH_HEAD
+          test "$(git -C .deps/json rev-parse HEAD)" = 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+      - name: Configure clean CPU build
+        run: |
+          mkdir -p build-ci-results
+          python --version
+          "$CXX" --version
+          cmake --version
+          ninja --version
+          cmake -S . -B "$SYNREX_TEST_NATIVE_DIR" -G Ninja \
+            -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} \
+            -DCMAKE_CXX_COMPILER="$CXX" -DBUILD_TESTING=ON \
+            -DSYNREX_ENABLE_CUDA=OFF -DSYNREX_SANITIZE=${{ matrix.sanitize }} \
+            -DLAZPERF_SOURCE_DIR="$PWD/.deps/laz-perf" \
+            -DNLOHMANN_JSON_INCLUDE_DIR="$PWD/.deps/json/single_include" \
+            2>&1 | tee build-ci-results/configure.log
+      - name: Build with compiler warnings as errors
+        run: cmake --build "$SYNREX_TEST_NATIVE_DIR" 2>&1 | tee build-ci-results/build.log
+      - name: Native CTest contracts
+        run: |
+          ctest --test-dir "$SYNREX_TEST_NATIVE_DIR" --output-on-failure --timeout 180 \
+            --output-junit "$PWD/build-ci-results/ctest.xml" \
+            2>&1 | tee build-ci-results/ctest.log
+      - name: Complete pytest suite including export and installed-link checks
+        if: ${{ !cancelled() && success() }}
+        run: |
+          python -m pytest -q -ra --basetemp="$SYNREX_TEST_NATIVE_DIR/pytest" \
+            --junitxml=build-ci-results/pytest.xml \
+            2>&1 | tee build-ci-results/pytest.log
+      - name: Maintained release and relative-link checks
+        if: ${{ !cancelled() && success() && matrix.configuration == 'Release' }}
+        run: |
+          python tools/release_checks.py --check-only --dependency-lock requirements-cpu-ci.lock \
+            2>&1 | tee build-ci-results/release.log
+      - name: Scoped style checks for maintained changes
+        if: ${{ !cancelled() && success() && matrix.configuration == 'Release' }}
+        env:
+          CHANGE_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$CHANGE_BASE" ] || [ "$CHANGE_BASE" = 0000000000000000000000000000000000000000 ]; then
+            CHANGE_BASE="$(git rev-parse HEAD^)"
+          fi
+          python tools/check_cpu_style.py --base "$CHANGE_BASE" \
+            2>&1 | tee build-ci-results/style.log
+      - name: Publish results and explicit skip reasons
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cpu-${{ matrix.configuration }}-results
+          path: |
+            build-ci-results/
+            build-cpu-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+          if-no-files-found: warn
+          retention-days: 14

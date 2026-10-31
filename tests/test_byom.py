@@ -27,7 +27,8 @@ from synthetic_laz import create
 from verify_laz import verify
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE", ROOT / "build/synrex-native")).resolve()
+NATIVE_DIR = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE", NATIVE_DIR / "synrex-native")).resolve()
 SPEC = json.loads((ROOT / "examples/dense_voxel.json").read_text())
 module_spec = importlib.util.spec_from_file_location(
     "reference_export", ROOT / "examples/export_reference.py"

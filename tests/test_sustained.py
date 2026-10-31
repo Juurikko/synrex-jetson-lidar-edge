@@ -3,11 +3,13 @@
 """CPU-only temporal protocol regressions; no inference or hardware qualification claims."""
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "build/synrex-stream"
+NATIVE_DIR = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+NATIVE = NATIVE_DIR / "synrex-stream"
 
 
 def validate(tmp_path, records):
@@ -96,7 +98,7 @@ def test_nonmonotonic_frame_time_fails(tmp_path):
 def test_sustained_cli_rejects_unsafe_configuration_before_gpu(tmp_path):
     result = subprocess.run(
         [
-            str(ROOT / "build/synrex-sustain"),
+            str(NATIVE_DIR / "synrex-sustain"),
             "--model",
             "unused",
             "--rate",

@@ -144,7 +144,14 @@
       "tools/verify_showcase.py",
       "tools/verify_stream_ab.py",
       "tools/verify_unet_outputs.py",
-      "tools/window_campaign.py"
+      "tools/window_campaign.py",
+      ".github/workflows/cpu.yml",
+      "requirements-cpu-ci.lock",
+      "tests/native/snapshot.cpp",
+      "tests/test_live_admission.py",
+      "tests/test_runtime_jobctl.py",
+      "tools/check_cpu_style.py",
+      "tools/runtime_jobctl.py"
     ],
     "license": "MIT"
   },
@@ -231,7 +238,10 @@
       "archive/editorial/linkedin/LINKEDIN_POST_MAIN_RC4.md",
       "archive/editorial/linkedin/LINKEDIN_POST_TEASER_RC4.md",
       "archive/editorial/linkedin/THUMBNAIL_CAPTION_RC4.md",
-      "media/PERSONAL_CREDITS.md"
+      "media/PERSONAL_CREDITS.md",
+      "docs/CPU_CHECKS.md",
+      "docs/runtime_jobctl.md",
+      "docs/streaming/SNAPSHOT_BUDGET.md"
     ],
     "license": "CC-BY-4.0"
   },
