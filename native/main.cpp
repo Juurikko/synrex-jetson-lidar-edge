@@ -40,7 +40,7 @@ void usage() {
                  "NEW.srxmodel\n"
                  "synrex-native inspect --model MODEL.srxmodel\n"
                  "synrex-native build-engine --model ONNX.srxmodel --out MODEL.engine [--precision "
-                 "fp16]\n"
+                 "fp16] [--builder-optimization 0..5]\n"
                  "synrex-native plan --model MODEL.srxmodel --input INPUT.laz --out PLAN.json\n"
                  "synrex-native classify --model ENGINE.srxmodel --input INPUT.laz --out "
                  "OUTPUT.laz [--semantics IDS.json]\n"
@@ -115,13 +115,21 @@ int main(int argc, char **argv) {
                 "unknown command");
         const auto expected = command == "inspect" ? 1U : command == "build-engine" ? 2U : 3U;
         require(args.size() == expected ||
-                    (command == "build-engine" && args.size() == expected + 1 &&
-                     args.count("--precision")) ||
+                    (command == "build-engine" &&
+                     args.size() == expected + args.count("--precision") +
+                                        args.count("--builder-optimization")) ||
                     (command == "classify" &&
                      args.size() == 3 + args.count("--semantics") + args.count("--trace")) ||
                     (command == "benchmark" && args.size() == 5 && args.count("--warmup") &&
                      args.count("--iterations")),
                 "unexpected CLI options");
+        unsigned builder_optimization = 3;
+        if (command == "build-engine" && args.count("--builder-optimization")) {
+            const auto level = Json::parse(get("--builder-optimization"), nullptr, false);
+            require(level.is_number_integer() && level >= 0 && level <= 5,
+                    "builder optimization must be an integer in 0..5");
+            builder_optimization = level.get<unsigned>();
+        }
         const Package package(get("--model"));
         if (command == "inspect") {
             std::cout << package.manifest.dump(2) << '\n';
@@ -132,7 +140,7 @@ int main(int argc, char **argv) {
         if (command == "build-engine") {
             const auto precision = args.count("--precision") ? get("--precision") : "default";
             require(precision == "default" || precision == "fp16", "unsupported engine precision");
-            build_engine(package, output, precision);
+            build_engine(package, output, precision, builder_optimization);
             return 0;
         }
         const fs::path input(get("--input"));

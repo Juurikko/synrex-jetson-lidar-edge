@@ -8,6 +8,10 @@ model. Its CPU fixtures are intentionally synthetic. Actual trained Q0/Q1 execut
 logit/discrete preprocessing parity, and final integrated qualification still need
 source-bound runtime receipts.
 
+The optional [frozen CPU reference](FROZEN_REFERENCE.md) prepares label-free trained
+R2 inputs and performs separately admitted ONNX CPU inference. It emits reference
+artifacts without a native parity or quality verdict.
+
 The three questions remain separate:
 
 | Comparison | Meaning | Reported decision |

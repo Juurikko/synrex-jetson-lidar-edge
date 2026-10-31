@@ -190,8 +190,10 @@ static void same_admission(const Package &supplied, const EngineArtifact &captur
         require(supplied.taxonomy->raw_bytes() == captured.taxonomy()->raw_bytes(),
                 "package taxonomy changed since CPU admission");
 }
-void build_engine(const Package &package, const fs::path &output, const std::string &precision) {
+void build_engine(const Package &package, const fs::path &output, const std::string &precision,
+                  unsigned builder_optimization) {
     require(precision == "default" || precision == "fp16", "unsupported engine precision");
+    require(builder_optimization <= 5, "builder optimization must be an integer in 0..5");
     const EngineArtifact captured(package.root);
     same_admission(package, captured);
     require(captured.artifact_kind() == "onnx", "engine build requires an ONNX artifact");
@@ -212,6 +214,7 @@ void build_engine(const Package &package, const fs::path &output, const std::str
             "ONNX must have one input and output");
     std::unique_ptr<nvinfer1::IBuilderConfig> config(builder->createBuilderConfig());
     require(bool(config), "cannot create builder config");
+    config->setBuilderOptimizationLevel(static_cast<int32_t>(builder_optimization));
     config->setMemoryPoolLimit(nvinfer1::MemoryPoolType::kWORKSPACE, 256ULL * 1024 * 1024);
     if (precision == "fp16") {
         // TensorRT 10.x weak typing supports mixed FP16 tactics; deprecated in 10.12,
@@ -239,6 +242,7 @@ void build_engine(const Package &package, const fs::path &output, const std::str
                       {"operation", "TensorRT_engine_build_and_initialization"},
                       {"target", target_info()},
                       {"precision_policy", precision},
+                      {"builder_optimization_level", config->getBuilderOptimizationLevel()},
                       {"engine_layers", Json::parse(layers)},
                       {"sha256", sha256(output)}}
                      .dump(2)

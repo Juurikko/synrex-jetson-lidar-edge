@@ -10,7 +10,11 @@ Json session_resources() { return {{"status", "NOT_RUN"}}; }
 Json target_info() {
     throw std::runtime_error("CUDA/TensorRT backend not built; GPU execution NOT_RUN");
 }
-void build_engine(const Package &, const fs::path &, const std::string &) { (void)target_info(); }
+void build_engine(const Package &, const fs::path &, const std::string &,
+                  unsigned builder_optimization) {
+    require(builder_optimization <= 5, "builder optimization must be an integer in 0..5");
+    (void)target_info();
+}
 std::vector<std::uint8_t> infer(const Package &, const std::vector<Point> &, const Plan &,
                                 InferenceMetrics *, std::vector<std::uint8_t> *,
                                 const InferenceOptions &) {

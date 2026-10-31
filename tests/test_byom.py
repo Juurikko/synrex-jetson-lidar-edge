@@ -434,6 +434,14 @@ def test_geometry_resource_limits(tmp_path, budget):
     assert not output.exists()
 
 
+@pytest.mark.parametrize("level", ["-1", "6", "3.0", "true", "null", "{}", "not-json"])
+def test_builder_policy_rejects_before_package_or_device(tmp_path, level):
+    result = run("build-engine", "--model", tmp_path / "absent.srxmodel",
+                 "--out", tmp_path / "out.engine", "--builder-optimization", level, ok=False)
+    assert "builder optimization must be an integer in 0..5" in result.stderr
+    assert not (tmp_path / "out.engine").exists()
+
+
 def test_cpu_build_explicitly_refuses_inference(tmp_path):
     version = json.loads(run("version").stdout)
     if version["cuda_tensorrt"]:
@@ -444,6 +452,19 @@ def test_cpu_build_explicitly_refuses_inference(tmp_path):
     result = run("classify", "--model", pkg, "--input", source, "--out", output, ok=False)
     assert "NOT_RUN" in result.stderr and not output.exists()
     run("build-engine", "--model", pkg, "--out", tmp_path / "out.engine", ok=False)
+
+
+@pytest.mark.parametrize("level,precision", [("0", None), ("3", None), ("5", None), ("0", "fp16")])
+def test_cpu_builder_policy_admission(tmp_path, level, precision):
+    if json.loads(run("version").stdout)["cuda_tensorrt"]:
+        pytest.skip("CPU-only failure contract")
+    pkg, _, _ = package(tmp_path)
+    options = ["--builder-optimization", level]
+    if precision is not None:
+        options += ["--precision", precision]
+    result = run("build-engine", "--model", pkg, "--out", tmp_path / "out.engine",
+                 *options, ok=False)
+    assert "NOT_RUN" in result.stderr and not (tmp_path / "out.engine").exists()
 
 
 def test_relocated_installation_package_and_geometry(tmp_path):

@@ -89,7 +89,7 @@ Json describe_plan(const std::vector<Point> &points, const Plan &plan, const Con
 bool gpu_enabled();
 Json target_info();
 void build_engine(const Package &package, const fs::path &output,
-                  const std::string &precision = "default");
+                  const std::string &precision = "default", unsigned builder_optimization = 3);
 struct InferenceMetrics {
     double initialization_and_upload_seconds{};
     double cuda_preparation_seconds{};
