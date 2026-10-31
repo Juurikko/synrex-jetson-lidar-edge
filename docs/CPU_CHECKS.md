@@ -67,6 +67,15 @@ Some native tests require generated fixtures: `tests/test_streaming_r1.py` invok
 Running CTest alone therefore does not cover the CPU suite. Performance/profile
 executables and opt-in physical GPU tests are outside this CPU qualification.
 
+`generic_dual_peer_input_completion` covers two metadata admissions before one
+opaque backend, both readiness ACKs, shared failure and transcript-bound input
+completion. `generic_single_file_export` verifies actual PDRF6/7/8 preservation,
+taxonomy/descriptor binding and atomic publication. `tests/test_generic_live.py`
+runs the production entry point in three real CPU fixture processes over TCP,
+including K4/non-FRACTAL7/K256, final partial windows, optional preserved export,
+missing/mismatched peers, inference failure and finite count disagreement. The
+fixture executable is not installed and provides no model/GPU/quality evidence.
+
 The complete pytest invocation retains explicit `NOT_RUN` reasons for unallocated
 GPU tests and absent genuine R2 recordings. Logs and JUnit XML from both configurations
 are uploaded even after failure; skips do not establish GPU or recording qualification.

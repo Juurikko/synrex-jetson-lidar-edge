@@ -39,6 +39,37 @@ std::unique_ptr<Session> AuthorityTransport::create_session(const SessionOptions
     }
 }
 
+std::unique_ptr<Session>
+AuthorityTransport::create_session_with_output(AuthorityTransport &output,
+                                               const SessionOptions &options) {
+    try {
+        require(!options.timeline, "generic wire output does not support timeline arrays");
+        validate_output_connection(output);
+        const auto artifact = begin_session();
+        (void)output.begin_session();
+        const auto capacity = negotiated_limits().max_frame_points;
+        auto backend = detail::create_persistent_session(artifact, capacity, options);
+        require(bool(backend), "generic backend returned no session");
+        const auto identity = backend->identity();
+        require(backend->contract().spec == artifact->contract().spec &&
+                    identity.at("manifest_sha256") == artifact->manifest_sha256() &&
+                    identity.at("artifacts") == artifact->manifest().at("artifacts") &&
+                    identity.at("target") == artifact->manifest().at("target") &&
+                    identity.at("max_window_points") == capacity &&
+                    identity.at("backend") == "CUDA/TensorRT",
+                "loaded generic backend identity mismatch");
+        auto session = std::unique_ptr<Session>(new Session(
+            std::move(backend), descriptor(), frame_authorizer(), session_aborter(output)));
+        complete_session();
+        output.complete_session();
+        return session;
+    } catch (...) {
+        abort_session();
+        output.abort_session();
+        throw;
+    }
+}
+
 Classification Session::run(Frame frame) {
     try {
         require(!poisoned_, "generic session permanently failed");

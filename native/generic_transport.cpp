@@ -12,6 +12,7 @@
 #include <set>
 #include <stdexcept>
 #include <sys/socket.h>
+#include <sys/stat.h>
 
 namespace synrex::generic {
 namespace {
@@ -27,7 +28,9 @@ enum class Message : unsigned char {
     classification = 17,
     snapshot = 32,
     output_complete = 33,
-    output_complete_ack = 34
+    output_complete_ack = 34,
+    input_complete = 35,
+    input_complete_ack = 36
 };
 void check(bool ok, const char *message) {
     if (!ok)
@@ -61,16 +64,16 @@ std::string digest_bytes(std::string_view bytes) {
           "wire-v3 SHA256 update failed");
     return digest_value(context);
 }
-// Exact complete classification envelopes in wire order; no decoded JSON or
+// Exact complete codec envelopes in wire order; no decoded JSON or
 // host-local clock is substituted. Envelope lengths make the concatenation unique.
 struct Transcript {
     DigestContext context = new_digest();
     std::uint64_t frames{}, points{};
     void add(std::string_view bytes, std::size_t count) {
         check(frames < UINT64_MAX && count <= UINT64_MAX - points,
-              "wire-v3 output accounting overflow");
+              "wire-v3 transcript accounting overflow");
         check(EVP_DigestUpdate(context.get(), bytes.data(), bytes.size()) == 1,
-              "wire-v3 classification transcript failed");
+              "wire-v3 frame transcript failed");
         ++frames;
         points += count;
     }
@@ -146,7 +149,8 @@ std::string readiness(const Descriptor &descriptor, const std::string &kind,
 std::size_t bound(Message message) {
     if (message == Message::snapshot)
         return SemanticMap::max_snapshot_bytes - 12; // Whole envelope <=16MiB.
-    if (message == Message::output_complete || message == Message::output_complete_ack)
+    if (message == Message::output_complete || message == Message::output_complete_ack ||
+        message == Message::input_complete || message == Message::input_complete_ack)
         return 2048;
     if (message == Message::descriptor)
         return Descriptor::max_bytes;
@@ -163,9 +167,10 @@ class ControlConnection {
     std::string session_;
     std::uint64_t epoch_;
     bool authority_, poisoned_{};
+    std::weak_ptr<ControlConnection> coupled_;
     enum class Stage { fresh, admitted, initializing, ready, terminal_pending, complete };
     Stage stage_{Stage::fresh};
-    Transcript sent_, received_;
+    Transcript sent_, received_, input_sent_, input_received_;
     const Time metadata_deadline_;
     Time startup_deadline_{};
     std::unique_ptr<Descriptor> descriptor_;
@@ -260,6 +265,22 @@ class ControlConnection {
                 {"as_of_ns", snapshot.at("as_of_ns")},
                 {"completion_challenge", challenge}};
     }
+    Json input_record(const std::string &kind, const Transcript &transcript,
+                      const std::string &challenge, const std::string &ack_challenge = {}) const {
+        Json record{{"schema", "synrex.input.terminal.v3"},
+                    {"kind", kind},
+                    {"descriptor_sha256", descriptor_->sha256()},
+                    {"session_id", session_},
+                    {"map_epoch", epoch_},
+                    {"taxonomy_sha256", descriptor_->taxonomy().sha256()},
+                    {"input_frames", transcript.frames},
+                    {"input_points", transcript.points},
+                    {"input_sha256", digest_value(transcript.context)},
+                    {"completion_challenge", challenge}};
+        if (!ack_challenge.empty())
+            record["acknowledgement_challenge"] = ack_challenge;
+        return record;
+    }
     void send(Message message, const std::string &bytes, Time deadline) const {
         check(!bytes.empty() && bytes.size() <= bound(message), "wire-v3 outgoing payload bound");
         const auto size = static_cast<std::uint32_t>(bytes.size());
@@ -335,6 +356,8 @@ class ControlConnection {
             } catch (...) {
             }
             ::shutdown(socket_, SHUT_RDWR);
+            if (auto coupled = coupled_.lock())
+                coupled->abort_local();
             throw;
         } catch (...) {
             abort();
@@ -429,7 +452,7 @@ class ControlConnection {
             return retained;
         });
     }
-    void abort() noexcept {
+    void abort_local() noexcept {
         poisoned_ = true;
         try {
             if (startup_)
@@ -438,6 +461,12 @@ class ControlConnection {
         }
         ::shutdown(socket_, SHUT_RDWR);
     }
+    void abort() noexcept {
+        abort_local();
+        if (auto coupled = coupled_.lock())
+            coupled->abort_local();
+    }
+    void couple(const std::shared_ptr<ControlConnection> &other) { coupled_ = other; }
     void ready() {
         guarded([&] {
             if (authority_) {
@@ -490,6 +519,8 @@ class ControlConnection {
             authorize_data(value, bytes.size());
             before(deadline);
             transfer(bytes.data(), bytes.size(), true, deadline);
+            input_sent_.add(bytes, value.points.size());
+            before(deadline);
         });
     }
     Frame receive_frame(Time deadline) {
@@ -497,6 +528,7 @@ class ControlConnection {
             const auto bytes = receive_data(Message::frame, deadline);
             auto value = decode_frame(*descriptor_, bytes);
             authorize_data(value, bytes.size());
+            input_received_.add(bytes, value.points.size());
             before(deadline);
             return value;
         });
@@ -521,6 +553,75 @@ class ControlConnection {
             received_.add(bytes, value.frame.points.size());
             before(deadline);
             return value;
+        });
+    }
+    void validate_distinct_output(const ControlConnection &output) const {
+        alive();
+        output.alive();
+        struct stat input_stat {};
+        struct stat output_stat {};
+        check(this != &output && socket_ != output.socket_ && ::fstat(socket_, &input_stat) == 0 &&
+                  ::fstat(output.socket_, &output_stat) == 0 &&
+                  (input_stat.st_dev != output_stat.st_dev ||
+                   input_stat.st_ino != output_stat.st_ino),
+              "wire-v3 input and output require distinct connections");
+        check(authority_ && output.authority_ && stage_ == Stage::admitted &&
+                  output.stage_ == Stage::admitted,
+              "wire-v3 both input and output metadata must be admitted");
+        check(descriptor().bytes() == output.descriptor().bytes(),
+              "wire-v3 input/output descriptor mismatch");
+    }
+    Json finish_input(std::uint64_t frames, std::uint64_t points, Time deadline) {
+        return guarded([&] {
+            ready_for_data(deadline);
+            const auto &transcript = authority_ ? input_received_ : input_sent_;
+            check(transcript.frames > 0 && transcript.points > 0,
+                  "wire-v3 empty input cannot qualify completion");
+            if (authority_)
+                check(transcript.frames == frames && transcript.points == points,
+                      "wire-v3 input expected frame/point count mismatch");
+            stage_ = Stage::terminal_pending;
+            Json terminal;
+            if (authority_) {
+                const auto bytes = receive(Message::input_complete, deadline);
+                terminal = small_json(bytes);
+                const auto challenge = terminal.at("completion_challenge").get<std::string>();
+                check(challenge_valid(challenge) &&
+                          bytes == input_record("input_complete", transcript, challenge).dump(),
+                      "wire-v3 input terminal identity/count/digest/challenge mismatch");
+                require_eof(deadline);
+                // Generated after validated terminal and EOF; startup ACKs or
+                // pre-sent terminal bytes cannot stand in for this event.
+                const auto ack_challenge = new_challenge();
+                send(
+                    Message::input_complete_ack,
+                    input_record("input_complete_ack", transcript, challenge, ack_challenge).dump(),
+                    deadline);
+                end_writes(deadline);
+                terminal["acknowledgement_challenge"] = ack_challenge;
+            } else {
+                const auto challenge = new_challenge();
+                terminal = input_record("input_complete", transcript, challenge);
+                send(Message::input_complete, terminal.dump(), deadline);
+                end_writes(deadline);
+                const auto bytes = receive(Message::input_complete_ack, deadline);
+                const auto ack = small_json(bytes);
+                const auto ack_challenge = ack.at("acknowledgement_challenge").get<std::string>();
+                check(challenge_valid(ack_challenge) &&
+                          bytes == input_record("input_complete_ack", transcript, challenge,
+                                                ack_challenge)
+                                       .dump(),
+                      "wire-v3 input acknowledgement identity/count/digest/challenge mismatch");
+                require_eof(deadline);
+                terminal["acknowledgement_challenge"] = ack_challenge;
+            }
+            before(deadline);
+            stage_ = Stage::complete;
+            terminal.erase("kind");
+            terminal["schema"] = "synrex.input.delivery.v1";
+            terminal["status"] = authority_ ? "VALIDATED_ACK_SENT" : "PEER_VALIDATED";
+            terminal["time_boundary"] = "input_delivery_only; no_inference_or_output_success_claim";
+            return terminal;
         });
     }
     Json finish_output(const std::string &expected_snapshot_bytes, std::uint64_t frames,
@@ -621,6 +722,15 @@ std::shared_ptr<const EngineArtifact> AuthorityTransport::begin_session() {
     return connection_->begin_session();
 }
 void AuthorityTransport::complete_session() { connection_->ready(); }
+void AuthorityTransport::validate_output_connection(const AuthorityTransport &output) const {
+    connection_->validate_distinct_output(*output.connection_);
+    connection_->couple(output.connection_);
+    output.connection_->couple(connection_);
+}
+Json AuthorityTransport::finish_input(std::uint64_t frames, std::uint64_t points,
+                                      Startup::Time deadline) {
+    return connection_->finish_input(frames, points, deadline);
+}
 void AuthorityTransport::abort_session() noexcept { connection_->abort(); }
 std::function<void(std::uint64_t, std::uint64_t)> AuthorityTransport::frame_authorizer() const {
     const auto &descriptor = connection_->descriptor();
@@ -633,6 +743,12 @@ std::function<void(std::uint64_t, std::uint64_t)> AuthorityTransport::frame_auth
 }
 std::function<void()> AuthorityTransport::session_aborter() const {
     return [connection = connection_] { connection->abort(); };
+}
+std::function<void()> AuthorityTransport::session_aborter(const AuthorityTransport &output) const {
+    return [input = connection_, output = output.connection_] {
+        input->abort();
+        output->abort();
+    };
 }
 void AuthorityTransport::authorize_frame(std::string_view hash, std::string_view session,
                                          std::uint64_t epoch, std::uint64_t points,
@@ -666,6 +782,9 @@ Json PeerTransport::finish_output(const std::string &bytes, std::uint64_t frames
 void PeerTransport::abort_output() noexcept { connection_->abort(); }
 void PeerTransport::metadata_admission() { connection_->admission(); }
 void PeerTransport::acknowledge_execution_ready() { connection_->ready(); }
+Json PeerTransport::finish_input(Startup::Time deadline) {
+    return connection_->finish_input(0, 0, deadline);
+}
 void PeerTransport::authorize_frame(std::string_view hash, std::string_view session,
                                     std::uint64_t epoch, std::uint64_t points,
                                     std::uint64_t bytes) {

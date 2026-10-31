@@ -24,6 +24,10 @@ No GPU SDK is required for parser, assembly, queue, map or orchestration tests. 
 commands fail closed. For sanitizer checks, use a separate build with `-DSYNREX_SANITIZE=ON`.
 The physical GPU qualifier is built but deliberately excluded from ordinary CTest execution.
 
+Explicit package-v3 taxonomies use the separate
+[generic finite single-file CLI](GENERIC_SINGLE_FILE_V3.md). Its process/socket/export
+coverage is CPU-only so far; generic GPU interchangeability and Q0/Q1 remain NOT_RUN.
+
 On an available RTX allocation, configure `build-gpu` with the R4 documented SDK arguments and
 `-DSYNREX_ENABLE_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89`. Recheck GPU compute processes,
 utilization and free memory, including Windows-native reporting on WSL, before GPU execution.

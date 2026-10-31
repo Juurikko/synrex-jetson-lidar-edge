@@ -8,20 +8,27 @@ exporter. It accepts explicit package-v3 taxonomies, including non-FRACTAL seven
 classes, repeated LAS projections and K=256/semantic ID255. Current evidence is CPU
 contract execution with a test-only opaque backend plus native SDK syntax checks.
 Typed socket I/O, descriptor-bound maps, strict snapshot admission and independently
-reconstructed terminal output have CPU regressions. Actual generic engine
-file/stream interchangeability, CLI selection, export bundles and trained quality
-remain unqualified.
+reconstructed terminal output have CPU regressions. The
+[finite single-file CLI and exporter](../streaming/GENERIC_SINGLE_FILE_V3.md) also
+have CPU process/preservation tests. Actual generic engine file/stream
+interchangeability and trained quality remain unqualified.
 
 `CpuAdmittedPackage(path)` captures model bytes once. Construct both peers with
 their expected package, session ID and epoch, then perform `metadata_admission()`
-on each connected endpoint. The authority's `create_session(options)` is the sole
-public generic initialization operation. It uses that connection's privately
+on each connected endpoint. The authority's `create_session(options)` is the
+single-connection initialization factory. It uses that connection's privately
 retained engine and negotiated capacity, verifies actual backend identity, completes
 the fresh-challenge execution-ready exchange and returns a privately constructed
 `generic::Session`. The peer calls `acknowledge_execution_ready()` after metadata
 admission. There is no public arbitrary backend callback or completion assertion.
 Calling the factory before admission, twice, or with an ONNX artifact fails closed.
 Initialization or ACK failure destroys the partial session and poisons the gate.
+
+`create_session_with_output(output, options)` coordinates two distinct authority
+connections. Both metadata admissions, exact descriptor equality and startup
+deadlines precede one backend construction. Readiness completes on both links.
+Both transports and Session calls share one caller; failure on either link poisons
+both. The socket owners must outlive all three objects.
 
 The backend reuses the existing dense persistent implementation, geometry and
 reductions. CPU checks reject capacities above the Contract or 1,000,000 points
@@ -78,8 +85,8 @@ header, expected message kind and whole negotiated envelope size are checked bef
 payload allocation; the codec then checks identity, count and all point/label fields.
 Fragmentation does not reset the deadline, which is also checked after encoding or
 decoding. These operations share the same single-owner connection as the Session;
-they cannot run concurrently with that Session or its Service. A future concurrent
-CLI must arrange separate owned connections or synchronized ownership explicitly.
+they cannot run concurrently with that Session or its Service. The finite single-file
+CLI uses two owned connections with one synchronous caller.
 The socket remains borrowed. Every error permanently fails and shuts down the
 connection. Clean EOF has a distinct diagnostic from a truncated envelope and
 throws; neither constitutes terminal success. The output wrappers below add
@@ -122,7 +129,8 @@ This is CPU output validation, not real model qualification.
 
 CTest targets `generic_binary_v3_codec`, `generic_control_transport`,
 `generic_binary_v3_socket_io`, `generic_taxonomy_map`, `generic_snapshot_admission`,
-`generic_output_completion` and `generic_session_service`
+`generic_output_completion`, `generic_dual_peer_input_completion`,
+`generic_single_file_export` and `generic_session_service`
 cover the CPU boundaries. The test-only backend is linked only into fixture test
 executables. Production backend linkage remains in
 `native/generic_backend.hpp`, outside the public include tree. The GPU backend

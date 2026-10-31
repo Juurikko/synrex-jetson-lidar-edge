@@ -8,8 +8,9 @@ connected POSIX `SOCK_STREAM` socket. Callers explicitly select
 `WireProtocol::binary_v3`. This library is separate from legacy wire-v2: no legacy
 CLI, Service, endpoint or codec calls it, and it never falls back to wire-v2.
 The [generic runtime library](GENERIC_RUNTIME.md) now supplies the authority session
-factory, frame/output codecs, typed socket I/O and separate Service. CLI selection
-remains pending. A bounded terminal snapshot/ACK protocol is available through
+factory, frame/output codecs, typed socket I/O and separate Service. The
+[single-file CLI](../streaming/GENERIC_SINGLE_FILE_V3.md) selects this path explicitly.
+A bounded terminal snapshot/ACK protocol is available through
 `OutputSender` and `OutputReceiver`. Real generic GPU
 interchangeability remains **NOT_RUN**.
 
@@ -20,7 +21,7 @@ frame/classification payloads use the binary codec described in the runtime guid
 | --- | --- |
 | 0–3 | ASCII `SRX3` |
 | 4 | Binary version 3 |
-| 5 | Kind: hello=1, descriptor=2, metadata ACK=3, execution-ready=4, ready ACK=5, frame=16, classification=17, snapshot=32, output complete=33, complete ACK=34 |
+| 5 | Kind: hello=1, descriptor=2, metadata ACK=3, execution-ready=4, ready ACK=5, frame=16, classification=17, snapshot=32, output complete=33, complete ACK=34, input complete=35, input complete ACK=36 |
 | 6–7 | Reserved, must both be zero |
 | 8–11 | Unsigned payload length, big endian |
 
@@ -170,3 +171,38 @@ output/map delivery; they do not establish neural inference, quality, distinct
 source coverage or capture-to-output latency. Do not run a transport wrapper
 concurrently with a Session or Service sharing its gate. Use synchronous execution
 and output on one owner thread until a separately reviewed ownership path exists.
+
+## Coordinated input and output connections
+
+`AuthorityTransport::create_session_with_output(output)` requires distinct stream
+socket inodes, both metadata admissions and identical descriptor bytes. Both startup
+deadlines are checked before one retained backend constructs. Both readiness ACKs
+complete before return. Later Session or transport failure poisons both authority
+connections. All operations across these links use one caller, including terminal
+completion; coupling introduces no concurrent transport API.
+
+`PeerTransport::finish_input(deadline)` and
+`AuthorityTransport::finish_input(expected_frames, expected_points, deadline)` add
+nonempty input completion. Separate input transcripts cover concatenated exact
+complete frame envelopes, with checked uint64 frame/point counts. Kind35 uses
+`synrex.input.terminal.v3` with exactly `kind: input_complete`, `descriptor_sha256`,
+`session_id`, `map_epoch`, `taxonomy_sha256`, `input_frames`, `input_points`,
+`input_sha256` and `completion_challenge`. The peer generates a fresh 128-bit
+challenge after its final frame, sends the terminal and half-closes writes.
+
+The authority checks the exact expected counts against its received transcript,
+all bound fields/digest and EOF. It then generates a fresh acknowledgement
+challenge and sends kind36 with `kind: input_complete_ack` and the additional
+`acknowledgement_challenge`, echoing all other fields, then half-closes writes.
+The peer verifies the exact ACK and EOF. Both challenges are 32 lowercase hex
+characters; exact generated control serialization is required. Terminal payloads
+are at most 2,048 bytes. Equality with an absolute deadline expires; fragments do
+not extend it. Empty input, missing/truncated terminals and duplicate/trailing
+terminal controls never succeed. Transcript completion alone does not establish
+distinct records across frames; the CLI's frozen row/window coverage supplies
+that separate single-file check. E3 manifest distinctness remains unqualified.
+
+Receipts use `synrex.input.delivery.v1`, with authority `VALIDATED_ACK_SENT` or peer
+`PEER_VALIDATED`. They attest input delivery only, with no inference or output
+success claim. The finite CLI completes input before requiring the separate output
+snapshot/ACK protocol. No EOF-only success or implicit record-count inference occurs.
