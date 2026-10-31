@@ -10,13 +10,13 @@ import subprocess
 from pathlib import Path
 
 import pytest
-
 from test_taxonomy_package import SPEC, cpu_package, v3_package
 
 ROOT = Path(__file__).resolve().parents[1]
 NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
 GUARD = "package v3 is file-only; legacy streaming requires package v2"
-MAPPINGS = [[0, 2, 5, 6], [1, 2, 5, 6, 9, 17, 64], [2, 5, 6]]
+LEGACY_FRACTAL_PROJECTION = [1, 2, 200, 6, 9, 17, 201]
+MAPPINGS = [[0, 2, 5, 6], LEGACY_FRACTAL_PROJECTION, [2, 5, 6]]
 
 
 def invoke(executable, *arguments):
@@ -81,7 +81,7 @@ def test_direct_native_legacy_apis_reject_v3(tmp_path, mapping, mode):
     assert_guard(invoke("synrex-package-policy-tests", mode, model, tmp_path / "bundle"), tmp_path)
 
 
-@pytest.mark.parametrize("mapping", [[2, 5, 6], [1, 2, 5, 6, 9, 17, 64]])
+@pytest.mark.parametrize("mapping", [[2, 5, 6], LEGACY_FRACTAL_PROJECTION])
 def test_v2_legacy_package_policy_positive_controls(tmp_path, mapping):
     spec = copy.deepcopy(SPEC)
     spec["las_classes"] = mapping

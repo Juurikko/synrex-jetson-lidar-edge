@@ -9,7 +9,6 @@ import os
 import subprocess
 
 import pytest
-
 from test_byom import NATIVE, ROOT, SPEC, package
 
 
