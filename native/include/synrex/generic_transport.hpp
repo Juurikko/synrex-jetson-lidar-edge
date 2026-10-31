@@ -10,7 +10,7 @@ class Session;
 class OutputSender;
 class OutputReceiver;
 // Explicit selection only. No legacy decoder/fallback.
-enum class WireProtocol { binary_v3 };
+// WireProtocol is declared beside Descriptor; explicit selection binds admission.
 namespace detail {
 class ControlConnection;
 }

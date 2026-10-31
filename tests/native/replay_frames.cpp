@@ -3,6 +3,7 @@
 // CPU-only input/frame/coverage contracts. No model or engine is executed.
 #include "synrex/replay_frames.hpp"
 #include <cmath>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
@@ -117,6 +118,41 @@ Window window(const Catalog &catalog, std::size_t source, std::uint64_t begin, u
         value.observations.push_back(point);
     }
     return value;
+}
+Window source_window(const Catalog &catalog, std::uint64_t begin, unsigned count) {
+    auto result = window(catalog, 0, begin, count);
+    auto &h = result.source_header;
+    auto put = [&](std::size_t offset, std::uint64_t bits, unsigned width) {
+        for (unsigned i = 0; i < width; ++i)
+            h.at(offset + i) = bits >> (8 * i);
+    };
+    std::memcpy(h.data(), "LASF", 4);
+    h[24] = 1;
+    h[25] = 4;
+    h[104] = 128 + 6;
+    put(94, 375, 2);
+    put(105, 30, 2);
+    put(247, catalog.sources()[0].records, 8);
+    const std::array<double, 3> scales{0.0001, 0.00000001, 0.5};
+    const std::array<double, 3> offsets{10000000.0000001, -0.0, -42.0};
+    for (unsigned axis = 0; axis < 3; ++axis) {
+        std::uint64_t bits;
+        std::memcpy(&bits, &scales[axis], 8);
+        put(131 + axis * 8, bits, 8);
+        std::memcpy(&bits, &offsets[axis], 8);
+        put(155 + axis * 8, bits, 8);
+    }
+    for (unsigned i = 0; i < count; ++i) {
+        auto &point = result.observations[i];
+        point.integer_xyz = {INT32_MIN + static_cast<int>(i), INT32_MAX, -1};
+        for (unsigned axis = 0; axis < 3; ++axis)
+            point.xyz[axis] = point.integer_xyz[axis] * scales[axis] + offsets[axis];
+        point.return_number = point.return_count = 0;
+        point.gps_time_bits = i == 0   ? 0x8000000000000000ULL
+                              : i == 1 ? 0x7ff8000000000001ULL
+                                       : UINT64_MAX;
+    }
+    return result;
 }
 } // namespace
 namespace synrex {
@@ -265,6 +301,100 @@ int main(int argc, char **argv) {
                   last_frame.frame_end_ns == 999999999 &&
                   last_coverage.receipt()["state"] == "SUCCEEDED",
               "max global row and last permitted sequence preserve finite arithmetic");
+        const auto source_descriptor = Descriptor::from_package(pkg, {}, std::string(32, 'd'), 1,
+                                                                WireProtocol::binary_source_v1);
+        check(source_descriptor.sha256() != descriptor.sha256() &&
+                  source_descriptor.source_fidelity(),
+              "new descriptor explicitly binds codec");
+        auto wrong_spec = source_descriptor.spec();
+        wrong_spec["source_attributes_schema"] = "unknown";
+        rejects([&] { Descriptor::parse(wrong_spec.dump()); });
+        wrong_spec = source_descriptor.spec();
+        wrong_spec["new_attribute"] = 1;
+        rejects([&] { Descriptor::parse(wrong_spec.dump()); });
+        wrong_spec = source_descriptor.spec();
+        wrong_spec["binary_wire_version"] = 2;
+        rejects([&] { Descriptor::parse(wrong_spec.dump()); });
+        rejects([&] {
+            Descriptor::from_package(pkg, {}, std::string(32, 'd'), 1,
+                                     static_cast<WireProtocol>(99));
+        });
+        const auto sw0 = source_window(catalog, 0, 3), sw1 = source_window(catalog, 3, 2);
+        const auto sf0 = make_frame(catalog, source_descriptor, options, sw0, 0);
+        const auto sf1 = make_frame(catalog, source_descriptor, options, sw1, 1);
+        auto source_bytes = encode_frame(source_descriptor, sf0);
+        check(source_bytes.substr(0, 5) == std::string("SRXS\1", 5) &&
+                  source_bytes.size() == encode_frame(descriptor, f0).size() + 391 + 28 * 3,
+              "fixed bounded source header and raw row records");
+        const auto decoded_source = decode_frame(source_descriptor, source_bytes);
+        check(decoded_source.source_header->las14 == sw0.source_header &&
+                  decoded_source.source_rows[0].integer_xyz == sw0.observations[0].integer_xyz &&
+                  decoded_source.source_rows[1].gps_time_bits == 0x7ff8000000000001ULL &&
+                  decoded_source.points[0].return_number == 0 &&
+                  decoded_source.points[0].return_count == 0,
+              "raw int extremes, signed zero GPS, NaN GPS payload and paired zero preserved");
+        Coverage source_exact(catalog, source_descriptor, options, 0);
+        source_exact.accept(sw0, decoded_source);
+        source_exact.accept(sw1, sf1);
+        source_exact.source_eof();
+        source_exact.finish();
+        check(source_exact.receipt()["raw_source_attribute_points"] == 5,
+              "independent source bit coverage");
+        Classification classified{sf0, {0, 1, 2}, {41, 58, 75}, Json::object()};
+        const auto output = decode_classification(
+            source_descriptor, encode_classification(source_descriptor, classified));
+        Coverage output_exact(catalog, source_descriptor, options, 0);
+        output_exact.accept(sw0, output.frame);
+        auto source_poison = [&](auto mutation) {
+            auto changed = sf0;
+            mutation(changed);
+            Coverage coverage(catalog, source_descriptor, options, 0);
+            rejects([&] { coverage.accept(sw0, changed); });
+            check(coverage.receipt()["state"] == "FAILED",
+                  "raw attribute corruption poisons coverage");
+        };
+        source_poison([](auto &f) { f.source_header->las14[26] ^= 1; });  // provenance header
+        source_poison([](auto &f) { f.source_header->las14[131] ^= 1; }); // exact scale
+        source_poison([](auto &f) { f.source_header->las14[155] ^= 1; }); // exact offset
+        source_poison([](auto &f) { ++f.source_header->records; });
+        source_poison([](auto &f) { ++f.source_header->wire_begin; });
+        source_poison([](auto &f) { ++f.source_rows[0].integer_xyz[0]; });
+        source_poison([](auto &f) { f.source_rows[1].gps_time_bits ^= 1; });
+        source_poison([](auto &f) { ++f.source_rows[1].original_record_index; });
+        source_poison([](auto &f) { f.points[0].return_count = 1; });
+        source_poison([](auto &f) { f.points[0].return_number = 1; });
+        source_poison([](auto &f) { f.source_header->las14[105] = 31; }); // unknown extra attrs
+        source_poison([](auto &f) { f.source_rows.pop_back(); });
+        source_poison([](auto &f) { f.source_header.reset(); });
+        Coverage header_change(catalog, source_descriptor, options, 0);
+        header_change.accept_frame(sf0);
+        auto changed_header = sf1;
+        changed_header.source_header->las14[26] ^= 1;
+        rejects([&] { header_change.accept_frame(changed_header); });
+        auto legacy_zero = f0;
+        legacy_zero.points[0].return_number = legacy_zero.points[0].return_count = 0;
+        rejects([&] { encode_frame(descriptor, legacy_zero); });
+        auto legacy_attrs = f0;
+        legacy_attrs.source_header = sf0.source_header;
+        legacy_attrs.source_rows = sf0.source_rows;
+        rejects([&] { encode_frame(descriptor, legacy_attrs); });
+        rejects([&] { decode_frame(descriptor, source_bytes); });
+        rejects([&] { decode_frame(source_descriptor, encode_frame(descriptor, f0)); });
+        for (const auto offset : {4U, 6U}) {
+            auto corrupt = source_bytes;
+            corrupt[offset] ^= 1;
+            rejects([&] { decode_frame(source_descriptor, corrupt); });
+        }
+        auto trailing = source_bytes + "x";
+        rejects([&] { decode_frame(source_descriptor, trailing); });
+        for (std::size_t length : {std::size_t(0), std::size_t(11), source_bytes.size() - 1})
+            rejects([&] { decode_frame(source_descriptor, source_bytes.substr(0, length)); });
+        const auto tight =
+            Descriptor::from_package(pkg, {3, source_bytes.size() - 1, 30000}, std::string(32, 'd'),
+                                     1, WireProtocol::binary_source_v1);
+        auto oversized = sf0;
+        oversized.identity.descriptor_sha256 = tight.sha256();
+        rejects([&] { encode_frame(tight, oversized); });
         check(target_queries == 0, "no GPU target query");
         std::cout << "replay frames: PASS checks=" << checks << " rejections=" << rejects_count
                   << '\n';

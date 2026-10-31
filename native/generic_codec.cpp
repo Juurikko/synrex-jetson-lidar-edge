@@ -37,7 +37,8 @@ void identity(const Descriptor &descriptor, const FrameIdentity &value) {
 std::size_t frame_size(const Frame &frame) {
     return header_bytes + 64 + 32 + 8 + 8 + frame.sensor_id.size() + frame.stream_id.size() +
            frame.coordinate_frame.size() + frame.crs.size() + 40 +
-           point_bytes * frame.points.size();
+           point_bytes * frame.points.size() +
+           (frame.source_header ? 391 + 28 * frame.source_rows.size() : 0);
 }
 void timing_values(const Json &timings) {
     check(timings.is_object() && timings.size() <= timing_fields, "generic timings object bound");
@@ -119,8 +120,8 @@ Reader payload(const Descriptor &descriptor, std::string_view bytes, unsigned ki
     check(bytes.size() >= header_bytes, "generic truncated header");
     check(bytes.size() <= limit(descriptor, "max_frame_bytes"), "generic frame byte limit");
     Reader reader{bytes};
-    check(reader.take(4) == "SRX3", "generic magic");
-    check(reader.get(1) == 3, "generic version");
+    check(reader.take(4) == (descriptor.source_fidelity() ? "SRXS" : "SRX3"), "generic magic");
+    check(reader.get(1) == (descriptor.source_fidelity() ? 1 : 3), "generic version");
     check(reader.get(1) == kind, "generic message kind");
     check(reader.get(2) == 0, "generic reserved header");
     const auto size = reader.get(4);
@@ -152,6 +153,21 @@ void encode_body(std::string &bytes, const Frame &frame) {
         put(bytes, point.intensity.value_or(0), 2);
         put(bytes, 0, 2);
     }
+    if (frame.source_header) {
+        const auto &header = *frame.source_header;
+        bytes.append(reinterpret_cast<const char *>(header.las14.data()), header.las14.size());
+        put(bytes, header.records, 8);
+        put(bytes, header.wire_begin, 8);
+        for (const auto &row : frame.source_rows) {
+            put(bytes, row.original_record_index, 8);
+            put(bytes, row.gps_time_bits, 8);
+            for (auto axis : row.integer_xyz) {
+                std::uint32_t bits;
+                std::memcpy(&bits, &axis, 4);
+                put(bytes, bits, 4);
+            }
+        }
+    }
 }
 Frame decode_body(const Descriptor &descriptor, Reader &reader, bool output) {
     Frame frame;
@@ -171,12 +187,14 @@ Frame decode_body(const Descriptor &descriptor, Reader &reader, bool output) {
     check(count > 0 && count <= limit(descriptor, "max_frame_points"), "generic frame point limit");
     // count is bounded before multiplication or allocation; include labels and
     // the minimum timing JSON for an output, with no input trailing bytes.
-    const auto record = point_bytes + (output ? 2 : 0);
-    check(count <= reader.left() / record, "generic point count exceeds payload");
+    const auto source_bytes = descriptor.source_fidelity() ? 391U : 0U;
+    const auto record = point_bytes + (descriptor.source_fidelity() ? 28 : 0) + (output ? 2 : 0);
+    check(reader.left() >= source_bytes && count <= (reader.left() - source_bytes) / record,
+          "generic point count exceeds payload");
     if (output)
-        check(reader.left() - count * record >= 6, "generic missing timings");
+        check(reader.left() - source_bytes - count * record >= 6, "generic missing timings");
     else
-        check(count * record == reader.left(), "generic frame trailing bytes");
+        check(source_bytes + count * record == reader.left(), "generic frame trailing bytes");
     frame.points.reserve(static_cast<std::size_t>(count));
     for (std::uint64_t i = 0; i < count; ++i) {
         streaming::SourcePoint point;
@@ -200,13 +218,32 @@ Frame decode_body(const Descriptor &descriptor, Reader &reader, bool output) {
         }
         frame.points.push_back(point);
     }
+    if (descriptor.source_fidelity()) {
+        SourceHeader header;
+        const auto raw = reader.take(header.las14.size());
+        std::memcpy(header.las14.data(), raw.data(), raw.size());
+        header.records = reader.get(8);
+        header.wire_begin = reader.get(8);
+        frame.source_header = header;
+        frame.source_rows.reserve(static_cast<std::size_t>(count));
+        for (std::uint64_t i = 0; i < count; ++i) {
+            SourceRow row;
+            row.original_record_index = reader.get(8);
+            row.gps_time_bits = reader.get(8);
+            for (auto &axis : row.integer_xyz) {
+                const auto bits = static_cast<std::uint32_t>(reader.get(4));
+                std::memcpy(&axis, &bits, 4);
+            }
+            frame.source_rows.push_back(row);
+        }
+    }
     validate_frame(descriptor, frame);
     return frame;
 }
-std::string envelope(std::string bytes, unsigned kind) {
+std::string envelope(const Descriptor &descriptor, std::string bytes, unsigned kind) {
     const auto size = bytes.size() - header_bytes;
-    bytes.replace(0, 4, "SRX3");
-    bytes[4] = 3;
+    bytes.replace(0, 4, descriptor.source_fidelity() ? "SRXS" : "SRX3");
+    bytes[4] = descriptor.source_fidelity() ? 1 : 3;
     bytes[5] = static_cast<char>(kind);
     for (unsigned i = 0; i < 4; ++i)
         bytes[8 + i] = static_cast<char>(size >> (8 * (3 - i)));
@@ -214,6 +251,10 @@ std::string envelope(std::string bytes, unsigned kind) {
 }
 } // namespace
 void validate_frame(const Descriptor &descriptor, const Frame &frame) {
+    check(descriptor.source_fidelity() == frame.source_header.has_value() &&
+              (descriptor.source_fidelity() ? frame.source_rows.size() == frame.points.size()
+                                            : frame.source_rows.empty()),
+          "generic source attributes protocol/count mismatch");
     identity(descriptor, frame.identity);
     for (const auto *text :
          {&frame.sensor_id, &frame.stream_id, &frame.coordinate_frame, &frame.crs})
@@ -235,9 +276,60 @@ void validate_frame(const Descriptor &descriptor, const Frame &frame) {
         check(point.return_number.has_value() == point.return_count.has_value(),
               "generic paired return attributes required");
         if (point.return_number)
-            check(*point.return_number > 0 && *point.return_number <= *point.return_count &&
-                      *point.return_count <= 15,
+            check((descriptor.source_fidelity() && *point.return_number == 0 &&
+                   *point.return_count == 0) ||
+                      (*point.return_number > 0 && *point.return_number <= *point.return_count &&
+                       *point.return_count <= 15),
                   "generic invalid return attributes");
+    }
+    if (frame.source_header) {
+        const auto &header = *frame.source_header;
+        const auto &raw = header.las14;
+        auto little = [&](std::size_t offset, unsigned width) {
+            std::uint64_t result{};
+            for (unsigned i = 0; i < width; ++i)
+                result |= std::uint64_t(raw.at(offset + i)) << (8 * i);
+            return result;
+        };
+        check(std::memcmp(raw.data(), "LASF", 4) == 0 && raw[24] == 1 && raw[25] == 4 &&
+                  little(94, 2) == 375 && (raw[104] & 192) == 128 && (raw[104] & 63) >= 6 &&
+                  (raw[104] & 63) <= 8,
+              "generic source header LAS14/PDRF identity");
+        const unsigned minimum = (raw[104] & 63) == 6 ? 30 : (raw[104] & 63) == 7 ? 36 : 38;
+        check(little(105, 2) == minimum && little(247, 8) == header.records && header.records > 0 &&
+                  header.records <= UINT64_MAX - header.wire_begin,
+              "generic source header record count/bounds");
+        check(frame.stream_id.size() == 64 &&
+                  std::all_of(frame.stream_id.begin(), frame.stream_id.end(),
+                              [](unsigned char c) {
+                                  return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f');
+                              }),
+              "generic source SHA identity");
+        std::array<double, 3> scales{}, offsets{};
+        for (unsigned axis = 0; axis < 3; ++axis) {
+            auto bits = little(131 + axis * 8, 8);
+            std::memcpy(&scales[axis], &bits, 8);
+            bits = little(155 + axis * 8, 8);
+            std::memcpy(&offsets[axis], &bits, 8);
+            check(std::isfinite(scales[axis]) && scales[axis] > 0 && std::isfinite(offsets[axis]),
+                  "generic source scale/offset");
+        }
+        for (std::size_t i = 0; i < frame.points.size(); ++i) {
+            const auto &row = frame.source_rows[i];
+            const auto &point = frame.points[i];
+            check(row.original_record_index < header.records &&
+                      point.id == header.wire_begin + row.original_record_index &&
+                      (!i || row.original_record_index ==
+                                 frame.source_rows[i - 1].original_record_index + 1),
+                  "generic source original row identity/order");
+            check(point.intensity.has_value() && point.return_number.has_value(),
+                  "generic source LAS attributes required");
+            for (unsigned axis = 0; axis < 3; ++axis) {
+                const double expected = row.integer_xyz[axis] * scales[axis] + offsets[axis];
+                check(std::memcmp(&expected, &point.xyz[axis], 8) == 0,
+                      "generic source integer/scale coordinate mismatch");
+            }
+        }
     }
 }
 void validate_classification(const Descriptor &descriptor, const Classification &result) {
@@ -262,7 +354,7 @@ std::string encode_frame(const Descriptor &descriptor, const Frame &frame) {
     std::string bytes(header_bytes, '\0');
     bytes.reserve(frame_size(frame));
     encode_body(bytes, frame);
-    return envelope(std::move(bytes), frame_kind);
+    return envelope(descriptor, std::move(bytes), frame_kind);
 }
 Frame decode_frame(const Descriptor &descriptor, std::string_view bytes) {
     auto reader = payload(descriptor, bytes, frame_kind);
@@ -282,7 +374,7 @@ std::string encode_classification(const Descriptor &descriptor, const Classifica
     }
     put(bytes, timings.size(), 4);
     bytes.append(timings);
-    return envelope(std::move(bytes), classification_kind);
+    return envelope(descriptor, std::move(bytes), classification_kind);
 }
 Classification decode_classification(const Descriptor &descriptor, std::string_view bytes) {
     auto reader = payload(descriptor, bytes, classification_kind);

@@ -3,6 +3,10 @@
 
 # CPU descriptor and startup library
 
+The explicitly selected [source attributes variant](SOURCE_FIDELITY.md) also
+binds its wire and fixed attribute schema in the descriptor before metadata ACK
+or backend creation. Binary-v3 descriptors keep their original exact fields.
+
 `native/include/synrex/generic_startup.hpp` and `native/generic_startup.cpp`
 provide CPU metadata admission and an authority-side startup gate in
 `synrex::generic`. They implement CPU admission for the companion generic control transport and

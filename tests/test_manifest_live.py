@@ -15,14 +15,15 @@ from test_generic_live import FIXTURE, PRODUCTION, SESSION, package, port, start
 from test_replay_reader import cloud, manifest
 
 
-def arguments(mode, model, receipt, port_number, manifest_path, rate=1000000):
-    return [mode, "--wire", "binary-v3", "--model", str(model), "--receipt", str(receipt),
+def arguments(mode, model, receipt, port_number, manifest_path, rate=1000000, wire="binary-v3"):
+    return [mode, "--wire", wire, "--model", str(model), "--receipt", str(receipt),
             "--session", SESSION, "--manifest", str(manifest_path), "--points", "8",
             "--rate", str(rate), "--port", str(port_number), "--io-ms", "1200",
             "--startup-ms", "3000", "--map-cells", "32", "--queue-frames", "2"]
 
 
-def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2):
+def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2, wire="binary-v3",
+             raw_bits=False):
     model = package(tmp_path, count)
     other_model = package(tmp_path, count, changed=True) if failure == "taxonomy" else model
     paths = [tmp_path / f"source-{i}.laz" for i in range(sources)]
@@ -31,6 +32,17 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2):
         counts[0] = 1001
     for index, (path, records) in enumerate(zip(paths, counts, strict=True)):
         cloud(path, records, 6 + index, offsets=[1000.0 * index, -2000.0 * index, 12.5])
+    if raw_bits:
+        import laspy
+        import numpy as np
+        for path in paths:
+            data = laspy.read(path, laz_backend=laspy.LazBackend.Lazrs)
+            data.return_number = np.zeros(len(data.points), dtype=np.uint8)
+            data.number_of_returns = np.zeros(len(data.points), dtype=np.uint8)
+            gps = np.resize(np.array([0x8000000000000000, 0x7ff8000000000001,
+                                     0xffffffffffffffff], dtype=np.uint64), len(data.points))
+            data.gps_time = gps.view(np.float64)
+            data.write(path, laz_backend=laspy.LazBackend.Lazrs)
     if failure == "late-decode":
         cloud(paths[-1], counts[-1], 7, offsets=[1000000001.0, 0.0, 0.0])
     manifest_path = tmp_path / "manifest.json"
@@ -42,7 +54,7 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2):
     if failure == "inference":
         environment["SYNREX_FIXTURE_RUN"] = "fail"
     receive_args = arguments("receive", model, tmp_path / "receive.json", input_port,
-                             manifest_path, rate)
+                             manifest_path, rate, wire)
     receive_args += ["--output-port", str(output_port)]
     children = {"receive": start_receiver([str(FIXTURE), *receive_args], environment)}
     try:
@@ -52,7 +64,7 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2):
             if mode == "subscribe" and failure == "missing-subscriber":
                 continue
             command = arguments(mode, model_path, tmp_path / f"{mode}.json", port_number,
-                                manifest_path, rate)
+                                manifest_path, rate, wire)
             if mode == "subscribe" and failure == "output-map":
                 command[command.index("--map-cells") + 1] = "1"
             children[mode] = subprocess.Popen(
@@ -81,12 +93,16 @@ def pipeline(tmp_path, count=4, failure=None, rate=1000000, sources=2):
 
 
 @pytest.mark.parametrize("classes", [4, 7, 256])
-def test_manifest_cli_finite_distinct_full_pipeline_and_per_source_reset(tmp_path, classes):
-    results, manifest_path = pipeline(tmp_path, count=classes)
+@pytest.mark.parametrize("wire", ["binary-v3", "binary-source-v1"])
+def test_manifest_cli_finite_distinct_full_pipeline_and_per_source_reset(tmp_path, classes, wire):
+    results, manifest_path = pipeline(tmp_path, count=classes, wire=wire)
     for mode, result in results.items():
         receipt = result["receipt"]
         assert result["code"] == 0, results
         assert receipt["status"] == "PASS"
+        assert receipt["binary_wire"] == wire
+        if wire == "binary-source-v1":
+            assert "raw GPS bits" in receipt["source_timestamp_transport"]
         assert receipt["manifest_sha256"] == hashlib.sha256(manifest_path.read_bytes()).hexdigest()
         assert receipt["declared_records"] == 34
         assert receipt["offered_finite_duration_seconds"] == 34 / 1000000
@@ -229,3 +245,33 @@ def test_manifest_cli_prior_receipt_is_immutable(tmp_path):
     result = subprocess.run([str(PRODUCTION), *command], capture_output=True, text=True, timeout=5)
     assert result.returncode == 1
     assert receipt.read_bytes() == b"prior receipt\n"
+
+
+def test_manifest_source_codec_preserves_raw_gps_nan_bits_and_paired_zero_returns(tmp_path):
+    results, _ = pipeline(tmp_path, wire="binary-source-v1", raw_bits=True)
+    assert all(result["code"] == 0 for result in results.values()), results
+    for mode in ["send", "subscribe"]:
+        for row in results[mode]["receipt"]["sources"]:
+            assert row["coverage"]["raw_source_attribute_points"] == row["expected_records"]
+            assert row["coverage"]["source_attribute_schema"] == "synrex.las14.source_attributes.v1"
+
+
+def test_source_wire_unknown_extra_attributes_reject_before_package_or_gpu(tmp_path):
+    import laspy
+    import numpy as np
+    source = tmp_path / "extra.laz"
+    cloud(source, 3, 6)
+    data = laspy.read(source, laz_backend=laspy.LazBackend.Lazrs)
+    data.add_extra_dim(laspy.ExtraBytesParams(name="unadmitted", type=np.uint16))
+    data.write(source, laz_backend=laspy.LazBackend.Lazrs)
+    path = tmp_path / "manifest.json"
+    manifest(path, [(source, 3)])
+    command = arguments("receive", tmp_path / "absent-model", tmp_path / "receipt.json",
+                        39183, path, wire="binary-source-v1")
+    command += ["--output-port", "39184"]
+    result = subprocess.run([str(PRODUCTION), *command], capture_output=True, text=True, timeout=5)
+    receipt = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert "extra" in receipt["error"].lower(), receipt
+    assert "cannot open" not in receipt["error"]
+    assert "generic_listening" not in result.stderr

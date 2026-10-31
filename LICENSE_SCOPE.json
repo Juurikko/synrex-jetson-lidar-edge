@@ -214,7 +214,12 @@
       "tools/verify_showcase.py",
       "tools/verify_stream_ab.py",
       "tools/verify_unet_outputs.py",
-      "tools/window_campaign.py"
+      "tools/window_campaign.py",
+      "native/include/synrex/replay_metrics.hpp",
+      "tests/native/replay_metrics.cpp",
+      "tests/test_manifest_metrics.py",
+      "tests/test_runtime_comparison.py",
+      "tools/runtime_comparison.py"
     ],
     "license": "MIT"
   },
@@ -313,7 +318,10 @@
       "docs/streaming/STREAMING_R2_RIGHTS.md",
       "docs/streaming/SUSTAINED_PROTOCOL.md",
       "docs/streaming/SUSTAINED_RTX_REPORT.md",
-      "media/PERSONAL_CREDITS.md"
+      "media/PERSONAL_CREDITS.md",
+      "docs/byom/SOURCE_FIDELITY.md",
+      "docs/streaming/REPLAY_TIMING.md",
+      "docs/runtime_comparison.md"
     ],
     "license": "CC-BY-4.0"
   },

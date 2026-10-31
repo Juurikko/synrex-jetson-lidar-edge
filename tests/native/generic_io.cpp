@@ -116,15 +116,17 @@ struct Connection {
     std::unique_ptr<PeerTransport> peer;
     std::unique_ptr<Session> session;
     explicit Connection(const CpuAdmittedPackage &package,
-                        const CpuAdmittedPackage *expected = nullptr) {
+                        const CpuAdmittedPackage *expected = nullptr,
+                        WireProtocol protocol = WireProtocol::binary_v3, bool mismatch = false) {
         int sockets[2];
         check(::socketpair(AF_UNIX, SOCK_STREAM, 0, sockets) == 0, "socketpair");
         a = sockets[0];
         b = sockets[1];
-        authority = std::make_unique<AuthorityTransport>(WireProtocol::binary_v3, a, package,
-                                                         limits, session_id, 42);
-        peer = std::make_unique<PeerTransport>(
-            WireProtocol::binary_v3, b, expected ? *expected : package, limits, session_id, 42);
+        authority =
+            std::make_unique<AuthorityTransport>(protocol, a, package, limits, session_id, 42);
+        peer =
+            std::make_unique<PeerTransport>(mismatch ? WireProtocol::binary_v3 : protocol, b,
+                                            expected ? *expected : package, limits, session_id, 42);
     }
     void admit() {
         auto remote = std::async(std::launch::async, [&] { peer->metadata_admission(); });
@@ -181,6 +183,33 @@ Frame frame(const Descriptor &descriptor, unsigned points = 2) {
              std::uint16_t(65535),
              std::uint8_t(15),
              std::uint8_t(15)});
+    if (descriptor.source_fidelity()) {
+        value.stream_id = std::string(64, 'a');
+        SourceHeader header;
+        header.records = points;
+        header.wire_begin = 0;
+        auto put = [&](std::size_t offset, std::uint64_t bits, unsigned width) {
+            for (unsigned i = 0; i < width; ++i)
+                header.las14.at(offset + i) = bits >> (8 * i);
+        };
+        std::memcpy(header.las14.data(), "LASF", 4);
+        header.las14[24] = 1;
+        header.las14[25] = 4;
+        header.las14[104] = 134;
+        put(94, 375, 2);
+        put(105, 30, 2);
+        put(247, points, 8);
+        for (unsigned axis = 0; axis < 3; ++axis)
+            put(131 + axis * 8, 0x3ff0000000000000ULL, 8);
+        value.source_header = header;
+        for (unsigned i = 0; i < points; ++i) {
+            auto &p = value.points[i];
+            p.id = i;
+            p.xyz = {double(i), -1.0, 2.0};
+            p.return_number = p.return_count = 0;
+            value.source_rows.push_back({i, UINT64_MAX - i, {static_cast<int>(i), -1, 2}});
+        }
+    }
     value.accepted_steady_ns = UINT64_MAX;
     value.submitted_steady_ns = UINT64_MAX;
     return value;
@@ -215,6 +244,22 @@ void equal_frame(const Frame &expected, const Frame &actual) {
                   a.return_number == b.return_number && a.return_count == b.return_count &&
                   std::memcmp(a.xyz.data(), b.xyz.data(), sizeof(double) * 3) == 0,
               "source IDs, attributes and exact f64 bits preserved");
+    }
+    check(expected.source_header.has_value() == actual.source_header.has_value() &&
+              expected.source_rows.size() == actual.source_rows.size(),
+          "raw source metadata count");
+    if (expected.source_header) {
+        check(expected.source_header->las14 == actual.source_header->las14 &&
+                  expected.source_header->records == actual.source_header->records &&
+                  expected.source_header->wire_begin == actual.source_header->wire_begin,
+              "exact public header/scales/offset/count preserved");
+        for (std::size_t i = 0; i < actual.source_rows.size(); ++i)
+            check(expected.source_rows[i].integer_xyz == actual.source_rows[i].integer_xyz &&
+                      expected.source_rows[i].gps_time_bits ==
+                          actual.source_rows[i].gps_time_bits &&
+                      expected.source_rows[i].original_record_index ==
+                          actual.source_rows[i].original_record_index,
+                  "raw int xyz/GPS/original row preserved");
     }
     check(actual.accepted_steady_ns == 0 && actual.submitted_steady_ns == 0,
           "received host-local timestamps reset");
@@ -278,6 +323,60 @@ int main(int argc, char **argv) {
         const auto base = read_json(argv[1]);
         const CpuAdmittedPackage p4(fixture(temporary.path, base, 4));
         const auto unattached = Descriptor::from_package(p4, limits, session_id, 42);
+        run_case("source_protocol_mismatch_before_gpu", [&] {
+            Connection c(p4, nullptr, WireProtocol::binary_source_v1, true);
+            rejects([&] { c.admit(); });
+            check(c.authority->failed() && c.peer->failed() && fb::init_calls == 0,
+                  "mismatched protocol poisons both peers before backend initialization");
+        });
+        run_case("unknown_local_protocol_before_gpu", [&] {
+            rejects([&] {
+                AuthorityTransport bad(static_cast<WireProtocol>(99), -1, p4, limits, session_id,
+                                       42);
+            });
+            check(fb::init_calls == 0, "unknown local protocol rejected before socket/backend");
+        });
+        for (const bool output : {false, true})
+            run_case(output ? "source_fragmented_classification" : "source_fragmented_frame", [&] {
+                Connection c(p4, nullptr, WireProtocol::binary_source_v1);
+                c.ready();
+                const auto labels = classification(c.authority->descriptor());
+                const auto input = labels.frame;
+                const auto bytes = output ? encode_classification(c.authority->descriptor(), labels)
+                                          : encode_frame(c.authority->descriptor(), input);
+                auto writer = std::async(std::launch::async, [&] { raw_write(c.b, bytes, 3, 1); });
+                if (output)
+                    equal_classification(labels, c.authority->receive_classification(deadline()));
+                else
+                    equal_frame(input, c.authority->receive_frame(deadline()));
+                writer.get();
+            });
+        for (unsigned mutation = 0; mutation < 5; ++mutation)
+            run_case("source_fixed_header_before_allocation_" + std::to_string(mutation), [&] {
+                Connection c(p4, nullptr, WireProtocol::binary_source_v1);
+                c.ready();
+                auto bytes =
+                    encode_frame(c.authority->descriptor(), frame(c.authority->descriptor()))
+                        .substr(0, 12);
+                if (mutation == 0) {
+                    bytes[3] = '3';
+                    bytes[4] = 3;
+                }
+                if (mutation == 1)
+                    bytes[5] = 17;
+                if (mutation == 2)
+                    bytes[6] = 1;
+                if (mutation == 3)
+                    set_length(bytes, limits.max_frame_bytes); // whole envelope bound
+                if (mutation == 4)
+                    set_length(bytes, UINT32_MAX);
+                raw_write(c.b, bytes);
+                const auto started = Clock::now();
+                rejects([&] { c.authority->receive_frame(deadline(800)); });
+                check(Clock::now() - started < std::chrono::milliseconds(250),
+                      "source header rejected before waiting for payload/allocation");
+                poisoned(*c.authority);
+            });
         for (const bool admitted : {false, true})
             for (const bool authority : {false, true})
                 for (unsigned method = 0; method < 4; ++method)

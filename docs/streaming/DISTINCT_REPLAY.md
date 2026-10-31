@@ -124,7 +124,8 @@ by `--queue-frames 1|2`. Payload and vector-allocation bytes are bounded by
 `queue_frames * points * sizeof(Observation)`. Its receipt reports current/high
 water item and byte counts, blocked producer/consumer time, queue age and discarded items/points/bytes. One
 producer window, one consumer window, model/codec/socket buffers and decoder
-internals are additional memory. The receiver uses one synchronous caller for
+internals are additional memory. Each retained window also has one fixed 375-byte
+public-header array; queue byte counters cover observation-vector storage. The receiver uses one synchronous caller for
 both transports and inference; it has no application input/output queues. This
 preserves the transport's single-caller contract. Socket buffering remains
 external to the decode-queue bound. Errors clear the FIFO, wake waiters, preserve
@@ -152,15 +153,16 @@ Each failed source retains its counters/coverage, and a prior successful file
 cannot make the overall trial pass. Source-coverage completion and decoded/source
 verification are separate receipt fields; coverage alone cannot prove decode EOF.
 
-Raw LAS GPS bits and the original integer/scales remain available in the Reader
-and bound by exact source SHA, but binary-v3 has no fields for their wire
-roundtrip. They are not converted to synthetic time or claimed to be preserved
-through transport. Physical EOF beyond header records also remains unqualified.
-These are explicit remaining E3 requirements, alongside bounded latency
-histograms, instrumentation overhead, broader fault trials and real measured
-capacity. Current manifest dispatch evidence uses an opaque CPU test backend;
-actual generic GPU execution remains required. No neural quality result follows
-from these tests.
+For exact original integer/scales, public-header and raw GPS bit transport, all
+three manifest commands can explicitly select `--wire binary-source-v1` instead.
+The [source attributes contract](../byom/SOURCE_FIDELITY.md) defines its distinct
+codec/admission identities, exact row sidecars, independent subscriber checks,
+paired zero-return support and bounds. Its default frame budget is 2 MiB.
+Binary-v3 continues to carry its original supported attributes and does not claim
+raw integer/GPS roundtrip. Neither path converts GPS to synthetic time.
+Physical EOF beyond header records and real measured capacity remain unqualified.
+Current manifest dispatch evidence uses an opaque CPU test backend; actual generic
+GPU execution remains required. No neural quality result follows from these tests.
 
 Multi-file preservation is `NOT_SUPPORTED`: `--source` and `--export-bundle`
 reject in manifest mode. Global IDs never enter the single-file exporter as local

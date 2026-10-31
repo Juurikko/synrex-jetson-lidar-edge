@@ -17,6 +17,7 @@ struct Observation {
 };
 struct Window {
     std::size_t source_index{};
+    std::array<unsigned char, 375> source_header{};
     std::vector<Observation> observations;
 };
 // One open source, one raw record buffer, and one caller-owned output window.

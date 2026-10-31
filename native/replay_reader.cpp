@@ -33,6 +33,7 @@ struct Reader::Impl {
     std::unique_ptr<lazperf::reader::named_file> decoder;
     std::vector<unsigned char> raw;
     std::array<double, 3> scales{}, offsets{};
+    std::array<unsigned char, 375> header{};
     std::uint64_t decoded{}, raw_decoded{}, expected{};
     unsigned format{}, global_encoding{};
     bool eof{}, finished{}, failed{};
@@ -43,7 +44,6 @@ struct Reader::Impl {
         const auto path = source.path();
         require(validate_laz(path) == expected, "replay declared/header point count mismatch");
         std::ifstream input(path, std::ios::binary);
-        std::array<unsigned char, 375> header{};
         require(bool(input.read(reinterpret_cast<char *>(header.data()), header.size())),
                 "replay truncated LAS header");
         format = header[104] & 63;
@@ -72,6 +72,7 @@ bool Reader::next(Window &window) {
         if (window.observations.capacity() > s.window_points)
             std::vector<Observation>().swap(window.observations);
         window.source_index = s.source_index;
+        window.source_header = s.header;
         if (s.decoded == s.expected) {
             s.eof = true;
             return false;

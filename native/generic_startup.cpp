@@ -128,14 +128,22 @@ Limits Limits::negotiate(const Limits &local, const Limits &peer) {
 Descriptor::Descriptor(std::string bytes)
     : bytes_(std::move(bytes)), spec_(strict_json(bytes_, max_bytes)),
       taxonomy_(spec_.at("taxonomy_utf8").get<std::string>()) {
-    keys(spec_,
+    const bool source = spec_.at("binary_wire_schema") == "synrex.binary.source.v1";
+    auto fields = spec_;
+    if (source) {
+        check(fields.at("source_attributes_schema") == "synrex.las14.source_attributes.v1",
+              "unsupported source attributes schema");
+        fields.erase("source_attributes_schema");
+    }
+    keys(fields,
          {"schema", "binary_wire_schema", "binary_wire_version", "package_envelope",
           "dense_adapter", "text_stream_schema", "context_policy_id", "context_policy_sha256",
           "manifest_sha256", "taxonomy_utf8", "taxonomy_sha256", "class_count", "las_projection",
           "las_projection_sha256", "session_id", "map_epoch", "limits"});
     check(spec_.at("schema") == "synrex.session.descriptor.v3", "descriptor schema");
-    check(spec_.at("binary_wire_schema") == "synrex.binary.v3" &&
-              integer(spec_.at("binary_wire_version"), 3, 3) == 3,
+    check((source && integer(spec_.at("binary_wire_version"), 1, 1) == 1) ||
+              (spec_.at("binary_wire_schema") == "synrex.binary.v3" &&
+               integer(spec_.at("binary_wire_version"), 3, 3) == 3),
           "binary wire identity");
     check(spec_.at("package_envelope") == "synrex.srxmodel.v3", "package envelope identity");
     check(spec_.at("dense_adapter") == "DENSE_VOXEL_SEGMENTATION_V1", "dense adapter identity");
@@ -169,7 +177,10 @@ Descriptor Descriptor::parse(std::string_view bytes) {
     return Descriptor(std::string(bytes));
 }
 Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Limits &limits,
-                                    const std::string &session_id, std::uint64_t map_epoch) {
+                                    const std::string &session_id, std::uint64_t map_epoch,
+                                    WireProtocol protocol) {
+    check(protocol == WireProtocol::binary_v3 || protocol == WireProtocol::binary_source_v1,
+          "unsupported wire protocol");
     limits.validate();
     const auto &package = *admitted.package_;
     // This object was privately constructed by the actual Package CPU reader;
@@ -210,6 +221,11 @@ Descriptor Descriptor::from_package(const CpuAdmittedPackage &admitted, const Li
                  {"max_frame_points", limits.max_frame_points},
                  {"max_frame_bytes", limits.max_frame_bytes},
                  {"startup_timeout_ms", limits.startup_timeout_ms}}}};
+    if (protocol == WireProtocol::binary_source_v1) {
+        value["binary_wire_schema"] = "synrex.binary.source.v1";
+        value["binary_wire_version"] = 1;
+        value["source_attributes_schema"] = "synrex.las14.source_attributes.v1";
+    }
     // Escaping and envelope overhead count. A valid 64KiB taxonomy may not fit.
     Descriptor result(value.dump());
     result.package_bound_ = true;

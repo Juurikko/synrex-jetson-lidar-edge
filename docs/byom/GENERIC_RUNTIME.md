@@ -16,8 +16,11 @@ interchangeability and trained quality remain unqualified.
 The [manifest dispatch path](../streaming/DISTINCT_REPLAY.md) adds finite multi-file
 classification and independent subscriber checks with a two-window decode queue.
 It opens a new descriptor/session/map for every file and keeps global wire IDs
-out of the preservation exporter. Source integer/scales/raw GPS wire roundtrip,
-full timing/capacity gates and real GPU evidence remain required.
+out of the preservation exporter. The explicit
+[source attributes transport](SOURCE_FIDELITY.md) adds exact integer/scales/raw GPS
+roundtrip with independent CPU reconstruction. [Per-source bounded timing](../streaming/REPLAY_TIMING.md)
+reports named local boundaries and synthetic accumulation separately. Full
+timing/capacity gates and real GPU evidence remain required.
 
 `CpuAdmittedPackage(path)` captures model bytes once. Construct both peers with
 their expected package, session ID and epoch, then perform `metadata_admission()`

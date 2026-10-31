@@ -30,6 +30,7 @@ class Coverage final {
     std::size_t source_index_;
     std::uint64_t sequence_begin_, points_{}, windows_{}, exact_points_{}, identity_points_{};
     bool failed_{}, eof_{}, finished_{};
+    std::optional<generic::SourceHeader> first_header_;
     void validate_next(const generic::Frame &) const;
     void advance(bool exact, std::size_t count);
 

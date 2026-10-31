@@ -116,10 +116,13 @@ Json small_json(const std::string &bytes) {
     };
     return Json::parse(bytes, callback);
 }
-Json hello_json(const std::string &bytes) {
+Json hello_json(const std::string &bytes, WireProtocol protocol) {
     auto value = small_json(bytes);
     check(value.is_object() && value.size() == 2 && value.contains("schema") &&
-              value.contains("limits") && value.at("schema") == "synrex.session.hello.v3",
+              value.contains("limits") &&
+              value.at("schema") == (protocol == WireProtocol::binary_source_v1
+                                         ? "synrex.session.hello.source.v1"
+                                         : "synrex.session.hello.v3"),
           "wire-v3 unsupported hello schema/capability");
     return value;
 }
@@ -162,6 +165,8 @@ std::size_t bound(Message message) {
 namespace detail {
 class ControlConnection {
     int socket_;
+    const WireProtocol protocol_;
+    bool source() const { return protocol_ == WireProtocol::binary_source_v1; }
     const CpuAdmittedPackage package_;
     Limits supported_, negotiated_{};
     std::string session_;
@@ -287,8 +292,8 @@ class ControlConnection {
         std::array<char, 12> header{'S',
                                     'R',
                                     'X',
-                                    '3',
-                                    3,
+                                    source() ? 'S' : '3',
+                                    static_cast<char>(source() ? 1 : 3),
                                     static_cast<char>(message),
                                     0,
                                     0,
@@ -301,9 +306,9 @@ class ControlConnection {
         transfer(const_cast<char *>(bytes.data()), bytes.size(), true, deadline);
     }
     std::uint32_t payload_size(const std::array<char, 12> &header, Message expected) const {
-        check(header[0] == 'S' && header[1] == 'R' && header[2] == 'X' && header[3] == '3' &&
-                  header[4] == 3 && header[5] == static_cast<char>(expected) && header[6] == 0 &&
-                  header[7] == 0,
+        check(header[0] == 'S' && header[1] == 'R' && header[2] == 'X' &&
+                  header[3] == (source() ? 'S' : '3') && header[4] == (source() ? 1 : 3) &&
+                  header[5] == static_cast<char>(expected) && header[6] == 0 && header[7] == 0,
               "wire-v3 unsupported/malformed/out-of-order envelope");
         std::uint32_t size{};
         for (unsigned i = 8; i < 12; ++i)
@@ -373,13 +378,14 @@ class ControlConnection {
   public:
     ControlConnection(WireProtocol protocol, int socket, const CpuAdmittedPackage &package,
                       Limits supported, std::string session, std::uint64_t epoch, bool authority)
-        : socket_(socket), package_(package.package_), supported_(supported),
+        : socket_(socket), protocol_(protocol), package_(package.package_), supported_(supported),
           session_(std::move(session)), epoch_(epoch), authority_(authority),
           metadata_deadline_(Clock::now() +
                              std::chrono::milliseconds(Descriptor::metadata_timeout_ms)) {
-        check(protocol == WireProtocol::binary_v3, "explicit binary-v3 selection required");
+        check(protocol == WireProtocol::binary_v3 || protocol == WireProtocol::binary_source_v1,
+              "explicit supported binary protocol selection required");
         // All local package/config validation happens before the first socket operation.
-        Descriptor::from_package(package_, supported_, session_, epoch_);
+        Descriptor::from_package(package_, supported_, session_, epoch_, protocol_);
         int type{};
         socklen_t size = sizeof(type);
         check(::getsockopt(socket_, SOL_SOCKET, SO_TYPE, &type, &size) == 0 && type == SOCK_STREAM,
@@ -390,16 +396,20 @@ class ControlConnection {
             check(stage_ == Stage::fresh, "wire-v3 duplicate metadata admission");
             before(metadata_deadline_);
             if (authority_) {
-                const auto hello = hello_json(receive(Message::hello, metadata_deadline_));
+                const auto hello =
+                    hello_json(receive(Message::hello, metadata_deadline_), protocol_);
                 negotiated_ = Limits::negotiate(supported_, read_limits(hello.at("limits")));
-                bind_descriptor(Descriptor::from_package(package_, negotiated_, session_, epoch_));
+                bind_descriptor(
+                    Descriptor::from_package(package_, negotiated_, session_, epoch_, protocol_));
                 send(Message::descriptor, descriptor_->bytes(), metadata_deadline_);
                 const auto ack = receive(Message::metadata_ack, metadata_deadline_);
                 before(metadata_deadline_);
                 startup_->metadata_ack(ack);
             } else {
                 send(Message::hello,
-                     Json{{"schema", "synrex.session.hello.v3"}, {"limits", limit_json(supported_)}}
+                     Json{{"schema",
+                           source() ? "synrex.session.hello.source.v1" : "synrex.session.hello.v3"},
+                          {"limits", limit_json(supported_)}}
                          .dump(),
                      metadata_deadline_);
                 const auto bytes = receive(Message::descriptor, metadata_deadline_);
@@ -411,7 +421,8 @@ class ControlConnection {
                 check(limit_json(Limits::negotiate(supported_, negotiated_)) ==
                           limit_json(negotiated_),
                       "wire-v3 descriptor exceeds peer supported limits");
-                auto expected = Descriptor::from_package(package_, negotiated_, session_, epoch_);
+                auto expected =
+                    Descriptor::from_package(package_, negotiated_, session_, epoch_, protocol_);
                 check(bytes == expected.bytes(),
                       "wire-v3 expected package/session/metadata identity mismatch");
                 bind_descriptor(std::move(expected));

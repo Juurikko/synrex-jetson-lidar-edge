@@ -3,6 +3,10 @@
 
 # Opt-in binary-v3 transport
 
+The separately selected [LAS source attributes transport](SOURCE_FIDELITY.md)
+uses this control/session/completion flow with distinct SRXS/version1 envelopes
+and descriptor-bound source schema. The layout below describes binary-v3.
+
 `generic_transport.hpp` implements a CPU control exchange over a caller-owned,
 connected POSIX `SOCK_STREAM` socket. Callers explicitly select
 `WireProtocol::binary_v3`. This library is separate from legacy wire-v2: no legacy

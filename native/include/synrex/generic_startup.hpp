@@ -11,6 +11,7 @@ namespace synrex::generic {
 namespace detail {
 class ControlConnection;
 }
+enum class WireProtocol { binary_v3, binary_source_v1 };
 // CPU preparation only; companion transport/session/codec modules consume it.
 struct Limits {
     std::uint64_t max_frame_points{16384}, max_frame_bytes{1048576};
@@ -46,11 +47,15 @@ class Descriptor {
     // Only the privately owned production-admitted wrapper can create authority
     // identity. The retained captured metadata is used; no mutable Package input.
     static Descriptor from_package(const CpuAdmittedPackage &, const Limits &,
-                                   const std::string &session_id, std::uint64_t map_epoch);
+                                   const std::string &session_id, std::uint64_t map_epoch,
+                                   WireProtocol protocol = WireProtocol::binary_v3);
     static Descriptor parse(std::string_view bytes);
     const std::string &bytes() const { return bytes_; }
     const std::string &sha256() const { return sha256_; }
     const Json &spec() const { return spec_; }
+    bool source_fidelity() const {
+        return spec_.at("binary_wire_schema") == "synrex.binary.source.v1";
+    }
     const Taxonomy &taxonomy() const { return taxonomy_; }
     std::string control(const std::string &kind) const;
 };
