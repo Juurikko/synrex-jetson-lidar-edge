@@ -82,6 +82,8 @@ target_include_directories(synrex_core PUBLIC native/include)
 target_include_directories(synrex_core SYSTEM PUBLIC "${SYNREX_JSON_INCLUDE}")
 target_compile_definitions(synrex_core PRIVATE SYNREX_LAZ_LIBRARY _GNU_SOURCE)
 target_link_libraries(synrex_core PUBLIC lazperf_review OpenSSL::Crypto)
+# Preserve the profile decode as separate float64 multiply/add on both CPU targets.
+set_source_files_properties(native/point_io.cpp PROPERTIES COMPILE_OPTIONS "-ffp-contract=off")
 target_compile_options(synrex_core PRIVATE -Wall -Wextra -Wpedantic -Werror)
 option(SYNREX_ENABLE_CUDA "Build genuine CUDA/TensorRT backend (TensorRT 10.x)" OFF)
 if(SYNREX_ENABLE_CUDA)
