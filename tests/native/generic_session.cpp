@@ -4,6 +4,7 @@
 #include "generic_fixture_backend.hpp"
 #include "synrex/generic_service.hpp"
 #include "synrex/generic_transport.hpp"
+#include "synrex/common_session.hpp"
 #include "synrex/tensor_trace.hpp"
 #include <fstream>
 #include <future>
@@ -197,6 +198,19 @@ int main(int argc, char **argv) {
         const auto base = read_json(argv[1]);
         const auto p4 = fixture(temporary.path, base, 4);
         const CpuAdmittedPackage package(p4);
+        run_case("common_dense_wrapper", [&] {
+            Connection c(package);
+            c.admit();
+            auto dense = c.ready();
+            auto input = frame(*dense);
+            synrex::common::Session common(std::move(dense));
+            check(common.backend() == synrex::common::Backend::dense, "explicit dense wrapper");
+            rejects([&] { common.point_authority(); }, "point authority");
+            rejects([&] { common.run(synrex::point::PreparedBatch{}); }, "backend/input");
+            const auto result = std::get<synrex::generic::Classification>(common.run(input));
+            check(result.semantic_ids == std::vector<std::uint8_t>({3, 1, 3}), "unchanged dense output");
+            check(fb::runs == 1 && fb::init_calls == 1, "dense wrapper initializes/runs once");
+        });
         run_case("no_metadata_no_backend", [&] {
             Connection c(package);
             check(!c.authority->initialization_permission(), "fresh gate denies initialization");

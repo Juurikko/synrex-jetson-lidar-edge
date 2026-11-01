@@ -8,8 +8,10 @@ never represented by a dummy ONNX file, dense tensor or TensorRT engine.
 This implementation provides bounded CPU envelope admission, retained native
 source/current/inverse authority and an abstract retained backend interface.
 It does **not** implement a learned backend, local worker process launcher,
-external wire4 socket codec, GPU execution or application qualification. The
-synthetic tests cannot establish any of those results. A production adapter
+GPU execution or application qualification. The separate
+[point wire4 codec and common caller](POINT_WIRE_V4.md) supply bounded external
+framing and explicit dispatch. Synthetic tests cannot establish learned or
+application qualification. A production adapter
 must supply the application validator, concrete backend and durable output
 committer, and qualify their exact combined sources and bytes.
 
@@ -80,8 +82,9 @@ input payload, logical batch and policy cutoff. This internal
 `synrex.point.native-authority.v1` record is not an external worker-protocol
 record; a concrete adapter binds the retained native record into its separately
 versioned IPC authority. Likewise `synrex.point.native-session.v1` is an internal
-native descriptor requiring wire4, not an implementation of external wire4
-framing. Dense wire-v3 peers cannot consume these types.
+native descriptor requiring wire4. External framing is supplied separately by
+`point_wire.hpp`; the descriptor alone is not a wire frame. Dense wire-v3 peers
+cannot consume these types.
 
 The backend returns only representative semantics/validity plus the retained
 request/authority identity. It never returns source mapping authority. Every

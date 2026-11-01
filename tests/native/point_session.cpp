@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/point_session.hpp"
+#include "synrex/common_session.hpp"
+#include "synrex/point_wire.hpp"
+#include "generic_fixture_backend.hpp"
+#include <sys/socket.h>
+#include <chrono>
+#include <future>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -445,6 +451,163 @@ void reset_and_completion() {
         });
     });
 }
+void wire_and_common() {
+    namespace w = synrex::point::wire4;
+    const auto deadline = [] { return w::Connection::Clock::now() + std::chrono::seconds(2); };
+    PackageFixture p;
+    Control c;
+    auto artifact = p.admit();
+    auto common = synrex::common::Session::from_point(
+        artifact, "00000000-0000-0000-0000-000000000001",
+        [&c] { return std::make_unique<Backend>(c); },
+        synrex::point::SessionOptions{true, false, 4, 8, {source()}});
+    auto &s = common.point_authority();
+    w::Binding binding(s, *artifact);
+    refuses([&] { synrex::generic::Descriptor::parse(s.descriptor().dump()); });
+    check(common.backend() == synrex::common::Backend::point);
+    refuses([&] { common.run(synrex::generic::Frame{}); });
+    check(c.made == 0 && s.state() == State::metadata_pending);
+    refuses([&] { common.dense_session(); });
+    // Real stream sockets exercise both peers, every admission ACK, typed data,
+    // native reconstruction and terminal ACKs. Only a synthetic CPU backend runs.
+    int input[2], output[2];
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, output) == 0);
+    std::string classified_packet;
+    {
+        w::Connection authority_in(input[0], binding), peer_in(input[1], binding),
+                       authority_out(output[0], binding), peer_out(output[1], binding);
+        for (auto *pair : {&authority_in, &authority_out})
+            pair->send_control(w::Control::descriptor, s.descriptor(), deadline());
+        check(peer_in.receive_control(w::Control::descriptor, deadline()) == s.descriptor());
+        check(peer_out.receive_control(w::Control::descriptor, deadline()) == s.descriptor());
+        peer_in.send_control(w::Control::metadata_ack, s.descriptor_sha256(), deadline());
+        s.metadata_ack(Peer::input, authority_in.receive_control(w::Control::metadata_ack, deadline()));
+        check(c.made == 0);
+        peer_out.send_control(w::Control::metadata_ack, s.descriptor_sha256(), deadline());
+        s.metadata_ack(Peer::output, authority_out.receive_control(w::Control::metadata_ack, deadline()));
+        const auto init = s.initialize();
+        authority_in.send_control(w::Control::initialization, init, deadline());
+        authority_out.send_control(w::Control::initialization, init, deadline());
+        const auto in_init = peer_in.receive_control(w::Control::initialization, deadline());
+        const auto out_init = peer_out.receive_control(w::Control::initialization, deadline());
+        peer_in.send_control(w::Control::ready_ack, in_init.at("initialization_sha256"), deadline());
+        peer_out.send_control(w::Control::ready_ack, out_init.at("initialization_sha256"), deadline());
+        s.ready_ack(Peer::input, authority_in.receive_control(w::Control::ready_ack, deadline()));
+        check(c.activated == 0);
+        s.ready_ack(Peer::output, authority_out.receive_control(w::Control::ready_ack, deadline()));
+        const auto identity_source = source();
+        peer_in.send_control(w::Control::source,
+            {{"sha256", identity_source.sha256}, {"header_sha256", identity_source.header_sha256},
+             {"rows", identity_source.rows}}, deadline());
+        const auto source_notice = authority_in.receive_control(w::Control::source, deadline());
+        check(source_notice.at("sha256") == identity_source.sha256);
+        s.open_source(identity_source);
+        auto original = batch();
+        original.coord[0] = -0.0F;
+        original.coord[1] = std::numeric_limits<float>::denorm_min();
+        original.feat[0] = std::numeric_limits<float>::max();
+        peer_in.send_batch(original, deadline());
+        const auto decoded = authority_in.receive_batch(deadline());
+        check(decoded.coord == original.coord && decoded.feat == original.feat &&
+              decoded.grid_coord == original.grid_coord && decoded.inverse == original.inverse &&
+              decoded.current_rows == original.current_rows &&
+              decoded.representative_source_rows == original.representative_source_rows);
+        check(w::encode_batch(binding, decoded) == w::encode_batch(binding, original));
+        auto classified = std::get<synrex::point::Classification>(common.run(decoded));
+        classified_packet = w::encode_classification(binding, classified);
+        authority_out.send_classification(classified, deadline());
+        const auto observed = peer_out.receive_classification(deadline());
+        check(observed.rows == classified.rows && observed.semantic_ids == classified.semantic_ids &&
+              observed.authority_sha256 == classified.authority_sha256 && observed.semantic_ids[1] == 0);
+        const auto completion = s.complete([](const auto &rows) {
+            check(rows.at(source().sha256) == std::vector<std::uint8_t>({0, 1, 1, 1}));
+            return digest_bytes("wire4 durable synthetic output");
+        });
+        authority_in.send_control(w::Control::completion, completion, deadline());
+        authority_out.send_control(w::Control::completion, completion, deadline());
+        const auto in_complete = peer_in.receive_control(w::Control::completion, deadline());
+        const auto out_complete = peer_out.receive_control(w::Control::completion, deadline());
+        peer_in.send_control(w::Control::completion_ack, in_complete.at("completion_sha256"), deadline());
+        peer_out.send_control(w::Control::completion_ack, out_complete.at("completion_sha256"), deadline());
+        s.completion_ack(Peer::input, authority_in.receive_control(w::Control::completion_ack, deadline()));
+        s.completion_ack(Peer::output, authority_out.receive_control(w::Control::completion_ack, deadline()));
+        check(s.state() == State::complete && c.made == 1 && c.runs == 1);
+    }
+    for (const auto fd : {input[0], input[1], output[0], output[1]}) ::close(fd);
+    for (std::size_t i = 0; i < classified_packet.size(); ++i)
+        refuses([&] { w::decode_classification(binding, std::string_view(classified_packet).substr(0, i)); });
+    auto corrupt_classification = classified_packet;
+    corrupt_classification.back() ^= 1;
+    refuses([&] { w::decode_classification(binding, corrupt_classification); });
+    corrupt_classification = classified_packet;
+    corrupt_classification[corrupt_classification.size() - 8] = 0;
+    refuses([&] { w::decode_classification(binding, corrupt_classification); });
+    const auto encoded = w::encode_batch(binding, batch());
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
+    {
+        w::Connection receiver(input[0], binding);
+        auto sender = std::async(std::launch::async, [&] {
+            check(::send(input[1], encoded.data(), 6, MSG_NOSIGNAL) == 6);
+            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+            check(::send(input[1], encoded.data() + 6, encoded.size() - 6, MSG_NOSIGNAL) ==
+                  static_cast<ssize_t>(encoded.size() - 6));
+        });
+        check(w::encode_batch(binding, receiver.receive_batch(deadline())) == encoded);
+        sender.get();
+    }
+    ::close(input[0]); ::close(input[1]);
+    for (std::size_t i = 0; i < encoded.size(); ++i)
+        refuses([&] { w::decode_batch(binding, std::string_view(encoded).substr(0, i)); });
+    for (const auto index : {0U, 4U, 5U, 6U, 8U, 12U, 112U}) {
+        auto bad = encoded; bad[index] ^= 1;
+        refuses([&] { w::decode_batch(binding, bad); });
+    }
+    auto bad = encoded + "x";
+    refuses([&] { w::decode_batch(binding, bad); });
+    bad = encoded;
+    // Current count sits after fixed identity/source/cutoff/logical digest.
+    std::fill(bad.begin() + 320, bad.begin() + 328, '\xff');
+    refuses([&] { w::decode_batch(binding, bad); });
+    auto invalid = batch(); invalid.inverse[0] = 99;
+    refuses([&] { w::encode_batch(binding, invalid); });
+    invalid = batch(); invalid.feat[0] = std::numeric_limits<float>::infinity();
+    refuses([&] { w::encode_batch(binding, invalid); });
+    invalid = batch(); invalid.source = source("unknown");
+    refuses([&] { w::encode_batch(binding, invalid); });
+    refuses([&] { w::encode_control(binding, w::Control::metadata_ack, digest_bytes("wrong")); });
+    auto control = w::encode_control(binding, w::Control::descriptor, s.descriptor());
+    control[3] = '3';
+    refuses([&] { w::decode_control(binding, w::Control::descriptor, control); });
+    // An oversized advertised length rejects from its 12-byte header alone.
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
+    {
+        w::Connection receiver(input[0], binding);
+        auto header = encoded.substr(0, 12);
+        std::fill(header.begin() + 8, header.end(), '\xff');
+        check(::send(input[1], header.data(), header.size(), MSG_NOSIGNAL) == 12);
+        refuses([&] { receiver.receive_batch(deadline()); });
+        check(receiver.failed());
+        refuses([&] { receiver.receive_batch(deadline()); });
+    }
+    ::close(input[0]); ::close(input[1]);
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
+    {
+        w::Connection receiver(input[0], binding);
+        refuses([&] { receiver.receive_batch(w::Connection::Clock::now() + std::chrono::milliseconds(10)); });
+        check(receiver.failed());
+    }
+    ::close(input[0]); ::close(input[1]);
+    check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
+    {
+        w::Connection receiver(input[0], binding);
+        ::shutdown(input[1], SHUT_WR);
+        refuses([&] { receiver.receive_batch(deadline()); });
+        check(receiver.failed());
+    }
+    ::close(input[0]); ::close(input[1]);
+}
+
 } // namespace
 int main(int argc, char **argv) {
     try {
@@ -462,6 +625,7 @@ int main(int argc, char **argv) {
         negative_batches();
         representative_self_mapping();
         reset_and_completion();
+        wire_and_common();
         std::cout
             << "PASS synthetic point artifact/session authority; no learned/GPU qualification\n";
     } catch (const std::exception &e) {
