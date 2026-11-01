@@ -70,6 +70,10 @@ The payload digest uses exact packed little endian array bytes in that order.
 It is independent of C++ object padding or host byte order. Zero-row sources
 complete without any model forward; an empty model batch itself rejects.
 
+When a representative source row is among current rows, its inverse must select
+that same representative index. History-only representatives may remain outside
+current rows. Contradictory in-range maps reject before backend execution.
+
 The native authority record additionally binds descriptor, epoch, request,
 source/header/row count, exact ordered current/inverse maps, representative count,
 input payload, logical batch and policy cutoff. This internal

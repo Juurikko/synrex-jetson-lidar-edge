@@ -168,7 +168,7 @@ PreparedBatch batch(SourceIdentity s = source()) {
     b.logical_batch_sha256 = digest_bytes("logical-batch");
     b.current_rows = {3, 0, 2, 1};
     b.representative_source_rows = {0, 1};
-    b.inverse = {1, 0, 1, 0};
+    b.inverse = {1, 0, 1, 1};
     b.coord = {0, 0, 0, 1, 1, 1};
     b.grid_coord = {0, 0, 0, 1, 1, 1};
     b.feat = {0, 0, 0, 0, 1, 1, 1, 1};
@@ -278,13 +278,13 @@ void reconstruction() {
           output.logical_batch_sha256 == b.logical_batch_sha256 &&
           output.authority_sha256.size() == 64);
     check(output.rows == b.current_rows &&
-          output.semantic_ids == std::vector<std::uint8_t>({1, 0, 1, 0}) &&
+          output.semantic_ids == std::vector<std::uint8_t>({1, 0, 1, 1}) &&
           output.validity == std::vector<std::uint8_t>({1, 1, 1, 1}) &&
-          output.las_codes == std::vector<std::uint8_t>({1, 2, 1, 2}));
+          output.las_codes == std::vector<std::uint8_t>({1, 2, 1, 1}));
     bool committed = false;
     const auto receipt = s->complete([&](const auto &rows) {
         committed = true;
-        check(rows.at(source().sha256) == std::vector<std::uint8_t>({0, 0, 1, 1}));
+        check(rows.at(source().sha256) == std::vector<std::uint8_t>({0, 1, 1, 1}));
         return digest_bytes("synthetic-output");
     });
     check(committed && s->state() == State::complete_pending && c.completed == 1);
@@ -359,8 +359,37 @@ void negative_batches() {
     ready(*s);
     s->open_source(source());
     auto b = batch();
-    b.inverse = {0, 0, 0, 0};
-    check(s->run(b).semantic_ids == std::vector<std::uint8_t>({0, 0, 0, 0}));
+    b.current_rows = {0, 2, 3}; // Representative row1 is context-only.
+    b.inverse = {0, 0, 0};
+    check(s->run(b).semantic_ids == std::vector<std::uint8_t>({0, 0, 0}));
+}
+void representative_self_mapping() {
+    Control c;
+    auto s = session(c);
+    ready(*s);
+    s->open_source(source());
+    auto b = batch();
+    // Both indices are in range, but the two current representatives select
+    // each other. Refuse before backend execution, rather than silently swap.
+    b.inverse = {1, 1, 1, 0};
+    bool rejected_for_mapping = false;
+    try {
+        s->run(b);
+    } catch (const std::exception &e) {
+        rejected_for_mapping =
+            std::string(e.what()).find("representative self-map") != std::string::npos;
+    }
+    check(rejected_for_mapping && c.runs == 0 && c.retired == 1 && s->state() == State::failed);
+    s = session(c);
+    ready(*s);
+    s->open_source(source());
+    b = batch();
+    // Representative order may differ from source/current order when its
+    // inverse is changed consistently. The original-row semantics stay fixed.
+    b.representative_source_rows = {1, 0};
+    b.inverse = {0, 1, 0, 0};
+    const auto output = s->run(b);
+    check(output.semantic_ids == std::vector<std::uint8_t>({1, 0, 1, 1}));
 }
 void reset_and_completion() {
     Control c;
@@ -431,6 +460,7 @@ int main(int argc, char **argv) {
         handshake();
         reconstruction();
         negative_batches();
+        representative_self_mapping();
         reset_and_completion();
         std::cout
             << "PASS synthetic point artifact/session authority; no learned/GPU qualification\n";

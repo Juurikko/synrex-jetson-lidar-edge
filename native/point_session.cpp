@@ -381,16 +381,25 @@ Classification PointSession::run(const PreparedBatch &input) {
                     hash(input.logical_batch_sha256),
                 "point model input count/shape/byte bound");
         require(s.request < json_integer_max, "point request overflow");
-        std::set<std::uint64_t> current, representatives;
+        std::map<std::uint64_t, std::uint32_t> current;
+        std::set<std::uint64_t> representatives;
         for (const auto row : input.representative_source_rows)
             require(row < source.identity.rows && representatives.insert(row).second,
                     "point representative source row range/duplicate");
         for (std::size_t i = 0; i < count; ++i)
             require(input.current_rows[i] < source.identity.rows &&
-                        current.insert(input.current_rows[i]).second &&
+                        current.emplace(input.current_rows[i], input.inverse[i]).second &&
                         !source.accepted[input.current_rows[i]] &&
                         !source.emitted[input.current_rows[i]] && input.inverse[i] < n,
                     "point current row/inverse/replay");
+        // A representative is its own source-row observation. If that source
+        // row is current, its inverse must select this exact representative.
+        // History-only representatives need not appear in current rows.
+        for (std::size_t j = 0; j < n; ++j) {
+            const auto selected = current.find(input.representative_source_rows[j]);
+            require(selected == current.end() || selected->second == j,
+                    "point representative self-map mismatch");
+        }
         // Freeze before handing control to an implementation; all row fences and
         // expansion below use this retained copy, never worker-supplied maps.
         for (auto value : input.grid_coord)
