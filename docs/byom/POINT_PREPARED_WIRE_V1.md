@@ -1,4 +1,4 @@
-# Explicit point wire4 and common caller
+# Prepared-batch wire1 and common caller
 
 `common::Session` is a closed choice between the existing dense
 `generic::Session` and the separate `point::PointSession`. Its input and output
@@ -18,9 +18,15 @@ An application supporting point inference supplies its own trusted validator,
 worker factory and durable output committer through `from_point`. The public
 `point-source` CLI remains an I/O utility, not an inference application.
 
+This prepared-array channel is distinct from the frozen external raw-point
+SRX4/version4 contract. It does not implement raw source-record wire4 or a network
+service. That separate integration remains pending. The native descriptor is
+`synrex.point.native-session.v2` with `prepared_wire={protocol:PWB1,version:1}`
+and `external_raw_point_wire4=NOT_IMPLEMENTED`.
+
 ## Wire selection and binding
 
-`point::wire4` is a separate codec and bounded socket primitive. Construct
+`point::prepared_wire1` is a separate codec and bounded socket primitive. Construct
 `Binding(native_point_session, retained_point_artifact, max_packet_bytes)` from
 the local, independently trusted native authority. It captures the exact
 descriptor, source roster, contract and worker hash. The default whole-packet
@@ -30,14 +36,14 @@ There is no untrusted-descriptor constructor. A peer must independently hold
 the expected artifact and session identity; a received descriptor alone cannot
 provide trust or confer readiness.
 
-Every packet starts with the 12-byte header below. SRX3, SRXS, wrong versions,
+Every packet starts with the 12-byte header below. SRX4, SRX3, SRXS, wrong versions,
 unknown expected kinds, reserved bits, excessive advertised lengths, truncated
-messages and trailing bytes reject. Existing dense codecs do not parse SRX4.
+messages and trailing bytes reject. Existing dense codecs and raw-point wire4 do not parse PWB1.
 
 | Field | Bytes | Encoding |
 |---|---:|---|
-| Magic | 4 | ASCII `SRX4` |
-| Version | 1 | 4 |
+| Magic | 4 | ASCII `PWB1` |
+| Version | 1 | 1 |
 | Kind | 1 | control 1–7, batch 16, classification 17 |
 | Reserved | 2 | zero |
 | Payload length | 4 | unsigned big endian, excludes header |

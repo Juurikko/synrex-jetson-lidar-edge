@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Tuomas Pietilä
 #include "synrex/point_session.hpp"
 #include "synrex/common_session.hpp"
-#include "synrex/point_wire.hpp"
+#include "synrex/point_prepared_wire.hpp"
 #include "generic_fixture_backend.hpp"
 #include <sys/socket.h>
 #include <chrono>
@@ -250,8 +250,9 @@ void handshake() {
     s = session(c);
     auto d = s->descriptor_sha256();
     auto copy = s->descriptor();
-    copy["required_wire_version"] = 3;
-    check(s->descriptor()["required_wire_version"] == 4);
+    copy["prepared_wire"]["version"] = 999;
+    check(s->descriptor()["prepared_wire"]["version"] == 1);
+    check(s->descriptor()["external_raw_point_wire4"] == "NOT_IMPLEMENTED");
     s->metadata_ack(Peer::input, d);
     refuses([&] { s->metadata_ack(Peer::input, d); });
     check(c.made == 0);
@@ -452,7 +453,7 @@ void reset_and_completion() {
     });
 }
 void wire_and_common() {
-    namespace w = synrex::point::wire4;
+    namespace w = synrex::point::prepared_wire1;
     const auto deadline = [] { return w::Connection::Clock::now() + std::chrono::seconds(2); };
     PackageFixture p;
     Control c;
@@ -522,7 +523,7 @@ void wire_and_common() {
               observed.authority_sha256 == classified.authority_sha256 && observed.semantic_ids[1] == 0);
         const auto completion = s.complete([](const auto &rows) {
             check(rows.at(source().sha256) == std::vector<std::uint8_t>({0, 1, 1, 1}));
-            return digest_bytes("wire4 durable synthetic output");
+            return digest_bytes("prepared_wire1 durable synthetic output");
         });
         authority_in.send_control(w::Control::completion, completion, deadline());
         authority_out.send_control(w::Control::completion, completion, deadline());
@@ -544,6 +545,16 @@ void wire_and_common() {
     corrupt_classification[corrupt_classification.size() - 8] = 0;
     refuses([&] { w::decode_classification(binding, corrupt_classification); });
     const auto encoded = w::encode_batch(binding, batch());
+    check(encoded.substr(0, 4) == "PWB1" && encoded.at(4) == 1);
+    // The frozen raw-point external wire4 has a different 16-byte header and
+    // raw source records. Never admit it as this prepared-array channel.
+    std::string external_raw_point_wire4 = "SRX4";
+    external_raw_point_wire4.append({4, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    refuses([&] { w::decode_batch(binding, external_raw_point_wire4); });
+    auto falsely_versioned = encoded;
+    falsely_versioned.replace(0, 4, "SRX4");
+    falsely_versioned[4] = 4;
+    refuses([&] { w::decode_batch(binding, falsely_versioned); });
     check(::socketpair(AF_UNIX, SOCK_STREAM, 0, input) == 0);
     {
         w::Connection receiver(input[0], binding);

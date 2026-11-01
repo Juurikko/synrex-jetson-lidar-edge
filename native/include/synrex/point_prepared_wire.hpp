@@ -5,8 +5,8 @@
 #include <chrono>
 #include <string_view>
 
-namespace synrex::point::wire4 {
-// Separately selected SRX4 codec. No legacy/dense protocol fallback. A binding
+namespace synrex::point::prepared_wire1 {
+// Separately selected PWB1 codec. No legacy/dense protocol fallback. A binding
 // captures native authority's exact descriptor and trusted retained contract.
 class Binding final {
     Json descriptor_;
@@ -62,4 +62,4 @@ class Connection final {
     void send_classification(const Classification &, Time);
     Classification receive_classification(Time);
 };
-} // namespace synrex::point::wire4
+} // namespace synrex::point::prepared_wire1

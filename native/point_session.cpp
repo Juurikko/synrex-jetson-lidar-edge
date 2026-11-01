@@ -255,8 +255,9 @@ PointSession::PointSession(std::shared_ptr<const PointArtifact> artifact, std::s
                           {"header_sha256", source.header_sha256},
                           {"rows", source.rows}});
     }
-    s.descriptor = {{"schema", "synrex.point.native-session.v1"},
-                    {"required_wire_version", 4},
+    s.descriptor = {{"schema", "synrex.point.native-session.v2"},
+                    {"prepared_wire", {{"protocol", "PWB1"}, {"version", 1}}},
+                    {"external_raw_point_wire4", "NOT_IMPLEMENTED"},
                     {"session_id", id},
                     {"package_manifest_sha256", s.artifact->manifest_sha256()},
                     {"point_contract_sha256", s.artifact->contract_sha256()},
