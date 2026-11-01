@@ -22,7 +22,8 @@ from streaming_r2_replay import verify  # noqa: E402
 
 @pytest.mark.parametrize("fault", ["semantic", "duplicate", "time", "victim", "missing", "reuse"])
 def test_hash_rebound_false_visual_provenance_rejected(tmp_path, fault):
-    root = Path(os.environ.get("SYNREX_R2_ASSETS", ROOT / "build/absent-r2-assets"))
+    native_dir = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+    root = Path(os.environ.get("SYNREX_R2_ASSETS", native_dir / "absent-r2-assets"))
     recording = root / "recording"
     if not recording.is_dir():
         pytest.skip("NOT_RUN: genuine R2 release recording required; set SYNREX_R2_ASSETS")

@@ -3,11 +3,13 @@
 """Native streaming CLI integration; no Python implementation of production inference."""
 
 import json
+import os
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / "build/synrex-stream"
+NATIVE_DIR = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+NATIVE = NATIVE_DIR / "synrex-stream"
 FIXTURE = ROOT / "examples/streaming/deterministic.jsonl"
 
 

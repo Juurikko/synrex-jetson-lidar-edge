@@ -24,6 +24,18 @@ No GPU SDK is required for parser, assembly, queue, map or orchestration tests. 
 commands fail closed. For sanitizer checks, use a separate build with `-DSYNREX_SANITIZE=ON`.
 The physical GPU qualifier is built but deliberately excluded from ordinary CTest execution.
 
+Explicit package-v3 taxonomies use the separate
+[generic finite single-file CLI](GENERIC_SINGLE_FILE_V3.md). R3 executed actual
+CUDA/TensorRT file, matched-window and independently reconstructed stream mechanics
+for explicit K4 and non-FRACTAL K7 packages at `23b8162`. Trained Q0/Q1 execution
+at `62a6f81` passed the identical-window numerical gates; policy quality remains
+inconclusive on one validation source with five truth classes absent. Finite replay
+at `92e2067` preserved exact semantics but failed the sender scheduling gate;
+`NO_MATERIAL_OPTIMIZATION` remains the measured outcome. See the
+[scoped R3 evidence summary](../../ARCHITECTURE.md#quality-comparison-and-evidence-boundaries)
+for source identities, timing limits and the authoritative campaign handoff receipts.
+CPU K=256/channel-255 fixtures do not extend these GPU measurements to every class count.
+
 On an available RTX allocation, configure `build-gpu` with the R4 documented SDK arguments and
 `-DSYNREX_ENABLE_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89`. Recheck GPU compute processes,
 utilization and free memory, including Windows-native reporting on WSL, before GPU execution.

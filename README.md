@@ -75,6 +75,7 @@ and matching release assets; this post-release layout is not a new benchmark or
 reconstruction qualification.
 
 
+- **Maintained architecture and evidence boundaries:** [runtime architecture](ARCHITECTURE.md) · [preserved earlier architecture](archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md)
 - **Native streaming implementation:** [C++/CUDA/TensorRT runtime](native/) · [BYOM adapter contract](docs/byom/ADAPTER.md)
 - **Build and replay:** [public quickstart](docs/publication/QUICKSTART_RC4.md) · [runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md)
 - **What the measurements mean:** [qualification report](docs/streaming/STREAMING_R1_QUALIFICATION.md) · [trial CSV](archive/evidence/streaming_r1_transport_trials.csv)
@@ -169,6 +170,14 @@ optional export and media reconstruction. Public dependencies are external and p
 
 - [Versioned binary protocol](docs/streaming/STREAMING_R1_PROTOCOL.md)
 - [Runtime and command-line examples](docs/streaming/STREAMING_R1_RUNTIME.md)
+- [Opt-in generic single-file v3 CLI and export, CPU tested](docs/streaming/GENERIC_SINGLE_FILE_V3.md)
+- [Distinct manifest admission and bounded CPU source decoding](docs/streaming/DISTINCT_REPLAY.md)
+- [Opt-in exact LAS source attributes, CPU tested](docs/byom/SOURCE_FIDELITY.md)
+- [Bounded manifest replay timing and measurement limits](docs/streaming/REPLAY_TIMING.md)
+- [Original-point runtime and policy comparison scorer](docs/runtime_comparison.md)
+- [Frozen validation representation diagnostics](docs/runtime_representation.md)
+- [CPU rescoring of retained semantic outputs](docs/runtime_sealed_outputs.md)
+- [Checked build-owned LAZ decoder correction](docs/streaming/LAZPERF_OVERLAY.md)
 - [CPU eviction design](docs/streaming/CPU_EVICTION_INDEX.md)
 - [Performance protocol](docs/streaming/SUSTAINED_PROTOCOL.md)
 - [Atomic streaming export](tools/streaming_export.py) and [verified QGIS COPC path](docs/byom/QGIS_R4.md)

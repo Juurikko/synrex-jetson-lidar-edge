@@ -70,11 +70,17 @@ std::vector<MapDelta> SemanticMap::update(const Classification &r) {
     const auto &h = r.frame.header;
     const std::array<std::string, 5> identity{h.sensor_id, h.stream_id, h.coordinate_frame, h.crs,
                                               h.taxonomy};
+    return update_points(r.frame.points, r.semantic_ids, identity);
+}
+std::vector<MapDelta> SemanticMap::update_points(const std::vector<SourcePoint> &points,
+                                                 const std::vector<std::uint8_t> &semantic_ids,
+                                                 const std::array<std::string, 5> &identity) {
+    auto tick = begin(profile_);
     require(!identity_ || *identity_ == identity, "map coordinate/taxonomy identity mismatch");
     identity_ = identity;
     std::vector<MapDelta> deltas;
-    for (std::size_t i = 0; i < r.frame.points.size(); ++i) {
-        const auto &p = r.frame.points[i];
+    for (std::size_t i = 0; i < points.size(); ++i) {
+        const auto &p = points[i];
         Key key{};
         tick = begin(detail_);
         for (int a = 0; a < 3; ++a) {
@@ -96,7 +102,7 @@ std::vector<MapDelta> SemanticMap::update(const Classification &r) {
             ++counters_.insertions;
         else
             ++counters_.existing_updates;
-        const auto id = r.semantic_ids[i];
+        const auto id = semantic_ids[i];
         const bool changed = inserted || found->second.semantic_id != id ||
                              found->second.timestamp_ns != p.timestamp_ns;
         bool indexed = policy_ == MapPolicy::indexed && !overflow_fallback_;

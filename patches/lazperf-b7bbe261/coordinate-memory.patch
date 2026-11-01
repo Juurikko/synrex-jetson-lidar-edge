@@ -1,0 +1,155 @@
+--- a/cpp/lazperf/decompressor.hpp
++++ b/cpp/lazperf/decompressor.hpp
+@@ -1,3 +1,4 @@
++// SynRex modification (2026-10-31): defined decoder arithmetic and checked stream reads.
+ /*
+ ===============================================================================
+ 
+@@ -104,9 +105,9 @@
+ 				typename TDecoder
+ 			>
+ 			int32_t decompress(TDecoder& dec, int32_t pred, uint32_t context) {
+-				int32_t real = pred + readCorrector(dec, mBits[context]);
+-				if (real < 0) real += corr_range;
+-				else if ((uint32_t)(real) >= corr_range) real -= corr_range;
++				int32_t real = utils::add32(pred, readCorrector(dec, mBits[context]));
++				if (real < 0) real = utils::signed32(uint32_t(real) + corr_range);
++				else if ((uint32_t)(real) >= corr_range) real = utils::signed32(uint32_t(real) - corr_range);
+ 
+ 				return real;
+ 			}
+@@ -136,12 +137,12 @@
+ 						if (c >= (1<<(k-1))) // if c is in the interval [ 2^(k-1)  ...  + 2^k - 1 ]
+ 						{
+ 							// so we translate c back into the interval [ 2^(k-1) + 1  ...  2^k ] by adding 1 
+-							c += 1;
++							c = utils::add32(c, 1);
+ 						}
+ 						else // otherwise c is in the interval [ 0 ...  + 2^(k-1) - 1 ]
+ 						{
+ 							// so we translate c back into the interval [ - (2^k - 1)  ...  - (2^(k-1)) ] by subtracting (2^k - 1)
+-							c -= ((1<<k) - 1);
++							c -= int32_t((uint32_t(1) << k) - 1);
+ 						}
+ 					}
+ 					else
+@@ -178,12 +179,12 @@
+ 						if (c >= (1<<(k-1))) // if c is in the interval [ 2^(k-1)  ...  + 2^k - 1 ]
+ 						{
+ 							// so we translate c back into the interval [ 2^(k-1) + 1  ...  2^k ] by adding 1 
+-							c += 1;
++							c = utils::add32(c, 1);
+ 						}
+ 						else // otherwise c is in the interval [ 0 ...  + 2^(k-1) - 1 ]
+ 						{
+ 							// so we translate c back into the interval [ - (2^k - 1)  ...  - (2^(k-1)) ] by subtracting (2^k - 1)
+-							c -= ((1<<k) - 1);
++							c -= int32_t((uint32_t(1) << k) - 1);
+ 						}
+ 					}
+ 					else
+--- a/cpp/lazperf/detail/field_point10.cpp
++++ b/cpp/lazperf/detail/field_point10.cpp
+@@ -1,3 +1,4 @@
++// SynRex modification (2026-10-31): defined decoder arithmetic and checked stream reads.
+ /*
+ ===============================================================================
+ 
+@@ -367,14 +368,14 @@
+     // decompress x coordinate
+     median = last_x_diff_median5[m].get();
+     diff = ic_dx.decompress(dec_, median, n==1);
+-    last_.x += diff;
++    last_.x = utils::add32(last_.x, diff);
+     last_x_diff_median5[m].add(diff);
+ 
+     // decompress y coordinate
+     median = last_y_diff_median5[m].get();
+     k_bits = ic_dx.getK();
+     diff = ic_dy.decompress(dec_, median, (n==1) + (k_bits < 20 ? utils::clearBit<0>(k_bits) : 20));
+-    last_.y += diff;
++    last_.y = utils::add32(last_.y, diff);
+     last_y_diff_median5[m].add(diff);
+ 
+     // decompress z coordinate
+--- a/cpp/lazperf/detail/field_point14.cpp
++++ b/cpp/lazperf/detail/field_point14.cpp
+@@ -1,3 +1,4 @@
++// SynRex modification (2026-10-31): defined decoder arithmetic and checked stream reads.
+ /*
+ ===============================================================================
+ 
+@@ -695,7 +696,7 @@
+     {
+         int32_t median = c.last_x_diff_median5_[ctx].get();
+         int32_t diff = c.dx_decomp_.decompress(xy_dec_, median, n == 1);
+-        c.last_.setX(c.last_.x() + diff);
++        c.last_.setX(utils::add32(c.last_.x(), diff));
+         c.last_x_diff_median5_[ctx].add(diff);
+         LAZDEBUG(sumX.add(c.last_.x()));
+     }
+@@ -705,7 +706,7 @@
+         uint32_t kbits = (std::min)(c.dx_decomp_.getK(), 20U) & ~1;
+         int32_t median = c.last_y_diff_median5_[ctx].get();
+         int32_t diff = c.dy_decomp_.decompress(xy_dec_, median, (n == 1) | kbits);
+-        c.last_.setY(c.last_.y() + diff);
++        c.last_.setY(utils::add32(c.last_.y(), diff));
+         c.last_y_diff_median5_[ctx].add(diff);
+         LAZDEBUG(sumY.add(c.last_.y()));
+     }
+--- a/cpp/lazperf/streams.hpp
++++ b/cpp/lazperf/streams.hpp
+@@ -1,3 +1,4 @@
++// SynRex modification (2026-10-31): defined decoder arithmetic and checked stream reads.
+ /*
+ ===============================================================================
+ 
+@@ -103,13 +104,17 @@
+ 
+     unsigned char getByte()
+     {
++        if (idx >= buf.size())
++            throw error("LAZ memory stream exhausted");
+         return buf[idx++];
+     }
+ 
+-    void getBytes(unsigned char *b, int len)
++    void getBytes(unsigned char *b, size_t len)
+     {
+-        for (int i = 0 ; i < len ; i ++)
+-            b[i] = getByte();
++        if (idx > buf.size() || len > buf.size() - idx)
++            throw error("LAZ memory stream exhausted");
++        for (size_t i = 0; i < len; ++i)
++            b[i] = buf[idx++];
+     }
+ 
+     InputCb inCb()
+--- a/cpp/lazperf/utils.hpp
++++ b/cpp/lazperf/utils.hpp
+@@ -1,3 +1,4 @@
++// SynRex modification (2026-10-31): defined decoder arithmetic and checked stream reads.
+ /*
+ ===============================================================================
+ 
+@@ -48,6 +49,20 @@
+ {
+ namespace utils
+ {
++
++// LAS integer predictors operate modulo 2^32. Map the unsigned result back
++// without an out-of-range unsigned-to-signed conversion (C++17 portable).
++inline int32_t signed32(uint32_t value)
++{
++    return value <= uint32_t((std::numeric_limits<int32_t>::max)()) ?
++        int32_t(value) : -1 - int32_t((std::numeric_limits<uint32_t>::max)() - value);
++}
++
++inline int32_t add32(int32_t a, int32_t b)
++{
++    return signed32(uint32_t(a) + uint32_t(b));
++}
++
+ 
+ template<int BIT, typename T>
+ T clearBit(T t)

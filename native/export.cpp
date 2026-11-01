@@ -18,10 +18,10 @@ void durable(const fs::path &path, bool directory = false) {
 AsyncLazExport::AsyncLazExport(const fs::path &source, const fs::path &model,
                                const fs::path &taxonomy, const fs::path &destination)
     : source_(source), model_(model), taxonomy_(taxonomy), destination_(fs::absolute(destination)) {
+    const Package package(model, PackageUse::legacy_stream);
     require(!fs::exists(destination_) && !fs::is_symlink(destination_) &&
                 fs::is_directory(destination_.parent_path()),
             "export requires new bundle in existing parent");
-    const Package package(model);
     original_ = decode(source, package.contract);
     require(!original_.empty() && original_.size() <= 1000000, "bounded export corpus");
     const auto classes = read_json(taxonomy).at("classes");
@@ -36,7 +36,7 @@ AsyncLazExport::AsyncLazExport(const fs::path &source, const fs::path &model,
     frames_.resize(original_.size());
     timestamps_.resize(original_.size());
     metadata_ = {{"source_sha256", sha256(source_)},
-                 {"model_manifest_sha256", sha256(package.root / "manifest.json")},
+                 {"model_manifest_sha256", package.manifest_sha256},
                  {"taxonomy_sha256", sha256(taxonomy_)},
                  {"las_classes", package.contract.las_classes}};
 }
@@ -85,8 +85,8 @@ void AsyncLazExport::publish() {
     require(fs::create_directory(stage), "export staging exists");
     try {
         require(sha256(source_) == metadata_["source_sha256"], "export source changed");
-        const Package verified(model_);
-        require(sha256(verified.root / "manifest.json") == metadata_["model_manifest_sha256"],
+        const Package verified(model_, PackageUse::legacy_stream);
+        require(verified.manifest_sha256 == metadata_["model_manifest_sha256"],
                 "export model changed");
         write_new(stage / "labels.u8",
                   std::string(reinterpret_cast<const char *>(labels_.data()), labels_.size()));

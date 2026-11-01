@@ -12,7 +12,7 @@ import pytest
 from synthetic_laz import create
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build"))
+NATIVE = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
 
 
 def test_native_wire():

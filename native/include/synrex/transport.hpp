@@ -6,6 +6,19 @@
 namespace synrex::streaming::wire {
 using Bytes = std::vector<std::uint8_t>;
 inline constexpr std::size_t max_payload = 16 * 1024 * 1024;
+// Legacy terminal snapshots are single JSON payloads. See docs/streaming/SNAPSHOT_BUDGET.md.
+// This transport admission limit does not constrain independent SemanticMap users.
+inline constexpr std::size_t max_legacy_map_cells = 65536;
+inline constexpr std::size_t legacy_snapshot_base_bytes = 8192;
+inline constexpr std::size_t legacy_snapshot_cell_bytes = 224;
+static_assert(legacy_snapshot_base_bytes + legacy_snapshot_cell_bytes * max_legacy_map_cells <=
+              max_payload);
+struct LegacyLiveLimits {
+    std::size_t points{16384}, map_cells{max_legacy_map_cells};
+    std::uint64_t rate{1000000};
+    // Receiver and subscriber call this before sessions, exporters, or map allocation.
+    void validate() const;
+};
 enum class Kind : std::uint16_t { frame = 1, classified = 2, snapshot = 3, end = 4 };
 enum class Coordinates : std::uint8_t { sensor = 1, vehicle = 2, world = 3, projected = 4 };
 struct Input {

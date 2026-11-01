@@ -1,66 +1,246 @@
-# Native architecture and release boundaries
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright (c) 2026 Tuomas Pietilä -->
 
-<!-- Copyright (c) 2026 Tuomas Pietilä. SPDX-License-Identifier: CC-BY-4.0. Original expression only; upstream material and facts excluded. -->
+# Maintained native LiDAR runtime architecture
 
-**Developer and project lead: Tuomas Pietilä ([@Juurikko](https://github.com/Juurikko)).**
+**Developer and project lead: Tuomas Pietilä.** Engineering includes OpenAI Codex
+assistance. This description covers the R3 implementation through `92e2067`;
+each qualification result has its own source, environment, model, data and
+configuration identity. The campaign handoff's final report and source-bound
+receipts are authoritative for the delivered candidate. The summaries below do
+not certify later source or documentation revisions.
 
-**Native BYOM R0 addition:** `native/` implements a generic package-driven pipeline, linking the retained MIT writer. Read the [adapter specification](docs/byom/ADAPTER.md), [build/usage guide](docs/byom/QUICKSTART.md) and [physical RTX4090 qualification](docs/byom/RTX4090_QUALIFICATION.md). Its regular 3D block geometry and NCZYX feature contract differ from the private SegFormer semantics described below; [provenance review](docs/byom/PROVENANCE_REVIEW_R1.md) records the design relationship. RTX4090 GPU execution is qualified on the original fixture; physical AGX qualification remains NOT_RUN. Historical qualification does not transfer to this source.
+The maintained runtime separates model admission, original-point inference,
+transport, map state and output preservation. Native classification uses C++17,
+CUDA and TensorRT; Python supplies development, independent verification and
+scientific evaluation tooling. A CPU build supports package inspection, geometry,
+codecs, maps, source decoding and tests. Its production backend rejects inference.
+The opaque CPU backend exists only in test executables and is never installed.
 
-The verified product boundary begins with an **already-georeferenced compressed LAZ file** and ends with a classified LAZ plus product digests. Sensor acquisition, georeferencing and a live telemetry service are outside that measurement.
+The [previous architecture](archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md) is
+preserved byte-for-byte. It records the earlier SegFormer product and historical
+BYOM additions, including their narrower deployment and preservation contracts.
+Its internal relative links retain their original repository-root context; use
+the maintained links here for current navigation. Its diagrams, model dimensions,
+Jetson measurements and relocation results are historical evidence, not a
+specification or qualification of the generic runtime below.
 
-![Native pipeline, landscape](media/pipeline-landscape.png)
+## Entry points and reproduction
 
-[Landscape SVG](media/pipeline-landscape.svg) · [Portrait SVG](media/pipeline-portrait.svg)
+Use the [maintained CPU checks](docs/CPU_CHECKS.md) for the complete Release and
+ASan/UBSan build, CTest, pytest, installation, style and inventory workflow.
+The [native quickstart](docs/byom/QUICKSTART.md) supplies dependency and
+CUDA/TensorRT build commands. The [SDK reproduction guide](docs/streaming/STREAMING_R2_REPRODUCIBILITY.md#native-gpu-correctness-and-transport)
+records a historical RTX SDK setup and command shapes; select and record the
+actual compiler, headers, linked/runtime libraries and target for a new build.
+Historical version strings and engine packages do not establish compatibility
+with a different target or qualify newly changed source.
 
-<img src="media/pipeline-portrait.png" alt="Portrait four-stage pipeline" width="420">
+| Interface | Purpose and contract |
+| --- | --- |
+| `synrex-native` | Package, inspect, plan, build an engine and classify supported files; [dense adapter](docs/byom/ADAPTER.md), [explicit packages](docs/byom/PACKAGE_V3.md) |
+| `synrex-generic-live receive/send/subscribe` | Explicit generic descriptor, readiness and output completion; [single-file producer/receiver/subscriber guide](docs/streaming/GENERIC_SINGLE_FILE_V3.md) |
+| Same generic commands with `--manifest` | Finite, source-ordered multi-file replay; [manifest guide](docs/streaming/DISTINCT_REPLAY.md) |
+| `synrex-replay inspect` | CPU manifest/source admission and bounded decode; no classification |
+| Legacy streaming executables | Retained package-v2 and legacy wire/text contracts; [legacy runtime commands](docs/streaming/STREAMING_R1_RUNTIME.md) |
+| `synrex-laz-labels` | Apply supplied LAS classification bytes without inference; [label-writer guide](BRING_YOUR_OWN_MODEL.md) |
 
-These diagrams are the accepted publication graphics, copied without alteration. The four boxes group a more detailed implementation described below.
+## Model and semantic identity
 
-## 1. Package and target gates
+The common adapter is `DENSE_VOXEL_SEGMENTATION_V1`: one static batch-one dense
+input and one per-voxel score output in contiguous NCZYX order. It admits 1–32
+ordered features and 2–256 output channels, with declared float32/float16 I/O,
+geometry, complete channel-to-LAS projection and resource limits. Actual engine
+tensors must match the contract. Dynamic shapes, sparse/point-transformer
+adapters, extra tensors and user plugins are outside this interface.
 
-The native C++ product launcher verifies host/target contracts, component identities, the model package's internal SHA256 manifest, tensor/preprocessing contracts and reference-license opt-in. A package contains the qualified target engine and lineage/configuration artifacts. These packages are excluded here.
+Package-v2 retains its existing file behavior and legacy streaming restrictions.
+Legacy synthetic/FRACTAL taxonomy handling is a separate, explicitly limited
+contract; a seven-channel count does not identify FRACTAL meanings. Legacy
+endpoints reject package-v3 before expensive initialization. Wire-v2 receives
+no new generic startup handshake and never silently falls back from a generic
+wire selection.
 
-The Product Runtime R1 installation resolves bundled libraries relative to the executable using `$ORIGIN/../lib`, clears inherited `LD_LIBRARY_PATH` and does not depend on historical build paths. A relocated copy was qualified outside the original build tree with invalid competing bundle-library files on `LD_LIBRARY_PATH`. CUDA, TensorRT and glibc remain system dependencies. This is relocation qualification on the tested target, not engine portability across devices.
+[Package-v3](docs/byom/PACKAGE_V3.md) adds exact
+[taxonomy bytes](docs/byom/TAXONOMY.md) and their hash. Ordered semantic channels,
+class meanings and LAS codes remain separate: different semantic classes may
+project to the same LAS byte, and channel 255 is valid at K=256. Reusing a taxonomy
+name, class count or LAS projection cannot establish semantic identity.
+Package envelope, dense adapter, taxonomy, context policy, descriptor and binary
+wire schemas carry distinct identities. Generic text streaming is unsupported.
 
-The launcher executes native inference and classified-LAZ components, requires expected artifacts and hashes labels and final LAZ. Contract failures, component failures or missing products cause the command to fail. The full execution measurement includes wrapper initialization and package checks; an inference-service internal timer is a different boundary.
+CPU admission captures the exact manifest, taxonomy, contract and hash-verified
+model bytes in a privately owned [engine artifact](docs/byom/ENGINE_ARTIFACT.md).
+Execution uses those retained bytes rather than reopening a model pathname after
+peer admission. Captured engine bytes remain host memory throughout the session;
+that retention belongs in resource accounting. Hashes bind bytes to a trusted
+manifest; they are not a signature, model provenance proof or hostile-model sandbox.
 
-## 2. laz-perf decode and native geometry
+## Admission precedes execution readiness
 
-[laz-perf 3.4.0](https://github.com/hobuinc/laz-perf/tree/b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce) decodes the source records. The geometry path extracts scaled coordinates for planning; the original record stream remains the authority for file output. Classification does not rewrite coordinates or georeference the file.
+The [generic startup gate](docs/byom/GENERIC_STARTUP.md) and
+[transport](docs/byom/GENERIC_TRANSPORT.md) enforce this sequence:
 
-The reviewed model contract uses 112 × 112 × 256 voxels, resolution 0.3 × 0.3 × 0.2 metres, horizontal block extent 33.6 × 33.6 metres and 10% overlap, with a 30.24-metre horizontal stride. Per-block voxel coordinates follow `floor((xyz - block_min_xyz) / resolution_xyz)`. The native implementation matches the frozen TreeAIBox-compatible grouping and boundary semantics rather than substituting a generic grid.
+```mermaid
+flowchart LR
+  A[CPU package/config admission] --> B[Descriptor exchange and metadata ACK]
+  B --> C[Create retained GPU backend]
+  C --> D[Execution-ready exchange and ACK]
+  D --> E[Frames and classifications]
+  E --> F[Transcript and independently reconstructed map completion]
+```
 
-A compact plan maps source point IDs to occupied voxel IDs. Same-block duplicate destinations are removed only after proving their references resolve to the same occupied voxel, retaining first occurrence order. This avoids competing GPU writes without changing the qualified mapping. Blocks execute sequentially; **later blocks win** where source points participate in overlapping blocks. These are frozen deployment semantics, not a claim that averaging or confidence fusion has been implemented.
+The peer acknowledges metadata before inference initialization or the first
+classified frame. Metadata admission has an absolute five-second deadline;
+initialization/readiness has its own selected absolute deadline. Fragmentation
+and polling do not restart either timer. The authority factory checks completion
+of actual backend construction and identity before returning a usable Session.
+Synchronous vendor initialization cannot be preempted: an overdue result is
+destroyed and cannot become ready.
 
-## 3. GPU occupancy and TensorRT inference
+The CLI uses separate input and output connections. Both metadata admissions and
+identical negotiated descriptors precede one backend construction; both readiness
+exchanges precede frames. Session, descriptor, epoch, taxonomy and source identity
+remain bound throughout execution. Errors poison the affected session/connections;
+a new model, policy or epoch requires a new session. This loopback transport is
+not authenticated remote access or a resumable multi-producer service.
 
-CUDA builds dense binary occupancy from the sparse occupied-voxel list. Planning indices are XYZ-flat (`((ix * 112) + iy) * 256 + iz`); the GPU converts them to the network's NCZYX spatial layout. The qualified input is float32 `[1, 1, 256, 112, 112]`, the output logits are float32 `[1, 8, 256, 112, 112]`, and the TensorRT engine uses FP16 internally. An FP16 engine does not mean the public tensor interfaces are FP16.
+Binary-v3 uses bounded SRX3/version-3 envelopes. Manifest replay can explicitly
+select [binary-source-v1](docs/byom/SOURCE_FIDELITY.md), using SRXS/version-1 and a
+descriptor-bound source-attribute schema. It adds exact public-header bytes, raw
+integer XYZ, scales/offsets, source row identity and opaque GPS bits to supported
+point attributes. The variant admits standard PDRF6/7/8 record lengths; unknown
+extra record attributes reject. It does not transport RGB/NIR, all VLRs or the
+complete LAZ record. Raw GPS bits never become an acquisition clock implicitly.
+Protocol selection is explicit; descriptors and completion hashes prevent mixing
+variants after admission.
 
-TensorRT context/engine and relevant buffers are reused within a file execution. Every benchmark file still launches a new product process and includes initialization. No always-warm streaming service throughput is inferred. The configured class metadata has seven classes while the network has eight output channels; raw qualified class-ID semantics are retained without inventing a remapping.
+## Geometry, inference and original-point reconstruction
 
-## 4. GPU reconstruction and point scattering
+File input is already georeferenced, supported compressed LAS 1.4 PDRF6/7/8.
+The [checked laz-perf overlay](docs/streaming/LAZPERF_OVERLAY.md) is generated in
+the build directory from pinned upstream bytes; it preserves external dependency
+ownership and notices. Decoding establishes declared-record coverage under the
+supported layout, not arbitrary physical EOF or malicious-file safety.
 
-CUDA evaluates argmax at occupied voxels. Strict `>` comparison keeps the first class on ties. The inverse voxel map and compact source-index references scatter uint8 labels into original point-ID positions. Sequential block execution preserves the chosen overlap rule. Bounds/capacity checks and frozen output digests support correctness; this is not confidence estimation or semantic-map generation.
+The [adapter contract](docs/byom/ADAPTER.md) defines source-minimum block origins,
+half-open membership, voxel flooring and lexicographic block order. Coincident
+points remain separate original records. Features include occupancy, count, mean
+intensity and mean local coordinates, with declared normalization. CUDA reductions
+use ordered source indices; empty tensor cells remain zero. Argmax ties select
+the lowest channel. The declared `first_wins`/`last_wins` overlap policy controls
+source-index scatter; no hidden confidence fusion or smoothing is introduced.
+Every original point must receive a valid semantic result and exact LAS projection.
 
-## 5. Native classified-LAZ output
+The persistent backend retains the TensorRT context, CUDA stream and reusable
+buffers across windows. CPU package/capacity checks precede CUDA-owning members;
+actual target, tensor and device-memory checks remain required at initialization.
+Engine building is explicit and separate from classification. TensorRT 10.x and
+target-specific engine bytes are part of the native SDK contract; an FP16 tactic
+policy does not change declared tensor I/O types or establish numerical parity.
 
-The benchmark writer reads the source in order, replaces classification byte 16 of each qualified 42-byte PDRF-7 record, and re-encodes the record. All other decompressed bytes, including coordinates, flags, GPS time, RGB and Extra Bytes, remain intact. It retains the source public header, non-LASzip VLRs and padding while regenerating the compression VLR. Rebuilt compression-stream/chunk-table offsets must agree with the preserved point-data offset.
+Generic execution uses the versioned current-frame policy: no history, a separate
+minimum per window, and current points emitted once. The semantic map consumes
+completed classifications; it does not supply cached labels or historical model
+context. Alternate geometry strategies and CPU differential/profile tools do not
+by themselves establish a GPU optimization benefit or permission to change the
+admitted preprocessing contract.
 
-The production qualification is narrow: LAS 1.4, PDRF 7, 42-byte records, 375-byte public header, point offset 1111, two VLRs, zero EVLRs. It does not establish support for arbitrary LAS formats, EVLRs, waveform packets or COPC indexes. See [validation](archive/history/VALIDATION.md).
+## File boundaries, distinct replay and terminal output
 
-## The runnable public-focused preservation utility
+The [single-file CLI](docs/streaming/GENERIC_SINGLE_FILE_V3.md) binds a sealed
+source capture and local zero-based row IDs. Its optional subscriber exporter
+checks source, taxonomy, descriptor and complete row coverage. Only after output
+completion does it encode preserved LAZ and publish a new bundle without replacing
+existing output. All nonclassification point-record bytes remain under the
+[writer's supported preservation boundary](BRING_YOUR_OWN_MODEL.md). Compressed
+file bytes can change. Atomic publication requires the applicable Linux filesystem
+operations; it is not a power-loss durability guarantee.
 
-The current BYOM extension supports compressed LAS 1.4 PDRF6/7/8 with valid
-variable record lengths and extra bytes. It has separate [real-data U-Net
-qualification](docs/byom/UNET_QUALIFICATION.md), including independent preservation
-of PDRF8/38-byte files. The historical benchmark scope above remains unchanged.
+[Manifest replay](docs/streaming/DISTINCT_REPLAY.md) instead identifies each record
+by `(source SHA256, original row index)` and uses checked global wire-ID prefixes.
+Duplicate source hashes cannot add distinct observations; physical points across
+different files are not deduplicated. Decode windows are bounded, with at most two
+queued windows plus caller/decoder buffers. Every file gets a fresh descriptor
+epoch, session and map under `reset_each_file`. EOF partial windows are retained.
+Files are consumed once in manifest order, with verified partial failures visible.
+The source catalog and receipt roster scale with admitted source count. A manifest
+trial's global IDs never enter the local-row preservation exporter: multi-file
+preservation export is explicitly unsupported.
 
-`src/preserve_laz.cpp` implements this separable integrity problem for trusted synthetic/test inputs. It applies **supplied labels**, not a model. It is newly written for this staging release after design/source review, not represented as clean-room work or as the frozen production source/binary. No production preprocessing, inference code or model artifacts are copied into it.
+Input completion binds exact encoded frame hashes and counts; producer PASS means
+acknowledged input delivery. Output completion additionally binds classification
+and final-map hashes, independent subscriber reconstruction, fresh challenges and
+EOF fences. Socket writes or EOF alone cannot qualify the whole pipeline.
 
-Its prefix parser rejects unsupported versions, formats, record lengths, waveform/EVLR fields, COPC metadata, invalid VLR counts and truncated/oversized prefixes. It permits a variable number of ordinary VLRs/padding within a bounded 16 MiB prefix, unlike the narrower original fixture contract. Its synthetic tests do not expand the historical production qualification.
+## Map state, timing and accounting
 
-The utility streams source records and label bytes to laz-perf, then rebuilds a result using the exact source prefix with only the generated compression VLR substituted. Equal physical VLR size is mandatory. The absolute LAZ chunk-table pointer is relocated when the generated and preserved point-data offsets differ. The remaining compressed chunks and table are copied directly.
+Maps retain a bounded last-accepted-observation state with revision/eviction
+ordering. Older updates to an existing cell reject; equal timestamps retain the
+specified recency behavior. There is no TTL expiry or calibrated confidence.
+Generic snapshots/deltas bind the full descriptor and preserve semantic IDs even
+when LAS codes coincide. Both legacy and generic live snapshot capacities are
+1–65,536 cells with final encoded-byte checks. Their schemas and admission proofs
+are separate: [legacy budget](docs/streaming/SNAPSHOT_BUDGET.md),
+[generic maps and completion](docs/byom/GENERIC_RUNTIME.md).
 
-Only an invocation-local, same-parent scratch directory is used. After all writes close successfully, hard-link creation publishes the staged file without replacing an existing pathname. This requires same-filesystem hard-link support. On failure, only that new scratch directory is removed; the source, labels and existing output remain untouched. This is atomic pathname creation after close, **not a power-loss/fsync durability guarantee**. Inputs must remain immutable during execution. The utility is not a hardened parser for hostile files or a general LAZ repair tool.
+[Manifest timing](docs/streaming/REPLAY_TIMING.md) reports fixed-memory histograms
+per source and merged trial populations, with interval-valued quantiles and named
+process-local boundaries. Decode, assembly, pacing lag, ingress, receiver service
+and independent subscriber validation remain distinct. Receiver service excludes
+accumulation, ingress wait and subscriber validation; overlapping GPU stages are
+not summed into wall latency. Whole-process RSS and CPU time have their own scope.
 
-The independent Python verifier is offline test tooling; it does not contradict the no-Python/PyTorch requirement of the deployed inference product. Third-party codec sources are fetched externally at the pinned commit and retain Apache-2.0 notices.
+Synthetic accumulation is separate from physical point age. At 40,000 points/s,
+a 16,384-point window requires about 409.6 ms of accumulation before processing.
+A short service time cannot establish 250 ms capture-to-output age for that policy.
+Unknown acquisition timing and missing power provenance stay unavailable. Finite
+emission rate, distinct record coverage and repeated-input legacy throughput are
+different measures. Optional instrumentation pairs retain identical output hashes
+and signed timing differences; CPU fixtures do not qualify actual GPU overhead.
+Owned execution uses source/input/environment identities and the established
+resource lease; see [job receipt boundaries](docs/runtime_jobctl.md).
+
+## Quality, comparison and evidence boundaries
+
+The [Q0/Q1 evaluator](docs/streaming/QUALITY_EVALUATION.md) separately freezes
+whole-source Q0, unchanged 16,384-point independent-window Q1, original-point
+coverage and matched reference/native output identities. Numerical implementation
+parity, semantic policy quality and system capacity are separate verdicts. The
+scorer performs no inference. Prefix/cutoff probes and policy names require
+execution provenance; a final map cannot replace timely original predictions.
+
+[Runtime comparison](docs/runtime_comparison.md) scores explicit original-point
+label streams and class mappings. [Acquisition uncertainty](docs/runtime_uncertainty.md)
+keeps paired statistical units separate from point count.
+[Representation diagnostics](docs/runtime_representation.md) characterize truth
+collisions, boundaries and optional annotated thin structures at selected grids:
+majority labels maximize fixed-partition accuracy, not an mIoU upper bound or a
+deployable classifier. [Retained-sidecar rescoring](docs/runtime_sealed_outputs.md)
+consumes historical semantic vectors without rerunning inference. It does not
+create a fresh holdout or current-source Q0/Q1 evidence. Ground-class metrics are
+classification proxies, not DTM vertical accuracy without external terrain truth.
+
+| Capability/evidence | Current boundary |
+| --- | --- |
+| Package/descriptor admission, codecs, sockets, maps, completion, preservation and scorers | Executed CPU contract/regression fixtures, including K=256/channel-255 semantics; opaque classes establish mechanics only. Exact candidate acceptance belongs to source/binary-bound receipts and the complete CPU workflow. |
+| Generic package-v3 file/stream execution on actual TensorRT/CUDA | R3 synthetic mechanics passed at `23b8162`: explicit K4 and non-FRACTAL K7 full-file and identical-window outputs, analytic feature/logit checks, original records/metadata, independent subscriber reconstruction and completion. No trained quality or arbitrary-K GPU claim. |
+| Trained Q0/Q1 and causal execution | Executed at `62a6f81`; identical-window native/reference numerical gates passed under frozen tolerances. Q0 whole-source versus Q1 streaming policy quality remains inconclusive on one metadata-selected validation source, without acquisition-level uncertainty and with five truth classes absent. Sampled prefix and label-erasure checks are bounded evidence, not universal causality proof. |
+| Finite distinct replay and profiling | Source `92e2067` ran an actual FINAL-phase job charged 18 GPU-job wall seconds: four trials over the same 270,300 distinct TRAIN records, each about 2.7–2.9 s wall at 250k offered points/s. Paired input/classification/snapshot semantics matched exactly. Enabled-trial service p99 upper bounds were below 43 ms, while maximum sender lag exceeded the frozen 50 ms gate (137–146 ms). Finite capacity gates failed; no sustained rate or physical capture-age claim. `NO_MATERIAL_OPTIMIZATION`: no qualifying optimization was demonstrated or adopted. |
+| Frozen legacy RTX4090 U-Net file/stream/repeated-tile results | Historical, scene/model/source-specific; [R1 qualification](docs/streaming/STREAMING_R1_QUALIFICATION.md), [R2 audit](docs/streaming/STREAMING_R2_AUDIT.md), [whole-tile model evaluation](docs/byom/UNET_R2_RELEASE.md). No transfer to the generic path or Q1 quality. |
+| Earlier SegFormer/Jetson file product | Separate [historical architecture](archive/history/ARCHITECTURE_PRE_RUNTIME_R3.md) and [benchmark](archive/history/BENCHMARK.md); no current streaming/Orin qualification. |
+| Physical sensor, UAV capture, AGX/Thor generic deployment and terrain accuracy | **NOT_RUN**; no inherited device, acquisition or terrain claim. |
+
+Historical negative rate/latency trials, decoder failures and unsupported layouts
+remain part of their evidence. Neither this architecture rewrite nor a later
+source commit turns them into successful measurements. The finite replay's two
+fixed-order instrumentation/profile pairs are descriptive and do not isolate
+instrumentation cost or prove optimization benefit. Campaign receipts retain raw
+disagreements, failures and exact source/SDK/model/data/configuration identities
+outside this source tree. Final qualification must bind the integrated candidate
+and obtain independent review; earlier R3 results do not substitute for that gate.
+
+Original native code is MIT where scoped; original documentation is CC BY 4.0.
+Models, data, patched upstream code and vendor SDKs retain their own rights and
+notices. See [license scope](LICENSE_SCOPE.json), [third-party notices](THIRD_PARTY_NOTICES.md)
+and [design provenance](docs/byom/PROVENANCE_REVIEW_R1.md).

@@ -1,0 +1,212 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright (c) 2026 Tuomas Pietilä -->
+
+# Opt-in binary-v3 transport
+
+The separately selected [LAS source attributes transport](SOURCE_FIDELITY.md)
+uses this control/session/completion flow with distinct SRXS/version1 envelopes
+and descriptor-bound source schema. The layout below describes binary-v3.
+
+`generic_transport.hpp` implements a CPU control exchange over a caller-owned,
+connected POSIX `SOCK_STREAM` socket. Callers explicitly select
+`WireProtocol::binary_v3`. This library is separate from legacy wire-v2: no legacy
+CLI, Service, endpoint or codec calls it, and it never falls back to wire-v2.
+The [generic runtime library](GENERIC_RUNTIME.md) now supplies the authority session
+factory, frame/output codecs, typed socket I/O and separate Service. The
+[single-file CLI](../streaming/GENERIC_SINGLE_FILE_V3.md) selects this path explicitly.
+A bounded terminal snapshot/ACK protocol is available through
+`OutputSender` and `OutputReceiver`. Real generic GPU
+interchangeability remains **NOT_RUN**.
+
+Every message has a fixed 12-byte header. Control payloads use UTF-8 JSON;
+frame/classification payloads use the binary codec described in the runtime guide:
+
+| Byte | Meaning |
+| --- | --- |
+| 0–3 | ASCII `SRX3` |
+| 4 | Binary version 3 |
+| 5 | Kind: hello=1, descriptor=2, metadata ACK=3, execution-ready=4, ready ACK=5, frame=16, classification=17, snapshot=32, output complete=33, complete ACK=34, input complete=35, input complete ACK=36 |
+| 6–7 | Reserved, must both be zero |
+| 8–11 | Unsigned payload length, big endian |
+
+The decoder reads into a fixed header buffer, validates the exact expected kind,
+magic, version and reserved bytes, then checks the nonzero payload length before
+allocating its payload. Hello is limited to 512 bytes, the complete encoded
+descriptor to 65,536 bytes, and each startup control to 1,024 bytes. Terminal
+controls are capped at 2,048 payload bytes; the complete snapshot envelope, including
+its header, is capped at 16 MiB. These are per-message
+bounds; envelope and hello/ACK overhead are additional to the descriptor bound.
+Unknown capabilities, extra fields, invalid integer limits and duplicate decoded
+hello keys reject. The [descriptor parser](GENERIC_STARTUP.md) separately bounds
+depth, duplicate keys, taxonomy identity and encoded size.
+
+The authority and peer each require their own CPU-admitted package pathname,
+expected 32-character lowercase hexadecimal session ID and nonzero map epoch.
+Peer admission never derives trust solely from metadata received on the socket.
+The library checks exact descriptor bytes reconstructed from the independently
+admitted expected package, session, epoch and negotiated limits. Manifest digest,
+exact taxonomy UTF-8 bytes and digest, full ordered projection, class count,
+adapter, context, package schema and binary schema all participate. Same K,
+projection or reused taxonomy ID cannot substitute for semantic identity. This
+binding supplies integrity and an application expectation, not authentication.
+
+The exchange is:
+
+1. The peer sends `synrex.session.hello.v3` with supported `max_frame_points`,
+   `max_frame_bytes` and `startup_timeout_ms`.
+2. The authority selects the minimum of its own and the peer's limits in each
+   dimension and sends the package-bound descriptor with those chosen values.
+3. The peer rejects chosen values above its supported limits, reconstructs and
+   validates the full expected descriptor, and sends the metadata ACK immediately.
+4. The authority validates the ACK through its privately owned `Startup` gate.
+   Only then may `initialization_permission()` return true. Authority
+   `create_session(options)` consumes this same gate and retained engine. It
+   validates engine kind/capacity before device construction, initializes the
+   backend and verifies the loaded contract, manifest, artifacts, target and
+   capacity. Public caller-asserted initialization completion is unavailable.
+5. After initialization completion the authority generates a fresh random 128-bit
+   readiness challenge and sends execution-ready. The peer verifies its full
+   descriptor, session and epoch binding and echoes that challenge in the ready ACK.
+   A ready ACK pre-sent from knowledge of the descriptor cannot satisfy this gate.
+6. Both sides permit `authorize_frame()` only after their readiness exchange.
+
+The hello JSON has exactly `schema` and `limits`; `schema` is
+`synrex.session.hello.v3`, and `limits` has exactly the three fields above.
+Other controls have `schema: synrex.session.control.v3`, the corresponding
+`kind` string (`metadata_ack`, `execution_ready`, `execution_ready_ack`),
+`descriptor_sha256`, `session_id` and `map_epoch`. Execution-ready and its ACK also
+carry `readiness_challenge`, exactly 32 lowercase hexadecimal characters. The
+transport verifies the exact descriptor-generated serialization plus challenge;
+it rejects alternate serialization of those two controls. Metadata ACK validation
+uses the startup library's strict bounded JSON parser.
+
+`authorize_frame(hash, session, epoch, points, bytes)` checks the admitted identity
+and both negotiated sizes before a caller allocates a payload. It does not inspect
+payloads, read frames, decode headers, validate labels or prove execution. A caller
+must invoke it before its own allocation and supply the actual frame sizes.
+
+Each connection starts a real absolute five-second metadata deadline at
+construction, including all hello, descriptor and ACK work. Nonblocking send/recv,
+poll retries, EINTR and fragment progress never reset it. The admitted metadata ACK
+starts a separate absolute deadline bounded by the negotiated startup timeout
+(1–120,000 milliseconds); initialization notifications and readiness controls never
+extend it. Equality expires. The startup gate independently checks that deadline.
+Typed frame/classification send and receive methods require a caller-supplied
+absolute `Startup::Time` operation deadline. The library checks readiness before
+socket I/O or encoding, validates the whole-envelope negotiated byte limit before
+incoming payload allocation, and checks the deadline after codec work. A partial
+transfer, poll retry or new fragment never resets that deadline.
+
+Malformed or out-of-order messages, duplicates at a receive gate, identity failures,
+oversize lengths, EOF/truncation and timeouts permanently poison the connection.
+Failure shuts down the borrowed socket in both directions so blocked peers wake;
+the owner still closes it. Recovery requires a new connection and startup object.
+Methods are single-owner and are not thread safe. The connection retains the
+admitted artifact independently of the package wrapper. The borrowed socket must
+outlive all produced Sessions/Services and must not be reused during that lifetime.
+Do not call any transport method concurrently with a produced Session/Service.
+The socket is never closed here. Successful terminal completion half-closes its
+write direction; the owner still closes it.
+Typed receive methods reject control envelopes at the frame/classification gate;
+there is no unsolicited background receive loop. Clean EOF throws a diagnostic
+distinct from truncation and permanently fails the connection. EOF alone never
+qualifies a completed stream or snapshot. Explicit terminal completion is described below.
+
+`synrex-generic-transport-tests` / CTest `generic_control_transport` exercises real
+TCP loopback, a socketpair proxy that splits every write, K=2/4/non-FRACTAL 7/256
+metadata and semantic ID 255, actual limit negotiation, changed meanings/order with
+the same K/projection/ID, malformed/oversized/truncated envelopes, duplicate and
+out-of-order controls, frame authorization gates, startup stalls and an actual
+five-second fragmented metadata stall. A test-only fake backend consumes opaque engine bytes; a throwing `target_info`
+sentinel proves no GPU query occurs. The production factory is exercised with
+CPU fixtures, but that does not establish valid engine deserialization or neural
+inference. The test establishes the CPU control/factory contracts only.
+
+`generic_binary_v3_socket_io` additionally exercises real socketpairs for typed
+data transfer in both directions, raw fragmentation and coalescing, forced
+backpressure, fixed-header-only oversize rejection, malformed identity/projection,
+startup ordering, EOF/truncation and absolute deadlines. It preserves exact f64,
+uint64 source fields and K256/ID255 while resetting remote host timestamps. These
+checks use the opaque test backend and establish neither GPU execution nor
+concurrent transport/Service integration.
+
+## Terminal output admission
+
+`generic_output.hpp` supplies synchronous, single-owner output wrappers on these
+same admitted sockets. Both sides provide the expected map resolution and capacity
+(1..65,536). Each wrapper updates its own descriptor-bound map from every valid
+classification, including source/order checks. The application supplies the finite
+expected frame count; there is no implicit EOF detection or background reader.
+An empty output cannot qualify completion. Classification bytes are also hashed
+by the transport in exact complete-envelope order; internal frame/point counts
+must match the wrapper counts, preventing bypassed map updates.
+
+After all classifications, `OutputSender::finish(deadline)` freezes its map at the
+last frame end, strictly admits its canonical snapshot, then sends snapshot kind32
+and terminal kind33. `OutputReceiver::finish(deadline)` reconstructs its own map at
+the same watermark, fully admits the received snapshot and requires exact equality
+with its own canonical snapshot before acknowledging. Same cell count or a digest
+alone cannot replace this comparison. Configuration, descriptor, source, semantic
+ID or ordering disagreement fails the connection. Snapshots retain exact descriptor
+bytes and the complete ordered taxonomy; they introduce no legacy meanings.
+
+Terminal JSON uses `synrex.output.terminal.v3` with exactly `kind`
+(`output_complete` or `output_complete_ack`), `descriptor_sha256`, `session_id`,
+`map_epoch`, `taxonomy_sha256`, `classification_frames`, `classified_points`,
+`classification_sha256`, `snapshot_sha256`, `snapshot_bytes`, `snapshot_cells`,
+`as_of_ns` and `completion_challenge`. SHA256 covers concatenated exact classified
+envelopes or exact snapshot payload bytes respectively. A fresh 128-bit lowercase
+hexadecimal challenge is generated after the final snapshot write. The ACK must
+match the complete identity, counts, digests and challenge exactly; it cannot be
+pre-sent from the descriptor. Both controls use the exact generated serialization.
+
+The authority half-closes writes after terminal kind33. The peer requires EOF
+immediately after that record, then sends kind34 and half-closes writes. The
+authority requires EOF immediately after the ACK. Trailing data, absent EOF,
+missing/truncated records, bad digests and any expired absolute deadline fail;
+fragment progress never refreshes a deadline. Data I/O cannot resume after terminal
+completion. No snapshot chunks, periodic snapshots or large-map extension is added.
+
+A sender receipt has schema `synrex.output.delivery.v1` and status
+`PEER_VALIDATED` only after the bound ACK and its EOF fence. The peer's receipt is
+`VALIDATED_ACK_SENT`: it does not claim the authority received the ACK. Unfinished
+wrapper destruction aborts the connection. These receipts establish classified
+output/map delivery; they do not establish neural inference, quality, distinct
+source coverage or capture-to-output latency. Do not run a transport wrapper
+concurrently with a Session or Service sharing its gate. Use synchronous execution
+and output on one owner thread until a separately reviewed ownership path exists.
+
+## Coordinated input and output connections
+
+`AuthorityTransport::create_session_with_output(output)` requires distinct stream
+socket inodes, both metadata admissions and identical descriptor bytes. Both startup
+deadlines are checked before one retained backend constructs. Both readiness ACKs
+complete before return. Later Session or transport failure poisons both authority
+connections. All operations across these links use one caller, including terminal
+completion; coupling introduces no concurrent transport API.
+
+`PeerTransport::finish_input(deadline)` and
+`AuthorityTransport::finish_input(expected_frames, expected_points, deadline)` add
+nonempty input completion. Separate input transcripts cover concatenated exact
+complete frame envelopes, with checked uint64 frame/point counts. Kind35 uses
+`synrex.input.terminal.v3` with exactly `kind: input_complete`, `descriptor_sha256`,
+`session_id`, `map_epoch`, `taxonomy_sha256`, `input_frames`, `input_points`,
+`input_sha256` and `completion_challenge`. The peer generates a fresh 128-bit
+challenge after its final frame, sends the terminal and half-closes writes.
+
+The authority checks the exact expected counts against its received transcript,
+all bound fields/digest and EOF. It then generates a fresh acknowledgement
+challenge and sends kind36 with `kind: input_complete_ack` and the additional
+`acknowledgement_challenge`, echoing all other fields, then half-closes writes.
+The peer verifies the exact ACK and EOF. Both challenges are 32 lowercase hex
+characters; exact generated control serialization is required. Terminal payloads
+are at most 2,048 bytes. Equality with an absolute deadline expires; fragments do
+not extend it. Empty input, missing/truncated terminals and duplicate/trailing
+terminal controls never succeed. Transcript completion alone does not establish
+distinct records across frames; the CLI's frozen row/window coverage supplies
+that separate single-file check. E3 manifest distinctness remains unqualified.
+
+Receipts use `synrex.input.delivery.v1`, with authority `VALIDATED_ACK_SENT` or peer
+`PEER_VALIDATED`. They attest input delivery only, with no inference or output
+success claim. The finite CLI completes input before requiring the separate output
+snapshot/ACK protocol. No EOF-only success or implicit record-count inference occurs.

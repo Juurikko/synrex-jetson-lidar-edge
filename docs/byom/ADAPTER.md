@@ -99,6 +99,12 @@ fallback. This is a generic builder policy, not a model adapter. Tensor dtypes
 still come from the contract and ONNX. The build receipt contains detailed engine
 layer inspection so actual FP16 execution can be checked. TensorRT 11 is unsupported.
 
+`build-engine --builder-optimization 0..5` selects and records the TensorRT builder
+search policy. The default remains 3. Level 0 disables dynamic kernel generation
+and selects the first working tactic; it is an explicit compilation experiment,
+with its own engine identity and required numerical and runtime qualification.
+It does not establish a memory reduction or an inference speed improvement.
+
 ## Resource and execution bounds
 
 `limits` contains exactly `max_points` <=20,000,000, `max_blocks` <=100,000,

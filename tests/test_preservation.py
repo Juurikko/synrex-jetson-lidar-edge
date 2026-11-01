@@ -17,7 +17,9 @@ import pytest
 from synthetic_laz import create
 from verify_laz import metadata_regions, verify
 
-WRITER = Path(os.environ.get("SYNREX_TEST_WRITER", "build/synrex-laz-labels")).resolve()
+ROOT = Path(__file__).resolve().parents[1]
+NATIVE_DIR = Path(os.environ.get("SYNREX_TEST_NATIVE_DIR", ROOT / "build")).resolve()
+WRITER = Path(os.environ.get("SYNREX_TEST_WRITER", NATIVE_DIR / "synrex-laz-labels")).resolve()
 
 
 def run(source, labels, output):

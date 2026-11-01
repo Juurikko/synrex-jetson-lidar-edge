@@ -1,0 +1,201 @@
+{
+  "schema": "synrex.lazperf_overlay.v1",
+  "upstream_url": "https://github.com/hobuinc/laz-perf",
+  "upstream_commit": "b7bbe26109dc986f42d4fc80b8de3d2b6ca634ce",
+  "patch": "coordinate-memory.patch",
+  "patch_sha256": "f8678f9ea4c0aa6f07364b02c9c734c92d71993ab8678920336d9b52443fdd67",
+  "files": {
+    "cpp/lazperf/Extractor.hpp": {
+      "before": "f0405fe452c3439f3b83261dbf19c77791bb390f842c61444971153ad6e37bcc",
+      "after": "f0405fe452c3439f3b83261dbf19c77791bb390f842c61444971153ad6e37bcc"
+    },
+    "cpp/lazperf/Inserter.hpp": {
+      "before": "998328dc87aae5f20958bfb9a9bb22e05a746c4589a31aee121ae85c9cdeb6ba",
+      "after": "998328dc87aae5f20958bfb9a9bb22e05a746c4589a31aee121ae85c9cdeb6ba"
+    },
+    "cpp/lazperf/charbuf.cpp": {
+      "before": "686c96a56a2c371e13cd187ecb9d3a84ecf9e3f83b990354aea11095cbb4d7de",
+      "after": "686c96a56a2c371e13cd187ecb9d3a84ecf9e3f83b990354aea11095cbb4d7de"
+    },
+    "cpp/lazperf/charbuf.hpp": {
+      "before": "7e6d9f48ff06b0c2bcb25e269c5998bdc1b959561e2d1d519fc101499dcaf07d",
+      "after": "7e6d9f48ff06b0c2bcb25e269c5998bdc1b959561e2d1d519fc101499dcaf07d"
+    },
+    "cpp/lazperf/coderbase.hpp": {
+      "before": "9bedd5f961e1998002a6d2e27002e2de496dc803e1f380c3b1707c557ea95732",
+      "after": "9bedd5f961e1998002a6d2e27002e2de496dc803e1f380c3b1707c557ea95732"
+    },
+    "cpp/lazperf/compressor.hpp": {
+      "before": "ed493a5493075b4251f24cfa1e604a0f0c1c91b7fb31a2c690b4f984e6eb5b46",
+      "after": "ed493a5493075b4251f24cfa1e604a0f0c1c91b7fb31a2c690b4f984e6eb5b46"
+    },
+    "cpp/lazperf/decoder.hpp": {
+      "before": "532ccc488549feb408126c7e25278d0a3d4a7b551dc5ea6d05dcaa053977d2dd",
+      "after": "532ccc488549feb408126c7e25278d0a3d4a7b551dc5ea6d05dcaa053977d2dd"
+    },
+    "cpp/lazperf/decompressor.hpp": {
+      "before": "b79f351fb89a034a51196b21e75866ee01284f5350653f308e970dd7f8b4ce3e",
+      "after": "998e4122963cea51e3aebee855d6d12a6f6b2e1dd8f7ea6004b9eb2bc6e5180c"
+    },
+    "cpp/lazperf/detail/field_byte10.cpp": {
+      "before": "91a72ed706e4cee46764e31c072071d2c47df83ad3facbbd714d43a17a01b9a5",
+      "after": "91a72ed706e4cee46764e31c072071d2c47df83ad3facbbd714d43a17a01b9a5"
+    },
+    "cpp/lazperf/detail/field_byte10.hpp": {
+      "before": "8b969dcc319b5f5c47cc93d786c805127c0d19cc9f80ba1d7c3cf661cfd9ddd1",
+      "after": "8b969dcc319b5f5c47cc93d786c805127c0d19cc9f80ba1d7c3cf661cfd9ddd1"
+    },
+    "cpp/lazperf/detail/field_byte14.cpp": {
+      "before": "cabc9a9153f46dee825d603a7e46f135b7a577e359b71284a55854401d75976c",
+      "after": "cabc9a9153f46dee825d603a7e46f135b7a577e359b71284a55854401d75976c"
+    },
+    "cpp/lazperf/detail/field_byte14.hpp": {
+      "before": "938c8e0e7a165899dc9a7aac20c46da4b9ca046d9737f73b2938805faa62699a",
+      "after": "938c8e0e7a165899dc9a7aac20c46da4b9ca046d9737f73b2938805faa62699a"
+    },
+    "cpp/lazperf/detail/field_gpstime.hpp": {
+      "before": "ad52c413ae505fea9e477bb637b54c8fd79f5b8c54b0325ed372f525fc3bc6d3",
+      "after": "ad52c413ae505fea9e477bb637b54c8fd79f5b8c54b0325ed372f525fc3bc6d3"
+    },
+    "cpp/lazperf/detail/field_gpstime10.cpp": {
+      "before": "08b95d95139e6619ef204705ed8110e0c9228d034e8c4fe0656201aa3b2deaac",
+      "after": "08b95d95139e6619ef204705ed8110e0c9228d034e8c4fe0656201aa3b2deaac"
+    },
+    "cpp/lazperf/detail/field_gpstime10.hpp": {
+      "before": "d48aa16d6e391567baf29d90d9531f1043bb95a08118f728e0ea27a6f0636d80",
+      "after": "d48aa16d6e391567baf29d90d9531f1043bb95a08118f728e0ea27a6f0636d80"
+    },
+    "cpp/lazperf/detail/field_nir14.cpp": {
+      "before": "80d31c70246d40cd3acd1e1dbc1552be17c13a01042e09dcb60ad10b1a9d15d7",
+      "after": "80d31c70246d40cd3acd1e1dbc1552be17c13a01042e09dcb60ad10b1a9d15d7"
+    },
+    "cpp/lazperf/detail/field_nir14.hpp": {
+      "before": "befb020c0df18827b4f4a99f09c9e698ce63a1af0bcd5a70a13583d6ffc17ebe",
+      "after": "befb020c0df18827b4f4a99f09c9e698ce63a1af0bcd5a70a13583d6ffc17ebe"
+    },
+    "cpp/lazperf/detail/field_point10.cpp": {
+      "before": "08fb6bf71706cefdb03cfa81efaa4aa85775158d672f4ef7dcecdb2cb27bae3a",
+      "after": "72b038eaffb3b567f9b11620d1de92be5b84b0c07e5a35143c545a919ee58fe3"
+    },
+    "cpp/lazperf/detail/field_point10.hpp": {
+      "before": "e119ef4eee623f741875333c62ea973e7489281a3e3ac8b01367dd49461bb9d2",
+      "after": "e119ef4eee623f741875333c62ea973e7489281a3e3ac8b01367dd49461bb9d2"
+    },
+    "cpp/lazperf/detail/field_point14.cpp": {
+      "before": "4b29d91a86b9a2d0ae5929c8d560413dc0d3dd1e57d0af86be222ebd55d1df63",
+      "after": "22cbb8f084a7b558f50deeb7cc90caeeaa60bf5650fc447ff8999f4c776cf213"
+    },
+    "cpp/lazperf/detail/field_point14.hpp": {
+      "before": "744b6f9b986e09bf2f4c92e294a896af331fda0b4d0dc26cbbbf9b2241614eef",
+      "after": "744b6f9b986e09bf2f4c92e294a896af331fda0b4d0dc26cbbbf9b2241614eef"
+    },
+    "cpp/lazperf/detail/field_rgb10.cpp": {
+      "before": "b33b6daabd0fda770fdae4d8fc056f67cb537fd1f6409a609d5a1750714f0dce",
+      "after": "b33b6daabd0fda770fdae4d8fc056f67cb537fd1f6409a609d5a1750714f0dce"
+    },
+    "cpp/lazperf/detail/field_rgb10.hpp": {
+      "before": "c24163c37cfaed642e00915403ef1eedb024d7df400e0f23c134ee051a2d9568",
+      "after": "c24163c37cfaed642e00915403ef1eedb024d7df400e0f23c134ee051a2d9568"
+    },
+    "cpp/lazperf/detail/field_rgb14.cpp": {
+      "before": "c761fc67db2e5df7d7f6d90fd4b85434a8b21ae7b0c86339d32b90cc0ae05bc4",
+      "after": "c761fc67db2e5df7d7f6d90fd4b85434a8b21ae7b0c86339d32b90cc0ae05bc4"
+    },
+    "cpp/lazperf/detail/field_rgb14.hpp": {
+      "before": "34f70fe89e027b4fcce56afa89f1f091f8a192d44bb5a9df287a98b4e72d7db1",
+      "after": "34f70fe89e027b4fcce56afa89f1f091f8a192d44bb5a9df287a98b4e72d7db1"
+    },
+    "cpp/lazperf/detail/field_xyz.hpp": {
+      "before": "d516a6d75cdbc78f6487bc0d4d261a75dd1c67960b945c9298ddd2f08b1cc031",
+      "after": "d516a6d75cdbc78f6487bc0d4d261a75dd1c67960b945c9298ddd2f08b1cc031"
+    },
+    "cpp/lazperf/encoder.hpp": {
+      "before": "404ffc61c384ffd487b7062217819d6871a973bed6d73a3c5ba1ff0ed7027a80",
+      "after": "404ffc61c384ffd487b7062217819d6871a973bed6d73a3c5ba1ff0ed7027a80"
+    },
+    "cpp/lazperf/excepts.hpp": {
+      "before": "5191eed2433d01fd73c53c0b06dd4b049d3825b01580354254f0337905662332",
+      "after": "5191eed2433d01fd73c53c0b06dd4b049d3825b01580354254f0337905662332"
+    },
+    "cpp/lazperf/filestream.cpp": {
+      "before": "3e1902b6228628ee32fef6a7b6f20aaa766c18fd4e2741e89a49396991254219",
+      "after": "3e1902b6228628ee32fef6a7b6f20aaa766c18fd4e2741e89a49396991254219"
+    },
+    "cpp/lazperf/filestream.hpp": {
+      "before": "cf6130dd218bd7b2d52f9fc92fd7a7dd2e27e76f42448dd7af1eb45c489e3068",
+      "after": "cf6130dd218bd7b2d52f9fc92fd7a7dd2e27e76f42448dd7af1eb45c489e3068"
+    },
+    "cpp/lazperf/header.cpp": {
+      "before": "c2fc814bab974c93a552e7744f2206fc229a9956d319b18c76dd257c3b4c1f3c",
+      "after": "c2fc814bab974c93a552e7744f2206fc229a9956d319b18c76dd257c3b4c1f3c"
+    },
+    "cpp/lazperf/header.hpp": {
+      "before": "047254820a95e043196f0a7cdddfd9ab96e60d8a13e7b2ba7f462f9be8075b7c",
+      "after": "047254820a95e043196f0a7cdddfd9ab96e60d8a13e7b2ba7f462f9be8075b7c"
+    },
+    "cpp/lazperf/las.hpp": {
+      "before": "ddcde2bd39faa593c156c11e4b67b76b89c0b0896da3faaec693885e400ed9a2",
+      "after": "ddcde2bd39faa593c156c11e4b67b76b89c0b0896da3faaec693885e400ed9a2"
+    },
+    "cpp/lazperf/lazperf.cpp": {
+      "before": "068bef1f966c4ad1c63b384b6bde8088773498a495b556df31066b3e7301bfe6",
+      "after": "068bef1f966c4ad1c63b384b6bde8088773498a495b556df31066b3e7301bfe6"
+    },
+    "cpp/lazperf/lazperf.hpp": {
+      "before": "bfd5d822febd5e00113d4f089926e72b1cce74e1899b2be4b5b983471e7dc689",
+      "after": "bfd5d822febd5e00113d4f089926e72b1cce74e1899b2be4b5b983471e7dc689"
+    },
+    "cpp/lazperf/lazperf_base.hpp": {
+      "before": "d356f870b4b941fc663a114dfd48f8e178c5d4fe3b30fff22691961a4dfe3cf8",
+      "after": "d356f870b4b941fc663a114dfd48f8e178c5d4fe3b30fff22691961a4dfe3cf8"
+    },
+    "cpp/lazperf/lazperf_user_base.hpp": {
+      "before": "ac738f36d88cda140720041a8e2a1d2b59910368be56bf3008f3549eadc53fa0",
+      "after": "ac738f36d88cda140720041a8e2a1d2b59910368be56bf3008f3549eadc53fa0"
+    },
+    "cpp/lazperf/model.hpp": {
+      "before": "c8d029ab91c139f93b92dd068c72dad31135258dd7e05db5b44f1d36010ffb7e",
+      "after": "c8d029ab91c139f93b92dd068c72dad31135258dd7e05db5b44f1d36010ffb7e"
+    },
+    "cpp/lazperf/portable_endian.hpp": {
+      "before": "a4bab5a0fe2901274788f3c06d199f9f229ccad3c6bb977e870e2b6cda3baecd",
+      "after": "a4bab5a0fe2901274788f3c06d199f9f229ccad3c6bb977e870e2b6cda3baecd"
+    },
+    "cpp/lazperf/readers.cpp": {
+      "before": "a2683c6c39fef0460524ed6c66b9e443d48ec15e2b22fc43ad0c7d58dd190340",
+      "after": "a2683c6c39fef0460524ed6c66b9e443d48ec15e2b22fc43ad0c7d58dd190340"
+    },
+    "cpp/lazperf/readers.hpp": {
+      "before": "f9533dc55616378476c6ede0b3c135996c654f255aec5dd25a6be0202eece92b",
+      "after": "f9533dc55616378476c6ede0b3c135996c654f255aec5dd25a6be0202eece92b"
+    },
+    "cpp/lazperf/streams.hpp": {
+      "before": "e29519b7b757debbfa84dc85fb1ebde6ffd046b58bff7b87a1a51915396fd24e",
+      "after": "022124b23bede0cd55ef0cfade1175591dba5f66cbdf41fa2905ca6759d199db"
+    },
+    "cpp/lazperf/utils.hpp": {
+      "before": "9fd2c55165b70285dbf3a50d3714669cc83a02f97424774b971894dcb198bb1f",
+      "after": "41fb36e1e43fdb43d9cd02512e89ce7d489a66194c99de2ff3ceef48638a54f8"
+    },
+    "cpp/lazperf/vlr.cpp": {
+      "before": "e081a51e310cb8f6fe56ab28c010d9201bbef29475b740d07fac44215e3f0ac2",
+      "after": "e081a51e310cb8f6fe56ab28c010d9201bbef29475b740d07fac44215e3f0ac2"
+    },
+    "cpp/lazperf/vlr.hpp": {
+      "before": "362c8eece33dffea598ae4bcc642eda8331b2dd82cff6b49518ffdf76bfceac1",
+      "after": "362c8eece33dffea598ae4bcc642eda8331b2dd82cff6b49518ffdf76bfceac1"
+    },
+    "cpp/lazperf/writers.cpp": {
+      "before": "0081f4d7c7246237ee63d8b47875a86a1192986f64ba4e18fdc2bd93409806cd",
+      "after": "0081f4d7c7246237ee63d8b47875a86a1192986f64ba4e18fdc2bd93409806cd"
+    },
+    "cpp/lazperf/writers.hpp": {
+      "before": "56dba580074a34bd4c7b1b09beac7b6684b7c0dfa7a5968500f6490528366572",
+      "after": "56dba580074a34bd4c7b1b09beac7b6684b7c0dfa7a5968500f6490528366572"
+    },
+    "COPYING": {
+      "before": "959f77033ba56a3b146faf5c02f9162071f2d0bff4b8b6f1c2193a4b41127d39",
+      "after": "959f77033ba56a3b146faf5c02f9162071f2d0bff4b8b6f1c2193a4b41127d39"
+    }
+  }
+}
