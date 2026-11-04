@@ -238,8 +238,8 @@ CausalContextWindow CausalContextAssembler::emit(std::size_t fresh) {
     // a consumer, and its lifetime is bound to the issuance token.
     out.context = std::make_shared<const std::vector<streaming::SourcePoint>>(std::move(issued));
     const auto digest = window_digest(out);
-    in_flight_.push_back({window_index_, out.context->at(out.fresh_begin).id,
-                          fresh, digest, out.context});
+    in_flight_.push_back(
+        {window_index_, out.context->at(out.fresh_begin).id, fresh, digest, out.context});
     ++window_index_;
     return out;
 }
@@ -336,8 +336,8 @@ CausalContextAssembler::commit_new_only(const CausalContextWindow &window,
         demand(!failed_ && !in_flight_.empty(), "causal context has no commit-ready window");
         const auto &token = in_flight_.front();
         demand(window.window_index == token.window_index &&
-                   window.fresh_count == token.fresh_count &&
-                   window.context && window.context == token.issued_context &&
+                   window.fresh_count == token.fresh_count && window.context &&
+                   window.context == token.issued_context &&
                    window.context->size() == all_context_labels.size() &&
                    window.fresh_begin <= window.context->size() &&
                    window.fresh_count == window.context->size() - window.fresh_begin,

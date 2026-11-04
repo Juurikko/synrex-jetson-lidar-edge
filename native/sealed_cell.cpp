@@ -9,17 +9,17 @@
 namespace synrex::generic {
 namespace {
 void demand(bool okay, const char *message) {
-    if (!okay) throw std::runtime_error(message);
+    if (!okay)
+        throw std::runtime_error(message);
 }
 } // namespace
 
 void SealedCellPolicy::validate() const {
     demand(idle_gap_points >= 1 && idle_gap_points <= 10000000ULL,
            "sealed cell idle gap outside admitted range");
-    demand(max_active_cells >= 1 && max_active_cells <= 65536 &&
-           max_retained_points >= 1 && max_retained_points <= 8000000 &&
-           max_points_per_cell >= 1 && max_points_per_cell <= 262144 &&
-           max_points_per_cell <= max_retained_points,
+    demand(max_active_cells >= 1 && max_active_cells <= 65536 && max_retained_points >= 1 &&
+               max_retained_points <= 8000000 && max_points_per_cell >= 1 &&
+               max_points_per_cell <= 262144 && max_points_per_cell <= max_retained_points,
            "sealed cell bounded retained memory policy invalid");
     demand(max_outstanding_windows >= 1 && max_outstanding_windows <= 128,
            "sealed cell outstanding-window cap invalid");
@@ -40,13 +40,12 @@ SealedCellScheduler::SealedCellScheduler(SealedCellPolicy policy) : policy_(std:
     policy_.validate();
 }
 
-void SealedCellScheduler::validate_point(std::uint64_t index,
-                                         const streaming::SourcePoint &point,
+void SealedCellScheduler::validate_point(std::uint64_t index, const streaming::SourcePoint &point,
                                          const std::string &source_crs) const {
     demand(!failed_ && !finished_, "sealed cell session failed or already EOF");
     demand(index == next_index_, "sealed cell missing or duplicate global stream index");
     demand(source_crs == policy_.projected_crs, "sealed cell unadmitted metre CRS");
-    if(have_source_) {
+    if (have_source_) {
         demand(first_id_ <= UINT64_MAX - index && point.id == first_id_ + index,
                "sealed cell source ID not contiguous");
     } else {
@@ -54,27 +53,22 @@ void SealedCellScheduler::validate_point(std::uint64_t index,
     }
     for (const auto c : point.xyz)
         demand(std::isfinite(c), "sealed cell nonfinite point coordinate");
-    demand(std::abs(point.xyz[0] - policy_.origin_xy_m[0]) <=
-               policy_.max_xy_distance_m &&
-           std::abs(point.xyz[1] - policy_.origin_xy_m[1]) <=
-               policy_.max_xy_distance_m &&
-           std::abs(point.xyz[2]) <= 25000.0,
+    demand(std::abs(point.xyz[0] - policy_.origin_xy_m[0]) <= policy_.max_xy_distance_m &&
+               std::abs(point.xyz[1] - policy_.origin_xy_m[1]) <= policy_.max_xy_distance_m &&
+               std::abs(point.xyz[2]) <= 25000.0,
            "sealed cell coordinates outside admitted metre-domain bounds");
 }
 
-SealedCellScheduler::Key
-SealedCellScheduler::cell_of(const streaming::SourcePoint &point) const {
-    const auto x = std::floor((point.xyz[0] - policy_.origin_xy_m[0]) /
-                              policy_.cell_width_m);
-    const auto y = std::floor((point.xyz[1] - policy_.origin_xy_m[1]) /
-                              policy_.cell_width_m);
+SealedCellScheduler::Key SealedCellScheduler::cell_of(const streaming::SourcePoint &point) const {
+    const auto x = std::floor((point.xyz[0] - policy_.origin_xy_m[0]) / policy_.cell_width_m);
+    const auto y = std::floor((point.xyz[1] - policy_.origin_xy_m[1]) / policy_.cell_width_m);
     demand(x >= -10000000 && x <= 10000000 && y >= -10000000 && y <= 10000000,
            "sealed cell grid key overflow");
     return {static_cast<std::int64_t>(x), static_cast<std::int64_t>(y)};
 }
 
-std::vector<SealedCellScheduler::Key>
-SealedCellScheduler::ready(std::uint64_t watermark, bool eof) const {
+std::vector<SealedCellScheduler::Key> SealedCellScheduler::ready(std::uint64_t watermark,
+                                                                 bool eof) const {
     std::vector<Key> found;
     for (const auto &[key, cell] : cells_) {
         if (cell.emitted_count == cell.points.size())
@@ -93,8 +87,7 @@ SealedCellScheduler::ready(std::uint64_t watermark, bool eof) const {
     return found;
 }
 
-SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t watermark,
-                                           bool eof) {
+SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t watermark, bool eof) {
     auto &cell = cells_.at(key);
     demand(cell.emitted_count < cell.points.size(), "sealed cell no fresh points");
     demand(issued_.size() < policy_.max_outstanding_windows,
@@ -103,8 +96,7 @@ SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t waterma
     out.cell = key;
     out.epoch = cell.epoch;
     out.window_index = windows_++;
-    out.release_point_index = eof ? watermark
-                             : cell.last_seen_index + policy_.idle_gap_points + 1;
+    out.release_point_index = eof ? watermark : cell.last_seen_index + policy_.idle_gap_points + 1;
     out.fresh_begin = cell.emitted_count;
     out.fresh_count = cell.points.size() - cell.emitted_count;
     out.previous_history_may_be_lost = may_have_lost_history_;
@@ -120,8 +112,8 @@ bool SealedCellScheduler::reserve_one(const Key &target) {
     for (;;) {
         const auto found = cells_.find(target);
         const bool needs_cell = found == cells_.end();
-        const bool local_full = !needs_cell &&
-                                found->second.points.size() >= policy_.max_points_per_cell;
+        const bool local_full =
+            !needs_cell && found->second.points.size() >= policy_.max_points_per_cell;
         const bool global_full = retained_points_ >= policy_.max_retained_points;
         const bool cells_full = needs_cell && cells_.size() >= policy_.max_active_cells;
         if (!local_full && !global_full && !cells_full)
@@ -134,8 +126,7 @@ bool SealedCellScheduler::reserve_one(const Key &target) {
                 continue; // never evict unsent or unacknowledged classifications
             if (local_full && it->first != target)
                 continue; // local cap requires this exact completed cell to retire
-            if (victim == cells_.end() ||
-                c.last_seen_index < victim->second.last_seen_index)
+            if (victim == cells_.end() || c.last_seen_index < victim->second.last_seen_index)
                 victim = it;
         }
         if (victim == cells_.end())
@@ -147,9 +138,9 @@ bool SealedCellScheduler::reserve_one(const Key &target) {
     }
 }
 
-SealedCellScheduler::Result SealedCellScheduler::try_ingest(
-    std::uint64_t global_index, const streaming::SourcePoint &point,
-    const std::string &source_crs) {
+SealedCellScheduler::Result SealedCellScheduler::try_ingest(std::uint64_t global_index,
+                                                            const streaming::SourcePoint &point,
+                                                            const std::string &source_crs) {
     try {
         validate_point(global_index, point, source_crs);
         const auto key = cell_of(point);
@@ -210,25 +201,23 @@ SealedCellScheduler::Result SealedCellScheduler::try_source_eof(std::uint64_t to
     }
 }
 
-SealedCellLabels SealedCellScheduler::commit_new_only(
-    const SealedCellWindow &window, const std::vector<std::uint8_t> &labels) {
+SealedCellLabels SealedCellScheduler::commit_new_only(const SealedCellWindow &window,
+                                                      const std::vector<std::uint8_t> &labels) {
     try {
         demand(!failed_ && !issued_.empty(), "sealed cell no authorized output to commit");
         const auto &issued = issued_.front().window;
-        demand(window.context && window.context == issued.context &&
-               window.cell == issued.cell && window.epoch == issued.epoch &&
-               window.window_index == issued.window_index &&
-               window.release_point_index == issued.release_point_index &&
-               window.fresh_begin == issued.fresh_begin &&
-               window.fresh_count == issued.fresh_count &&
-               window.previous_history_may_be_lost == issued.previous_history_may_be_lost &&
-               window.eof_release == issued.eof_release &&
-               window.context->size() == labels.size() &&
-               window.fresh_count == window.context->size() - window.fresh_begin,
+        demand(window.context && window.context == issued.context && window.cell == issued.cell &&
+                   window.epoch == issued.epoch && window.window_index == issued.window_index &&
+                   window.release_point_index == issued.release_point_index &&
+                   window.fresh_begin == issued.fresh_begin &&
+                   window.fresh_count == issued.fresh_count &&
+                   window.previous_history_may_be_lost == issued.previous_history_may_be_lost &&
+                   window.eof_release == issued.eof_release &&
+                   window.context->size() == labels.size() &&
+                   window.fresh_count == window.context->size() - window.fresh_begin,
                "sealed cell source window identity or size changed");
         for (const auto code : labels)
-            demand(code < policy_.semantic_class_count,
-                   "sealed cell invalid semantic class");
+            demand(code < policy_.semantic_class_count, "sealed cell invalid semantic class");
         auto &cell = cells_.at(window.cell);
         demand(cell.epoch == window.epoch && cell.outstanding > 0,
                "sealed cell epoch lost before commit");

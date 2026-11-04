@@ -10,8 +10,8 @@
 #include <utility>
 
 using namespace synrex::generic;
-static_assert(std::is_const_v<std::remove_reference_t<decltype(
-                  std::declval<const CausalContextWindow &>().context->at(0))>>,
+static_assert(std::is_const_v<std::remove_reference_t<
+                  decltype(std::declval<const CausalContextWindow &>().context->at(0))>>,
               "A published causal point must be immutable through the native API");
 namespace {
 std::size_t checks{}, rejections{};

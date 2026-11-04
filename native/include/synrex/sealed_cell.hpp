@@ -70,7 +70,7 @@ class SealedCellScheduler final {
     SealedCellScheduler &operator=(const SealedCellScheduler &) = delete;
 
     struct Result {
-        bool accepted{}; // input point accepted or EOF admitted
+        bool accepted{};     // input point accepted or EOF admitted
         bool needs_commit{}; // pending sealed output must be committed and retried
         std::vector<SealedCellWindow> issued;
     };
