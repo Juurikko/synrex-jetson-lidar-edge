@@ -105,6 +105,7 @@
       "src/verify_laz.py",
       "src/verify_semantics.py",
       "tests/native/causal_context.cpp",
+      "tests/native/causal_context_perf.cpp",
       "tests/native/core.cpp",
       "tests/native/engine_artifact.cpp",
       "tests/native/export.cpp",
