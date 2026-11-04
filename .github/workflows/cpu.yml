@@ -147,12 +147,80 @@ jobs:
           g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp tests/native/causal_context.cpp -o build-causal-aarch64/causal-context-tests -lcrypto
           build-causal-aarch64/causal-context-tests | tee build-causal-aarch64/results.txt
           grep -q CAUSAL_CONTEXT_CPU_PASS build-causal-aarch64/results.txt
-          sha256sum build-causal-aarch64/causal-context-tests > build-causal-aarch64/SHA256SUMS
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp native/sealed_cell.cpp tests/native/sealed_cell.cpp -o build-causal-aarch64/sealed-cell-tests -lcrypto
+          build-causal-aarch64/sealed-cell-tests | tee build-causal-aarch64/sealed-results.txt
+          grep -q SEALED_CELL_CPU_PASS build-causal-aarch64/sealed-results.txt
+          sha256sum build-causal-aarch64/causal-context-tests build-causal-aarch64/sealed-cell-tests > build-causal-aarch64/SHA256SUMS
       - name: Retain ARM64 CPU results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: causal-context-aarch64-${{ github.run_id }}
           path: build-causal-aarch64/
+          retention-days: 30
+          if-no-files-found: warn
+
+  causal-performance-x86:
+    name: Immutable context vs original SHA256 x86_64 CPU (no GPU)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Fetch pinned JSON dependency
+        run: |
+          set -euo pipefail
+          git init -q .deps/json
+          git -C .deps/json fetch --quiet --depth=1 https://github.com/nlohmann/json.git 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+          git -C .deps/json checkout --quiet --detach FETCH_HEAD
+      - name: Compile identical CPU fixture against original SHA baseline and immutable candidate
+        run: |
+          set -euo pipefail
+          mkdir -p .baseline/include/synrex .baseline/native build-causal-perf
+          BASE_SHA=18c6e6da45f24ae066226459ee0580e8cfb774f5
+          test "$(git cat-file -t "$BASE_SHA")" = commit
+          git show "$BASE_SHA:native/include/synrex/causal_context.hpp" > .baseline/include/synrex/causal_context.hpp
+          git show "$BASE_SHA:native/causal_context.cpp" > .baseline/native/causal_context.cpp
+          g++ -std=c++17 -O3 -DNDEBUG -DSYNREX_PERF_BASELINE -Wall -Wextra -Wpedantic -Werror \
+            -I .baseline/include -I native/include -I .deps/json/single_include \
+            .baseline/native/causal_context.cpp tests/native/causal_context_perf.cpp \
+            -o build-causal-perf/baseline -lcrypto
+          g++ -std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic -Werror \
+            -I native/include -I .deps/json/single_include \
+            native/causal_context.cpp tests/native/causal_context_perf.cpp \
+            -o build-causal-perf/candidate -lcrypto
+          printf 'base=%s\ncandidate=%s\n' "$BASE_SHA" "$GITHUB_SHA" > build-causal-perf/source-lock.txt
+      - name: Run same 3.145M source-point workload and record exact throughput
+        run: |
+          set -euo pipefail
+          build-causal-perf/baseline | tee build-causal-perf/baseline.json
+          build-causal-perf/candidate | tee build-causal-perf/candidate.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          a = json.loads(Path("build-causal-perf/baseline.json").read_text())
+          b = json.loads(Path("build-causal-perf/candidate.json").read_text())
+          assert a["total_points"] == b["total_points"] == 3145728
+          assert a["checksum"] == b["checksum"]
+          assert a["context_processed"] == b["context_processed"]
+          assert a["windows"] == b["windows"] == 192
+          assert a["fresh_points_per_second"] > 0 and b["fresh_points_per_second"] > 0
+          ratio = b["fresh_points_per_second"] / a["fresh_points_per_second"]
+          receipt = {"schema":"synrex.causal_context_perf_comparison.v1",
+                     "scope":"isolated CPU assemble+commit, no real model, no GPU",
+                     "baseline_source":"18c6e6da45f24ae066226459ee0580e8cfb774f5",
+                     "candidate_faster_by":ratio,"baseline":a,"candidate":b}
+          Path("build-causal-perf/comparison.json").write_text(json.dumps(receipt,indent=2)+"\n")
+          print("CPU_ONLY_IMMUTABLE_CONTEXT_RATIO", round(ratio,2))
+          PY
+          sha256sum build-causal-perf/baseline build-causal-perf/candidate > build-causal-perf/SHA256SUMS
+      - name: Retain measured speed and source identities
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: causal-context-cpu-perf-${{ github.run_id }}
+          path: build-causal-perf/
           retention-days: 30
           if-no-files-found: warn

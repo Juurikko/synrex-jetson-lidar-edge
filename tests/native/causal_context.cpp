@@ -6,8 +6,13 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+#include <type_traits>
+#include <utility>
 
 using namespace synrex::generic;
+static_assert(std::is_const_v<std::remove_reference_t<
+                  decltype(std::declval<const CausalContextWindow &>().context->at(0))>>,
+              "A published causal point must be immutable through the native API");
 namespace {
 std::size_t checks{}, rejections{};
 void check(bool ok, const char *message) {
@@ -79,7 +84,7 @@ Frame frame(std::uint64_t start, std::size_t count, std::uint64_t seq, std::uint
 
 std::vector<std::uint8_t> mock_labels(const CausalContextWindow &w) {
     // Intentionally distinctive past labels: a correct output cannot leak them.
-    std::vector<std::uint8_t> labels(w.context.size(), 6);
+    std::vector<std::uint8_t> labels(w.context->size(), 6);
     for (std::size_t i = 0; i < w.fresh_count; ++i)
         labels[w.fresh_begin + i] = static_cast<std::uint8_t>((i + 1) % 6);
     return labels;
@@ -106,13 +111,13 @@ void basic_history_and_eof() {
     check(asmbl.retained_history_points() == 6, "history ring is bounded");
     check(asmbl.ingest(frame(8, 2, 2)).empty(), "partial frame stays pending");
     auto d = asmbl.ingest(frame(10, 3, 3));
-    check(d.size() == 1 && d[0].full_history && d[0].fresh_begin == 6 && d[0].context.size() == 10,
+    check(d.size() == 1 && d[0].full_history && d[0].fresh_begin == 6 && d[0].context->size() == 10,
           "full six-point past carried forward");
     auto third = asmbl.commit_new_only(d[0], mock_labels(d[0]));
     check(third.source_ids == std::vector<std::uint64_t>({1008, 1009, 1010, 1011}),
           "past labels never republished");
     const auto tail = asmbl.source_eof();
-    check(tail && tail->fresh_count == 1 && tail->context.size() == 7, "exact one-point EOF tail");
+    check(tail && tail->fresh_count == 1 && tail->context->size() == 7, "exact one-point EOF tail");
     auto last = asmbl.commit_new_only(*tail, mock_labels(*tail));
     check(last.source_ids == std::vector<std::uint64_t>({1012}), "EOF last point exactly once");
     check(asmbl.accepted_points() == 13 && asmbl.outstanding_windows() == 0 && asmbl.finished() &&
@@ -136,14 +141,14 @@ void future_invariance() {
     auto later = b.ingest(future);
     check(later.size() == 1 && later[0].fresh_begin == 4,
           "future history may be used only by future window");
-    check(first_a[0].context.size() == first_b[0].context.size() &&
+    check(first_a[0].context->size() == first_b[0].context->size() &&
               first_a[0].fresh_begin == first_b[0].fresh_begin &&
               first_a[0].cutoff_frame_end_ns == first_b[0].cutoff_frame_end_ns &&
               first_a[0].fixed_world_origin_xy_m == first_b[0].fixed_world_origin_xy_m,
           "future append did not revise prefix");
-    for (std::size_t i = 0; i < first_a[0].context.size(); ++i)
-        check(first_a[0].context[i].id == first_b[0].context[i].id &&
-                  first_a[0].context[i].intensity == first_b[0].context[i].intensity,
+    for (std::size_t i = 0; i < first_a[0].context->size(); ++i)
+        check(first_a[0].context->at(i).id == first_b[0].context->at(i).id &&
+                  first_a[0].context->at(i).intensity == first_b[0].context->at(i).intensity,
               "historical input cannot be replaced by future");
     auto out_a = a.commit_new_only(first_a[0], mock_labels(first_a[0]));
     auto out_b = b.commit_new_only(first_b[0], mock_labels(first_b[0]));
@@ -231,31 +236,34 @@ void commit_window_integrity_guards() {
         assembler.commit_new_only(first.at(0), mock_labels(first.at(0)));
         auto next = assembler.ingest(frame(4, 4, 1, 8));
         auto altered = next.at(0);
+        // Adversarial transport of a counterfeit context copy: even if its
+        // fields match an issued window, it must NOT acquire the private handle.
+        std::vector<synrex::streaming::SourcePoint> counterfeit(*altered.context);
         const auto fresh = altered.fresh_begin;
         switch (variant) {
         case 0:
-            altered.context.at(fresh).xyz[0] += 0.125;
+            counterfeit.at(fresh).xyz[0] += 0.125;
             break;
         case 1:
-            altered.context.at(0).id += 123;
+            counterfeit.at(0).id += 123;
             break;
         case 2:
-            altered.context.at(0).xyz[1] += 0.25;
+            counterfeit.at(0).xyz[1] += 0.25;
             break;
         case 3:
-            altered.context.at(0).timestamp_ns += 1;
+            counterfeit.at(0).timestamp_ns += 1;
             break;
         case 4:
-            altered.context.at(fresh).intensity = 65535;
+            counterfeit.at(fresh).intensity = 65535;
             break;
         case 5:
-            altered.context.at(fresh).return_number = 2;
+            counterfeit.at(fresh).return_number = 2;
             break;
         case 6:
-            altered.context.at(fresh).return_count = 2;
+            counterfeit.at(fresh).return_count = 2;
             break;
         case 7:
-            altered.context.at(fresh).timestamp_ns += 1;
+            counterfeit.at(fresh).timestamp_ns += 1;
             break;
         case 8:
             altered.cutoff_frame_end_ns += 1;
@@ -264,12 +272,15 @@ void commit_window_integrity_guards() {
             altered.full_history = !altered.full_history;
             break;
         case 10:
-            altered.context.at(0).intensity.reset();
+            counterfeit.at(0).intensity.reset();
             break;
         case 11:
-            altered.context.at(fresh).xyz[2] += 0.01;
+            counterfeit.at(fresh).xyz[2] += 0.01;
             break;
         }
+        if (variant != 8 && variant != 9)
+            altered.context = std::make_shared<const std::vector<synrex::streaming::SourcePoint>>(
+                std::move(counterfeit));
         rejects([&] { assembler.commit_new_only(altered, mock_labels(altered)); });
         check(assembler.failed(), "every mutation of issued context must poison commit");
     }
@@ -405,7 +416,7 @@ void projected_crs_and_spatial_admission() {
         f.points.at(2).xyz[2] = 120.0;
         auto w = a.ingest(f);
         check(w.size() == 1 && w[0].fixed_world_origin_xy_m == p.fixed_world_origin_xy_m &&
-                  w[0].context[2].xyz[2] == 120.0,
+                  w[0].context->at(2).xyz[2] == 120.0,
               "XY anchor does not shift or replace the measured Z coordinate");
     }
 }
