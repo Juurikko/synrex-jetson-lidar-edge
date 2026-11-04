@@ -33,7 +33,8 @@ CausalContextPolicy policy(bool source_rows = true) {
     p.max_context_points = 10;
     p.max_inflight_windows = 4;
     p.semantic_class_count = 7;
-    p.fixed_world_origin_m = {{300000.0, 6700000.0, 0.0}};
+    p.fixed_world_origin_xy_m = {{300000.0, 6700000.0}};
+    p.projected_crs = "EPSG:3067";
     p.world_grid_size_m = 0.5;
     p.require_exact_source_rows = source_rows;
     return p;
@@ -138,7 +139,7 @@ void future_invariance() {
     check(first_a[0].context.size() == first_b[0].context.size() &&
               first_a[0].fresh_begin == first_b[0].fresh_begin &&
               first_a[0].cutoff_frame_end_ns == first_b[0].cutoff_frame_end_ns &&
-              first_a[0].fixed_world_origin_m == first_b[0].fixed_world_origin_m,
+              first_a[0].fixed_world_origin_xy_m == first_b[0].fixed_world_origin_xy_m,
           "future append did not revise prefix");
     for (std::size_t i = 0; i < first_a[0].context.size(); ++i)
         check(first_a[0].context[i].id == first_b[0].context[i].id &&
@@ -208,7 +209,7 @@ void poison_guards() {
         p.history_points = 10;
         rejects([&] { CausalContextAssembler asmbl(p); });
         p = policy();
-        p.fixed_world_origin_m[0] = std::numeric_limits<double>::infinity();
+        p.fixed_world_origin_xy_m[0] = std::numeric_limits<double>::infinity();
         rejects([&] { CausalContextAssembler asmbl(p); });
     }
     {
@@ -221,6 +222,171 @@ void poison_guards() {
     }
 }
 
+
+void commit_window_integrity_guards() {
+    // Every payload attribute and history record is covered by the PRIVATE
+    // issuance digest. No externally mutable window may become authoritative.
+    for (int variant = 0; variant < 12; ++variant) {
+        CausalContextAssembler assembler(policy());
+        auto first = assembler.ingest(frame(0, 4, 0, 8));
+        assembler.commit_new_only(first.at(0), mock_labels(first.at(0)));
+        auto next = assembler.ingest(frame(4, 4, 1, 8));
+        auto altered = next.at(0);
+        const auto fresh = altered.fresh_begin;
+        switch (variant) {
+        case 0: altered.context.at(fresh).xyz[0] += 0.125; break;
+        case 1: altered.context.at(0).id += 123; break;
+        case 2: altered.context.at(0).xyz[1] += 0.25; break;
+        case 3: altered.context.at(0).timestamp_ns += 1; break;
+        case 4: altered.context.at(fresh).intensity = 65535; break;
+        case 5: altered.context.at(fresh).return_number = 2; break;
+        case 6: altered.context.at(fresh).return_count = 2; break;
+        case 7: altered.context.at(fresh).timestamp_ns += 1; break;
+        case 8: altered.cutoff_frame_end_ns += 1; break;
+        case 9: altered.full_history = !altered.full_history; break;
+        case 10: altered.context.at(0).intensity.reset(); break;
+        case 11: altered.context.at(fresh).xyz[2] += 0.01; break;
+        }
+        rejects([&] { assembler.commit_new_only(altered, mock_labels(altered)); });
+        check(assembler.failed(), "every mutation of issued context must poison commit");
+    }
+    {
+        // Old authentic issued window still commits unchanged after future
+        // ingress, so the hash is a content binding, not a map-state snapshot.
+        CausalContextAssembler assembler(policy());
+        auto first = assembler.ingest(frame(0, 4, 0, 8));
+        auto second = assembler.ingest(frame(4, 4, 1, 8));
+        auto out0 = assembler.commit_new_only(first.at(0), mock_labels(first.at(0)));
+        auto out1 = assembler.commit_new_only(second.at(0), mock_labels(second.at(0)));
+        check(out0.source_ids.front() == 1000 && out1.source_ids.front() == 1004,
+              "exact issued window remains valid despite later accepted frames");
+        check(!assembler.failed(), "valid delayed commit does not poison session");
+    }
+}
+
+void backpressure_is_retryable_and_never_consumes_input() {
+    {
+        auto p = policy();
+        p.fresh_points = 16384;
+        p.history_points = 114688;
+        p.max_context_points = 131072;
+        p.max_inflight_windows = 4;
+        CausalContextAssembler assembler(p);
+        auto initial = assembler.ingest(frame(0, 16384, 0, 200000));
+        check(initial.size() == 1 && assembler.outstanding_windows() == 1,
+              "initial window outstanding");
+        auto large_frame = frame(16384, 65536, 1, 200000);
+        auto busy = assembler.try_ingest(large_frame);
+        check(!busy.accepted && busy.windows.empty() && !assembler.failed() &&
+                  assembler.accepted_points() == 16384 &&
+                  assembler.outstanding_windows() == 1 && assembler.pending_new_points() == 0,
+              "busy 65k frame returns capacity without mutating source state");
+        rejects([&] { assembler.ingest(large_frame); });
+        check(!assembler.failed() && assembler.accepted_points() == 16384,
+              "backpressure wrapper throws but does not permanently poison");
+        assembler.commit_new_only(initial.at(0), mock_labels(initial.at(0)));
+        auto retry = assembler.try_ingest(large_frame);
+        check(retry.accepted && retry.windows.size() == 4,
+              "exact original frame retries after old window completes");
+        for (std::size_t i = 0; i < retry.windows.size(); ++i) {
+            auto result =
+                assembler.commit_new_only(retry.windows[i], mock_labels(retry.windows[i]));
+            check(result.source_ids.front() == 1000 + 16384 + i * 16384 &&
+                      result.source_ids.size() == 16384,
+                  "retry preserves every new point in exact source order");
+        }
+        check(!assembler.failed() && assembler.accepted_points() == 81920 &&
+                  assembler.retained_history_points() == 81920 &&
+                  assembler.outstanding_windows() == 0,
+              "backpressure recovery keeps bounded history and full accepted coverage");
+    }
+    {
+        auto p = policy();
+        p.max_inflight_windows = 1;
+        CausalContextAssembler assembler(p);
+        auto first = assembler.ingest(frame(0, 4, 0, 5));
+        check(assembler.ingest(frame(4, 1, 1, 5)).empty(),
+              "one partial EOF point buffered while prior inference outstanding");
+        auto busy = assembler.try_source_eof();
+        check(!busy.accepted && !busy.window && !assembler.failed() &&
+                  !assembler.finished() && assembler.pending_new_points() == 1,
+              "EOF capacity wait retains the final point without poisoning");
+        rejects([&] { assembler.source_eof(); });
+        check(!assembler.failed() && !assembler.finished(),
+              "EOF wrapper capacity rejection is retryable");
+        assembler.commit_new_only(first.at(0), mock_labels(first.at(0)));
+        auto admitted = assembler.try_source_eof();
+        check(admitted.accepted && admitted.window &&
+                  admitted.window->fresh_count == 1 && assembler.finished(),
+              "EOF reattempt publishes single remaining point");
+        auto last = assembler.commit_new_only(*admitted.window, mock_labels(*admitted.window));
+        check(last.source_ids == std::vector<std::uint64_t>({1004}),
+              "EOF after backpressure publishes point exactly once");
+    }
+    {
+        // Invalid data may never hide behind a valid capacity denial.
+        auto p = policy();
+        p.max_inflight_windows = 1;
+        CausalContextAssembler assembler(p);
+        assembler.ingest(frame(0, 4, 0, 8));
+        auto invalid = frame(4, 4, 1, 8);
+        invalid.crs = "EPSG:4326";
+        rejects([&] { assembler.try_ingest(invalid); });
+        check(assembler.failed(), "invalid data is terminal even under full backpressure");
+    }
+}
+
+void projected_crs_and_spatial_admission() {
+    {
+        auto p = policy();
+        p.projected_crs = "EPSG:4326";
+        rejects([&] { CausalContextAssembler a(p); });
+        p.projected_crs = "EPSG:2263"; // projected, but US survey foot
+        rejects([&] { CausalContextAssembler a(p); });
+        p.projected_crs = "EPSG:3067junk";
+        rejects([&] { CausalContextAssembler a(p); });
+        p.projected_crs = "EPSG:2154"; // metre-based Lambert-93
+        CausalContextAssembler a(p);
+        auto f = frame(0, 4, 0, 4);
+        f.crs = "EPSG:2154";
+        check(a.ingest(f).size() == 1, "admitted French projected-metre CRS works");
+    }
+    {
+        CausalContextAssembler a(policy());
+        auto geographic = frame(0, 4, 0, 4);
+        geographic.crs = "EPSG:4326";
+        rejects([&] { a.ingest(geographic); });
+        check(a.failed(), "geographic frame cannot use a metre grid");
+    }
+    {
+        CausalContextAssembler a(policy());
+        auto far = frame(0, 4, 0, 4);
+        far.points.at(2).xyz[0] += 100000000.0; // 100,000 km from anchor
+        rejects([&] { a.ingest(far); });
+        check(a.failed(), "absurd X offset rejected before any window issued");
+    }
+    {
+        CausalContextAssembler a(policy());
+        auto tall = frame(0, 4, 0, 4);
+        tall.points.at(1).xyz[2] = 25001.0;
+        rejects([&] { a.ingest(tall); });
+        check(a.failed(), "invalid vertical magnitude rejected even without Z anchor");
+    }
+    {
+        // Vertical origin is deliberately unanchored, to avoid silently
+        // changing the frozen U-Net's z preprocessing during model research.
+        auto p = policy();
+        p.fixed_world_origin_xy_m = {{300000.0, 6700000.0}};
+        CausalContextAssembler a(p);
+        auto f = frame(0, 4, 0, 4);
+        f.points.at(2).xyz[2] = 120.0;
+        auto w = a.ingest(f);
+        check(w.size() == 1 && w[0].fixed_world_origin_xy_m == p.fixed_world_origin_xy_m &&
+                  w[0].context[2].xyz[2] == 120.0,
+              "XY anchor does not shift or replace the measured Z coordinate");
+    }
+}
+
 } // namespace
 
 int main() {
@@ -228,6 +394,9 @@ int main() {
         basic_history_and_eof();
         future_invariance();
         poison_guards();
+        commit_window_integrity_guards();
+        backpressure_is_retryable_and_never_consumes_input();
+        projected_crs_and_spatial_admission();
         std::cout << "CAUSAL_CONTEXT_CPU_PASS checks=" << checks << " rejections=" << rejections
                   << " GPU_NOT_RUN model_inference_NOT_RUN" << std::endl;
         return 0;
