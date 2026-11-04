@@ -3,6 +3,7 @@
 #pragma once
 #include "synrex/generic_codec.hpp"
 #include <deque>
+#include <memory>
 
 namespace synrex::generic {
 
@@ -31,7 +32,10 @@ struct CausalContextWindow {
     std::array<double, 2> fixed_world_origin_xy_m{};
     double world_grid_size_m{};
     std::size_t fresh_begin{}, fresh_count{};
-    std::vector<streaming::SourcePoint> context; // [past-only H][new-only W]
+    // Owned immutable snapshot. Consumers cannot legally mutate source point
+    // measurements; a copied/replaced handle is rejected at commit by pointer
+    // identity against the assembler's privately retained issued snapshot.
+    std::shared_ptr<const std::vector<streaming::SourcePoint>> context;
     bool full_history{};
 };
 
@@ -54,7 +58,10 @@ class CausalContextAssembler final {
         std::uint64_t window_index{}, first_new_id{};
         std::size_t fresh_count{};
         // Private digest of the complete issued window, including history.
+        // Only fixed-size window METADATA is hashed. Source-point data are
+        // protected by immutable ownership and exact object identity.
         std::array<unsigned char, 32> window_sha256{};
+        std::shared_ptr<const std::vector<streaming::SourcePoint>> issued_context;
     };
     CausalContextPolicy policy_;
     std::deque<streaming::SourcePoint> past_, pending_;
