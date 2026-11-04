@@ -144,7 +144,7 @@ jobs:
           set -euo pipefail
           test "$(uname -m)" = aarch64
           mkdir -p build-causal-aarch64
-          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp tests/native/causal_context.cpp -o build-causal-aarch64/causal-context-tests
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp tests/native/causal_context.cpp -o build-causal-aarch64/causal-context-tests -lcrypto
           build-causal-aarch64/causal-context-tests | tee build-causal-aarch64/results.txt
           grep -q CAUSAL_CONTEXT_CPU_PASS build-causal-aarch64/results.txt
           sha256sum build-causal-aarch64/causal-context-tests > build-causal-aarch64/SHA256SUMS
