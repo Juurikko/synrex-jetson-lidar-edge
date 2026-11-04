@@ -8,15 +8,15 @@
 namespace synrex::generic {
 namespace {
 void demand(bool yes, const char *why) {
-    if (!yes) throw std::runtime_error(why);
+    if (!yes)
+        throw std::runtime_error(why);
 }
 bool same_identity(const FrameIdentity &a, const FrameIdentity &b) {
-    return a.descriptor_sha256 == b.descriptor_sha256 &&
-           a.session_id == b.session_id && a.map_epoch == b.map_epoch;
+    return a.descriptor_sha256 == b.descriptor_sha256 && a.session_id == b.session_id &&
+           a.map_epoch == b.map_epoch;
 }
 bool same_header(const SourceHeader &a, const SourceHeader &b) {
-    return a.records == b.records && a.wire_begin == b.wire_begin &&
-           a.las14 == b.las14;
+    return a.records == b.records && a.wire_begin == b.wire_begin && a.las14 == b.las14;
 }
 } // namespace
 
@@ -24,18 +24,18 @@ void CausalContextPolicy::validate() const {
     demand(fresh_points >= 1 && fresh_points <= 131072,
            "causal context fresh window outside 1..131072");
     demand(history_points <= 262144 && max_context_points <= 262144 &&
-           max_context_points >= fresh_points &&
-           history_points <= max_context_points - fresh_points,
+               max_context_points >= fresh_points &&
+               history_points <= max_context_points - fresh_points,
            "causal context total history/fresh budget exceeded");
     demand(max_inflight_windows >= 1 && max_inflight_windows <= 8,
            "causal context in-flight bound outside 1..8");
     demand(semantic_class_count >= 2 && semantic_class_count <= 255,
            "causal context semantic class count outside 2..255");
     demand(std::isfinite(world_grid_size_m) && world_grid_size_m > 0.0 &&
-           world_grid_size_m <= 1000.0, "causal context grid size invalid");
+               world_grid_size_m <= 1000.0,
+           "causal context grid size invalid");
     for (const auto c : fixed_world_origin_m)
-        demand(std::isfinite(c) && std::abs(c) <= 1e9,
-               "causal context fixed-world origin invalid");
+        demand(std::isfinite(c) && std::abs(c) <= 1e9, "causal context fixed-world origin invalid");
 }
 
 CausalContextAssembler::CausalContextAssembler(CausalContextPolicy policy) : policy_(policy) {
@@ -46,17 +46,17 @@ void CausalContextAssembler::check_frame(const Frame &frame) const {
     demand(!failed_ && !finished_, "causal context session poisoned or EOF");
     demand(!frame.points.empty(), "causal context empty accepted frame");
     demand(!frame.identity.descriptor_sha256.empty() && !frame.identity.session_id.empty() &&
-           !frame.sensor_id.empty() && !frame.stream_id.empty() &&
-           !frame.coordinate_frame.empty() && !frame.crs.empty(),
+               !frame.sensor_id.empty() && !frame.stream_id.empty() &&
+               !frame.coordinate_frame.empty() && !frame.crs.empty(),
            "causal context missing source/session identity");
     demand(frame.frame_end_ns >= frame.frame_start_ns, "causal context inverted frame time");
     demand(frame.points.size() <= 65536, "causal context oversized ingress frame");
     demand(accepted_points_ <= UINT64_MAX - frame.points.size(),
            "causal context point count overflow");
     if (have_last_) {
-        demand(same_identity(frame.identity, *identity_) &&
-               frame.sensor_id == sensor_id_ && frame.stream_id == stream_id_ &&
-               frame.coordinate_frame == coordinate_frame_ && frame.crs == crs_,
+        demand(same_identity(frame.identity, *identity_) && frame.sensor_id == sensor_id_ &&
+                   frame.stream_id == stream_id_ && frame.coordinate_frame == coordinate_frame_ &&
+                   frame.crs == crs_,
                "causal context crossed source/session identity");
         demand(last_sequence_ < UINT64_MAX && frame.sequence == last_sequence_ + 1,
                "causal context missing or replayed frame sequence");
@@ -65,8 +65,7 @@ void CausalContextAssembler::check_frame(const Frame &frame) const {
     }
 
     const auto first_id = have_last_ ? next_id_ : frame.points.front().id;
-    demand(first_id <= UINT64_MAX - frame.points.size(),
-           "causal context source point ID overflow");
+    demand(first_id <= UINT64_MAX - frame.points.size(), "causal context source point ID overflow");
     for (std::size_t i = 0; i < frame.points.size(); ++i) {
         const auto &p = frame.points[i];
         demand(p.id == first_id + i, "causal context source index gap, duplicate or reorder");
@@ -75,8 +74,7 @@ void CausalContextAssembler::check_frame(const Frame &frame) const {
     }
 
     if (policy_.require_exact_source_rows) {
-        demand(frame.source_header.has_value() &&
-               frame.source_rows.size() == frame.points.size(),
+        demand(frame.source_header.has_value() && frame.source_rows.size() == frame.points.size(),
                "causal context exact source-v1 rows required");
         const auto &header = *frame.source_header;
         demand(header.records > 0 && header.records >= accepted_points_ + frame.points.size(),
@@ -88,7 +86,7 @@ void CausalContextAssembler::check_frame(const Frame &frame) const {
             demand(frame.source_rows[i].original_record_index == index,
                    "causal context original record index reordered");
             demand(header.wire_begin <= UINT64_MAX - index &&
-                   frame.points[i].id == header.wire_begin + index,
+                       frame.points[i].id == header.wire_begin + index,
                    "causal context source row/wire ID disagrees");
         }
     } else {
@@ -123,7 +121,8 @@ CausalContextWindow CausalContextAssembler::emit(std::size_t fresh) {
         out.context.push_back(pending_.front());
         if (policy_.history_points) {
             past_.push_back(pending_.front());
-            while (past_.size() > policy_.history_points) past_.pop_front();
+            while (past_.size() > policy_.history_points)
+                past_.pop_front();
         }
         pending_.pop_front();
     }
@@ -133,14 +132,15 @@ CausalContextWindow CausalContextAssembler::emit(std::size_t fresh) {
 }
 
 void CausalContextAssembler::append_accepted(const Frame &frame,
-                                              std::vector<CausalContextWindow> &out) {
+                                             std::vector<CausalContextWindow> &out) {
     if (!have_last_) {
         identity_ = frame.identity;
         stream_id_ = frame.stream_id;
         sensor_id_ = frame.sensor_id;
         coordinate_frame_ = frame.coordinate_frame;
         crs_ = frame.crs;
-        if (policy_.require_exact_source_rows) source_header_ = frame.source_header;
+        if (policy_.require_exact_source_rows)
+            source_header_ = frame.source_header;
     }
     last_sequence_ = frame.sequence;
     last_end_ns_ = frame.frame_end_ns;
@@ -174,15 +174,15 @@ std::vector<CausalContextWindow> CausalContextAssembler::ingest(const Frame &fra
 
 std::optional<CausalContextWindow> CausalContextAssembler::source_eof() {
     try {
-        demand(!failed_ && !finished_ && have_last_,
-               "causal context invalid/duplicate source EOF");
+        demand(!failed_ && !finished_ && have_last_, "causal context invalid/duplicate source EOF");
         if (policy_.require_exact_source_rows)
             demand(source_header_ && accepted_points_ == source_header_->records,
                    "causal context premature source EOF");
         demand(pending_.empty() || in_flight_.size() < policy_.max_inflight_windows,
                "causal context EOF cannot publish another in-flight window");
         finished_ = true;
-        if (pending_.empty()) return {};
+        if (pending_.empty())
+            return {};
         return emit(pending_.size());
     } catch (...) {
         failed_ = true;
@@ -190,23 +190,24 @@ std::optional<CausalContextWindow> CausalContextAssembler::source_eof() {
     }
 }
 
-NewOnlyClassification CausalContextAssembler::commit_new_only(
-    const CausalContextWindow &window, const std::vector<std::uint8_t> &all_context_labels) {
+NewOnlyClassification
+CausalContextAssembler::commit_new_only(const CausalContextWindow &window,
+                                        const std::vector<std::uint8_t> &all_context_labels) {
     try {
         demand(!failed_ && !in_flight_.empty(), "causal context has no commit-ready window");
         const auto &token = in_flight_.front();
         demand(window.window_index == token.window_index &&
-               window.fresh_count == token.fresh_count &&
-               window.context.size() == all_context_labels.size() &&
-               window.fresh_begin <= window.context.size() &&
-               window.fresh_count == window.context.size() - window.fresh_begin,
+                   window.fresh_count == token.fresh_count &&
+                   window.context.size() == all_context_labels.size() &&
+                   window.fresh_begin <= window.context.size() &&
+                   window.fresh_count == window.context.size() - window.fresh_begin,
                "causal context classifier output/window mismatch");
         demand(same_identity({window.descriptor_sha256, window.session_id, window.map_epoch},
                              *identity_) &&
-               window.stream_id == stream_id_ && window.sensor_id == sensor_id_ &&
-               window.coordinate_frame == coordinate_frame_ && window.crs == crs_ &&
-               window.fixed_world_origin_m == policy_.fixed_world_origin_m &&
-               window.world_grid_size_m == policy_.world_grid_size_m,
+                   window.stream_id == stream_id_ && window.sensor_id == sensor_id_ &&
+                   window.coordinate_frame == coordinate_frame_ && window.crs == crs_ &&
+                   window.fixed_world_origin_m == policy_.fixed_world_origin_m &&
+                   window.world_grid_size_m == policy_.world_grid_size_m,
                "causal context output identity/anchor mismatch");
         NewOnlyClassification result;
         result.window_index = window.window_index;
@@ -218,7 +219,7 @@ NewOnlyClassification CausalContextAssembler::commit_new_only(
         for (std::size_t i = 0; i < window.fresh_count; ++i) {
             const auto idx = window.fresh_begin + i;
             demand(token.first_new_id <= UINT64_MAX - i &&
-                   window.context[idx].id == token.first_new_id + i,
+                       window.context[idx].id == token.first_new_id + i,
                    "causal context committed point identity mismatch");
             result.source_ids.push_back(window.context[idx].id);
             result.semantic_ids.push_back(all_context_labels[idx]);
