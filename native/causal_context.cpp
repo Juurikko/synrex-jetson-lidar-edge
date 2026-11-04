@@ -365,7 +365,7 @@ CausalContextAssembler::commit_new_only(const CausalContextWindow &window,
             demand(token.first_new_id <= UINT64_MAX - i &&
                        window.context->at(idx).id == token.first_new_id + i,
                    "causal context committed point identity mismatch");
-            result.source_ids.push_back(window.context[idx].id);
+            result.source_ids.push_back(window.context->at(idx).id);
             result.semantic_ids.push_back(all_context_labels[idx]);
         }
         in_flight_.pop_front();
