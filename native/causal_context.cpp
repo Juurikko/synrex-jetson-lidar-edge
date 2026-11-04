@@ -102,16 +102,10 @@ std::array<unsigned char, 32> window_digest(const CausalContextWindow &w) {
     for (double xy : w.fixed_world_origin_xy_m)
         h.floating(xy);
     h.floating(w.world_grid_size_m);
-    h.integer(w.context.size());
-    for (const auto &p : w.context) {
-        h.integer(p.id);
-        h.integer(p.timestamp_ns);
-        for (double xyz : p.xyz)
-            h.floating(xyz);
-        h.optional(p.intensity);
-        h.optional(p.return_number);
-        h.optional(p.return_count);
-    }
+    // No per-point SHA here. The private issuance queue owns the same
+    // shared_ptr<const vector<SourcePoint>> and verifies exact handle identity.
+    // Metadata remains mutable by the caller, so it must still be sealed.
+    h.integer(w.context ? w.context->size() : 0);
     return h.finish();
 }
 } // namespace
@@ -228,10 +222,11 @@ CausalContextWindow CausalContextAssembler::emit(std::size_t fresh) {
     out.fresh_begin = past_.size();
     out.fresh_count = fresh;
     out.full_history = past_.size() == policy_.history_points;
-    out.context.reserve(out.fresh_begin + fresh);
-    out.context.insert(out.context.end(), past_.begin(), past_.end());
+    std::vector<streaming::SourcePoint> issued;
+    issued.reserve(out.fresh_begin + fresh);
+    issued.insert(issued.end(), past_.begin(), past_.end());
     for (std::size_t i = 0; i < fresh; ++i) {
-        out.context.push_back(pending_.front());
+        issued.push_back(pending_.front());
         if (policy_.history_points) {
             past_.push_back(pending_.front());
             while (past_.size() > policy_.history_points)
@@ -239,8 +234,12 @@ CausalContextWindow CausalContextAssembler::emit(std::size_t fresh) {
         }
         pending_.pop_front();
     }
+    // Construct the final object as const. No mutable pointer is handed to
+    // a consumer, and its lifetime is bound to the issuance token.
+    out.context = std::make_shared<const std::vector<streaming::SourcePoint>>(std::move(issued));
     const auto digest = window_digest(out);
-    in_flight_.push_back({window_index_, out.context[out.fresh_begin].id, fresh, digest});
+    in_flight_.push_back({window_index_, out.context->at(out.fresh_begin).id,
+                          fresh, digest, out.context});
     ++window_index_;
     return out;
 }
@@ -338,9 +337,10 @@ CausalContextAssembler::commit_new_only(const CausalContextWindow &window,
         const auto &token = in_flight_.front();
         demand(window.window_index == token.window_index &&
                    window.fresh_count == token.fresh_count &&
-                   window.context.size() == all_context_labels.size() &&
-                   window.fresh_begin <= window.context.size() &&
-                   window.fresh_count == window.context.size() - window.fresh_begin,
+                   window.context && window.context == token.issued_context &&
+                   window.context->size() == all_context_labels.size() &&
+                   window.fresh_begin <= window.context->size() &&
+                   window.fresh_count == window.context->size() - window.fresh_begin,
                "causal context classifier output/window mismatch");
         demand(same_identity({window.descriptor_sha256, window.session_id, window.map_epoch},
                              *identity_) &&
@@ -363,7 +363,7 @@ CausalContextAssembler::commit_new_only(const CausalContextWindow &window,
         for (std::size_t i = 0; i < window.fresh_count; ++i) {
             const auto idx = window.fresh_begin + i;
             demand(token.first_new_id <= UINT64_MAX - i &&
-                       window.context[idx].id == token.first_new_id + i,
+                       window.context->at(idx).id == token.first_new_id + i,
                    "causal context committed point identity mismatch");
             result.source_ids.push_back(window.context[idx].id);
             result.semantic_ids.push_back(all_context_labels[idx]);
