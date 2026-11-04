@@ -123,3 +123,36 @@ jobs:
             build-cpu-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
           if-no-files-found: warn
           retention-days: 14
+
+  causal-context-aarch64:
+    name: Native AArch64 causal context CPU (no CUDA)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Fetch pinned JSON dependency
+        run: |
+          set -euo pipefail
+          git init -q .deps/json
+          git -C .deps/json fetch --quiet --depth=1 https://github.com/nlohmann/json.git 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+          git -C .deps/json checkout --quiet --detach FETCH_HEAD
+          test "$(git -C .deps/json rev-parse HEAD)" = 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+      - name: Compile and execute AArch64 causal contract
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = aarch64
+          mkdir -p build-causal-aarch64
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp tests/native/causal_context.cpp -o build-causal-aarch64/causal-context-tests -lcrypto
+          build-causal-aarch64/causal-context-tests | tee build-causal-aarch64/results.txt
+          grep -q CAUSAL_CONTEXT_CPU_PASS build-causal-aarch64/results.txt
+          sha256sum build-causal-aarch64/causal-context-tests > build-causal-aarch64/SHA256SUMS
+      - name: Retain ARM64 CPU results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: causal-context-aarch64-${{ github.run_id }}
+          path: build-causal-aarch64/
+          retention-days: 30
+          if-no-files-found: warn
