@@ -1,0 +1,25 @@
+name: Temporary R2 native formatter review-only
+on:
+  push:
+    branches:
+      - campaign/immutable-sealed-cpu-r2
+permissions:
+  contents: read
+jobs:
+  native-format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Format only seven known native CPU sources without publishing
+        run: |
+          set -euo pipefail
+          clang-format --version
+          clang-format -i native/causal_context.cpp native/include/synrex/causal_context.hpp tests/native/causal_context.cpp tests/native/causal_context_perf.cpp native/sealed_cell.cpp native/include/synrex/sealed_cell.hpp tests/native/sealed_cell.cpp
+          for path in "native/causal_context.cpp" "native/include/synrex/causal_context.hpp" "tests/native/causal_context.cpp" "tests/native/causal_context_perf.cpp" "native/sealed_cell.cpp" "native/include/synrex/sealed_cell.hpp" "tests/native/sealed_cell.cpp"; do
+            printf 'SYNREX_FORMAT_BEGIN:%s\n' "$path"
+            base64 -w0 "$path"
+            printf '\nSYNREX_FORMAT_END:%s\n' "$path"
+          done
