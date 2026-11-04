@@ -108,7 +108,7 @@ void nonpoisoning_capacity_and_explicit_eviction() {
 }
 
 void eviction_after_ack_and_history_disclosure() {
-    auto p=policy(); p.max_active_cells=2; p.max_retained_points=10;
+    auto p=policy(); p.max_active_cells=2; p.max_retained_points=10; p.max_points_per_cell=10;
     SealedCellScheduler s(p);
     auto r0=s.try_ingest(0,point(0,'A'),"EPSG:3067");
     check(r0.accepted,"A admitted");
