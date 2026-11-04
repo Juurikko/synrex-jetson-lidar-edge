@@ -62,6 +62,7 @@ class CausalContextAssembler final {
     void check_frame(const Frame &frame) const;
     CausalContextWindow emit(std::size_t fresh);
     void append_accepted(const Frame &frame, std::vector<CausalContextWindow> &out);
+
   public:
     explicit CausalContextAssembler(CausalContextPolicy policy);
     CausalContextAssembler(const CausalContextAssembler &) = delete;
@@ -70,7 +71,7 @@ class CausalContextAssembler final {
     std::vector<CausalContextWindow> ingest(const Frame &frame);
     std::optional<CausalContextWindow> source_eof();
     NewOnlyClassification commit_new_only(const CausalContextWindow &window,
-                                           const std::vector<std::uint8_t> &all_context_labels);
+                                          const std::vector<std::uint8_t> &all_context_labels);
     std::size_t retained_history_points() const noexcept { return past_.size(); }
     std::size_t pending_new_points() const noexcept { return pending_.size(); }
     std::size_t outstanding_windows() const noexcept { return in_flight_.size(); }
