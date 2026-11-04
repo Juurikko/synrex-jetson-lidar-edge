@@ -327,6 +327,7 @@
       "docs/publication/RELEASE_NOTES.md",
       "docs/runtime_jobctl.md",
       "docs/streaming/CAUSAL_CONTEXT_R1.md",
+      "docs/streaming/SEALED_CELL_SCHEDULER_R2.md",
       "docs/streaming/CPU_EVICTION_INDEX.md",
       "docs/streaming/DISTINCT_REPLAY.md",
       "docs/streaming/EVICTION_INDEX_RTX_REPORT.md",
