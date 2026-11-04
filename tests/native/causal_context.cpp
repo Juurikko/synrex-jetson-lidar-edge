@@ -117,7 +117,7 @@ void basic_history_and_eof() {
     check(third.source_ids == std::vector<std::uint64_t>({1008, 1009, 1010, 1011}),
           "past labels never republished");
     const auto tail = asmbl.source_eof();
-    check(tail && tail->fresh_count == 1 && tail->context.size() == 7, "exact one-point EOF tail");
+    check(tail && tail->fresh_count == 1 && tail->context->size() == 7, "exact one-point EOF tail");
     auto last = asmbl.commit_new_only(*tail, mock_labels(*tail));
     check(last.source_ids == std::vector<std::uint64_t>({1012}), "EOF last point exactly once");
     check(asmbl.accepted_points() == 13 && asmbl.outstanding_windows() == 0 && asmbl.finished() &&
