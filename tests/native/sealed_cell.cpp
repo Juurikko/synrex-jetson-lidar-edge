@@ -204,22 +204,21 @@ void spoof_and_invalid_input_guards() {
     }
 }
 
-
 void independent_stream_index_schedule_oracle() {
     // Mathematically independent group-at-gap implementation of the Python
     // sealed() policy: cell memberships are constructed from the entire
     // deterministic fixture only for TEST ASSERTIONS, never for scheduler inputs.
-    constexpr std::uint64_t total=8192;
-    constexpr std::uint64_t gap=256;
-    auto p=policy();
-    p.idle_gap_points=gap;
-    p.max_active_cells=16;
-    p.max_retained_points=10000;
-    p.max_points_per_cell=2000;
-    p.max_outstanding_windows=32;
+    constexpr std::uint64_t total = 8192;
+    constexpr std::uint64_t gap = 256;
+    auto p = policy();
+    p.idle_gap_points = gap;
+    p.max_active_cells = 16;
+    p.max_retained_points = 10000;
+    p.max_points_per_cell = 2000;
+    p.max_outstanding_windows = 32;
     SealedCellScheduler scheduler(p);
-    using Key=std::array<std::int64_t,2>;
-    std::map<Key,std::vector<std::uint64_t>> oracle_inputs;
+    using Key = std::array<std::int64_t, 2>;
+    std::map<Key, std::vector<std::uint64_t>> oracle_inputs;
     struct Event {
         Key key{};
         std::uint64_t release{};
@@ -227,63 +226,64 @@ void independent_stream_index_schedule_oracle() {
         std::size_t total_context{};
     };
     std::vector<Event> actual;
-    auto accept_window=[&](const SealedCellWindow &w){
-        const auto labelled=scheduler.commit_new_only(w,labels(w));
-        actual.push_back({w.cell,w.release_point_index,labelled.source_ids,w.context->size()});
-        check(w.context->size()==w.fresh_begin+w.fresh_count,
+    auto accept_window = [&](const SealedCellWindow &w) {
+        const auto labelled = scheduler.commit_new_only(w, labels(w));
+        actual.push_back({w.cell, w.release_point_index, labelled.source_ids, w.context->size()});
+        check(w.context->size() == w.fresh_begin + w.fresh_count,
               "sealed output includes all and only prior cell points");
     };
-    for(std::uint64_t i=0;i<total;++i) {
+    for (std::uint64_t i = 0; i < total; ++i) {
         // One strip touches one of eight cells; returns create a long gap.
-        const char cell=static_cast<char>('A'+(i/127)%8);
-        const auto pt=point(i,cell);
-        const Key key={
-            static_cast<std::int64_t>(std::floor((pt.xyz[0]-p.origin_xy_m[0])/p.cell_width_m)),
-            static_cast<std::int64_t>(std::floor((pt.xyz[1]-p.origin_xy_m[1])/p.cell_width_m))
-        };
+        const char cell = static_cast<char>('A' + (i / 127) % 8);
+        const auto pt = point(i, cell);
+        const Key key = {
+            static_cast<std::int64_t>(std::floor((pt.xyz[0] - p.origin_xy_m[0]) / p.cell_width_m)),
+            static_cast<std::int64_t>(std::floor((pt.xyz[1] - p.origin_xy_m[1]) / p.cell_width_m))};
         oracle_inputs[key].push_back(pt.id);
-        auto admitted=scheduler.try_ingest(i,pt,"EPSG:3067");
+        auto admitted = scheduler.try_ingest(i, pt, "EPSG:3067");
         check(admitted.accepted && !admitted.needs_commit,
               "unbounded-oracle experiment has sufficient memory");
-        for(const auto &w:admitted.issued)
+        for (const auto &w : admitted.issued)
             accept_window(w);
     }
-    auto eof=scheduler.try_source_eof(total);
-    check(eof.accepted && !eof.needs_commit,"oracle source EOF allowed");
-    for(const auto &w:eof.issued)
+    auto eof = scheduler.try_source_eof(total);
+    check(eof.accepted && !eof.needs_commit, "oracle source EOF allowed");
+    for (const auto &w : eof.issued)
         accept_window(w);
     std::vector<Event> expected;
-    for (const auto &[cell,ids]:oracle_inputs) {
-        std::size_t begin=0;
-        while(begin<ids.size()) {
-            std::size_t end=begin+1;
-            while(end<ids.size() &&
-                  ids[end]-ids[end-1] <= gap)
+    for (const auto &[cell, ids] : oracle_inputs) {
+        std::size_t begin = 0;
+        while (begin < ids.size()) {
+            std::size_t end = begin + 1;
+            while (end < ids.size() && ids[end] - ids[end - 1] <= gap)
                 ++end;
-            const std::uint64_t last=ids[end-1]-1000000;
-            const auto release=std::min<std::uint64_t>(total,last+gap+1);
-            expected.push_back({cell,release,
-                std::vector<std::uint64_t>(ids.begin()+begin,ids.begin()+end),end});
-            begin=end;
+            const std::uint64_t last = ids[end - 1] - 1000000;
+            const auto release = std::min<std::uint64_t>(total, last + gap + 1);
+            expected.push_back({cell, release,
+                                std::vector<std::uint64_t>(ids.begin() + begin, ids.begin() + end),
+                                end});
+            begin = end;
         }
     }
-    const auto order=[](const Event&a,const Event&b) {
-        if(a.release!=b.release) return a.release<b.release;
-        const auto last_a=a.newly_labelled.back(),last_b=b.newly_labelled.back();
-        if(last_a!=last_b) return last_a<last_b;
-        return a.key<b.key;
+    const auto order = [](const Event &a, const Event &b) {
+        if (a.release != b.release)
+            return a.release < b.release;
+        const auto last_a = a.newly_labelled.back(), last_b = b.newly_labelled.back();
+        if (last_a != last_b)
+            return last_a < last_b;
+        return a.key < b.key;
     };
-    std::sort(expected.begin(),expected.end(),order);
-    check(expected.size()==actual.size(), "native sealed generation count equals independent oracle");
-    for(std::size_t i=0;i<expected.size();++i) {
-        check(expected[i].key==actual[i].key &&
-              expected[i].release==actual[i].release &&
-              expected[i].newly_labelled==actual[i].newly_labelled &&
-              expected[i].total_context==actual[i].total_context,
+    std::sort(expected.begin(), expected.end(), order);
+    check(expected.size() == actual.size(),
+          "native sealed generation count equals independent oracle");
+    for (std::size_t i = 0; i < expected.size(); ++i) {
+        check(expected[i].key == actual[i].key && expected[i].release == actual[i].release &&
+                  expected[i].newly_labelled == actual[i].newly_labelled &&
+                  expected[i].total_context == actual[i].total_context,
               "native seal schedule, fresh IDs, context and release agree with offline gap oracle");
     }
-    check(scheduler.accepted_points()==total && scheduler.evictions()==0 &&
-          !scheduler.history_may_be_truncated() && !scheduler.failed(),
+    check(scheduler.accepted_points() == total && scheduler.evictions() == 0 &&
+              !scheduler.history_may_be_truncated() && !scheduler.failed(),
           "full oracle equality requires no eviction and no point loss");
 }
 
