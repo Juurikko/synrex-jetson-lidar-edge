@@ -4,6 +4,7 @@
 #include "synrex/causal_context.hpp"
 #include <functional>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 
 using namespace synrex::generic;
@@ -53,7 +54,7 @@ Frame frame(std::uint64_t start, std::size_t count, std::uint64_t seq,
         f.source_header = header;
     }
     for (std::size_t i = 0; i < count; ++i) {
-        streaming::SourcePoint p;
+        synrex::streaming::SourcePoint p;
         p.id = 1000 + start + i;
         p.timestamp_ns = 100000 + start + i;
         p.xyz = {{300000.0 + double(start + i), 6700000.0, 50.0}};
