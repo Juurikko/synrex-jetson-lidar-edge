@@ -35,16 +35,14 @@ bool known_projected_metre_crs(const std::string &crs) {
         code = code * 10 + static_cast<unsigned>(crs[i] - '0');
     }
     return code == 3067 || code == 2154 || code == 2393 || code == 3006 ||
-           (code >= 25828 && code <= 25838) ||
-           (code >= 32601 && code <= 32660) ||
+           (code >= 25828 && code <= 25838) || (code >= 32601 && code <= 32660) ||
            (code >= 32701 && code <= 32760);
 }
 
 // Stable endian-independent SHA-256 of EVERY field that a downstream model
 // could use. The private expected hash never leaves the assembler's queue.
 class WindowDigest {
-    std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> ctx_{EVP_MD_CTX_new(),
-                                                                 EVP_MD_CTX_free};
+    std::unique_ptr<EVP_MD_CTX, decltype(&EVP_MD_CTX_free)> ctx_{EVP_MD_CTX_new(), EVP_MD_CTX_free};
 
   public:
     WindowDigest() {
