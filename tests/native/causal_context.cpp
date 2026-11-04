@@ -222,7 +222,6 @@ void poison_guards() {
     }
 }
 
-
 void commit_window_integrity_guards() {
     // Every payload attribute and history record is covered by the PRIVATE
     // issuance digest. No externally mutable window may become authoritative.
@@ -234,18 +233,42 @@ void commit_window_integrity_guards() {
         auto altered = next.at(0);
         const auto fresh = altered.fresh_begin;
         switch (variant) {
-        case 0: altered.context.at(fresh).xyz[0] += 0.125; break;
-        case 1: altered.context.at(0).id += 123; break;
-        case 2: altered.context.at(0).xyz[1] += 0.25; break;
-        case 3: altered.context.at(0).timestamp_ns += 1; break;
-        case 4: altered.context.at(fresh).intensity = 65535; break;
-        case 5: altered.context.at(fresh).return_number = 2; break;
-        case 6: altered.context.at(fresh).return_count = 2; break;
-        case 7: altered.context.at(fresh).timestamp_ns += 1; break;
-        case 8: altered.cutoff_frame_end_ns += 1; break;
-        case 9: altered.full_history = !altered.full_history; break;
-        case 10: altered.context.at(0).intensity.reset(); break;
-        case 11: altered.context.at(fresh).xyz[2] += 0.01; break;
+        case 0:
+            altered.context.at(fresh).xyz[0] += 0.125;
+            break;
+        case 1:
+            altered.context.at(0).id += 123;
+            break;
+        case 2:
+            altered.context.at(0).xyz[1] += 0.25;
+            break;
+        case 3:
+            altered.context.at(0).timestamp_ns += 1;
+            break;
+        case 4:
+            altered.context.at(fresh).intensity = 65535;
+            break;
+        case 5:
+            altered.context.at(fresh).return_number = 2;
+            break;
+        case 6:
+            altered.context.at(fresh).return_count = 2;
+            break;
+        case 7:
+            altered.context.at(fresh).timestamp_ns += 1;
+            break;
+        case 8:
+            altered.cutoff_frame_end_ns += 1;
+            break;
+        case 9:
+            altered.full_history = !altered.full_history;
+            break;
+        case 10:
+            altered.context.at(0).intensity.reset();
+            break;
+        case 11:
+            altered.context.at(fresh).xyz[2] += 0.01;
+            break;
         }
         rejects([&] { assembler.commit_new_only(altered, mock_labels(altered)); });
         check(assembler.failed(), "every mutation of issued context must poison commit");
@@ -278,8 +301,8 @@ void backpressure_is_retryable_and_never_consumes_input() {
         auto large_frame = frame(16384, 65536, 1, 200000);
         auto busy = assembler.try_ingest(large_frame);
         check(!busy.accepted && busy.windows.empty() && !assembler.failed() &&
-                  assembler.accepted_points() == 16384 &&
-                  assembler.outstanding_windows() == 1 && assembler.pending_new_points() == 0,
+                  assembler.accepted_points() == 16384 && assembler.outstanding_windows() == 1 &&
+                  assembler.pending_new_points() == 0,
               "busy 65k frame returns capacity without mutating source state");
         rejects([&] { assembler.ingest(large_frame); });
         check(!assembler.failed() && assembler.accepted_points() == 16384,
@@ -308,16 +331,16 @@ void backpressure_is_retryable_and_never_consumes_input() {
         check(assembler.ingest(frame(4, 1, 1, 5)).empty(),
               "one partial EOF point buffered while prior inference outstanding");
         auto busy = assembler.try_source_eof();
-        check(!busy.accepted && !busy.window && !assembler.failed() &&
-                  !assembler.finished() && assembler.pending_new_points() == 1,
+        check(!busy.accepted && !busy.window && !assembler.failed() && !assembler.finished() &&
+                  assembler.pending_new_points() == 1,
               "EOF capacity wait retains the final point without poisoning");
         rejects([&] { assembler.source_eof(); });
         check(!assembler.failed() && !assembler.finished(),
               "EOF wrapper capacity rejection is retryable");
         assembler.commit_new_only(first.at(0), mock_labels(first.at(0)));
         auto admitted = assembler.try_source_eof();
-        check(admitted.accepted && admitted.window &&
-                  admitted.window->fresh_count == 1 && assembler.finished(),
+        check(admitted.accepted && admitted.window && admitted.window->fresh_count == 1 &&
+                  assembler.finished(),
               "EOF reattempt publishes single remaining point");
         auto last = assembler.commit_new_only(*admitted.window, mock_labels(*admitted.window));
         check(last.source_ids == std::vector<std::uint64_t>({1004}),
