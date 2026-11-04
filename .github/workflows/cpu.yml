@@ -147,7 +147,10 @@ jobs:
           g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp tests/native/causal_context.cpp -o build-causal-aarch64/causal-context-tests -lcrypto
           build-causal-aarch64/causal-context-tests | tee build-causal-aarch64/results.txt
           grep -q CAUSAL_CONTEXT_CPU_PASS build-causal-aarch64/results.txt
-          sha256sum build-causal-aarch64/causal-context-tests > build-causal-aarch64/SHA256SUMS
+          g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I native/include -I .deps/json/single_include native/causal_context.cpp native/sealed_cell.cpp tests/native/sealed_cell.cpp -o build-causal-aarch64/sealed-cell-tests -lcrypto
+          build-causal-aarch64/sealed-cell-tests | tee build-causal-aarch64/sealed-results.txt
+          grep -q SEALED_CELL_CPU_PASS build-causal-aarch64/sealed-results.txt
+          sha256sum build-causal-aarch64/causal-context-tests build-causal-aarch64/sealed-cell-tests > build-causal-aarch64/SHA256SUMS
       - name: Retain ARM64 CPU results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
