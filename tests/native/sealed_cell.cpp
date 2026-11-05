@@ -295,9 +295,10 @@ void liveness_under_pressure() {
         std::uint64_t gap;
         int spread;
     };
-    const Case cases[] = {{8, 64, 32, 4, 16, 1},     {8, 64, 32, 4, 1000, 4},  {4, 64, 32, 4, 1000, 8},
-                          {2, 8, 4, 1, 1000, 8},     {1, 1, 1, 1, 1000000, 8}, {3, 9, 9, 2, 5, 16},
-                          {16, 40, 40, 2, 64, 32},   {4, 16, 8, 1, 2, 3},      {64, 512, 64, 8, 256, 64}};
+    const Case cases[] = {
+        {8, 64, 32, 4, 16, 1},   {8, 64, 32, 4, 1000, 4},  {4, 64, 32, 4, 1000, 8},
+        {2, 8, 4, 1, 1000, 8},   {1, 1, 1, 1, 1000000, 8}, {3, 9, 9, 2, 5, 16},
+        {16, 40, 40, 2, 64, 32}, {4, 16, 8, 1, 2, 3},      {64, 512, 64, 8, 256, 64}};
     std::uint64_t seed = 88172645463325252ULL;
     const auto next = [&seed] {
         seed ^= seed << 13;
@@ -332,7 +333,8 @@ void liveness_under_pressure() {
                 if (r.accepted)
                     break;
             }
-            check(s.retained_points() <= p.max_retained_points && s.active_cells() <= p.max_active_cells,
+            check(s.retained_points() <= p.max_retained_points &&
+                      s.active_cells() <= p.max_active_cells,
                   "caps hold under pressure");
         }
         for (;;) {
@@ -406,7 +408,8 @@ void truncation_flag_is_per_cell() {
         if (w.cell[0] == 0 && w.fresh_begin == 0 && w.context->front().id > 1000000 + 3)
             a_again = a_again || w.cell_history_truncated;
         if (w.cell[0] == 2)
-            other_clean = other_clean || (!w.cell_history_truncated && w.previous_history_may_be_lost);
+            other_clean =
+                other_clean || (!w.cell_history_truncated && w.previous_history_may_be_lost);
     }
     check(a_again && other_clean, "returning cell flagged, untouched cell clean");
 }

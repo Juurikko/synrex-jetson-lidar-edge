@@ -96,8 +96,9 @@ SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t waterma
         eof || forced ? watermark : cell.last_seen_index + policy_.idle_gap_points + 1;
     out.forced_release = forced;
     out.cell_history_truncated = cell.history_truncated;
-    out.cell_origin_xy_m = {{policy_.origin_xy_m[0] + static_cast<double>(key[0]) * policy_.cell_width_m,
-                             policy_.origin_xy_m[1] + static_cast<double>(key[1]) * policy_.cell_width_m}};
+    out.cell_origin_xy_m = {
+        {policy_.origin_xy_m[0] + static_cast<double>(key[0]) * policy_.cell_width_m,
+         policy_.origin_xy_m[1] + static_cast<double>(key[1]) * policy_.cell_width_m}};
     if (forced)
         ++forced_releases_;
     out.fresh_begin = cell.emitted_count;
@@ -177,8 +178,7 @@ SealedCellScheduler::Result SealedCellScheduler::try_ingest(std::uint64_t global
         }
         // Idle generations become causal only when the global stream index
         // passes last_cell_point + G, not when future cell points are inspected.
-        if (!seal_expired(global_index, false, result) ||
-            !reserve_one(key, global_index, result)) {
+        if (!seal_expired(global_index, false, result) || !reserve_one(key, global_index, result)) {
             ++rejected_capacity_;
             demand(!issued_.empty(), "sealed cell internal liveness violation");
             result.needs_commit = true;
