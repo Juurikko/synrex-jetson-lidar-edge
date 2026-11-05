@@ -2,8 +2,10 @@
 // Copyright (c) 2026 Tuomas Pietilä
 #pragma once
 #include "synrex/causal_context.hpp"
+#include <list>
 #include <map>
 #include <memory>
+#include <set>
 
 namespace synrex::generic {
 
@@ -30,7 +32,10 @@ struct SealedCellWindow {
     std::uint64_t epoch{}, release_point_index{}, window_index{};
     std::size_t fresh_begin{}, fresh_count{};
     bool previous_history_may_be_lost{}; // true after ANY bounded eviction
+    bool cell_history_truncated{};       // true when THIS cell lost earlier points
+    bool forced_release{};               // sealed by memory pressure, not idle gap
     bool eof_release{};
+    std::array<double, 2> cell_origin_xy_m{};
     std::shared_ptr<const std::vector<streaming::SourcePoint>> context;
 };
 
@@ -41,11 +46,21 @@ struct SealedCellLabels {
 };
 
 class SealedCellScheduler final {
+  public:
+    struct Result {
+        bool accepted{};     // input point accepted or EOF admitted
+        bool needs_commit{}; // pending sealed output must be committed and retried
+        std::vector<SealedCellWindow> issued;
+    };
+
+  private:
     using Key = std::array<std::int64_t, 2>;
     struct Cell {
         std::vector<streaming::SourcePoint> points;
         std::size_t emitted_count{}, outstanding{};
         std::uint64_t last_seen_index{}, epoch{};
+        bool history_truncated{}, in_pending{};
+        std::list<Key>::iterator pending_at{};
     };
     struct Issued {
         SealedCellWindow window;
@@ -53,14 +68,20 @@ class SealedCellScheduler final {
     SealedCellPolicy policy_;
     std::map<Key, Cell> cells_;
     std::deque<Issued> issued_;
+    std::list<Key> pending_; // cells holding unsealed points, oldest last_seen first
+    std::set<Key> evicted_keys_;
+    bool tombstones_overflowed_{};
     std::uint64_t next_index_{}, first_id_{}, windows_{}, evictions_{}, rejected_capacity_{};
+    std::uint64_t epochs_{}, forced_releases_{}, committed_points_{};
+    bool held_{};
+    streaming::SourcePoint held_point_{};
     std::size_t retained_points_{};
     bool have_source_{}, finished_{}, failed_{}, may_have_lost_history_{};
 
     Key cell_of(const streaming::SourcePoint &) const;
-    std::vector<Key> ready(std::uint64_t watermark, bool eof) const;
-    SealedCellWindow seal(const Key &, std::uint64_t watermark, bool eof);
-    bool reserve_one(const Key &);
+    bool seal_expired(std::uint64_t watermark, bool eof, Result &result);
+    SealedCellWindow seal(const Key &, std::uint64_t watermark, bool eof, bool forced);
+    bool reserve_one(const Key &, std::uint64_t watermark, Result &result);
     void validate_point(std::uint64_t index, const streaming::SourcePoint &point,
                         const std::string &source_crs) const;
 
@@ -69,14 +90,11 @@ class SealedCellScheduler final {
     SealedCellScheduler(const SealedCellScheduler &) = delete;
     SealedCellScheduler &operator=(const SealedCellScheduler &) = delete;
 
-    struct Result {
-        bool accepted{};     // input point accepted or EOF admitted
-        bool needs_commit{}; // pending sealed output must be committed and retried
-        std::vector<SealedCellWindow> issued;
-    };
     // Source-index (0..N-1) must be globally sequential; same source_id-base.
     // An unaccepted point is NOT consumed. Issued windows MAY need committing
     // before retrying the identical input. Never silently discard the point.
+    // Liveness: after every issued and outstanding window is committed, a retry
+    // of the same point is accepted or issues more work. It cannot wait forever.
     Result try_ingest(std::uint64_t global_index, const streaming::SourcePoint &point,
                       const std::string &source_crs);
     Result try_source_eof(std::uint64_t total_points);
@@ -90,6 +108,19 @@ class SealedCellScheduler final {
     std::uint64_t evictions() const noexcept { return evictions_; }
     std::uint64_t capacity_rejections() const noexcept { return rejected_capacity_; }
     bool history_may_be_truncated() const noexcept { return may_have_lost_history_; }
+    std::uint64_t forced_releases() const noexcept { return forced_releases_; }
+    std::uint64_t committed_points() const noexcept { return committed_points_; }
+    // Every accepted point has been sealed, issued and committed exactly once.
+    bool complete() const noexcept {
+        return finished_ && issued_.empty() && committed_points_ == next_index_;
+    }
+    // Recovery: a caller that lost an issued result can fetch it again.
+    std::vector<SealedCellWindow> outstanding() const {
+        std::vector<SealedCellWindow> all;
+        for (const auto &i : issued_)
+            all.push_back(i.window);
+        return all;
+    }
     bool failed() const noexcept { return failed_; }
     bool finished() const noexcept { return finished_; }
 };

@@ -67,27 +67,23 @@ SealedCellScheduler::Key SealedCellScheduler::cell_of(const streaming::SourcePoi
     return {static_cast<std::int64_t>(x), static_cast<std::int64_t>(y)};
 }
 
-std::vector<SealedCellScheduler::Key> SealedCellScheduler::ready(std::uint64_t watermark,
-                                                                 bool eof) const {
-    std::vector<Key> found;
-    for (const auto &[key, cell] : cells_) {
-        if (cell.emitted_count == cell.points.size())
-            continue;
-        demand(cell.last_seen_index < watermark || eof,
-               "sealed cell watermark must follow received index");
-        if (eof || watermark - cell.last_seen_index > policy_.idle_gap_points)
-            found.push_back(key);
+bool SealedCellScheduler::seal_expired(std::uint64_t watermark, bool eof, Result &result) {
+    // pending_ is ordered by last_seen, so only its front can have expired.
+    while (!pending_.empty()) {
+        const Key key = pending_.front();
+        const auto last = cells_.at(key).last_seen_index;
+        demand(last < watermark || eof, "sealed cell watermark must follow received index");
+        if (!eof && watermark - last <= policy_.idle_gap_points)
+            return true;
+        if (issued_.size() == policy_.max_outstanding_windows)
+            return false;
+        result.issued.push_back(seal(key, watermark, eof, false));
     }
-    std::sort(found.begin(), found.end(), [&](const Key &a, const Key &b) {
-        const auto &ca = cells_.at(a), &cb = cells_.at(b);
-        if (ca.last_seen_index != cb.last_seen_index)
-            return ca.last_seen_index < cb.last_seen_index;
-        return a < b;
-    });
-    return found;
+    return true;
 }
 
-SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t watermark, bool eof) {
+SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t watermark, bool eof,
+                                           bool forced) {
     auto &cell = cells_.at(key);
     demand(cell.emitted_count < cell.points.size(), "sealed cell no fresh points");
     demand(issued_.size() < policy_.max_outstanding_windows,
@@ -96,7 +92,15 @@ SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t waterma
     out.cell = key;
     out.epoch = cell.epoch;
     out.window_index = windows_++;
-    out.release_point_index = eof ? watermark : cell.last_seen_index + policy_.idle_gap_points + 1;
+    out.release_point_index =
+        eof || forced ? watermark : cell.last_seen_index + policy_.idle_gap_points + 1;
+    out.forced_release = forced;
+    out.cell_history_truncated = cell.history_truncated;
+    out.cell_origin_xy_m = {
+        {policy_.origin_xy_m[0] + static_cast<double>(key[0]) * policy_.cell_width_m,
+         policy_.origin_xy_m[1] + static_cast<double>(key[1]) * policy_.cell_width_m}};
+    if (forced)
+        ++forced_releases_;
     out.fresh_begin = cell.emitted_count;
     out.fresh_count = cell.points.size() - cell.emitted_count;
     out.previous_history_may_be_lost = may_have_lost_history_;
@@ -104,11 +108,13 @@ SealedCellWindow SealedCellScheduler::seal(const Key &key, std::uint64_t waterma
     out.context = std::make_shared<const std::vector<streaming::SourcePoint>>(cell.points);
     cell.emitted_count = cell.points.size();
     ++cell.outstanding;
+    pending_.erase(cell.pending_at);
+    cell.in_pending = false;
     issued_.push_back({out});
     return out;
 }
 
-bool SealedCellScheduler::reserve_one(const Key &target) {
+bool SealedCellScheduler::reserve_one(const Key &target, std::uint64_t watermark, Result &result) {
     for (;;) {
         const auto found = cells_.find(target);
         const bool needs_cell = found == cells_.end();
@@ -129,12 +135,29 @@ bool SealedCellScheduler::reserve_one(const Key &target) {
             if (victim == cells_.end() || c.last_seen_index < victim->second.last_seen_index)
                 victim = it;
         }
-        if (victim == cells_.end())
-            return false; // bounded HOLD, never shed unclassified source points
-        retained_points_ -= victim->second.points.size();
-        cells_.erase(victim);
-        ++evictions_;
-        may_have_lost_history_ = true;
+        if (victim != cells_.end()) {
+            retained_points_ -= victim->second.points.size();
+            if (evicted_keys_.size() < 65536)
+                evicted_keys_.insert(victim->first);
+            else
+                tombstones_overflowed_ = true;
+            cells_.erase(victim);
+            ++evictions_;
+            may_have_lost_history_ = true;
+            continue;
+        }
+        // Nothing can be retired. Commits may free a cell, so try those first. With
+        // none outstanding, waiting for G more points cannot help, because the next
+        // point is the one being held. Seal early so that a commit frees something.
+        // The window is causal, since it holds only points already received.
+        if (issued_.empty()) {
+            const bool own_pending = local_full && found->second.in_pending;
+            if (!local_full && !pending_.empty())
+                result.issued.push_back(seal(pending_.front(), watermark, false, true));
+            else if (own_pending)
+                result.issued.push_back(seal(target, watermark, false, true));
+        }
+        return false;
     }
 }
 
@@ -145,30 +168,42 @@ SealedCellScheduler::Result SealedCellScheduler::try_ingest(std::uint64_t global
         validate_point(global_index, point, source_crs);
         const auto key = cell_of(point);
         Result result;
+        if (held_) {
+            demand(point.id == held_point_.id && point.xyz == held_point_.xyz &&
+                       point.timestamp_ns == held_point_.timestamp_ns &&
+                       point.intensity == held_point_.intensity &&
+                       point.return_number == held_point_.return_number &&
+                       point.return_count == held_point_.return_count,
+                   "sealed cell retried point differs from the held point");
+        }
         // Idle generations become causal only when the global stream index
         // passes last_cell_point + G, not when future cell points are inspected.
-        for (const auto &expired : ready(global_index, false)) {
-            if (issued_.size() == policy_.max_outstanding_windows) {
-                ++rejected_capacity_;
-                result.needs_commit = true;
-                return result; // global_index point not consumed; retry same point
-            }
-            result.issued.push_back(seal(expired, global_index, false));
-        }
-        if (!reserve_one(key)) {
+        if (!seal_expired(global_index, false, result) || !reserve_one(key, global_index, result)) {
             ++rejected_capacity_;
+            demand(!issued_.empty(), "sealed cell internal liveness violation");
             result.needs_commit = true;
-            return result;
+            held_ = true;
+            held_point_ = point;
+            return result; // global_index point not consumed; retry same point
         }
+        held_ = false;
         if (!have_source_) {
             first_id_ = point.id;
             have_source_ = true;
         }
         auto &cell = cells_[key];
-        if (cell.points.empty())
-            cell.epoch = ++windows_; // unique session-local cell instance identity
+        if (cell.points.empty()) {
+            cell.epoch = ++epochs_; // unique session-local cell instance identity
+            cell.history_truncated = tombstones_overflowed_ || evicted_keys_.count(key) > 0;
+        }
         cell.points.push_back(point);
         cell.last_seen_index = global_index;
+        if (cell.in_pending) {
+            pending_.splice(pending_.end(), pending_, cell.pending_at);
+        } else {
+            cell.pending_at = pending_.insert(pending_.end(), key);
+            cell.in_pending = true;
+        }
         ++retained_points_;
         ++next_index_;
         result.accepted = true;
@@ -184,13 +219,10 @@ SealedCellScheduler::Result SealedCellScheduler::try_source_eof(std::uint64_t to
         demand(!failed_ && !finished_ && have_source_ && total_points == next_index_,
                "sealed cell EOF source coverage invalid");
         Result result;
-        for (const auto &key : ready(total_points, true)) {
-            if (issued_.size() == policy_.max_outstanding_windows) {
-                ++rejected_capacity_;
-                result.needs_commit = true;
-                return result;
-            }
-            result.issued.push_back(seal(key, total_points, true));
+        if (!seal_expired(total_points, true, result)) {
+            ++rejected_capacity_;
+            result.needs_commit = true;
+            return result;
         }
         result.accepted = true;
         finished_ = true;
@@ -213,6 +245,9 @@ SealedCellLabels SealedCellScheduler::commit_new_only(const SealedCellWindow &wi
                    window.fresh_count == issued.fresh_count &&
                    window.previous_history_may_be_lost == issued.previous_history_may_be_lost &&
                    window.eof_release == issued.eof_release &&
+                   window.forced_release == issued.forced_release &&
+                   window.cell_history_truncated == issued.cell_history_truncated &&
+                   window.cell_origin_xy_m == issued.cell_origin_xy_m &&
                    window.context->size() == labels.size() &&
                    window.fresh_count == window.context->size() - window.fresh_begin,
                "sealed cell source window identity or size changed");
@@ -230,6 +265,7 @@ SealedCellLabels SealedCellScheduler::commit_new_only(const SealedCellWindow &wi
             out.semantic_ids.push_back(labels[i]);
         }
         --cell.outstanding;
+        committed_points_ += window.fresh_count;
         issued_.pop_front();
         return out;
     } catch (...) {

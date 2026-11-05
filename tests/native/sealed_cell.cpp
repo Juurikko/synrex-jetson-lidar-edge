@@ -287,6 +287,133 @@ void independent_stream_index_schedule_oracle() {
           "full oracle equality requires no eviction and no point loss");
 }
 
+// Regression: a held point must never wait forever. Before the fix each of these
+// returned needs_commit with nothing to commit, for good.
+void liveness_under_pressure() {
+    struct Case {
+        std::size_t cells, retained, per_cell, outstanding;
+        std::uint64_t gap;
+        int spread;
+    };
+    const Case cases[] = {
+        {8, 64, 32, 4, 16, 1},   {8, 64, 32, 4, 1000, 4},  {4, 64, 32, 4, 1000, 8},
+        {2, 8, 4, 1, 1000, 8},   {1, 1, 1, 1, 1000000, 8}, {3, 9, 9, 2, 5, 16},
+        {16, 40, 40, 2, 64, 32}, {4, 16, 8, 1, 2, 3},      {64, 512, 64, 8, 256, 64}};
+    std::uint64_t seed = 88172645463325252ULL;
+    const auto next = [&seed] {
+        seed ^= seed << 13;
+        seed ^= seed >> 7;
+        seed ^= seed << 17;
+        return seed;
+    };
+    for (const auto &c : cases) {
+        auto p = policy();
+        p.max_active_cells = c.cells;
+        p.max_retained_points = c.retained;
+        p.max_points_per_cell = c.per_cell;
+        p.max_outstanding_windows = c.outstanding;
+        p.idle_gap_points = c.gap;
+        SealedCellScheduler s(p);
+        constexpr std::uint64_t total = 4000;
+        std::vector<int> seen(total, 0);
+        const auto commit = [&](const SealedCellWindow &w) {
+            check(w.context->size() == w.fresh_begin + w.fresh_count, "context layout");
+            for (const auto &q : *w.context)
+                check(q.id - 1000000 < total, "context holds received points only");
+            for (const auto id : s.commit_new_only(w, labels(w)).source_ids)
+                ++seen.at(id - 1000000);
+        };
+        for (std::uint64_t i = 0; i < total; ++i) {
+            const auto pt = point(i, static_cast<char>('A' + next() % c.spread));
+            for (int attempt = 0;; ++attempt) {
+                check(attempt < 8, "held point always makes progress after commits");
+                const auto r = s.try_ingest(i, pt, "EPSG:3067");
+                for (const auto &w : s.outstanding())
+                    commit(w);
+                if (r.accepted)
+                    break;
+            }
+            check(s.retained_points() <= p.max_retained_points &&
+                      s.active_cells() <= p.max_active_cells,
+                  "caps hold under pressure");
+        }
+        for (;;) {
+            const auto r = s.try_source_eof(total);
+            for (const auto &w : s.outstanding())
+                commit(w);
+            if (r.accepted)
+                break;
+        }
+        check(s.complete(), "every point committed");
+        for (const auto n : seen)
+            check(n == 1, "every point labelled exactly once");
+    }
+    // Hover: one cell, never idle. Used to stop for good at the per-cell cap.
+    auto p = policy();
+    p.max_points_per_cell = 32;
+    p.idle_gap_points = 16;
+    SealedCellScheduler s(p);
+    std::uint64_t forced_seen = 0;
+    for (std::uint64_t i = 0; i < 500; ++i) {
+        for (int attempt = 0;; ++attempt) {
+            check(attempt < 8, "hover makes progress");
+            const auto r = s.try_ingest(i, point(i, 'A'), "EPSG:3067");
+            for (const auto &w : s.outstanding()) {
+                forced_seen += w.forced_release;
+                s.commit_new_only(w, labels(w));
+            }
+            if (r.accepted)
+                break;
+        }
+    }
+    check(forced_seen > 0 && s.forced_releases() == forced_seen, "pressure releases are disclosed");
+    // A held point may not be swapped for another one at retry.
+    auto q = policy();
+    q.max_active_cells = 1;
+    q.idle_gap_points = 1000;
+    SealedCellScheduler t(q);
+    check(t.try_ingest(0, point(0, 'A'), "EPSG:3067").accepted, "first point");
+    const auto held = t.try_ingest(1, point(1, 'B'), "EPSG:3067");
+    check(!held.accepted && held.issued.size() == 1, "pressure seals the only pending cell");
+    for (const auto &w : t.outstanding())
+        t.commit_new_only(w, labels(w));
+    auto swapped = point(1, 'B');
+    swapped.xyz[2] += 1.0;
+    must_reject([&] { t.try_ingest(1, swapped, "EPSG:3067"); });
+}
+
+// Only the cell that lost points is flagged, not every later window.
+void truncation_flag_is_per_cell() {
+    auto p = policy();
+    p.max_active_cells = 2;
+    p.idle_gap_points = 2;
+    SealedCellScheduler s(p);
+    std::vector<SealedCellWindow> ws;
+    std::uint64_t i = 0;
+    for (const char c : std::string("AAABBBBCCCCAAAACCCC")) {
+        for (;;) {
+            const auto r = s.try_ingest(i, point(i, c), "EPSG:3067");
+            for (const auto &w : s.outstanding()) {
+                ws.push_back(w);
+                s.commit_new_only(w, labels(w));
+            }
+            if (r.accepted)
+                break;
+        }
+        ++i;
+    }
+    check(s.evictions() > 0, "fixture evicts");
+    bool a_again = false, other_clean = false;
+    for (const auto &w : ws) {
+        if (w.cell[0] == 0 && w.fresh_begin == 0 && w.context->front().id > 1000000 + 3)
+            a_again = a_again || w.cell_history_truncated;
+        if (w.cell[0] == 2)
+            other_clean =
+                other_clean || (!w.cell_history_truncated && w.previous_history_may_be_lost);
+    }
+    check(a_again && other_clean, "returning cell flagged, untouched cell clean");
+}
+
 } // namespace
 
 int main() {
@@ -296,6 +423,8 @@ int main() {
         eviction_after_ack_and_history_disclosure();
         spoof_and_invalid_input_guards();
         independent_stream_index_schedule_oracle();
+        liveness_under_pressure();
+        truncation_flag_is_per_cell();
         std::cout << "SEALED_CELL_CPU_PASS checks=" << checks << " rejections=" << rejects
                   << " GPU_NOT_RUN model_inference_NOT_RUN\n";
         return 0;
