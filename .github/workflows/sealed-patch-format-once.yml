@@ -1,0 +1,25 @@
+name: Temporary sealed-cell patch formatting review
+on:
+  push:
+    branches:
+      - campaign/sealed-liveness-review-r3
+permissions:
+  contents: read
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Canonical clang-format patch files in runner only
+        run: |
+          set -euo pipefail
+          clang-format --version
+          clang-format -i native/include/synrex/sealed_cell.hpp native/sealed_cell.cpp tests/native/sealed_cell.cpp
+          for path in native/include/synrex/sealed_cell.hpp native/sealed_cell.cpp tests/native/sealed_cell.cpp; do
+            printf 'SYNREX_FORMAT_BEGIN:%s\n' "$path"
+            base64 -w0 "$path"
+            printf '\nSYNREX_FORMAT_END:%s\n' "$path"
+          done
