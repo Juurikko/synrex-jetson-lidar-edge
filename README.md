@@ -122,6 +122,8 @@ changed-voxel deltas and file-encoding rates are separate quantities.
 | Ten-minute coverage / drops / p99 replay-to-validated-output latency | **100% / zero / 39.85 ms** |
 | Dense/churn TCP trials at 2M/s | **FAIL**: bounded output-delivery queue; failures retained |
 
+**Separate streaming-quality diagnostic.** On IGN 1 km tile `0448_6393`, a separate frozen-model FP32 CPU reference reported ground F1 **0.1602 with independent 16,384-point windows**, versus **0.9708 for whole-tile processing**. The 262,144-point result was **0.7692**. These are diagnostic classifications using an uncorrected GPS-time sort, not accuracy measurements of the native TensorRT replay above. The experiment timed out after two of four planned tiles; subsequent checks found timestamp/header inconsistencies, so acquisition-order and seconds-latency interpretations require further validation. The throughput table does not establish accurate live streaming.
+
 **What the replay source is.** Each workload replays one finite licensed FRACTAL tile in a
 loop, in 16,384-point frames. Scene A
 ([`TEST-0447_6390-002819414.laz`](docs/streaming/SUSTAINED_RTX_REPORT.md)) has 50,096
@@ -129,8 +131,7 @@ records, so at 2M points/s the same records repeat about 40 times per second; de
 has 400,654 records. Full-churn runs, including the ten-minute run, loop scene A and shift
 each successive frame by 64 m in x, so the map keeps receiving new cells while the point
 attributes repeat. Rates are therefore pipeline throughput on repeated input, not a count
-of distinct points. Accuracy at streaming-window context has not been evaluated separately;
-the mIoU below comes from whole-tile processing.
+of distinct points. The mIoU below comes from whole-tile processing. Separate CPU-reference streaming-window diagnostics are described above; native streaming-window quality remains unqualified.
 
 Every counted classification comes from fresh neural execution. Map state never supplies
 cached point labels. The original gates remain 250 ms p99 validated latency, 50 ms maximum
