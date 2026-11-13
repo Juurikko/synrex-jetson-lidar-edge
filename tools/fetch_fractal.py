@@ -10,6 +10,7 @@ import concurrent.futures
 import hashlib
 import io
 import json
+import re
 import struct
 import time
 import urllib.request
@@ -23,17 +24,29 @@ BASE = f"https://huggingface.co/datasets/IGNF/FRACTAL/resolve/{REVISION}"
 
 
 def fetch(url, start, length):
+    if start < 0 or length <= 0:
+        raise ValueError("invalid byte range")
+    end = start + length - 1
     for attempt in range(5):
         try:
             request = urllib.request.Request(
-                url, headers={"Range": f"bytes={start}-{start + length - 1}"}
+                url, headers={"Range": f"bytes={start}-{end}"}
             )
             with urllib.request.urlopen(request, timeout=120) as response:
                 if response.status != 206:
                     raise ValueError("server did not honor bounded range request")
-                data = response.read()
+                match = re.fullmatch(
+                    r"bytes (\d+)-(\d+)/(\d+)", response.headers.get("Content-Range", "")
+                )
+                if (
+                    not match
+                    or (int(match[1]), int(match[2])) != (start, end)
+                    or int(match[3]) <= end
+                ):
+                    raise ValueError("server returned an unexpected Content-Range")
+                data = response.read(length + 1)
                 if len(data) != length:
-                    raise ValueError("short HTTP range")
+                    raise ValueError("incorrect HTTP range length")
                 return data
         except Exception:
             if attempt == 4:
